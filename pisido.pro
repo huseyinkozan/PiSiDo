@@ -13,12 +13,18 @@ VERSION = 1.0.0
 DEFINES += PISIDO_VERSION=\\\"$$VERSION\\\"
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    configurationdialog.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    configurationdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    configurationdialog.ui
 
 OTHER_FILES += \
     pisido_tr.qm \
     pisido_tr.ts
+
+RESOURCES += \
+    pisido.qrc

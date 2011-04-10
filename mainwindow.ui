@@ -21,7 +21,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_src_code">
        <attribute name="title">
@@ -93,6 +93,24 @@
              </item>
             </layout>
            </item>
+           <item>
+            <layout class="QHBoxLayout" name="hl_url">
+             <item>
+              <widget class="QRadioButton" name="rb_src_url">
+               <property name="text">
+                <string>Url Address</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="le_src_url">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
           </layout>
          </widget>
         </item>
@@ -152,8 +170,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>479</width>
-             <height>475</height>
+             <width>463</width>
+             <height>797</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout">
@@ -165,10 +183,23 @@
              </widget>
             </item>
             <item row="0" column="1" colspan="2">
-             <widget class="QLineEdit" name="le_name"/>
+             <widget class="QLineEdit" name="le_name">
+              <property name="toolTip">
+               <string>Package name.</string>
+              </property>
+              <property name="statusTip">
+               <string>Package name.</string>
+              </property>
+             </widget>
             </item>
             <item row="4" column="0">
              <widget class="QLabel" name="lbl_work_dir">
+              <property name="toolTip">
+               <string>pspec.xml, actions.py ve diğer dosyalar burada oluşturulacaktır.</string>
+              </property>
+              <property name="statusTip">
+               <string>pspec.xml, actions.py ve diğer dosyalar burada oluşturulacaktır.</string>
+              </property>
               <property name="text">
                <string>Work Dir</string>
               </property>
@@ -176,6 +207,12 @@
             </item>
             <item row="4" column="1" colspan="3">
              <widget class="QLineEdit" name="le_work_dir">
+              <property name="toolTip">
+               <string>pspec.xml, actions.py and other files will be created in here.</string>
+              </property>
+              <property name="statusTip">
+               <string>pspec.xml, actions.py and other files will be created in here.</string>
+              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -193,8 +230,17 @@
             </item>
             <item row="6" column="1" rowspan="4" colspan="3">
              <widget class="QListWidget" name="lw_files">
+              <property name="toolTip">
+               <string>Added file in here will copy to work dir.</string>
+              </property>
+              <property name="statusTip">
+               <string>Added file in here will copy to work dir.</string>
+              </property>
               <property name="editTriggers">
                <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::ExtendedSelection</enum>
               </property>
              </widget>
             </item>
@@ -213,6 +259,12 @@
             </item>
             <item row="4" column="4">
              <widget class="QToolButton" name="tb_work_dir">
+              <property name="toolTip">
+               <string>pspec.xml, actions.py ve diğer dosyalar burada oluşturulacaktır.</string>
+              </property>
+              <property name="statusTip">
+               <string>pspec.xml, actions.py ve diğer dosyalar burada oluşturulacaktır.</string>
+              </property>
               <property name="text">
                <string>...</string>
               </property>
@@ -226,7 +278,14 @@
              </widget>
             </item>
             <item row="1" column="1" colspan="2">
-             <widget class="QLineEdit" name="le_version"/>
+             <widget class="QLineEdit" name="le_version">
+              <property name="toolTip">
+               <string>Package version.</string>
+              </property>
+              <property name="statusTip">
+               <string>Package version.</string>
+              </property>
+             </widget>
             </item>
             <item row="6" column="4">
              <widget class="QPushButton" name="pb_add_file">
@@ -244,6 +303,12 @@
             </item>
             <item row="8" column="4">
              <widget class="QPushButton" name="pb_clear_files">
+              <property name="toolTip">
+               <string>Delete files on the list. Does not delete real files.</string>
+              </property>
+              <property name="statusTip">
+               <string>Delete files on the list. Does not delete real files.</string>
+              </property>
               <property name="text">
                <string>Clear</string>
               </property>
@@ -264,10 +329,24 @@
              </widget>
             </item>
             <item row="10" column="1" colspan="4">
-             <widget class="QTextEdit" name="te_brief"/>
+             <widget class="QTextEdit" name="te_brief">
+              <property name="toolTip">
+               <string>Shows directly at the installer list.</string>
+              </property>
+              <property name="statusTip">
+               <string>Shows directly at the installer list.</string>
+              </property>
+             </widget>
             </item>
             <item row="11" column="1" colspan="4">
-             <widget class="QTextEdit" name="te_detailed"/>
+             <widget class="QTextEdit" name="te_detailed">
+              <property name="toolTip">
+               <string>Shows after open detailed description. Should be continuous of the brief.</string>
+              </property>
+              <property name="statusTip">
+               <string>Shows after open detailed description. Should be continuous of the brief.</string>
+              </property>
+             </widget>
             </item>
             <item row="10" column="0">
              <widget class="QLabel" name="lbl_brief">
@@ -276,6 +355,9 @@
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -286,6 +368,9 @@
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -341,22 +426,26 @@
                 <string notr="true">as-is</string>
                </property>
               </item>
-              <item>
-               <property name="text">
-                <string>Other</string>
-               </property>
-              </item>
              </widget>
             </item>
             <item row="2" column="3" colspan="2">
              <widget class="QLineEdit" name="le_other_licence">
-              <property name="enabled">
-               <bool>false</bool>
+              <property name="toolTip">
+               <string>Other licence that doesn't on the list.</string>
+              </property>
+              <property name="statusTip">
+               <string>Other licence that doesn't on the list.</string>
               </property>
              </widget>
             </item>
             <item row="3" column="1" colspan="2">
              <widget class="QComboBox" name="combo_type">
+              <property name="toolTip">
+               <string>Package type.</string>
+              </property>
+              <property name="statusTip">
+               <string>Package type.</string>
+              </property>
               <item>
                <property name="text">
                 <string notr="true"/>
@@ -891,12 +980,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>107</x>
-     <y>103</y>
+     <x>46</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
-     <x>196</x>
-     <y>107</y>
+     <x>68</x>
+     <y>92</y>
     </hint>
    </hints>
   </connection>
@@ -907,12 +996,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>57</x>
-     <y>100</y>
+     <x>46</x>
+     <y>92</y>
     </hint>
     <hint type="destinationlabel">
-     <x>459</x>
-     <y>108</y>
+     <x>89</x>
+     <y>92</y>
     </hint>
    </hints>
   </connection>
@@ -923,12 +1012,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>94</x>
-     <y>134</y>
+     <x>46</x>
+     <y>86</y>
     </hint>
     <hint type="destinationlabel">
-     <x>156</x>
-     <y>134</y>
+     <x>68</x>
+     <y>86</y>
     </hint>
    </hints>
   </connection>
@@ -939,12 +1028,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>71</x>
-     <y>136</y>
+     <x>46</x>
+     <y>86</y>
     </hint>
     <hint type="destinationlabel">
-     <x>458</x>
-     <y>140</y>
+     <x>89</x>
+     <y>86</y>
     </hint>
    </hints>
   </connection>
@@ -961,6 +1050,22 @@
     <hint type="destinationlabel">
      <x>326</x>
      <y>287</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_src_url</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>le_src_url</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>89</x>
+     <y>80</y>
     </hint>
    </hints>
   </connection>

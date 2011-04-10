@@ -233,9 +233,9 @@
         <source>This program written by Hüseyin Kozan.
 http://huseyinkozan.com.tr
 App Version:%1</source>
-        <translation>Bu program Hüseyin Kozan tarafından yazıldı.
+        <translation type="unfinished">Bu program Hüseyin Kozan tarafından yazıldı.
 http://huseyinkozan.com.tr
-uygulama Sürümü: %1</translation>
+Uygulama Sürümü: %1</translation>
     </message>
 </context>
 </TS>

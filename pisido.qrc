@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/translations">
+        <file>pisido_tr.qm</file>
+    </qresource>
+    <qresource prefix="/images"/>
+</RCC>
