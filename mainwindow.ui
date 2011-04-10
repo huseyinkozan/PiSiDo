@@ -1,24 +1,968 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>501</width>
+    <height>601</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>MainWindow</string>
+  <property name="windowTitle">
+   <string>PiSiDo</string>
   </property>
-  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="QWidget" name="tab_src_code">
+       <attribute name="title">
+        <string>Source Code</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QGroupBox" name="gb_src">
+          <property name="title">
+           <string>Source</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <layout class="QHBoxLayout" name="hl_zip">
+             <item>
+              <widget class="QRadioButton" name="rb_src_compressed">
+               <property name="text">
+                <string>Compressed File</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="le_src_compressed">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="tb_src_compressed">
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="hl_folder">
+             <item>
+              <widget class="QRadioButton" name="rb_src_folder">
+               <property name="text">
+                <string>Folder Path</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="le_src_folder">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="tb_src_folder">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chk_cp_to_pisi_work">
+          <property name="text">
+           <string>Copy source code to pisi work directory</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chk_cp_to_pckg_work">
+          <property name="text">
+           <string>Copy sorce code to package work directory</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_src">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>300</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_package">
+       <attribute name="title">
+        <string>Package</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_tab_pckg">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>479</width>
+             <height>475</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="0">
+             <widget class="QLabel" name="lbl_name">
+              <property name="text">
+               <string>Name</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" colspan="2">
+             <widget class="QLineEdit" name="le_name"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="lbl_work_dir">
+              <property name="text">
+               <string>Work Dir</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1" colspan="3">
+             <widget class="QLineEdit" name="le_work_dir">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="lbl_files">
+              <property name="text">
+               <string>Files</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1" rowspan="4" colspan="3">
+             <widget class="QListWidget" name="lw_files">
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="1">
+             <spacer name="verticalSpacer_pckg">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="4" column="4">
+             <widget class="QToolButton" name="tb_work_dir">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="lbl_version">
+              <property name="text">
+               <string>Version</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" colspan="2">
+             <widget class="QLineEdit" name="le_version"/>
+            </item>
+            <item row="6" column="4">
+             <widget class="QPushButton" name="pb_add_file">
+              <property name="text">
+               <string>Add</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="4">
+             <widget class="QPushButton" name="pb_remove_file">
+              <property name="text">
+               <string>Remove</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="4">
+             <widget class="QPushButton" name="pb_clear_files">
+              <property name="text">
+               <string>Clear</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="lbl_licence">
+              <property name="text">
+               <string>Licence</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="lbl_type">
+              <property name="text">
+               <string>Type</string>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="1" colspan="4">
+             <widget class="QTextEdit" name="te_brief"/>
+            </item>
+            <item row="11" column="1" colspan="4">
+             <widget class="QTextEdit" name="te_detailed"/>
+            </item>
+            <item row="10" column="0">
+             <widget class="QLabel" name="lbl_brief">
+              <property name="text">
+               <string>Brief Description</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="0">
+             <widget class="QLabel" name="lbl_detailed">
+              <property name="text">
+               <string>Detailed Description</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" colspan="2">
+             <widget class="QComboBox" name="combo_licence">
+              <item>
+               <property name="text">
+                <string/>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">GPLv1</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">GPLv2</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">GPLv3</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">LGPLv2</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">LGPLv2.1</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">LGPLv3</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">BSD</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">MIT</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">as-is</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Other</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="2" column="3" colspan="2">
+             <widget class="QLineEdit" name="le_other_licence">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1" colspan="2">
+             <widget class="QComboBox" name="combo_type">
+              <item>
+               <property name="text">
+                <string notr="true"/>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">app</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">app:console</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">app:gui</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">app:web</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">library</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">service</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">data</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">data:doc</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">data:front</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">kernel</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">driver</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:aa</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:af</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:am</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:an</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:ar</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:as</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:ast</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:az</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:be</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:ber</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:bg</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:bn</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:bn_IN</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:bo</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:br</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:byn</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:ca</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:ca@valencia</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:crh</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:cs</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:csb</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:cy</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:da</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:de</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:dz</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:el</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:en</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:en_CA</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:en_GB</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:eo</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:es</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:et</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:eu</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:fa</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:fi</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:fil</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:fo</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:fr</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">locale:fur</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_compilation">
+       <attribute name="title">
+        <string>Compilation</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QGroupBox" name="gb_action_modules">
+          <property name="title">
+           <string>Action Modules</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="rb_auto">
+             <property name="text">
+              <string notr="true">Auto</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QRadioButton" name="rb_cmake">
+             <property name="text">
+              <string notr="true">CMake</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QRadioButton" name="rb_kde4">
+             <property name="text">
+              <string notr="true">KDE4</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QRadioButton" name="rb_qt4">
+             <property name="text">
+              <string notr="true">Qt4</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QRadioButton" name="rb_python">
+             <property name="text">
+              <string notr="true">Python</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QRadioButton" name="rb_scons">
+             <property name="text">
+              <string notr="true">SCons</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chk_create_desktop">
+          <property name="text">
+           <string>Create .desktop file</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chk_create_icon">
+          <property name="text">
+           <string>Create &lt;icon&gt;&lt;/icon&gt; tag</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chk_create_service">
+          <property name="text">
+           <string>Create service file</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="chk_create_comar">
+          <property name="text">
+           <string>Create COMAR file</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_compilation">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_packager">
+       <attribute name="title">
+        <string>Packager</string>
+       </attribute>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lbl_packager_name">
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="le_packager_name"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="le_packager_email"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lbl_packager_email">
+          <property name="text">
+           <string>E-Mail</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="pb_clear">
+        <property name="toolTip">
+         <string>Clears and resets all options</string>
+        </property>
+        <property name="statusTip">
+         <string>Clears and resets all options</string>
+        </property>
+        <property name="text">
+         <string>&amp;Clear</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pb_create">
+        <property name="toolTip">
+         <string>Creates files to make pisi package. All necessary fields must filled before use.</string>
+        </property>
+        <property name="statusTip">
+         <string>Creates files to make pisi package. All necessary fields must filled before use.</string>
+        </property>
+        <property name="text">
+         <string>C&amp;reate</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>501</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>&amp;Settings</string>
+    </property>
+    <addaction name="actionConfigure_Application"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionOpen_Help_Page"/>
+    <addaction name="separator"/>
+    <addaction name="action_About"/>
+    <addaction name="actionAbout_Qt"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionExit">
+   <property name="text">
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionConfigure_Application">
+   <property name="text">
+    <string>&amp;Configure Application...</string>
+   </property>
+  </action>
+  <action name="actionOpen_Help_Page">
+   <property name="text">
+    <string>Open &amp;Help Page...</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="text">
+    <string>&amp;About...</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="text">
+    <string>About &amp;Qt...</string>
+   </property>
+  </action>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>268</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_src_compressed</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>le_src_compressed</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>107</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>196</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_src_compressed</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>tb_src_compressed</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>459</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_src_folder</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>le_src_folder</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>156</x>
+     <y>134</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_src_folder</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>tb_src_folder</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>71</x>
+     <y>136</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>458</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pb_clear_files</sender>
+   <signal>clicked()</signal>
+   <receiver>lw_files</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>442</x>
+     <y>290</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>287</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

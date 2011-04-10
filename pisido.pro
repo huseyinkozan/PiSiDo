@@ -9,6 +9,8 @@ QT       += core gui
 TARGET = pisido
 TEMPLATE = app
 
+VERSION = 1.0.0
+DEFINES += PISIDO_VERSION=\\\"$$VERSION\\\"
 
 SOURCES += main.cpp\
         mainwindow.cpp
@@ -16,3 +18,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
+
+OTHER_FILES += \
+    pisido_tr.qm \
+    pisido_tr.ts
