@@ -20,7 +20,7 @@ void ConfigurationDialog::read_settings()
 {
     QSettings settings;
     settings.beginGroup( "configuration" );
-    ui->le_pisi_archive_dir->setText(settings.value("pisi_archive_dir", QString("/var/cache/pisi/archives/")).toString());
+    ui->le_pisi_archive_dir->setText(settings.value("pisi_archive_dir").toString());
     settings.endGroup();
 }
 

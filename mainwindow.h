@@ -42,6 +42,9 @@ private slots:
 
     void on_pb_create_clicked();
 
+protected:
+    virtual void closeEvent(QCloseEvent * event);
+
 private:
     Ui::MainWindow *ui;
     QMap<QString, QString> package_files;
@@ -49,6 +52,8 @@ private:
     enum User_Selection_Mode {Folder, File};
     QString get_user_selection( User_Selection_Mode selection_mode, QString setting_group, QString setting_key,
                                QWidget * parent = 0, QString title = QString(), QString file_filter = QString());
+    void write_settings();
+    void read_settings();
 };
 
 #endif // MAINWINDOW_H
