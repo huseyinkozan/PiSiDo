@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Unix)">
+	<META NAME="CREATED" CONTENT="20110504;8301300">
+	<META NAME="CHANGED" CONTENT="20110505;20234000">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		H1 { margin-bottom: 0.21cm }
+		H1.western { font-family: "Liberation Sans", sans-serif; font-size: 16pt }
+		H1.cjk { font-family: "Droid Sans"; font-size: 16pt }
+		H1.ctl { font-family: "DejaVu Sans Condensed"; font-size: 16pt }
+		P { margin-bottom: 0.21cm }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="tr-TR" DIR="LTR">
+<OL>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#bilgi_kaydetme_yukleme"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Paket
+	İnşa Bilgilerini Kaydetme Ve Yükleme</B></FONT></FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#insa_ipucu"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>İnşa
+	İpucu</B></FONT></FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#kaynak_kod"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Kaynak
+	Kod</B></FONT></FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#paket"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Paket</B></FONT></FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#derleme"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Derleme</B></FONT></FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#paketleyici"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Paketleyici</B></FONT></FONT></A></P>
+</OL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">PiSiDo
+basit bir PISI paketi oluşturma yazılımıdır. Kaynak kodu, paket,
+derleme süreci ve paketçi hakkında bilgiler toplar ve .pisi paketi
+oluşturmak için gereken dosyaları hazırlar.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">Öncelikle
+pisi inşa bilgilerinin kaydedileceği çalışma dizini seçin.
+Sonra kaynak kodu arşivini belirtin. Ve en son olarak da deleme
+işlemini gerçekleştirecek olan python betiğini belirleyin. PiSiDo
+çalışma dizinine oluşturulan dosyalar şu şekildedir:</FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif"><SPAN LANG="tr-TR">PiSiDo
+	Çalışma Dizini (<A HREF="#paket">Paket</A> bölümüne bakın)</SPAN></FONT></P>
+	<UL>
+		<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">&lt;kaynak_dizini&gt;.tar.gz
+		(isteğe bağlı)</FONT></P>
+		<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">&lt;paket_ismi&gt;-&lt;sürümü&gt;-&lt;digerleri&gt;.pisi
+		(isteğe bağlı)</FONT></P>
+		<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">&lt;paket_ismi&gt;
+		(klasör)</FONT></P>
+		<UL>
+			<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">pspec.xml</FONT></P>
+			<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">action.py</FONT></P>
+			<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">files
+			(klasör) (isteğe bağlı)</FONT></P>
+			<UL>
+				<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">&lt;paket_ismi&gt;.desktop
+				(isteğe bağlı)</FONT></P>
+				<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">&lt;paket_ismi&gt;.png
+				(isteğe bağlı)</FONT></P>
+			</UL>
+		</UL>
+	</UL>
+</UL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">Pencerenin
+altında iki düğme ve bir seçim kutusu var. Temizle düğmesi
+bütün alanları ilk haline getirir. Eğer İnşa Et seçilmemişse
+Oluştur düğmesi PISI inşa dosyalarını oluşturup işlemi
+bitirecektir. Eğer seçilmişse önce parola istenecek sonra da bir
+konsol açılıp paketin inşa işlemi başlatılacaktır. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif"><B>Uyarı
+! </B><SPAN STYLE="font-weight: normal">PiSiDo seçilen çalışma
+dizinindeki dosyaların üzerine yazacaktır. (files klasöründeki
+.png dosyası hariç.)</SPAN></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<H1 CLASS="western"><A NAME="bilgi_kaydetme_yukleme"></A><FONT FACE="DejaVu Sans, sans-serif">Paket
+İnşa Bilgilerini Kaydetme Ve Yükleme</FONT></H1>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif"><B>Dosya</B>
+menüsünde paket inşa bilgilerini kaydetmek ve yüklemek için
+seçenekler bulabilirsiniz. Bu seçeneklerle <FONT FACE="DejaVu Sans, sans-serif">sadece
+alanlardaki veriler kaydedilir ve yüklenir. Bu işlem PiSiDo çalışma
+dizinine herhangi bir etki yapmaz.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<H1 CLASS="western"><A NAME="insa_ipucu"></A>İnşa Etme İpucu</H1>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">Önce
+<B>Oluştur</B> düğmesiyle oluşturup, sonra da eğer <B>Araçlar</B>
+menüsünden inşa ederseniz pspec.xml dosyasının üzerine
+yazılmaz. Bu yöntemle pspec.xml dosyasını düzenleyebilirsiniz.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<H1 CLASS="western"><A NAME="kaynak_kod"></A><FONT FACE="DejaVu Sans, sans-serif">Kaynak
+Kod</FONT></H1>
+<P><FONT FACE="DejaVu Sans, sans-serif">Bu bölümde kaynak kodu
+arşivini nasıl elde edeceğimizi tanımlıyoruz.</FONT></P>
+<UL>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>Sıkıştırılmış
+	DOsya</B> : Bir sıkıştırılmış dosya seçin. Seçilen dosyanın
+	ismi <I>archive</I> tag'ına eklenecek ve sha1sum değeri <I>archive</I>
+	özelliği için üretilecektir.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>Dizin Yolu</B> : Bir
+	yerel klasör seçin. Seçilen klasör sıkıştırılarak PiSiDo
+	çalışma dizini altına kopyalanacak ve sonrasında Sıkıştırılmış
+	Dosya'daki gibi davranılacaktır.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><SPAN LANG="tr-TR"><B>Url
+	Adresi</B></SPAN></FONT> <FONT FACE="DejaVu Sans, sans-serif"><SPAN LANG="tr-TR">:
+	Kesin dosya kolunu gösteren bir web sitesi adresi girin
+	(ör:<A HREF="http://ex.com/file.tar.gz">http://ex.com/file.tar.gz</A>).
+	Archive tag'ına tam dosya yolu girilecektir. Ayrıca archive'in
+	sha1 özelliğini belirlemek için SHA1 alanını doldurmak
+	zorundasınız. <BR>Bu alan yaptığınız paket oluşturma
+	dosyalarını başka insanlara dağıtmak için oldukça
+	kullanışlıdır. Diğerleri sizden aldıkları bu dosyalarla
+	kendileri de paket oluşturabilirler. Arşiv dosyası URL'deki
+	adresten indirilecek ve derlenecektir.</SPAN></FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>Kaynak kodu pisi
+	arşivi klasörüne kopyala</B> : Eğer bunu seçerseniz parola
+	sorulacaktır. Bu seçenek sadece yerel dosyalar için
+	kullanılabilir. Eğer paket inşa dosyalarını oluşturduktan
+	sonra paketi de yapmak istiyorsanız, bu seçeneği seçmelisiniz.
+	Derleme işlemi için arşivi pisi çalışma dizinine
+	kopyalayacaktır. Her halükarda bu işlemi yapmanız gerekecek.
+	<BR>Eğer URL seçeneğini seçtiyseniz pisi arşivi kendisi
+	indirerek kendi çalışma dizinine kopyalayacaktır. Bu yüzden URL
+	seçeneğinde ihtiyacınız olmayacak.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>Anasayfa</B> : Paket
+	hakkında bir bilgidir. Paket bilgisinde gösterilir.</FONT></P>
+</UL>
+<H1 CLASS="western"><A NAME="paket"></A><FONT FACE="DejaVu Sans, sans-serif">Paket</FONT></H1>
+<P><FONT FACE="DejaVu Sans, sans-serif">Bu bölümde paket
+bilgilerini ve PiSiDo çalışma dizinini tanımlıyoruz.</FONT></P>
+<UL>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>PiSiDo Çalışma
+	Dizini</B> : Bu alan PiSiDo'nun geçerli paket için çalışma
+	dizinini belirtir. Bütün dosyalar burada oluşturulur. Gözat
+	düğmesini kullanarak dizin seçebilir ve Aç düğmesini
+	kullanarak da seçilen dizini açabilirsiniz. <BR>Bu dizinde
+	oluşturulan dosyalar şunlardır:</FONT></P>
+	<UL>
+		<LI><P><FONT FACE="DejaVu Sans, sans-serif">pspec.xml : paketle
+		ilgili ve paket oluşturma süreciyle ilgili bilgileri tutar.</FONT></P>
+		<LI><P><FONT FACE="DejaVu Sans, sans-serif">action.py : paketin
+		nasıl derleneceğini ve kurulacağını belirleyen bir betiktir.</FONT></P>
+		<LI><P><FONT FACE="DejaVu Sans, sans-serif">&lt;paket_ismi&gt;.desktop
+		: paketteki uygulamanın çalıştırılmasını sağlayan simge
+		tanımlayıcıdır. Çalışma dizinin içindeki “files”
+		dizininde oluşturulur. Seçimliktir, ayrıntı için Derleme
+		bölümüne bakın.</FONT></P>
+		<LI><P><FONT FACE="DejaVu Sans, sans-serif">&lt;paket_ismi&gt;.png
+		: .desktop dosyası için görselliği sağlayan resim dosyasıdır.
+		Seçimliktir, ayrıntı için Derleme bölümüne bakın.</FONT></P>
+	</UL>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>İsim</B> : Paket
+	adını tanımlar. Paket yöneticisinde ve .pisi paketinde
+	kullanılır.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>Sürüm</B> : Paket
+	sürümünü tanımlar.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>Lisans</B> :
+	Yazılımın lisansını tanımlar. Bu seçenek birden fazla
+	olabilir. Oluşturma işleminden sonra pspec.xml dosyasını
+	düzenleyerek daha fazla ekleyebilirsiniz.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>IsA</B> : Paket
+	tipini tanımlar (app:gui,app:console, vb.).Oluşturma işleminden
+	sonra pspec.xml dosyasını düzenleyerek daha fazla
+	ekleyebilirsiniz.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>PartOf</B> : Paket
+	tipini tanımlar (game, hardware, vb.).Oluşturma işleminden sonra
+	pspec.xml dosyasını düzenleyerek daha fazla ekleyebilirsiniz.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>Özet</B> : Bu alan
+	paket yöneticisi listesinde görüntülenir.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>Açıklama</B> : Bu
+	alan paket yöneticisi listesinde paket ismine tıkladıktan sonra
+	görüntülenir.</FONT></P>
+</UL>
+<H1 CLASS="western"><A NAME="derleme"></A><FONT FACE="DejaVu Sans, sans-serif">Derleme</FONT></H1>
+<P><FONT FACE="DejaVu Sans, sans-serif">Bu bölümde derleme işlemini
+tanımlıyoruz.</FONT></P>
+<UL>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>action.py şablonunu
+	seç</B> : Soldan derleme tipini seçtiğinizde, sağda action.py
+	şablonu alacaksınız. Oluşturmadan önce python betiğini
+	değiştirebilirsiniz. </FONT>
+	</P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>.desktop dosyası
+	oluştur</B> : Eğer bunu seçerseniz “files” dizini altında
+	.desktop dosyası ve .png dosyası oluşturulacak. Ayrıca pspec.xml
+	dosyasında uygun tag'lar eklenecek ve kurulumdan sonra K menüsünde
+	bir simge oluşacaktır.</FONT></P>
+</UL>
+<H1 CLASS="western"><A NAME="paketleyici"></A><FONT FACE="DejaVu Sans, sans-serif">Paketleyici</FONT></H1>
+<P><FONT FACE="DejaVu Sans, sans-serif">Bu bölümde paketçinin adı
+ve eposta adresi bilgisi alınacak.</FONT></P>
+<UL>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>İsim</B> : İsminiz
+	:)</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><B>E-Posta</B> : Eposta
+	adresiniz. Bu bilgiler pspec.xml dosyasına eklenecektir.</FONT></P>
+</UL>
+</BODY>
+</HTML>

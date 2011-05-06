@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="LibreOffice 3.3  (Unix)">
+	<META NAME="CREATED" CONTENT="20110504;8301300">
+	<META NAME="CHANGED" CONTENT="20110505;20235700">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		H1 { margin-bottom: 0.21cm }
+		H1.western { font-family: "Liberation Sans", sans-serif; font-size: 16pt }
+		H1.cjk { font-family: "Droid Sans"; font-size: 16pt }
+		H1.ctl { font-family: "DejaVu Sans Condensed"; font-size: 16pt }
+		P { margin-bottom: 0.21cm }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="tr-TR" DIR="LTR">
+<OL>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#save_load_info"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>Saving
+	And Loading Package Build Info</B></SPAN></FONT></FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#building_tip"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>Building
+	Tip</B></SPAN></FONT></FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#source_code"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>Source
+	Code</B></SPAN></FONT></FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#package"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>Package</B></SPAN></FONT></FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#compilation"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>Compilation</B></SPAN></FONT></FONT></A></P>
+	<LI><P STYLE="margin-bottom: 0cm"><A HREF="#packager"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>Packager</B></SPAN></FONT></FONT></A></P>
+</OL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">PiSiDo
+is a simple PISI package creation software. It collects some
+information about source code, package, compilation process and
+packager and creates proper files to make a .pisi package. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">First,
+you select a work directory to define where this pisi build
+information will save. Then define source code archive, and finally
+compilation python script to build the code. Here is how the PiSiDo
+work directory created:</FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif"><SPAN LANG="en-US">PiSiDo
+	Work Directory (see <A HREF="#2.Package|outline">Package</A>
+	section)</SPAN></FONT></P>
+	<UL>
+		<LI><P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">&lt;source_folder&gt;.tar.gz
+		(optional)</FONT></P>
+		<LI><P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">&lt;paket_name&gt;-&lt;version&gt;-&lt;others&gt;.pisi
+		(optional)</FONT></P>
+		<LI><P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">&lt;package_name&gt;
+		(directory)</FONT></P>
+		<UL>
+			<LI><P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">pspec.xml</FONT></P>
+			<LI><P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">action.py</FONT></P>
+			<LI><P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">files
+			(directory) (optional)</FONT></P>
+			<UL>
+				<LI><P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">&lt;package_name&gt;.desktop
+				(optional)</FONT></P>
+				<LI><P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">&lt;package_name&gt;.png
+				(optional)</FONT></P>
+			</UL>
+		</UL>
+	</UL>
+</UL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif">There
+are two buttons and a check box under the window. <B>Clear</B> button
+resets all fields to initial states. <B>Create</B> button creates
+PISI build files <B>Build</B> check box is not checked. If checked, a
+dialog will promp for password and than a console will open and
+starts building package.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P LANG="en-US" STYLE="margin-bottom: 0cm"><FONT FACE="DejaVu Sans, sans-serif"><B>Caution
+! </B><SPAN STYLE="font-weight: normal">PiSiDo will overwrite to the
+files that selected working dir. (Except .png file under files dir.)</SPAN></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<H1 CLASS="western"><A NAME="save_load_info"></A><FONT FACE="DejaVu Sans, sans-serif">Saving
+And Loading Package Build Info</FONT></H1>
+<P><FONT FACE="DejaVu Sans, sans-serif">You can find an option to
+save and load package build information in the <B>File</B> menu. You
+can save and load field values by this option. This operation will
+not affect anything on the PiSiDo working directory.</FONT></P>
+<P><BR><BR>
+</P>
+<H1 CLASS="western"><A NAME="building_tip"></A><FONT FACE="DejaVu Sans, sans-serif">Building
+Tip</FONT></H1>
+<P><FONT FACE="DejaVu Sans, sans-serif">First you should create with
+<B>Create</B> button, and then if you build from <B>Tools</B> menu,
+pspec.xml file will not overwrite. You can edit pspec.xml file with
+this way.</FONT></P>
+<P><BR><BR>
+</P>
+<H1 LANG="en-US" CLASS="western"><A NAME="source_code"></A><FONT FACE="DejaVu Sans, sans-serif">Source
+Code</FONT></H1>
+<P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><FONT FACE="DejaVu Sans, sans-serif">In</FONT>
+this section, we define how to get source code archive. </FONT>
+</P>
+<UL>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Compressed
+	File</B> : Select a local compressed file. File name will add to
+	archive tag, and sha1sum produced for the archive attribute.</FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Folder
+	Path</B> : Select a local folder. The folder will compress to a file
+	under PiSiDo Work Directory, and behave as Compressed File section
+	above.</FONT></P>
+	<LI><P><FONT FACE="DejaVu Sans, sans-serif"><SPAN LANG="en-US"><B>Url
+	Address</B></SPAN></FONT> <FONT FACE="DejaVu Sans, sans-serif"><SPAN LANG="en-US">:
+	Enter a web site addres that shows exact file location
+	(ex:<A HREF="http://ex.com/file.tar.gz">http://ex.com/file.tar.gz</A>).
+	Full file path will add to archive, and you must fill the SHA1 value
+	for add to the archive attribute. <BR>This section is usefull for
+	deploying package creation files to other people. They can build
+	from source code with this information. The archive will download
+	from URL and compile.</SPAN></FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Copy
+	source code to pisi archive directory</B> : If you select this, it
+	will prompt for the password. This item only works with local files.
+	If you want to make package after creating the pisi build files, you
+	should check this. It will copy the archive to pisi work directory
+	for the compilation. This must be done either way. <BR>If you select
+	URL option, pisi will download the archive to its work dir itself.
+	So, you don't need at URL option.</FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Home
+	Page</B> : This is an information about package. It will show in the
+	package information.</FONT></P>
+</UL>
+<H1 LANG="en-US" CLASS="western"><A NAME="package"></A><FONT FACE="DejaVu Sans, sans-serif">Package</FONT></H1>
+<P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif">In this section,
+we define package information and PiSiDo package working directory.</FONT></P>
+<UL>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>PiSiDo
+	Work Dir</B> : This field define the PiSiDo current work directory
+	for the package. All files that created will store in here. You can
+	select a folder with <B>Browse</B> button and open selected folder
+	with <B>Open</B> button. <BR>These files will create in this folder:</FONT></P>
+	<UL>
+		<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif">pspec.xml
+		: stores information that needed for the package and packaging
+		phases.</FONT></P>
+		<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif">action.py
+		: a script file that will describe how to compile and install the
+		package.</FONT></P>
+		<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif">&lt;package_name&gt;.desktop
+		: an icon descriptor for running the application in the package.
+		Created under the “files” folder in work directory. This is
+		optional, see Compilation.</FONT></P>
+		<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif">&lt;package_name&gt;.png
+		: an icon for visualizing .desktop file. Created under the “files”
+		folder in work directory. This is optional, see Compilation.</FONT></P>
+	</UL>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Name</B>
+	: Defines the package name. This will use in package manager and
+	created pisi file.</FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Version</B>
+	: Defines the package version.</FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Licence</B>
+	: Defines the licence that software in the package uses. This can be
+	more than one. You can edit pspec.xml and add more after creation.</FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>IsA</B>
+	: Defines which type of package is (app:gui, app:console, etc.).
+	This can be more than one. You can edit pspec.xml and add more after
+	creation.</FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>PartOf</B>
+	: Defines which type of package is (game, hardware, etc.). This can
+	be more than one. You can edit pspec.xml and add more after
+	creation.</FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Summary</B>
+	: This section will show the user in the package manager list.</FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Description</B>
+	: This section will show the user after clicking to package name in
+	the package manager list.</FONT></P>
+</UL>
+<H1 LANG="en-US" CLASS="western"><A NAME="compilation"></A><FONT FACE="DejaVu Sans, sans-serif">Compilation</FONT></H1>
+<P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif">In this section,
+we define compilation process.</FONT></P>
+<UL>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Select
+	action.py template</B> : When you select a build type on the left,
+	you will get an action.py template on the right side. You can change
+	the python script before the creation.</FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Create
+	.desktop file</B> : If you select this option, you will get a icon
+	and a .desktop file in the files folder. Also, the proper tags in
+	the pspec.xml will add and you can see an icon in the K menu after
+	install the package.</FONT></P>
+</UL>
+<H1 LANG="en-US" CLASS="western"><A NAME="packager"></A><FONT FACE="DejaVu Sans, sans-serif">Packager</FONT></H1>
+<P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif">In this section,
+name of the packager and his/her email taken. </FONT>
+</P>
+<UL>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>Name</B>
+	: Your name :)</FONT></P>
+	<LI><P LANG="en-US"><FONT FACE="DejaVu Sans, sans-serif"><B>E-Mail</B>
+	: Your email. This information wil add to pspec.xml file.</FONT></P>
+</UL>
+</BODY>
+</HTML>
