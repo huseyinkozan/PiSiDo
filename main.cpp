@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // set Application information
-    a.setOrganizationName(QString("huseyinkozan"));
+    a.setOrganizationName(QString("pisido"));
     a.setOrganizationDomain(QString("huseyinkozan.com.tr"));
     a.setApplicationName(QString("pisido"));
     a.setApplicationVersion(QString("%1").arg(PISIDO_VERSION));

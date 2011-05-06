@@ -1,0 +1,51 @@
+License
+-------
+This program is free software; you can redistribute it and/or modify it under
+the terms of the latest version of GNU General Public License.
+Please read the LICENSE file for the license.
+
+PiSiDo
+------
+PiSiDo is developed to create pisi packages which is the package manager of the Pardus.
+Aim of the PiSiDo is to be a start point which are new to PISI package system.
+And also to be a simple program to make packages from source code for end users.
+PiSiDo does not use PISI features at full capacity. It collects necessery information
+to build basic packages.
+
+
+Features
+--------
+    * Writes basic pspec.xml file (can not read an use it)
+    * Creates action.py from selected template.
+    * Creates .desktop file and an example application image for menu.
+    * Can use source code archive from :
+        * A local archive file (can copy to pisi arhive directory)
+        * A local folder (can compress and copy to pisi archive directory)
+        * A file on any web site
+
+Usage
+-----
+Please read resource/files/help.html or Help in the program.
+
+
+Install
+-------
+To install, Qt development tools and packages must install ot the system.
+Development tools can install like this :
+
+    sudo pisi it qt-creator
+    sudo pisi it -c system.devel
+
+To compile and run program enter these :
+
+    cd pisido_klasoru
+    qmake pisido.pro
+    make
+    ./pisido
+
+If you want to install it:
+
+    make install
+
+Also you can make a pisi package with PiSiDo to install itself :)
+

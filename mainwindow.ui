@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>501</width>
-    <height>601</height>
+    <width>687</width>
+    <height>641</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -70,6 +70,12 @@
              <property name="enabled">
               <bool>false</bool>
              </property>
+             <property name="toolTip">
+              <string>Folder will compress to use as source archive.</string>
+             </property>
+             <property name="statusTip">
+              <string>Folder will compress to use as source archive.</string>
+             </property>
              <property name="readOnly">
               <bool>true</bool>
              </property>
@@ -97,15 +103,42 @@
              <property name="enabled">
               <bool>false</bool>
              </property>
+             <property name="toolTip">
+              <string>Only writes Url to pspec.xml file. Does not download it.</string>
+             </property>
+             <property name="statusTip">
+              <string>Only writes Url to pspec.xml file. Does not download it.</string>
+             </property>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QCheckBox" name="chk_cp_to_pckg_work">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLabel" name="lbl_src_sha1">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>SHA1</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="le_src_sha1">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="inputMask">
+                <string>HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH;_</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QCheckBox" name="chk_cp_to_pisi_archive">
              <property name="text">
-              <string>Copy sorce code to package work directory</string>
+              <string>Copy source code to pisi archive directory</string>
              </property>
             </widget>
            </item>
@@ -122,37 +155,16 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="le_src_home_page"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLabel" name="lbl_src_sub_dir">
-            <property name="text">
-             <string>Project Sub Directory</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="le_src_sub_dir">
+           <widget class="QLineEdit" name="le_src_home_page">
             <property name="toolTip">
-             <string>If source code file or folder have sub directory for the project that will be packaged, enter here that sub directory.</string>
+             <string>Package web site.</string>
             </property>
             <property name="statusTip">
-             <string>If source code file or folder have sub directory for the project that will be packaged, enter here that sub directory.</string>
+             <string>Package web site.</string>
             </property>
            </widget>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="chk_cp_to_pisi_work">
-          <property name="text">
-           <string>Copy source code to pisi work directory</string>
-          </property>
-         </widget>
         </item>
         <item>
          <spacer name="verticalSpacer">
@@ -196,19 +208,19 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>463</width>
-             <height>664</height>
+             <width>665</width>
+             <height>515</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="0">
+            <item row="1" column="0">
              <widget class="QLabel" name="lbl_name">
               <property name="text">
                <string>Name</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="1" colspan="2">
+            <item row="1" column="1" colspan="2">
              <widget class="QLineEdit" name="le_name">
               <property name="toolTip">
                <string>Package name.</string>
@@ -218,59 +230,7 @@
               </property>
              </widget>
             </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="lbl_work_dir">
-              <property name="toolTip">
-               <string>pspec.xml, actions.py ve diğer dosyalar burada oluşturulacaktır.</string>
-              </property>
-              <property name="statusTip">
-               <string>pspec.xml, actions.py ve diğer dosyalar burada oluşturulacaktır.</string>
-              </property>
-              <property name="text">
-               <string>Work Dir</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1" colspan="3">
-             <widget class="QLineEdit" name="le_work_dir">
-              <property name="toolTip">
-               <string>pspec.xml, actions.py and other files will be created in here.</string>
-              </property>
-              <property name="statusTip">
-               <string>pspec.xml, actions.py and other files will be created in here.</string>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="0">
-             <widget class="QLabel" name="lbl_files">
-              <property name="text">
-               <string>Files</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="1" rowspan="4" colspan="3">
-             <widget class="QListWidget" name="lw_files">
-              <property name="toolTip">
-               <string>Added file in here will copy to work dir.</string>
-              </property>
-              <property name="statusTip">
-               <string>Added file in here will copy to work dir.</string>
-              </property>
-              <property name="editTriggers">
-               <set>QAbstractItemView::NoEditTriggers</set>
-              </property>
-              <property name="selectionMode">
-               <enum>QAbstractItemView::ExtendedSelection</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="13" column="1">
+            <item row="12" column="1">
              <spacer name="verticalSpacer_pckg">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -283,27 +243,14 @@
               </property>
              </spacer>
             </item>
-            <item row="5" column="4">
-             <widget class="QToolButton" name="tb_work_dir">
-              <property name="toolTip">
-               <string>pspec.xml, actions.py ve diğer dosyalar burada oluşturulacaktır.</string>
-              </property>
-              <property name="statusTip">
-               <string>pspec.xml, actions.py ve diğer dosyalar burada oluşturulacaktır.</string>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
+            <item row="2" column="0">
              <widget class="QLabel" name="lbl_version">
               <property name="text">
                <string>Version</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1" colspan="2">
+            <item row="2" column="1" colspan="2">
              <widget class="QLineEdit" name="le_version">
               <property name="toolTip">
                <string>Package version.</string>
@@ -313,48 +260,21 @@
               </property>
              </widget>
             </item>
-            <item row="7" column="4">
-             <widget class="QPushButton" name="pb_add_file">
-              <property name="text">
-               <string>Add</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="4">
-             <widget class="QPushButton" name="pb_remove_file">
-              <property name="text">
-               <string>Remove</string>
-              </property>
-             </widget>
-            </item>
-            <item row="9" column="4">
-             <widget class="QPushButton" name="pb_clear_files">
-              <property name="toolTip">
-               <string>Delete files on the list. Does not delete real files.</string>
-              </property>
-              <property name="statusTip">
-               <string>Delete files on the list. Does not delete real files.</string>
-              </property>
-              <property name="text">
-               <string>Clear</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
+            <item row="3" column="0">
              <widget class="QLabel" name="lbl_licence">
               <property name="text">
                <string>Licence</string>
               </property>
              </widget>
             </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="lbl_type">
+            <item row="4" column="0">
+             <widget class="QLabel" name="lbl_is_a">
               <property name="text">
-               <string>Type</string>
+               <string>IsA</string>
               </property>
              </widget>
             </item>
-            <item row="12" column="1" colspan="4">
+            <item row="9" column="1" colspan="4">
              <widget class="QTextEdit" name="te_detailed">
               <property name="toolTip">
                <string>Shows after open detailed description. Should be continuous of the brief.</string>
@@ -364,10 +284,10 @@
               </property>
              </widget>
             </item>
-            <item row="11" column="0">
+            <item row="8" column="0">
              <widget class="QLabel" name="lbl_brief">
               <property name="text">
-               <string>Brief Description</string>
+               <string>Summary</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -377,10 +297,10 @@
               </property>
              </widget>
             </item>
-            <item row="12" column="0">
+            <item row="9" column="0">
              <widget class="QLabel" name="lbl_detailed">
               <property name="text">
-               <string>Detailed Description</string>
+               <string>Description</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -390,7 +310,7 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="1" colspan="2">
+            <item row="3" column="1" colspan="2">
              <widget class="QComboBox" name="combo_licence">
               <item>
                <property name="text">
@@ -444,18 +364,8 @@
               </item>
              </widget>
             </item>
-            <item row="2" column="3" colspan="2">
-             <widget class="QLineEdit" name="le_other_licence">
-              <property name="toolTip">
-               <string>Other licence that doesn't on the list.</string>
-              </property>
-              <property name="statusTip">
-               <string>Other licence that doesn't on the list.</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1" colspan="2">
-             <widget class="QComboBox" name="combo_type">
+            <item row="4" column="1" colspan="2">
+             <widget class="QComboBox" name="combo_is_a">
               <property name="toolTip">
                <string>Package type.</string>
               </property>
@@ -724,7 +634,7 @@
               </item>
              </widget>
             </item>
-            <item row="11" column="1" colspan="4">
+            <item row="8" column="1" colspan="4">
              <widget class="QLineEdit" name="le_brief">
               <property name="toolTip">
                <string>Shows a brief description on the installer list.</string>
@@ -734,15 +644,15 @@
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="lbl_component_group">
+            <item row="5" column="0">
+             <widget class="QLabel" name="lbl_part_of">
               <property name="text">
-               <string>Group</string>
+               <string>PartOf</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="1" colspan="2">
-             <widget class="QComboBox" name="combo_component_group">
+            <item row="5" column="1" colspan="2">
+             <widget class="QComboBox" name="combo_part_of">
               <item>
                <property name="text">
                 <string notr="true"/>
@@ -1695,6 +1605,86 @@
               </item>
              </widget>
             </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="lbl_work_dir">
+              <property name="text">
+               <string>PiSiDo Work Dir</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1" colspan="2">
+             <widget class="QLineEdit" name="le_work_dir">
+              <property name="toolTip">
+               <string>pspec.xml, actions.py and other files will be created in here.</string>
+              </property>
+              <property name="statusTip">
+               <string>pspec.xml, actions.py and other files will be created in here.</string>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QPushButton" name="pb_work_dir_browse">
+              <property name="toolTip">
+               <string>Select directory.</string>
+              </property>
+              <property name="statusTip">
+               <string>Select directory.</string>
+              </property>
+              <property name="text">
+               <string>Browse</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QPushButton" name="pb_work_dir_open">
+              <property name="toolTip">
+               <string>Open Selected Directory.</string>
+              </property>
+              <property name="statusTip">
+               <string>Open Selected Directory.</string>
+              </property>
+              <property name="text">
+               <string>Open</string>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="0">
+             <widget class="QLabel" name="lbl_build_dependency">
+              <property name="text">
+               <string>Build Dependency</string>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="1">
+             <widget class="QLineEdit" name="le_build_dependency">
+              <property name="toolTip">
+               <string>Comma seperated package names.</string>
+              </property>
+              <property name="statusTip">
+               <string>Comma seperated package names.</string>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="0">
+             <widget class="QLabel" name="lbl_runtime_dependency">
+              <property name="text">
+               <string>Runtime Dependency</string>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="1">
+             <widget class="QLineEdit" name="le_runtime_dependency">
+              <property name="toolTip">
+               <string>Comma seperated package names.</string>
+              </property>
+              <property name="statusTip">
+               <string>Comma seperated package names.</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </widget>
@@ -1705,98 +1695,383 @@
        <attribute name="title">
         <string>Compilation</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
+       <layout class="QVBoxLayout" name="verticalLayout_11" stretch="3,1">
         <item>
-         <widget class="QGroupBox" name="gb_action_modules">
+         <widget class="QGroupBox" name="groupBox">
           <property name="title">
-           <string>Action Modules</string>
+           <string>Select action.py template</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_2">
-           <item row="0" column="0">
-            <widget class="QRadioButton" name="rb_auto">
-             <property name="text">
-              <string notr="true">Auto</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QRadioButton" name="rb_cmake">
-             <property name="text">
-              <string notr="true">CMake</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QRadioButton" name="rb_kde4">
-             <property name="text">
-              <string notr="true">KDE4</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QRadioButton" name="rb_qt4">
-             <property name="text">
-              <string notr="true">Qt4</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QRadioButton" name="rb_python">
-             <property name="text">
-              <string notr="true">Python</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QRadioButton" name="rb_scons">
-             <property name="text">
-              <string notr="true">SCons</string>
-             </property>
-            </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,6">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <property name="margin">
+                <number>9</number>
+               </property>
+               <item>
+                <widget class="QListWidget" name="lw_action_template">
+                 <property name="currentRow">
+                  <number>-1</number>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string notr="true">Auto</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string notr="true">CMake</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string notr="true">KDE4</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string notr="true">Qt4</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string notr="true">Python</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string notr="true">SCons</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QStackedWidget" name="sw_action_template">
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <widget class="QWidget" name="page_1">
+                <layout class="QVBoxLayout" name="verticalLayout_3">
+                 <item>
+                  <widget class="QTextEdit" name="te_auto">
+                   <property name="html">
+                    <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#!/usr/bin/python&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# -*- coding: utf-8 -*-&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Licensed under the GNU General Public License, version 3.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# See the file http://www.gnu.org/copyleft/gpl.txt&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Use this as variables:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Package Name : ___package_name___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Version : ___version___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Summary : ___summary___&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import autotools&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import pisitools&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import get&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# if archive have project in a sub directory:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# WorkDir=&amp;quot;___package_name___-&amp;quot;+ get.srcVERSION() +&amp;quot;/sub_project_dir/&amp;quot;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def setup():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    autotools.configure()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def build():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    autotools.make()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def install():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    autotools.rawInstall(&amp;quot;DESTDIR=%s&amp;quot; % get.installDIR())&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dodoc(&amp;quot;AUTHORS&amp;quot;, &amp;quot;BUGS&amp;quot;, &amp;quot;ChangeLog&amp;quot;, &amp;quot;COPYING&amp;quot;, &amp;quot;NEWS&amp;quot;, &amp;quot;README&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dobin(&amp;quot;___package_name___&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page_2">
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <item>
+                  <widget class="QTextEdit" name="te_cmake">
+                   <property name="html">
+                    <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#!/usr/bin/python&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# -*- coding: utf-8 -*-&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Licensed under the GNU General Public License, version 3.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# See the file http://www.gnu.org/copyleft/gpl.txt&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Use this as variables:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Package Name : ___package_name___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Version : ___version___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Summary : ___summary___&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import cmaketools&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import pisitools&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import get&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# if archive have project in a sub directory:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# WorkDir=&amp;quot;___package_name___-&amp;quot;+ get.srcVERSION() +&amp;quot;/sub_project_dir/&amp;quot;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def setup():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    cmaketools.configure(&amp;quot;-DCMAKE_BUILD_TYPE=release&amp;quot;, installPrefix=&amp;quot;/usr&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def build():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    cmaketools.make()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def install():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    cmaketools.rawInstall(&amp;quot;DESTDIR=%s&amp;quot; % get.installDIR())&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dodoc(&amp;quot;AUTHORS&amp;quot;, &amp;quot;BUGS&amp;quot;, &amp;quot;ChangeLog&amp;quot;, &amp;quot;COPYING&amp;quot;, &amp;quot;NEWS&amp;quot;, &amp;quot;README&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dobin(&amp;quot;___package_name___&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page_3">
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <item>
+                  <widget class="QTextEdit" name="te_kde4">
+                   <property name="html">
+                    <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#!/usr/bin/python&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# -*- coding: utf-8 -*-&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Licensed under the GNU General Public License, version 3.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# See the file http://www.gnu.org/copyleft/gpl.txt&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Use this as variables:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Package Name : ___package_name___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Version : ___version___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Summary : ___summary___&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import pisitools&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import kde4&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# if archive have project in a sub directory:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# WorkDir=&amp;quot;___package_name___-&amp;quot;+ get.srcVERSION() +&amp;quot;/sub_project_dir/&amp;quot;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def setup():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    kde4.configure()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def build():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    kde4.make()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def install():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    kde4.install()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dodoc(&amp;quot;AUTHORS&amp;quot;, &amp;quot;BUGS&amp;quot;, &amp;quot;ChangeLog&amp;quot;, &amp;quot;COPYING&amp;quot;, &amp;quot;NEWS&amp;quot;, &amp;quot;README&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dobin(&amp;quot;___package_name___&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page_4">
+                <layout class="QVBoxLayout" name="verticalLayout_7">
+                 <item>
+                  <widget class="QTextEdit" name="te_qt4">
+                   <property name="html">
+                    <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#!/usr/bin/python&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# -*- coding: utf-8 -*-&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Licensed under the GNU General Public License, version 3.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# See the file http://www.gnu.org/copyleft/gpl.txt&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Use this as variables:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Package Name : ___package_name___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Version : ___version___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Summary : ___summary___&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import pisitools&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import qt4&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# if archive have project in a sub directory:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# WorkDir=&amp;quot;___package_name___-&amp;quot;+ get.srcVERSION() +&amp;quot;/sub_project_dir/&amp;quot;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def setup():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    qt4.configure()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def build():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    qt4.make()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def install():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    qt4.install()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dodoc(&amp;quot;AUTHORS&amp;quot;, &amp;quot;BUGS&amp;quot;, &amp;quot;ChangeLog&amp;quot;, &amp;quot;COPYING&amp;quot;, &amp;quot;NEWS&amp;quot;, &amp;quot;README&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dobin(&amp;quot;___package_name___&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page_5">
+                <layout class="QVBoxLayout" name="verticalLayout_8">
+                 <item>
+                  <widget class="QTextEdit" name="te_python">
+                   <property name="html">
+                    <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#!/usr/bin/python&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# -*- coding: utf-8 -*-&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Licensed under the GNU General Public License, version 3.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# See the file http://www.gnu.org/copyleft/gpl.txt&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Use this as variables:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Package Name : ___package_name___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Version : ___version___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Summary : ___summary___&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import pythonmodules&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import pisitools&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# if archive have project in a sub directory:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# WorkDir=&amp;quot;___package_name___-&amp;quot;+ get.srcVERSION() +&amp;quot;/sub_project_dir/&amp;quot;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def build():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    pythonmodules.compile()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def install():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    pythonmodules.install()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dodoc(&amp;quot;AUTHORS&amp;quot;, &amp;quot;BUGS&amp;quot;, &amp;quot;ChangeLog&amp;quot;, &amp;quot;COPYING&amp;quot;, &amp;quot;NEWS&amp;quot;, &amp;quot;README&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dobin(&amp;quot;___package_name___&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="page_6">
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <item>
+                  <widget class="QTextEdit" name="te_scons">
+                   <property name="statusTip">
+                    <string>You can change before create.</string>
+                   </property>
+                   <property name="html">
+                    <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#!/usr/bin/python&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# -*- coding: utf-8 -*-&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Licensed under the GNU General Public License, version 3.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# See the file http://www.gnu.org/copyleft/gpl.txt&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Use this as variables:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Package Name : ___package_name___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Version : ___version___&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# Summary : ___summary___&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import pisitools&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;from pisi.actionsapi import scons&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# if archive have project in a sub directory:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;# WorkDir=&amp;quot;___package_name___-&amp;quot;+ get.srcVERSION() +&amp;quot;/sub_project_dir/&amp;quot;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def setup():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    scons.configure()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def build():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    scons.make()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;def install():&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;    scons.install()&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dodoc(&amp;quot;AUTHORS&amp;quot;, &amp;quot;BUGS&amp;quot;, &amp;quot;ChangeLog&amp;quot;, &amp;quot;COPYING&amp;quot;, &amp;quot;NEWS&amp;quot;, &amp;quot;README&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;#    pisitools.dobin(&amp;quot;___package_name___&amp;quot;)&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="chk_create_desktop">
-          <property name="text">
-           <string>Create .desktop file</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="chk_create_icon">
-          <property name="text">
-           <string>Create &lt;icon&gt;&lt;/icon&gt; tag</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="chk_create_service">
-          <property name="text">
-           <string>Create service file</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="chk_create_comar">
-          <property name="text">
-           <string>Create COMAR file</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="verticalSpacer_compilation">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_12">
+            <item>
+             <widget class="QCheckBox" name="chk_create_desktop">
+              <property name="text">
+               <string>Create .desktop file</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPlainTextEdit" name="pte_desktop">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Underscored words will replace with proper values.</string>
+            </property>
+            <property name="statusTip">
+             <string>Underscored words will replace with proper values.</string>
+            </property>
+            <property name="plainText">
+             <string notr="true">#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Version=___version___
+Encoding=UTF-8
+Name=___package_name___
+# Name[tr]=___package_name___
+GenericName=___package_name___
+GenericName[tr]=___package_name___
+Comment=___summary___
+# Comment[tr]=___summary___
+Icon=___package_name___.png
+Exec=___package_name___
+Terminal=false
+StartupNotify=false
+Categories=Application;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -1858,6 +2133,13 @@
        </spacer>
       </item>
       <item>
+       <widget class="QCheckBox" name="chk_build">
+        <property name="text">
+         <string>Build</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="pb_create">
         <property name="toolTip">
          <string>Creates files to make pisi package. All necessary fields must filled before use.</string>
@@ -1879,7 +2161,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>501</width>
+     <width>687</width>
      <height>25</height>
     </rect>
    </property>
@@ -1887,6 +2169,10 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="separator"/>
+    <addaction name="action_Save_Package_Information"/>
+    <addaction name="action_Load_Package_Information"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
@@ -1899,12 +2185,24 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="actionOpen_Help_Page"/>
+    <addaction name="action_Help"/>
     <addaction name="separator"/>
     <addaction name="action_About"/>
-    <addaction name="actionAbout_Qt"/>
+    <addaction name="action_About_Qt"/>
+   </widget>
+   <widget class="QMenu" name="menu_Tools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="action_Open_Actions_API_Page"/>
+    <addaction name="action_Open_PISI_Spec_File"/>
+    <addaction name="action_Open_PISI_Archive_Dir"/>
+    <addaction name="action_Open_PISI_Archive_Dir_As_Root"/>
+    <addaction name="separator"/>
+    <addaction name="action_Build_Package"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menu_Tools"/>
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -1922,26 +2220,100 @@
     <string>&amp;Configure Application...</string>
    </property>
   </action>
-  <action name="actionOpen_Help_Page">
-   <property name="text">
-    <string>Open &amp;Help Page...</string>
-   </property>
-   <property name="shortcut">
-    <string>F1</string>
-   </property>
-  </action>
   <action name="action_About">
    <property name="text">
     <string>&amp;About...</string>
    </property>
   </action>
-  <action name="actionAbout_Qt">
+  <action name="action_About_Qt">
    <property name="text">
     <string>About &amp;Qt...</string>
    </property>
   </action>
+  <action name="action_Help">
+   <property name="text">
+    <string>&amp;Help...</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="action_Open_Actions_API_Page">
+   <property name="text">
+    <string>Open Actions API Page</string>
+   </property>
+  </action>
+  <action name="action_Open_PISI_Spec_File">
+   <property name="text">
+    <string>Open PISI Spec File</string>
+   </property>
+  </action>
+  <action name="action_Open_PISI_Archive_Dir">
+   <property name="text">
+    <string>Open PISI Archive Dir</string>
+   </property>
+  </action>
+  <action name="action_Open_PISI_Archive_Dir_As_Root">
+   <property name="text">
+    <string>Open PISI Archive Dir As Root</string>
+   </property>
+  </action>
+  <action name="action_Build_Package">
+   <property name="text">
+    <string>Build Package</string>
+   </property>
+  </action>
+  <action name="action_Save_Package_Information">
+   <property name="text">
+    <string>Save Package Build Information...</string>
+   </property>
+  </action>
+  <action name="action_Load_Package_Information">
+   <property name="text">
+    <string>Load Package Build Information...</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>rb_src_compressed</tabstop>
+  <tabstop>le_src_compressed</tabstop>
+  <tabstop>tb_src_compressed</tabstop>
+  <tabstop>rb_src_folder</tabstop>
+  <tabstop>le_src_folder</tabstop>
+  <tabstop>tb_src_folder</tabstop>
+  <tabstop>rb_src_url</tabstop>
+  <tabstop>le_src_url</tabstop>
+  <tabstop>le_src_sha1</tabstop>
+  <tabstop>chk_cp_to_pisi_archive</tabstop>
+  <tabstop>le_src_home_page</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>le_work_dir</tabstop>
+  <tabstop>pb_work_dir_browse</tabstop>
+  <tabstop>pb_work_dir_open</tabstop>
+  <tabstop>le_name</tabstop>
+  <tabstop>le_version</tabstop>
+  <tabstop>combo_licence</tabstop>
+  <tabstop>combo_is_a</tabstop>
+  <tabstop>combo_part_of</tabstop>
+  <tabstop>le_brief</tabstop>
+  <tabstop>te_detailed</tabstop>
+  <tabstop>lw_action_template</tabstop>
+  <tabstop>te_auto</tabstop>
+  <tabstop>chk_create_desktop</tabstop>
+  <tabstop>pte_desktop</tabstop>
+  <tabstop>le_packager_name</tabstop>
+  <tabstop>le_packager_email</tabstop>
+  <tabstop>pb_clear</tabstop>
+  <tabstop>chk_build</tabstop>
+  <tabstop>pb_create</tabstop>
+  <tabstop>te_qt4</tabstop>
+  <tabstop>te_python</tabstop>
+  <tabstop>te_scons</tabstop>
+  <tabstop>te_cmake</tabstop>
+  <tabstop>te_kde4</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -1967,8 +2339,8 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>68</x>
-     <y>113</y>
+     <x>90</x>
+     <y>112</y>
     </hint>
     <hint type="destinationlabel">
      <x>224</x>
@@ -1983,12 +2355,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>68</x>
-     <y>113</y>
+     <x>90</x>
+     <y>112</y>
     </hint>
     <hint type="destinationlabel">
-     <x>469</x>
-     <y>115</y>
+     <x>564</x>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -1999,8 +2371,8 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>68</x>
-     <y>144</y>
+     <x>90</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>224</x>
@@ -2015,28 +2387,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>68</x>
-     <y>144</y>
+     <x>90</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
-     <x>469</x>
-     <y>146</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pb_clear_files</sender>
-   <signal>clicked()</signal>
-   <receiver>lw_files</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>464</x>
-     <y>331</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>326</x>
-     <y>287</y>
+     <x>564</x>
+     <y>143</y>
     </hint>
    </hints>
   </connection>
@@ -2059,16 +2415,80 @@
   <connection>
    <sender>rb_src_url</sender>
    <signal>toggled(bool)</signal>
-   <receiver>chk_cp_to_pckg_work</receiver>
+   <receiver>lbl_src_sha1</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>70</x>
-     <y>162</y>
+     <x>61</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
-     <x>218</x>
-     <y>196</y>
+     <x>176</x>
+     <y>197</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_src_url</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>le_src_sha1</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>305</x>
+     <y>197</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lw_action_template</sender>
+   <signal>currentRowChanged(int)</signal>
+   <receiver>sw_action_template</receiver>
+   <slot>setCurrentIndex(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>115</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>387</x>
+     <y>310</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rb_src_url</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>chk_cp_to_pisi_archive</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>36</x>
+     <y>168</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>119</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chk_create_desktop</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pte_desktop</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>504</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>229</x>
+     <y>532</y>
     </hint>
    </hints>
   </connection>

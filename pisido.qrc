@@ -1,6 +1,12 @@
 <RCC>
     <qresource prefix="/translations">
-        <file>pisido_tr.qm</file>
+        <file alias="pisido_tr.qm">resource/translation/pisido_tr.qm</file>
     </qresource>
-    <qresource prefix="/images"/>
+    <qresource prefix="/images">
+        <file alias="pardus-logo.png">resource/images/pardus-logo.png</file>
+    </qresource>
+    <qresource prefix="/files">
+        <file alias="help.html">resource/files/help.html</file>
+        <file alias="help_tr.html">resource/files/help_tr.html</file>
+    </qresource>
 </RCC>

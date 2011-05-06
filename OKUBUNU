@@ -1,0 +1,50 @@
+Lisans
+------
+Bu program açık kaynak kodlu bir yazılımdır. En son sürüm GNU Genel Kamu Lisansı (GPL) altında
+değiştirebilir ve/veya dağıtabilirsiniz.
+Lisans için lütfen LISANS dosyasını okuyun.
+
+PiSiDo
+------
+PiSiDo Pardus işletim sisteminin paket yönetim aracı olan PISI paketlerinin
+yapımı için geliştirilmiştir. PiSiDo'nun amacı paketleme yeni başlayan kullanıcıları
+ya da paketi olmayan programların kişisel kullanım için basitçe paketlenmesi amaçlanmıştır.
+PISI yapısının tüm yeteneklerini kullanmaz. Daha çok gerekli olan temel bileşenlerin
+bilgisini toplayarak basit paketlerin yapılmasını sağlar.
+
+
+Özellikleri
+-----------
+    * Basit pspec.xml dosyası yazar (oluşturulmuş dosyayı okuyamaz)
+    * Belirlenmiş basit taslak Action python betiklerini kullandırabilir.
+    * Paketin uygulamasının menüde görünmesi için .desktop dosyası ve simge oluşturur.
+    * Kaynak kod arşivi olarak şunlar tanımlanabilir:
+        * Yereldeki bir arşiv dosyası (pisi arşiv dizinine kopyalanabilir)
+        * Yereldeki bir klasör (sıkıştırılıp pisi arşiv dizinine kopyalanabilir)
+        * Web sitesi üstündeki herhangi arşiv dosyası
+
+Kullanım
+--------
+Lütfen resource/files/help_tr.html dosyasını veya programdaki Yardım'ı okuyun.
+
+
+Kurulum
+-------
+Kurulum için sistemde Qt geliştirme araçlarının yüklü olması gerekmektedir.
+Gerekli araçları Pardus'a basitçe şu şekilde kurulabilir:
+
+    sudo pisi it qt-creator
+    sudo pisi it -c system.devel
+
+Programı derleyip çalıştırmak için şu komutlar kullanılabilir:
+
+    cd pisido_klasoru
+    qmake pisido.pro
+    make
+    ./pisido
+
+Eğer program kurulmak istenirse şu komut kullanılabilir:
+
+    make install
+
+Ya da en iyisi PiSiDo'yu kullanarak bir pisi paketi yapın :)

@@ -14,17 +14,24 @@ DEFINES += PISIDO_VERSION=\\\"$$VERSION\\\"
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    configurationdialog.cpp
+    configurationdialog.cpp \
+    helpdialog.cpp
 
 HEADERS  += mainwindow.h \
-    configurationdialog.h
+    configurationdialog.h \
+    helpdialog.h
 
 FORMS    += mainwindow.ui \
-    configurationdialog.ui
+    configurationdialog.ui \
+    helpdialog.ui
 
 OTHER_FILES += \
     pisido_tr.qm \
-    pisido_tr.ts
+    pisido_tr.ts \
+    README \
+    OKUBUNU \
+    LICENSE \
+    LISANS
 
 RESOURCES += \
     pisido.qrc
