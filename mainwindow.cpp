@@ -1147,10 +1147,7 @@ void MainWindow::set_settings_group(QMap<QString, QVariant> map, QString group)
     QMap<QString, QVariant>::const_iterator i = map.constBegin();
     while(i != map.constEnd())
     {
-        if(settings.contains(i.key()))
-            settings.setValue(i.key(), i.value());
-        else
-            qDebug() << i.key() << " is not in settings and not loaded.";
+        settings.setValue(i.key(), i.value());
         ++i;
     }
     settings.endGroup();
