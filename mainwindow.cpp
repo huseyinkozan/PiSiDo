@@ -1085,6 +1085,8 @@ void MainWindow::on_action_Save_Package_Information_triggered()
     if(file_name.isEmpty())
         return;
 
+    write_settings();
+
     QMap< int, QMap<QString, QVariant> > map;
     map[0] = get_settings_group("source");
     map[1] = get_settings_group("package");
