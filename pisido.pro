@@ -15,11 +15,21 @@ DEFINES += PISIDO_VERSION=\\\"$$VERSION\\\"
 SOURCES += main.cpp\
         mainwindow.cpp \
     configurationdialog.cpp \
-    helpdialog.cpp
+    helpdialog.cpp \
+    pspecsource.cpp \
+    pspecpackage.cpp \
+    pspecbase.cpp \
+    pspecupdate.cpp \
+    pspecpisi.cpp
 
 HEADERS  += mainwindow.h \
     configurationdialog.h \
-    helpdialog.h
+    helpdialog.h \
+    pspecsource.h \
+    pspecpackage.h \
+    pspecbase.h \
+    pspecupdate.h \
+    pspecpisi.h
 
 FORMS    += mainwindow.ui \
     configurationdialog.ui \
