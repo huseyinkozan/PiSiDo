@@ -8,5 +8,8 @@
     <qresource prefix="/files">
         <file alias="help.html">resource/files/help.html</file>
         <file alias="help_tr.html">resource/files/help_tr.html</file>
+        <file alias="is_a">resource/files/is_a</file>
+        <file alias="license">resource/files/license</file>
+        <file alias="part_of">resource/files/part_of</file>
     </qresource>
 </RCC>

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QSettings>
+#include <QDomDocument>
 
 namespace Ui {
     class MainWindow;
@@ -35,10 +36,11 @@ private slots:
     void on_action_Open_PISI_Archive_Dir_triggered();
     void on_action_Open_PISI_Archive_Dir_As_Root_triggered();
     void on_action_Build_Package_triggered();
-
     void on_action_Save_Package_Information_triggered();
-
     void on_action_Load_Package_Information_triggered();
+    void on_le_package_name_textChanged(const QString &arg1);
+    void on_tw_history_itemSelectionChanged();
+    void on_pb_import_package_clicked();
 
 protected:
     virtual void closeEvent(QCloseEvent * event);
@@ -49,6 +51,9 @@ private:
     QStringList action_defaults;
     QString desktop_file_default;
     QSettings settings;
+    QDomDocument dom_pspec;
+
+    QStringList get_file_strings(const QString & file_name);
 
     enum User_Selection_Mode {Folder, File};
     QString get_user_selection( User_Selection_Mode selection_mode, QString setting_group, QString setting_key,
@@ -68,6 +73,9 @@ private:
 
     bool build_package(QDir package_dir, QDir out_dir);
     bool copy_source_archive(QString src_path);
+
+    void fill_fields_from_pspec_xml();
+
 };
 
 #endif // MAINWINDOW_H

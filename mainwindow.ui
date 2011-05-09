@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>687</width>
-    <height>641</height>
+    <width>606</width>
+    <height>643</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_src_code">
        <attribute name="title">
@@ -203,13 +203,16 @@
           <property name="widgetResizable">
            <bool>true</bool>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
           <widget class="QWidget" name="scrollAreaWidgetContents">
            <property name="geometry">
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>665</width>
-             <height>515</height>
+             <width>568</width>
+             <height>521</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout">
@@ -221,7 +224,7 @@
              </widget>
             </item>
             <item row="1" column="1" colspan="2">
-             <widget class="QLineEdit" name="le_name">
+             <widget class="QLineEdit" name="le_package_name">
               <property name="toolTip">
                <string>Package name.</string>
               </property>
@@ -311,58 +314,7 @@
              </widget>
             </item>
             <item row="3" column="1" colspan="2">
-             <widget class="QComboBox" name="combo_licence">
-              <item>
-               <property name="text">
-                <string/>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">GPLv1</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">GPLv2</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">GPLv3</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">LGPLv2</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">LGPLv2.1</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">LGPLv3</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">BSD</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">MIT</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">as-is</string>
-               </property>
-              </item>
-             </widget>
+             <widget class="QComboBox" name="combo_licence"/>
             </item>
             <item row="4" column="1" colspan="2">
              <widget class="QComboBox" name="combo_is_a">
@@ -372,266 +324,6 @@
               <property name="statusTip">
                <string>Package type.</string>
               </property>
-              <item>
-               <property name="text">
-                <string notr="true"/>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">app</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">app:console</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">app:gui</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">app:web</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">library</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">service</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">data</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">data:doc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">data:front</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">kernel</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">driver</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:aa</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:af</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:am</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:an</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:ar</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:as</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:ast</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:az</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:be</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:ber</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:bg</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:bn</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:bn_IN</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:bo</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:br</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:byn</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:ca</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:ca@valencia</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:crh</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:cs</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:csb</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:cy</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:da</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:de</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:dz</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:el</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:en</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:en_CA</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:en_GB</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:eo</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:es</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:et</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:eu</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:fa</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:fi</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:fil</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:fo</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:fr</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">locale:fur</string>
-               </property>
-              </item>
              </widget>
             </item>
             <item row="8" column="1" colspan="4">
@@ -652,958 +344,7 @@
              </widget>
             </item>
             <item row="5" column="1" colspan="2">
-             <widget class="QComboBox" name="combo_part_of">
-              <item>
-               <property name="text">
-                <string notr="true"/>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.enlightenment</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.enlightenment.addon</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.enlightenment.base</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.font</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.gnome</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.kde</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.kde.addon</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.kde.admin</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.kde.base</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.kde.l10n</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.lookandfeel</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.lxde</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.lxde.base</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.toolkit</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.toolkit.gtk</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.toolkit.motif</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.toolkit.qt</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.toolkit.qt3</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.xfce</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.xfce.addon</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.xfce.admin</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.xfce.base</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">desktop.xfce.l10n</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">editor</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">editor.emacs</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">editor.vi</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">editor.web</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.action</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.adventure</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.arcade</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.board</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.engine</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.fps</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.kids</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.puzzle</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.rpg</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.simulation</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.sports</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">game.strategy</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.bluetooth</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.cpu</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.disk</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.emulator</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.firewire</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.firmware</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.graphics</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.info</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.irda</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.mobile</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.optical</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.powermanagement</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.printer</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.scanner</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.security</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.smartcard</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.sound</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">hardware.virtualization</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">kernel</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">kernel.default</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">kernel.default.drivers</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">kernel.pae</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">kernel.pae.drivers</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">kernel.rt</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">kernel.rt.drivers</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.converter</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.editor</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.graphics</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.graphics.gimp</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.graphics.gimp.addon</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.graphics.gimp.l10n</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.plugin</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.radio</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.sound</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.stream</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.tv</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">multimedia.video</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.analyzer</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.chat</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.connection</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.download</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.fax</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.filter</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.ftp</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.mail</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.monitor</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.p2p</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.plugin</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.remoteshell</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.rss</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.share</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.voip</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">network.web</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">office</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">office.dictionary</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">office.docbook</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">office.koffice</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">office.koffice.base</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">office.koffice.l10n</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">office.libreoffice</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">office.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">office.postscript</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">office.spellcheck</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.build</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.debug</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.environment</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.environment.eclipse</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.environment.eric</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.environment.kdevelop</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.dotnet</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.falcon</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.gambas</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.haskell</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.java</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.lisp</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.ocaml</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.pascal</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.perl</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.php</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.python</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.ruby</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.language.tcl</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.microcontroller</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.profiler</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.scm</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">programming.tool</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science.astronomy</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science.biology</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science.chemistry</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science.electronics</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science.gis</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science.mathematics</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science.medical</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science.plotting</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">science.robotics</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">server</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">server.auth</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">server.backup</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">server.database</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">server.ftp</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">server.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">server.mta</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">server.proxy</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">server.ptsp</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">server.web</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">system</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">system.auth</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">system.base</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">system.boot</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">system.devel</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">system.doc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">system.installer</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">system.locale</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">tex</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">tex.addon</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">tex.base</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">tex.extra</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">tex.tool</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">util</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">util.admin</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">util.antivirus</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">util.archive</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">util.benchmark</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">util.crypt</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">util.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">util.shell</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">x11</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">x11.driver</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">x11.im</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">x11.library</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">x11.misc</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">x11.server</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">x11.terminal</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">x11.util</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">x11.wm</string>
-               </property>
-              </item>
-             </widget>
+             <widget class="QComboBox" name="combo_part_of"/>
             </item>
             <item row="0" column="0">
              <widget class="QLabel" name="lbl_work_dir">
@@ -1661,7 +402,13 @@
             <item row="10" column="1">
              <widget class="QLineEdit" name="le_build_dependency">
               <property name="toolTip">
-               <string>Comma seperated package names.</string>
+               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Comma seperated package names:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qt Version From 4.6.0 And Gtk Version To 2.4 : &lt;span style=&quot; font-weight:600;&quot;&gt;qt&amp;gt;4.6.0, gtk&amp;lt;2.4&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qt Version 4.6.0 : &lt;span style=&quot; font-weight:600;&quot;&gt;qt=4.6.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="statusTip">
                <string>Comma seperated package names.</string>
@@ -1685,9 +432,292 @@
               </property>
              </widget>
             </item>
+            <item row="1" column="3">
+             <widget class="QPushButton" name="pb_import_package">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>İmport</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_history">
+       <attribute name="title">
+        <string>History</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0" colspan="2">
+         <widget class="QTableWidget" name="tw_history">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="alternatingRowColors">
+           <bool>true</bool>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+          <property name="cornerButtonEnabled">
+           <bool>false</bool>
+          </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>New Row</string>
+           </property>
+          </row>
+          <column>
+           <property name="text">
+            <string>Rel. No</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Rel. Type</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Date</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Version</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Comment</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Email</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="pb_delete_update">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Delete Update</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QGroupBox" name="gb_update">
+          <property name="title">
+           <string>Update</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
+            <widget class="QLabel" name="lbl_release_number">
+             <property name="font">
+              <font>
+               <italic>true</italic>
+              </font>
+             </property>
+             <property name="text">
+              <string>Release Number</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="sb_release_number">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>999</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="lbl_update_date">
+             <property name="font">
+              <font>
+               <italic>true</italic>
+              </font>
+             </property>
+             <property name="text">
+              <string>Date</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1" colspan="2">
+            <widget class="QDateEdit" name="de_update_date">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+             <property name="displayFormat">
+              <string notr="true">dd MMMM (MM) yyyy</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1" rowspan="2" colspan="2">
+            <widget class="QLineEdit" name="le_update_version"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="lbl_update_version">
+             <property name="text">
+              <string>Version</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="lbl_update_comment">
+             <property name="text">
+              <string>Comment</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1" colspan="5">
+            <widget class="QLineEdit" name="le_update_comment"/>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="lbl_update_name">
+             <property name="font">
+              <font>
+               <italic>true</italic>
+              </font>
+             </property>
+             <property name="text">
+              <string>Name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1" colspan="5">
+            <widget class="QLineEdit" name="le_update_name">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="lbl_update_email">
+             <property name="font">
+              <font>
+               <italic>true</italic>
+              </font>
+             </property>
+             <property name="text">
+              <string>Email</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1" colspan="5">
+            <widget class="QLineEdit" name="le_update_email">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2" colspan="4">
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="lbl_relese_type">
+             <property name="text">
+              <string>Release Type</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1" colspan="2">
+            <widget class="QComboBox" name="combo_relese_type">
+             <item>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Critical</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Security</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QPushButton" name="pb_add_update">
+          <property name="text">
+           <string>Add Update</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="0">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -2161,7 +1191,7 @@ Categories=Application;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>687</width>
+     <width>606</width>
      <height>25</height>
     </rect>
    </property>
@@ -2292,7 +1322,7 @@ Categories=Application;</string>
   <tabstop>le_work_dir</tabstop>
   <tabstop>pb_work_dir_browse</tabstop>
   <tabstop>pb_work_dir_open</tabstop>
-  <tabstop>le_name</tabstop>
+  <tabstop>le_package_name</tabstop>
   <tabstop>le_version</tabstop>
   <tabstop>combo_licence</tabstop>
   <tabstop>combo_is_a</tabstop>
@@ -2483,12 +1513,44 @@ Categories=Application;</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>103</x>
-     <y>504</y>
+     <x>116</x>
+     <y>464</y>
     </hint>
     <hint type="destinationlabel">
      <x>229</x>
      <y>532</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>le_packager_name</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>le_update_name</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>323</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>357</x>
+     <y>479</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>le_packager_email</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>le_update_email</receiver>
+   <slot>setText(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>323</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>357</x>
+     <y>507</y>
     </hint>
    </hints>
   </connection>

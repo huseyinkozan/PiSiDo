@@ -1,22 +1,20 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QMessageBox>
-#include <QFileDialog>
-#include <QDesktopServices>
-#include <QUrl>
+#include <QDebug>
+
 #include <QCloseEvent>
 #include <QCryptographicHash>
-#include <QProcess>
 #include <QDate>
-
-#include <QXmlStreamWriter>
-#include <QDomDocument>
+#include <QDesktopServices>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QProcess>
+#include <QUrl>
 
 #include "configurationdialog.h"
 #include "helpdialog.h"
 
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,6 +22,17 @@ MainWindow::MainWindow(QWidget *parent) :
     help_dialog(NULL)
 {
     ui->setupUi(this);
+
+    // fill comboboxes
+    ui->combo_is_a->addItem("");
+    ui->combo_is_a->addItems(get_file_strings(":/files/is_a"));
+    ui->combo_licence->addItem("");
+    ui->combo_licence->addItems(get_file_strings(":/files/license"));
+    ui->combo_part_of->addItem("");
+    ui->combo_part_of->addItems(get_file_strings(":/files/part_of"));
+
+    // set update date
+    ui->de_update_date->setDate(QDate::currentDate());
 
     // read and write settings if there is no setting entry
 
@@ -88,6 +97,29 @@ void MainWindow::on_action_About_Qt_triggered()
 {
     QMessageBox::aboutQt(this);
 }
+
+
+QStringList MainWindow::get_file_strings(const QString & file_name)
+{
+    QFile file(file_name);
+    if( ! file.open(QFile::ReadOnly | QFile::Text))
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Can not open \"%1\" resource !").arg(file_name));
+        return QStringList();
+    }
+    QStringList list;
+    QTextStream stream(&file);
+    while( ! stream.atEnd())
+    {
+        QString line = stream.readLine().trimmed();
+        if( ! line.isEmpty())
+            list.append(line);
+    }
+    file.close();
+    return list;
+}
+
+
 
 /**
   gets user file or folder selection. Saves selected directory for next call.
@@ -198,7 +230,7 @@ void MainWindow::write_settings()
     settings.setValue("cp_to_pisi_archive", ui->chk_cp_to_pisi_archive->isChecked());
     settings.endGroup();
     settings.beginGroup("package");
-    settings.setValue("name", ui->le_name->text());
+    settings.setValue("name", ui->le_package_name->text());
     settings.setValue("version", ui->le_version->text());
     settings.setValue("work_dir", ui->le_work_dir->text());
     settings.setValue("brief", ui->le_brief->text());
@@ -255,9 +287,9 @@ void MainWindow::read_settings()
     ui->chk_cp_to_pisi_archive->setChecked(settings.value("cp_to_pisi_archive", false).toBool());
     settings.endGroup();
     settings.beginGroup("package");
-    ui->le_name->setText(settings.value("name").toString());
-    ui->le_version->setText(settings.value("version").toString());
     ui->le_work_dir->setText(settings.value("work_dir").toString());
+    ui->le_package_name->setText(settings.value("name").toString());
+    ui->le_version->setText(settings.value("version").toString());
     ui->le_brief->setText(settings.value("brief").toString());
     ui->te_detailed->setPlainText(settings.value("detailed").toString());
     ui->combo_licence->setCurrentIndex(ui->combo_licence->findText(settings.value("licence","").toString()));
@@ -395,11 +427,11 @@ void MainWindow::on_pb_create_clicked()
     }
 
 
-    if( ui->le_name->text().isEmpty())
+    if( ui->le_package_name->text().isEmpty())
     {
         QMessageBox::critical(this, tr("Error"), tr("No package name. Please define package name."));
         ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
-        ui->le_name->setFocus();
+        ui->le_package_name->setFocus();
         return;
     }
 
@@ -459,7 +491,7 @@ void MainWindow::on_pb_create_clicked()
         return;
     }
 
-    QString package_name = ui->le_name->text();
+    QString package_name = ui->le_package_name->text();
     QDir work_dir(ui->le_work_dir->text());
     QDir package_dir;
 
@@ -593,7 +625,7 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
 
 
     // collect other data
-    QString package_name = ui->le_name->text();
+    QString package_name = ui->le_package_name->text();
     QString src_home_page = ui->le_src_home_page->text();
     QString is_a = ui->combo_is_a->currentText();
     QString part_of = ui->combo_part_of->currentText();
@@ -840,7 +872,7 @@ bool MainWindow::create_action_py(QDir package_dir)
     if(te)
     {
         QString action_py = te->toPlainText();
-        action_py.replace(QString("___package_name___"), ui->le_name->text());
+        action_py.replace(QString("___package_name___"), ui->le_package_name->text());
         action_py.replace(QString("___version___"), ui->le_version->text());
         action_py.replace(QString("___summary___"), ui->le_brief->text());
 
@@ -867,7 +899,7 @@ bool MainWindow::create_desktop(QDir package_dir)
         package_dir.cd(files);
     }
 
-    QString package_name = ui->le_name->text();
+    QString package_name = ui->le_package_name->text();
     QString file_name = package_dir.absoluteFilePath(package_name + ".desktop");
     QFile file(file_name);
     if( ! file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -961,7 +993,7 @@ void MainWindow::on_action_Build_Package_triggered()
 {
     QString work_dir_str = ui->le_work_dir->text();
     QFileInfo work_dir_info(work_dir_str);
-    QString package_name(ui->le_name->text());
+    QString package_name(ui->le_package_name->text());
 
     if(work_dir_str.isEmpty() || ! work_dir_info.exists())
     {
@@ -974,7 +1006,7 @@ void MainWindow::on_action_Build_Package_triggered()
     {
         QMessageBox::critical(this, tr("Error"), tr("No package name. Please define package name."));
         ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
-        ui->le_name->setFocus();
+        ui->le_package_name->setFocus();
         return;
     }
 
@@ -1154,3 +1186,74 @@ void MainWindow::set_settings_group(QMap<QString, QVariant> map, QString group)
     }
     settings.endGroup();
 }
+
+void MainWindow::on_le_package_name_textChanged(const QString & text)
+{
+    if(ui->le_work_dir->text().isEmpty() || ui->le_package_name->text().isEmpty())
+    {
+        ui->pb_import_package->setEnabled(false);
+        return;
+    }
+    QFileInfo fi(ui->le_work_dir->text() +
+                 QDir::separator() +
+                 ui->le_package_name->text() +
+                 QDir::separator() +
+                 "pspec.xml"
+                 );
+    if(fi.exists())
+        ui->pb_import_package->setEnabled(true);
+    else
+        ui->pb_import_package->setEnabled(false);
+}
+
+void MainWindow::on_tw_history_itemSelectionChanged()
+{
+    ui->pb_delete_update->setEnabled( ui->tw_history->selectionModel()->hasSelection());
+}
+
+void MainWindow::on_pb_import_package_clicked()
+{
+    QString file_name = ui->le_work_dir->text() +
+                 QDir::separator() +
+                 ui->le_package_name->text() +
+                 QDir::separator() +
+                 "pspec.xml";
+    if( ! file_name.isEmpty() && QFile::exists(file_name))
+    {
+        QFile file(file_name);
+        if( ! file.open(QFile::ReadOnly))
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Can not open file for reading !"));
+            return;
+        }
+        dom_pspec.clear();
+        QString errorMsg;
+        int errorLine, errorColumn;
+        if( ! dom_pspec.setContent(&file, &errorMsg, &errorLine, &errorColumn))
+        {
+            file.close();
+            dom_pspec.clear();
+            QMessageBox::critical(this, tr("Parse Error"),
+                                  tr("XML Parse Error : \n%1\nLine:%2, Column:%3")
+                                    .arg(errorMsg).arg(errorLine).arg(errorColumn)
+                                  );
+            return;
+        }
+        file.close();
+        fill_fields_from_pspec_xml();
+    }
+}
+
+void MainWindow::fill_fields_from_pspec_xml()
+{
+    QDomElement dom_root = dom_pspec.documentElement();
+    QDomNodeList list = dom_root.elementsByTagName("Name");
+    for(int i=0; i<list.count(); ++i)
+    {
+        QDomElement e = list.at(i).toElement();
+        if( ! e.isNull()) {
+            qDebug() << qPrintable(e.tagName()) << endl;
+        }
+    }
+}
+
