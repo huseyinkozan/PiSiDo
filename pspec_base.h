@@ -4,10 +4,16 @@
 #include <QString>
 #include <QMap>
 
+class QDomDocumentFragment;
+
 class PSpecBase
 {
 public:
     PSpecBase();
+
+    virtual void clear();
+
+    virtual bool load_from_dom(const QDomDocumentFragment & dom_fragment);
 
     enum VersionReleaseToFromAttr {
         VERSIONFROM,

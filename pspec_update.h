@@ -4,10 +4,15 @@
 #include <QString>
 #include <QDate>
 
+class QDomDocumentFragment;
+
 class PSpecUpdate
 {
 public:
     PSpecUpdate();
+
+    void clear();
+    bool load_from_dom(const QDomDocumentFragment & dom_fragment);
 
     enum UpdateType { UNDEFINED, CRITICAL, SECURITY };
 

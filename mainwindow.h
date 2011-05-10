@@ -6,6 +6,8 @@
 #include <QSettings>
 #include <QDomDocument>
 
+#include "pspec_pisi.h"
+
 namespace Ui {
     class MainWindow;
 }
@@ -54,6 +56,7 @@ private:
     QString desktop_file_default;
     QSettings settings;
     QDomDocument dom_pspec;
+    PSpecPISI pspec_pisi;
 
     QStringList get_file_strings(const QString & file_name);
 
@@ -74,9 +77,9 @@ private:
     bool create_desktop(QDir package_dir);
 
     bool build_package(QDir package_dir, QDir out_dir);
-    bool copy_source_archive(QString src_path);
+    void copy_source_archive(QString src_path);
 
-    void fill_fields_from_pspec_xml();
+    void fill_fields_from_pspec_pisi();
 
 };
 

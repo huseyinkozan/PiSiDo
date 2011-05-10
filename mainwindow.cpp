@@ -1083,7 +1083,7 @@ bool MainWindow::build_package(QDir package_dir, QDir out_dir)
 }
 
 
-bool MainWindow::copy_source_archive(QString src_path)
+void MainWindow::copy_source_archive(QString src_path)
 {
     settings.beginGroup( "configuration" );
     QString pisi_dir = settings.value("pisi_archive_dir").toString();
@@ -1247,21 +1247,22 @@ void MainWindow::on_pb_import_package_clicked()
             return;
         }
         file.close();
-        fill_fields_from_pspec_xml();
+        pspec_pisi.clear();
+        if(pspec_pisi.load_from_dom(dom_pspec))
+        {
+            fill_fields_from_pspec_pisi();
+        }
+        else
+        {
+            QMessageBox::critical(this, tr("Error"),
+                                  tr("An error occured while parsing xml file !"));
+        }
     }
 }
 
-void MainWindow::fill_fields_from_pspec_xml()
+void MainWindow::fill_fields_from_pspec_pisi()
 {
-    QDomElement dom_root = dom_pspec.documentElement();
-    QDomNodeList list = dom_root.elementsByTagName("Name");
-    for(int i=0; i<list.count(); ++i)
-    {
-        QDomElement e = list.at(i).toElement();
-        if( ! e.isNull()) {
-            qDebug() << qPrintable(e.tagName()) << endl;
-        }
-    }
+    // TODO : get values from pspec_pisi and fill visual fields.
 }
 
 

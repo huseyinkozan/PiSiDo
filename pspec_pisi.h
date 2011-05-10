@@ -1,19 +1,26 @@
 #ifndef PSPECPISI_H
 #define PSPECPISI_H
 
-#include "pspecsource.h"
-#include "pspecpackage.h"
-#include "pspecupdate.h"
+#include "pspec_source.h"
+#include "pspec_package.h"
+#include "pspec_update.h"
 #include <QList>
+
+class QDomDocument;
 
 class PSpecPISI
 {
 public:
     PSpecPISI();
 
+    void clear();
+
     PSpecSource source;
     PSpecPackage package;
     QList<PSpecUpdate> updates;
+
+    bool load_from_dom(const QDomDocument & dom);
+    bool save_to_dom(QDomDocument & dom);
 };
 
 #endif // PSPECPISI_H
