@@ -38,9 +38,11 @@ private slots:
     void on_action_Build_Package_triggered();
     void on_action_Save_Package_Information_triggered();
     void on_action_Load_Package_Information_triggered();
+    void on_le_work_dir_textChanged(const QString &arg1);
     void on_le_package_name_textChanged(const QString &arg1);
     void on_tw_history_itemSelectionChanged();
     void on_pb_import_package_clicked();
+
 
 protected:
     virtual void closeEvent(QCloseEvent * event);

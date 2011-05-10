@@ -1187,8 +1187,15 @@ void MainWindow::set_settings_group(QMap<QString, QVariant> map, QString group)
     settings.endGroup();
 }
 
-void MainWindow::on_le_package_name_textChanged(const QString & text)
+void MainWindow::on_le_work_dir_textChanged(const QString &arg1)
 {
+    Q_UNUSED(arg1);
+    on_le_package_name_textChanged(ui->le_package_name->text());
+}
+
+void MainWindow::on_le_package_name_textChanged(const QString &arg1)
+{
+    Q_UNUSED(arg1);
     if(ui->le_work_dir->text().isEmpty() || ui->le_package_name->text().isEmpty())
     {
         ui->pb_import_package->setEnabled(false);
@@ -1256,4 +1263,5 @@ void MainWindow::fill_fields_from_pspec_xml()
         }
     }
 }
+
 
