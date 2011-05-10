@@ -9,7 +9,7 @@ QT       += core gui xml network
 TARGET = pisido
 TEMPLATE = app
 
-VERSION = 1.0.0
+VERSION = 1.1.0
 DEFINES += PISIDO_VERSION=\\\"$$VERSION\\\"
 
 SOURCES += main.cpp\
