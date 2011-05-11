@@ -1,6 +1,6 @@
 #include "pspec_package.h"
 
-#include <QDomDocumentFragment>
+#include <QDomElement>
 
 PSpecPackage::PSpecPackage()
     : PSpecBase()
@@ -14,14 +14,12 @@ void PSpecPackage::clear()
     runtime_dependencies.clear();
 }
 
-bool PSpecPackage::load_from_dom(const QDomDocumentFragment & dom_fragment)
+void PSpecPackage::load_from_dom(const QDomElement & dom_element)
 {
-    if(dom_fragment.isNull())
-        return false;
+    if(dom_element.isNull())
+        throw QString("Dom Element is null while loading to PspecPackage !");
 
-    PSpecBase::load_from_dom(dom_fragment);
+    PSpecBase::load_from_dom(dom_element);
 
     // TODO : implement
-
-    return true;
 }

@@ -1248,21 +1248,26 @@ void MainWindow::on_pb_import_package_clicked()
         }
         file.close();
         pspec_pisi.clear();
-        if(pspec_pisi.load_from_dom(dom_pspec))
+
+        try
         {
-            fill_fields_from_pspec_pisi();
+            pspec_pisi.load_from_dom(dom_pspec);
+
         }
-        else
+        catch (QString e)
         {
-            QMessageBox::critical(this, tr("Error"),
-                                  tr("An error occured while parsing xml file !"));
+            QMessageBox::critical(this, tr("Error"), tr("An error occured while parsing xml file : %1").arg(e));
+            return;
         }
+
+        fill_fields_from_pspec_pisi();
     }
 }
 
 void MainWindow::fill_fields_from_pspec_pisi()
 {
     // TODO : get values from pspec_pisi and fill visual fields.
+    qDebug() << "Fields filled.";
 }
 
 

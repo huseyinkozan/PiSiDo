@@ -4,7 +4,7 @@
 #include <QString>
 #include <QMap>
 
-class QDomDocumentFragment;
+class QDomElement;
 
 class PSpecBase
 {
@@ -13,7 +13,7 @@ public:
 
     virtual void clear();
 
-    virtual bool load_from_dom(const QDomDocumentFragment & dom_fragment);
+    virtual void load_from_dom(const QDomElement & dom_element);
 
     enum VersionReleaseToFromAttr {
         VERSIONFROM,
@@ -23,21 +23,18 @@ public:
         RELEASETO,
         RELEASE
     };
-    enum AdditionalFileAttr {
-        PERMISSION,
-        OWNER,
-        GROUP
-    };
 
     QString name;
-    QList<QString> license;                                     // one or more
+    QString summary;                                            // only english !
+    QString description;                                        // only english !
     QString part_of;
-    QList<QString> is_a_s;                                      // zero or more
-    QMap<QString,QString> summaries;                            // en=bla bla, tr=hede hede
-    QMap<QString,QString> descriptions;                         // en=bla bla, tr=hede hede
+    QString license;                                     // one or more, only first !
+    QString is_a;                                      // zero or more, only first !
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> > build_dependencies;  // dependency, {(versionFrom,xxxx),(versionTo,xxxx),...,(release,xxxx)}
-    QMap<QString, QMap<AdditionalFileAttr,QString> > additional_files;     // additional_file, {(permission,xxxx),(owner,xxxx),(group,xxxx)}
 
+private:
+    QString get_value_from_element(QString tag, QDomElement elm, bool mandatory);
+    VersionReleaseToFromAttr get_dependency_attr_property(QString attr_name);
 };
 
 #endif // PSPECBASE_H

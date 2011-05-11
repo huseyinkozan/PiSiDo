@@ -1,6 +1,6 @@
 #include "pspec_update.h"
 
-#include <QDomDocumentFragment>
+#include <QDomElement>
 
 PSpecUpdate::PSpecUpdate()
 {
@@ -15,12 +15,10 @@ void PSpecUpdate::clear()
     packager_email.clear();
 }
 
-bool PSpecUpdate::load_from_dom(const QDomDocumentFragment & dom_fragment)
+void PSpecUpdate::load_from_dom(const QDomElement & dom_element)
 {
-    if(dom_fragment.isNull())
-        return false;
+    if(dom_element.isNull())
+        throw QString("Dom Element is null while loading to PspecPackage !");
 
     // TODO : implement
-
-    return true;
 }

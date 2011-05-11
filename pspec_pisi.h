@@ -19,7 +19,7 @@ public:
     PSpecPackage package;
     QList<PSpecUpdate> updates;
 
-    bool load_from_dom(const QDomDocument & dom);
+    void load_from_dom(const QDomDocument & dom);
     bool save_to_dom(QDomDocument & dom);
 };
 

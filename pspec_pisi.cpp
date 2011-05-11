@@ -14,7 +14,7 @@ void PSpecPISI::clear()
     updates.clear();
 }
 
-bool PSpecPISI::load_from_dom(const QDomDocument & dom)
+void PSpecPISI::load_from_dom(const QDomDocument & dom)
 {
     QDomElement root = dom.documentElement();
     if( ! root.isNull() && root.tagName().toLower() == "pisi")
@@ -24,20 +24,30 @@ bool PSpecPISI::load_from_dom(const QDomDocument & dom)
         QDomElement elm_src = root.namedItem("Source").toElement();
         if( ! elm_src.isNull() && elm_src.isElement())
         {
-            if( ! source.load_from_dom(elm_src.toDocumentFragment()))
-                return false;
+            try {
+                source.load_from_dom(elm_src);
+            } catch (QString e) {
+                throw QString("From Source parser : %1").arg(e);
+            }
         }
         else
-            return false;
+        {
+            throw QString("Can not find Source tag !");
+        }
 
         QDomElement elm_pkg = root.namedItem("Package").toElement();
         if( ! elm_pkg.isNull() && elm_pkg.isElement())
         {
-            if( ! source.load_from_dom(elm_pkg.toDocumentFragment()))
-                return false;
+            try{
+                package.load_from_dom(elm_pkg);
+            } catch (QString e) {
+                throw QString("From Package parser : %1").arg(e);
+            }
         }
         else
-            return false;
+        {
+            throw QString("Can not find Package tag !");
+        }
 
         QDomElement elm_hist = root.namedItem("History").toElement();
         if( ! elm_hist.isNull() && elm_hist.isElement())
@@ -46,16 +56,23 @@ bool PSpecPISI::load_from_dom(const QDomDocument & dom)
             for( ; ! elm_upd.isNull(); elm_upd = elm_upd.nextSiblingElement("Update"))
             {
                 PSpecUpdate upd;
-                if(upd.load_from_dom(elm_upd.toDocumentFragment()))
-                    updates.append(upd);
-                else
-                    return false;
+                try {
+                    upd.load_from_dom(elm_upd);
+                } catch (QString e) {
+                    throw QString("From Update parser : %1").arg(e);
+                }
+                updates.append(upd);
             }
         }
         else
-            return false;
+        {
+            throw QString("Can not find History tag !");
+        }
     }
-    return false;
+    else
+    {
+        throw QString("Can not find PISI tag !");
+    }
 }
 
 bool PSpecPISI::save_to_dom(QDomDocument &dom)

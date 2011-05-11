@@ -4,7 +4,7 @@
 #include <QString>
 #include <QDate>
 
-class QDomDocumentFragment;
+class QDomElement;
 
 class PSpecUpdate
 {
@@ -12,7 +12,7 @@ public:
     PSpecUpdate();
 
     void clear();
-    bool load_from_dom(const QDomDocumentFragment & dom_fragment);
+    void load_from_dom(const QDomElement & dom_element);
 
     enum UpdateType { UNDEFINED, CRITICAL, SECURITY };
 

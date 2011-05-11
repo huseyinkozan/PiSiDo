@@ -1,6 +1,6 @@
 #include "pspec_source.h"
 
-#include <QDomDocumentFragment>
+#include <QDomElement>
 
 PSpecSource::PSpecSource()
     : PSpecBase()
@@ -15,14 +15,12 @@ void PSpecSource::clear()
     archives.clear();
 }
 
-bool PSpecSource::load_from_dom(const QDomDocumentFragment & dom_fragment)
+void PSpecSource::load_from_dom(const QDomElement & dom_element)
 {
-    if(dom_fragment.isNull())
-        return false;
+    if(dom_element.isNull())
+        throw QString("Dom Element is null while loading to PspecSource !");
 
-    PSpecBase::load_from_dom(dom_fragment);
+    PSpecBase::load_from_dom(dom_element);
 
     // TODO : implement
-
-    return true;
 }

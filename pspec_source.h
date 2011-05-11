@@ -6,7 +6,7 @@
 
 #include "pspec_base.h"
 
-class QDomDocumentFragment;
+class QDomElement;
 
 class PSpecSource : public PSpecBase
 {
@@ -14,7 +14,7 @@ public:
     PSpecSource();
 
     virtual void clear();
-    virtual bool load_from_dom(const QDomDocumentFragment & dom_fragment);
+    virtual void load_from_dom(const QDomElement & dom_element);
 
     enum ArchiveAttr {
         SHA1SUM,
