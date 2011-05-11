@@ -4,11 +4,13 @@
 
 PSpecPISI::PSpecPISI()
 {
+    clear();
 }
 
 
 void PSpecPISI::clear()
 {
+    loaded = false;
     source.clear();
     package.clear();
     updates.clear();
@@ -16,6 +18,8 @@ void PSpecPISI::clear()
 
 void PSpecPISI::load_from_dom(const QDomDocument & dom)
 {
+    loaded = false;
+
     QDomElement root = dom.documentElement();
     if( ! root.isNull() && root.tagName().toLower() == "pisi")
     {
@@ -68,6 +72,8 @@ void PSpecPISI::load_from_dom(const QDomDocument & dom)
         {
             throw QString("Can not find History tag !");
         }
+
+        loaded = true;
     }
     else
     {

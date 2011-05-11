@@ -1252,11 +1252,15 @@ void MainWindow::on_pb_import_package_clicked()
         try
         {
             pspec_pisi.load_from_dom(dom_pspec);
-
         }
         catch (QString e)
         {
             QMessageBox::critical(this, tr("Error"), tr("An error occured while parsing xml file : %1").arg(e));
+            return;
+        }
+        catch(...)
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
             return;
         }
 

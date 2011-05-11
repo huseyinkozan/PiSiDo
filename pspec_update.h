@@ -14,13 +14,16 @@ public:
     void clear();
     void load_from_dom(const QDomElement & dom_element);
 
-    enum UpdateType { UNDEFINED, CRITICAL, SECURITY };
-
     QDate date;
     QString version;
     QString comment;
     QString packager_name;
     QString packager_email;
+
+    int release;
+
+private:
+    QString get_value_from_element(QString tag, QDomElement elm, bool mandatory);
 };
 
 #endif // PSPECUPDATE_H

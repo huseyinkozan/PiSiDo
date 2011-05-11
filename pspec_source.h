@@ -24,8 +24,11 @@ public:
 
 
     QString home_page;
-    QMap<QString,QString> packager;                             // name=ali veli, email=q@q.com
-    QMap<QString, QMap<ArchiveAttr,QString> > archives;             // archive, {(sha1sum,xxxx),(type,xxxx),(target,xxxx)}
+    QMap<QString,QString> packager;                         // name=ali veli, email=q@q.com
+    QMap<QString, QMap<ArchiveAttr,QString> > archives;     // archive, {(sha1sum,xxxx),(type,xxxx),(target,xxxx)}
+
+private:
+    ArchiveAttr get_archive_attr_property(QString attr_name);
 };
 
 #endif // PSPECSOURCE_H

@@ -7,6 +7,7 @@
 
 PSpecBase::PSpecBase()
 {
+    clear();
 }
 
 void PSpecBase::clear()
@@ -26,53 +27,28 @@ void PSpecBase::load_from_dom(const QDomElement & dom_element)
         throw QString("Dom Element is null while loading to PspecBase !");
 
     bool is_src_tag = dom_element.tagName().toLower() == "source";
+    //    qDebug() << (is_src_tag?"Source":"Package") << ":: Base";
 
     QDomElement elm = dom_element.firstChildElement("Name");
-    if(elm.isNull()) throw QString("No child element in package or source !");
-
-//    qDebug() << (is_src_tag?"Source":"Package") << ":: Base";
-
     name = get_value_from_element("Name", elm, true);
 
-    elm = elm.nextSiblingElement("License");
+    elm = dom_element.firstChildElement("License");
     license = get_value_from_element("License", elm, is_src_tag);
 
-    elm = elm.nextSiblingElement("Summary");
+    elm = dom_element.firstChildElement("Summary");
     summary = get_value_from_element("Summary", elm, is_src_tag);
 
-    elm = elm.nextSiblingElement("Description");
+    elm = dom_element.firstChildElement("Description");
     description = get_value_from_element("Description", elm, false);
 
-    elm = elm.nextSiblingElement("PartOf");
+    elm = dom_element.firstChildElement("PartOf");
     part_of = get_value_from_element("PartOf", elm, false);
 
-    elm = elm.nextSiblingElement("IsA");
+    elm = dom_element.firstChildElement("IsA");
     is_a = get_value_from_element("IsA", elm, false);
 
     elm = dom_element.firstChildElement("BuildDependencies");
-    if( ! elm.isNull())
-    {
-        elm = elm.firstChildElement("Dependency");
-        if(elm.isNull())
-            throw QString("No Dependency in Dependency");
-
-        for( ; ! elm.isNull(); elm = elm.nextSiblingElement("Dependency"))
-        {
-            QMap<VersionReleaseToFromAttr,QString> attributes;
-            QDomNamedNodeMap elm_node_map = elm.attributes();
-            int count = elm_node_map.count();
-            for(int i=0; i<count; ++i)
-            {
-                QDomNode n = elm_node_map.item(i);
-                QDomAttr a = n.toAttr();
-                if(a.isNull())
-                    throw QString("Can not convert to attribute !");
-                attributes[get_dependency_attr_property(a.name())] = a.value();
-//                qDebug() << "BuildDepAttr = " << a.name() << " : " << a.value();
-            }
-            build_dependencies[elm.text()] = attributes;
-        }
-    }
+    build_dependencies = get_dependency_map(elm, false);
 }
 
 QString PSpecBase::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
@@ -88,6 +64,40 @@ QString PSpecBase::get_value_from_element(QString tag, QDomElement elm, bool man
 //        qDebug() << tag << " : " << elm.text();
         return elm.text();
     }
+}
+
+QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > PSpecBase::get_dependency_map(QDomElement elm, bool mandatory)
+{
+    if(elm.isNull())
+    {
+        if(mandatory)
+            throw QString("Empty element while getting dependency map.");
+        else return QMap<QString, QMap<VersionReleaseToFromAttr,QString> >();
+    }
+
+    QMap<QString, QMap<VersionReleaseToFromAttr,QString> > dependencies;
+
+    elm = elm.firstChildElement("Dependency");
+    if(elm.isNull())
+        throw QString("No Dependency in Dependencies");
+
+    for( ; ! elm.isNull(); elm = elm.nextSiblingElement("Dependency"))
+    {
+        QMap<VersionReleaseToFromAttr,QString> attributes;
+        QDomNamedNodeMap elm_node_map = elm.attributes();
+        int count = elm_node_map.count();
+        for(int i=0; i<count; ++i)
+        {
+            QDomNode n = elm_node_map.item(i);
+            QDomAttr a = n.toAttr();
+            if(a.isNull())
+                throw QString("Can not convert to attribute !");
+            attributes[get_dependency_attr_property(a.name())] = a.value();
+//                qDebug() << "DepAttr = " << a.name() << " : " << a.value();
+        }
+        dependencies[elm.text()] = attributes;
+    }
+    return dependencies;
 }
 
 PSpecBase::VersionReleaseToFromAttr PSpecBase::get_dependency_attr_property(QString attr_name)
