@@ -51,6 +51,41 @@ void PSpecBase::load_from_dom(const QDomElement & dom_element)
     build_dependencies = get_dependency_map(elm, false);
 }
 
+QString PSpecBase::get_name()
+{
+    return name;
+}
+
+QString PSpecBase::get_summary()
+{
+    return summary;
+}
+
+QString PSpecBase::get_description()
+{
+    return description;
+}
+
+QString PSpecBase::get_part_of()
+{
+    return part_of;
+}
+
+QString PSpecBase::get_license()
+{
+    return license;
+}
+
+QString PSpecBase::get_is_a()
+{
+    return is_a;
+}
+
+QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > PSpecBase::get_build_dependencies()
+{
+    return build_dependencies;
+}
+
 QString PSpecBase::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
 {
     if(elm.isNull())
@@ -93,9 +128,10 @@ QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > PSpecBase::get
             if(a.isNull())
                 throw QString("Can not convert to attribute !");
             attributes[get_dependency_attr_property(a.name())] = a.value();
-//                qDebug() << "DepAttr = " << a.name() << " : " << a.value();
+//            qDebug() << "DepAttr = " << a.name() << " : " << a.value();
         }
         dependencies[elm.text()] = attributes;
+//        qDebug() << "Dep:" << elm.text();
     }
     return dependencies;
 }
@@ -115,4 +151,55 @@ PSpecBase::VersionReleaseToFromAttr PSpecBase::get_dependency_attr_property(QStr
     else if(attr_name.toLower() == "release")
         return RELEASE;
     else throw QString("Wrong dependency atribute name : %1").arg(attr_name);
+}
+
+QString PSpecBase::get_dependency_attr_property_string(PSpecBase::VersionReleaseToFromAttr attr, bool abbreviation)
+{
+    switch(attr)
+    {
+    case VERSIONFROM:
+        if(abbreviation) return ">"; else return "versionFrom";
+        break;
+    case VERSIONTO:
+        if(abbreviation) return "<"; else return "versionTo";
+        break;
+    case VERSION:
+        if(abbreviation) return "="; else return "version";
+        break;
+    case RELEASEFROM:
+        if(abbreviation) return ">>"; else return "releaseFrom";
+        break;
+    case RELEASETO:
+        if(abbreviation) return "<<"; else return "releaseTo";
+        break;
+    case RELEASE:
+        if(abbreviation) return "=="; else return "release";
+        break;
+    default:
+        return "";
+        break;
+    }
+}
+
+/*
+  qt[>4.7,<4.5,==4.6], gtk[>>2], libz, libusb1[=1]
+*/
+QStringList PSpecBase::get_dependency_list(QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > dependency)
+{
+    QStringList dep_list;
+    QMap<QString, QMap<VersionReleaseToFromAttr,QString> >::const_iterator dependency_it = dependency.constBegin();
+    for( ; dependency_it != dependency.constEnd(); dependency_it++)
+    {
+        QStringList attr_list;
+        QMap<VersionReleaseToFromAttr,QString> attr = dependency_it.value();
+        QMap<VersionReleaseToFromAttr,QString>::const_iterator attr_it = attr.constBegin();
+        for( ; attr_it != attr.constEnd(); attr_it++)
+        {
+            attr_list << QString("%1%2").arg(get_dependency_attr_property_string(attr_it.key(), true)).arg(attr_it.value());
+        }
+        QString attributes = ((attr_list.count()>0)?QString("%1%2%3").arg("[").arg(attr_list.join(",")).arg("]"):"");
+        dep_list << QString("%1%2").arg(dependency_it.key()).arg(attributes);
+//        qDebug() << "dep list : " << dep_list;
+    }
+    return dep_list;
 }

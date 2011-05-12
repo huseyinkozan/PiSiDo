@@ -16,15 +16,19 @@ public:
     void clear();
     bool is_loaded() { return loaded; }
 
-    PSpecSource source;
-    PSpecPackage package;
-    QList<PSpecUpdate> updates;
-
     void load_from_dom(const QDomDocument & dom);
     bool save_to_dom(QDomDocument & dom);
 
+    PSpecSource get_source();
+    PSpecPackage get_package();
+    QList<PSpecUpdate> get_updates();
+
 private:
     bool loaded;
+
+    PSpecSource source;
+    PSpecPackage package;
+    QList<PSpecUpdate> updates;
 };
 
 #endif // PSPECPISI_H

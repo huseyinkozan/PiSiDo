@@ -211,8 +211,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>568</width>
-             <height>521</height>
+             <width>584</width>
+             <height>517</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout">
@@ -233,7 +233,7 @@
               </property>
              </widget>
             </item>
-            <item row="12" column="1">
+            <item row="11" column="1">
              <spacer name="verticalSpacer_pckg">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -247,38 +247,21 @@
              </spacer>
             </item>
             <item row="2" column="0">
-             <widget class="QLabel" name="lbl_version">
-              <property name="text">
-               <string>Version</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1" colspan="2">
-             <widget class="QLineEdit" name="le_version">
-              <property name="toolTip">
-               <string>Package version.</string>
-              </property>
-              <property name="statusTip">
-               <string>Package version.</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
              <widget class="QLabel" name="lbl_licence">
               <property name="text">
                <string>Licence</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
+            <item row="3" column="0">
              <widget class="QLabel" name="lbl_is_a">
               <property name="text">
                <string>IsA</string>
               </property>
              </widget>
             </item>
-            <item row="9" column="1" colspan="4">
-             <widget class="QTextEdit" name="te_detailed">
+            <item row="8" column="1" colspan="4">
+             <widget class="QTextEdit" name="te_description">
               <property name="toolTip">
                <string>Shows after open detailed description. Should be continuous of the brief.</string>
               </property>
@@ -287,7 +270,7 @@
               </property>
              </widget>
             </item>
-            <item row="8" column="0">
+            <item row="7" column="0">
              <widget class="QLabel" name="lbl_brief">
               <property name="text">
                <string>Summary</string>
@@ -300,7 +283,7 @@
               </property>
              </widget>
             </item>
-            <item row="9" column="0">
+            <item row="8" column="0">
              <widget class="QLabel" name="lbl_detailed">
               <property name="text">
                <string>Description</string>
@@ -313,10 +296,10 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="1" colspan="2">
+            <item row="2" column="1" colspan="2">
              <widget class="QComboBox" name="combo_licence"/>
             </item>
-            <item row="4" column="1" colspan="2">
+            <item row="3" column="1" colspan="2">
              <widget class="QComboBox" name="combo_is_a">
               <property name="toolTip">
                <string>Package type.</string>
@@ -326,8 +309,8 @@
               </property>
              </widget>
             </item>
-            <item row="8" column="1" colspan="4">
-             <widget class="QLineEdit" name="le_brief">
+            <item row="7" column="1" colspan="4">
+             <widget class="QLineEdit" name="le_summary">
               <property name="toolTip">
                <string>Shows a brief description on the installer list.</string>
               </property>
@@ -336,14 +319,14 @@
               </property>
              </widget>
             </item>
-            <item row="5" column="0">
+            <item row="4" column="0">
              <widget class="QLabel" name="lbl_part_of">
               <property name="text">
                <string>PartOf</string>
               </property>
              </widget>
             </item>
-            <item row="5" column="1" colspan="2">
+            <item row="4" column="1" colspan="2">
              <widget class="QComboBox" name="combo_part_of"/>
             </item>
             <item row="0" column="0">
@@ -392,14 +375,14 @@
               </property>
              </widget>
             </item>
-            <item row="10" column="0">
+            <item row="9" column="0">
              <widget class="QLabel" name="lbl_build_dependency">
               <property name="text">
                <string>Build Dependency</string>
               </property>
              </widget>
             </item>
-            <item row="10" column="1">
+            <item row="9" column="1">
              <widget class="QLineEdit" name="le_build_dependency">
               <property name="toolTip">
                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -415,14 +398,14 @@ p, li { white-space: pre-wrap; }
               </property>
              </widget>
             </item>
-            <item row="11" column="0">
+            <item row="10" column="0">
              <widget class="QLabel" name="lbl_runtime_dependency">
               <property name="text">
                <string>Runtime Dependency</string>
               </property>
              </widget>
             </item>
-            <item row="11" column="1">
+            <item row="10" column="1">
              <widget class="QLineEdit" name="le_runtime_dependency">
               <property name="toolTip">
                <string>Comma seperated package names.</string>
@@ -493,11 +476,6 @@ p, li { white-space: pre-wrap; }
           </column>
           <column>
            <property name="text">
-            <string>Rel. Type</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
             <string>Date</string>
            </property>
           </column>
@@ -564,7 +542,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
+           <item row="1" column="0">
             <widget class="QLabel" name="lbl_update_date">
              <property name="font">
               <font>
@@ -576,7 +554,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="2" column="1" colspan="2">
+           <item row="1" column="1" colspan="2">
             <widget class="QDateEdit" name="de_update_date">
              <property name="readOnly">
               <bool>true</bool>
@@ -586,27 +564,27 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="3" column="1" rowspan="2" colspan="2">
+           <item row="2" column="1" rowspan="2" colspan="2">
             <widget class="QLineEdit" name="le_update_version"/>
            </item>
-           <item row="4" column="0">
+           <item row="3" column="0">
             <widget class="QLabel" name="lbl_update_version">
              <property name="text">
               <string>Version</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
+           <item row="4" column="0">
             <widget class="QLabel" name="lbl_update_comment">
              <property name="text">
               <string>Comment</string>
              </property>
             </widget>
            </item>
-           <item row="5" column="1" colspan="5">
+           <item row="4" column="1" colspan="5">
             <widget class="QLineEdit" name="le_update_comment"/>
            </item>
-           <item row="6" column="0">
+           <item row="5" column="0">
             <widget class="QLabel" name="lbl_update_name">
              <property name="font">
               <font>
@@ -618,14 +596,14 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="6" column="1" colspan="5">
+           <item row="5" column="1" colspan="5">
             <widget class="QLineEdit" name="le_update_name">
              <property name="readOnly">
               <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item row="7" column="0">
+           <item row="6" column="0">
             <widget class="QLabel" name="lbl_update_email">
              <property name="font">
               <font>
@@ -637,7 +615,7 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="7" column="1" colspan="5">
+           <item row="6" column="1" colspan="5">
             <widget class="QLineEdit" name="le_update_email">
              <property name="readOnly">
               <bool>true</bool>
@@ -656,32 +634,6 @@ p, li { white-space: pre-wrap; }
               </size>
              </property>
             </spacer>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="lbl_relese_type">
-             <property name="text">
-              <string>Release Type</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1" colspan="2">
-            <widget class="QComboBox" name="combo_relese_type">
-             <item>
-              <property name="text">
-               <string notr="true"/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Critical</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Security</string>
-              </property>
-             </item>
-            </widget>
            </item>
           </layout>
          </widget>
@@ -1323,12 +1275,11 @@ Categories=Application;</string>
   <tabstop>pb_work_dir_browse</tabstop>
   <tabstop>pb_work_dir_open</tabstop>
   <tabstop>le_package_name</tabstop>
-  <tabstop>le_version</tabstop>
   <tabstop>combo_licence</tabstop>
   <tabstop>combo_is_a</tabstop>
   <tabstop>combo_part_of</tabstop>
-  <tabstop>le_brief</tabstop>
-  <tabstop>te_detailed</tabstop>
+  <tabstop>le_summary</tabstop>
+  <tabstop>te_description</tabstop>
   <tabstop>lw_action_template</tabstop>
   <tabstop>te_auto</tabstop>
   <tabstop>chk_create_desktop</tabstop>

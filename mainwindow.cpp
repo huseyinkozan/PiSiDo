@@ -231,10 +231,10 @@ void MainWindow::write_settings()
     settings.endGroup();
     settings.beginGroup("package");
     settings.setValue("name", ui->le_package_name->text());
-    settings.setValue("version", ui->le_version->text());
+//    settings.setValue("version", ui->le_version->text());
     settings.setValue("work_dir", ui->le_work_dir->text());
-    settings.setValue("brief", ui->le_brief->text());
-    settings.setValue("detailed", ui->te_detailed->toPlainText());
+    settings.setValue("summary", ui->le_summary->text());
+    settings.setValue("detailed", ui->te_description->toPlainText());
     settings.setValue("licence", ui->combo_licence->currentText());
     settings.setValue("is_a", ui->combo_is_a->currentText());
     settings.setValue("part_of", ui->combo_part_of->currentText());
@@ -289,9 +289,9 @@ void MainWindow::read_settings()
     settings.beginGroup("package");
     ui->le_work_dir->setText(settings.value("work_dir").toString());
     ui->le_package_name->setText(settings.value("name").toString());
-    ui->le_version->setText(settings.value("version").toString());
-    ui->le_brief->setText(settings.value("brief").toString());
-    ui->te_detailed->setPlainText(settings.value("detailed").toString());
+//    ui->le_version->setText(settings.value("version").toString());
+    ui->le_summary->setText(settings.value("summary").toString());
+    ui->te_description->setPlainText(settings.value("detailed").toString());
     ui->combo_licence->setCurrentIndex(ui->combo_licence->findText(settings.value("licence","").toString()));
     ui->combo_is_a->setCurrentIndex(ui->combo_is_a->findText(settings.value("is_a","").toString()));
     ui->combo_part_of->setCurrentIndex(ui->combo_part_of->findText(settings.value("part_of","").toString()));
@@ -342,7 +342,7 @@ void MainWindow::on_pb_clear_clicked()
     foreach(QCheckBox * chkb, chkb_list)
         chkb->setChecked(false);
 
-    ui->te_detailed->clear();
+    ui->te_description->clear();
 
     ui->te_auto->setText(action_defaults.at(0));
     ui->te_cmake->setText(action_defaults.at(1));
@@ -435,13 +435,13 @@ void MainWindow::on_pb_create_clicked()
         return;
     }
 
-    if( ui->le_version->text().isEmpty())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No version. Please define version."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
-        ui->le_version->setFocus();
-        return;
-    }
+//    if( ui->le_version->text().isEmpty())
+//    {
+//        QMessageBox::critical(this, tr("Error"), tr("No version. Please define version."));
+//        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
+//        ui->le_version->setFocus();
+//        return;
+//    }
 
     if( ui->combo_licence->currentText().isEmpty())
     {
@@ -459,19 +459,19 @@ void MainWindow::on_pb_create_clicked()
         return;
     }
 
-    if( ui->le_brief->text().isEmpty())
+    if( ui->le_summary->text().isEmpty())
     {
         QMessageBox::critical(this, tr("Error"), tr("No summary. Please enter summary."));
         ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
-        ui->le_brief->setFocus();
+        ui->le_summary->setFocus();
         return;
     }
 
-    if( ui->te_detailed->toPlainText().isEmpty())
+    if( ui->te_description->toPlainText().isEmpty())
     {
         QMessageBox::critical(this, tr("Error"), tr("No Description. Please enter description."));
         ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
-        ui->te_detailed->setFocus();
+        ui->te_description->setFocus();
         return;
     }
 
@@ -630,8 +630,8 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
     QString is_a = ui->combo_is_a->currentText();
     QString part_of = ui->combo_part_of->currentText();
     QString license = ui->combo_licence->currentText();
-    QString brief = ui->le_brief->text();
-    QString detailed = ui->te_detailed->toPlainText();
+    QString summary = ui->le_summary->text();
+    QString detailed = ui->te_description->toPlainText();
     QString archive_name;
     if(local_file)
         archive_name = QFileInfo(src_path).fileName();
@@ -640,7 +640,7 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
     QString src_file_type = get_archive_type(src_path);
     int release = 1;
     QString release_date = QDate::currentDate().toString("yyyy-MM-dd");
-    QString release_version = ui->le_version->text();
+//    QString release_version = ui->le_version->text();
     QString release_comment = tr("First Release");
     QString packager_name = ui->le_packager_name->text();
     QString packager_email = ui->le_packager_email->text();
@@ -687,7 +687,7 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
         source.appendChild(source_license);
 
         QDomElement source_summary = domdom.createElement("Summary");
-        source_summary.appendChild(domdom.createTextNode(brief));
+        source_summary.appendChild(domdom.createTextNode(summary));
         source.appendChild(source_summary);
 
         QDomComment source_summary_comment = domdom.createComment("<Summary xml:lang=\"tr\">Summary in Turkish </Summary>");
@@ -821,7 +821,7 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
             history_update.appendChild(history_update_date);
 
             QDomElement history_update_version = domdom.createElement("Version");
-            history_update_version.appendChild(domdom.createTextNode(release_version));
+            history_update_version.appendChild(domdom.createTextNode("1" /*release_version*/));
             history_update.appendChild(history_update_version);
 
             QDomElement history_update_comment = domdom.createElement("Comment");
@@ -873,8 +873,8 @@ bool MainWindow::create_action_py(QDir package_dir)
     {
         QString action_py = te->toPlainText();
         action_py.replace(QString("___package_name___"), ui->le_package_name->text());
-        action_py.replace(QString("___version___"), ui->le_version->text());
-        action_py.replace(QString("___summary___"), ui->le_brief->text());
+//        action_py.replace(QString("___version___"), ui->le_version->text());
+        action_py.replace(QString("___summary___"), ui->le_summary->text());
 
         writer << action_py;
         return true;
@@ -912,8 +912,8 @@ bool MainWindow::create_desktop(QDir package_dir)
 
     QString desktop_str = ui->pte_desktop->toPlainText();
     desktop_str.replace(QString("___package_name___"), package_name);
-    desktop_str.replace(QString("___version___"), ui->le_version->text());
-    desktop_str.replace(QString("___summary___"), ui->le_brief->text());
+//    desktop_str.replace(QString("___version___"), ui->le_version->text());
+    desktop_str.replace(QString("___summary___"), ui->le_summary->text());
 
     writer << desktop_str;
 
@@ -1264,14 +1264,96 @@ void MainWindow::on_pb_import_package_clicked()
             return;
         }
 
-        fill_fields_from_pspec_pisi();
+        try
+        {
+            fill_fields_from_pspec_pisi();
+        }
+        catch (QString e)
+        {
+            QMessageBox::critical(this, tr("Error"), tr("An error occured while filling fields: %1").arg(e));
+            return;
+        }
+        catch (...)
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
+            return;
+        }
     }
 }
 
 void MainWindow::fill_fields_from_pspec_pisi()
 {
-    // TODO : get values from pspec_pisi and fill visual fields.
+    PSpecSource source = pspec_pisi.get_source();
+    PSpecPackage package = pspec_pisi.get_package();
+    QList<PSpecUpdate> updates = pspec_pisi.get_updates();
+
+    // source section
+    QMap<QString, QMap<PSpecSource::ArchiveAttr,QString> > archives = source.get_archives();
+    // TODO : revise filling comma seperated archives
+    if(archives.count() > 1)
+    {
+        throw QString("More than one archive tag.");
+    }
+    QString archive = archives.constBegin().key();
+    if(archive.startsWith("http:") || archive.startsWith("ftp:"))
+    {
+        ui->rb_src_url->setChecked(true);
+        ui->le_src_url->setText(archive);
+        QMap<PSpecSource::ArchiveAttr,QString> archive_att = archives.constBegin().value();
+        ui->le_src_sha1->setText(archive_att.value(PSpecSource::SHA1SUM));
+        ui->chk_cp_to_pisi_archive->setChecked(false);
+    }
+    else
+    {
+        ui->rb_src_compressed->setChecked(true);
+        ui->le_src_compressed->setText(archive);
+        ui->chk_cp_to_pisi_archive->setChecked(true);
+    }
+    ui->le_src_home_page->setText(source.get_home_page());
+
+    // package section
+
+    // do not edit work_dir and packge_name, only warn
+    if(ui->le_package_name->text() != package.get_name())
+        QMessageBox::warning(this, tr("Warning"), tr("Package name is not same as in the pspec.xml file !"));
+    ui->le_summary->setText(package.get_summary());
+    ui->te_description->setPlainText(package.get_description());
+    int license_index = ui->combo_licence->findText(package.get_license());
+    if(license_index > 0) ui->combo_licence->setCurrentIndex(license_index);
+    int is_a_index = ui->combo_is_a->findText(package.get_is_a());
+    if(is_a_index > 0) ui->combo_is_a->setCurrentIndex(is_a_index);
+    int part_of_index = ui->combo_part_of->findText(package.get_part_of());
+    if(part_of_index > 0) ui->combo_part_of->setCurrentIndex(part_of_index);
+
+    QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > build_dep = source.get_build_dependencies();
+    ui->le_build_dependency->setText(source.get_dependency_list(build_dep).join(", "));
+
+    QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > runtime_dep = package.get_runtime_dependencies();
+    ui->le_runtime_dependency->setText(package.get_dependency_list(runtime_dep).join(", "));
+
     qDebug() << "Fields filled.";
+
+    /*
+
+    settings.endGroup();
+    settings.beginGroup("compilation");
+    ui->lw_action_template->setCurrentRow(settings.value("action_template",0).toInt());
+    ui->sw_action_template->setCurrentIndex(settings.value("action_template",0).toInt());
+    ui->chk_create_desktop->setChecked(settings.value("create_desktop", false).toBool());
+    ui->pte_desktop->setPlainText(settings.value("desktop_file", desktop_file_default).toString());
+    ui->te_auto->setHtml(settings.value("te_auto", action_defaults.at(0)).toString());
+    ui->te_cmake->setHtml(settings.value("te_cmake", action_defaults.at(1)).toString());
+    ui->te_kde4->setHtml(settings.value("te_kde4", action_defaults.at(2)).toString());
+    ui->te_qt4->setHtml(settings.value("te_qt4", action_defaults.at(3)).toString());
+    ui->te_python->setHtml(settings.value("te_python", action_defaults.at(4)).toString());
+    ui->te_scons->setHtml(settings.value("te_scons", action_defaults.at(5)).toString());
+    settings.endGroup();
+    settings.beginGroup("packager");
+    ui->le_packager_name->setText(settings.value("packager_name").toString());
+    ui->le_packager_email->setText(settings.value("packager_email").toString());
+    settings.endGroup();
+    */
+
 }
 
 

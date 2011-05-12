@@ -43,6 +43,31 @@ void PSpecUpdate::load_from_dom(const QDomElement & dom_element)
     else release = 0;
 }
 
+int PSpecUpdate::get_release()
+{
+    return release;
+}
+
+QString PSpecUpdate::get_version()
+{
+    return version;
+}
+
+QString PSpecUpdate::get_comment()
+{
+    return comment;
+}
+
+QString PSpecUpdate::get_packager_name()
+{
+    return packager_name;
+}
+
+QString PSpecUpdate::get_packager_email()
+{
+    return packager_email;
+}
+
 QString PSpecUpdate::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
 {
     if(elm.isNull())

@@ -25,3 +25,8 @@ void PSpecPackage::load_from_dom(const QDomElement & dom_element)
     QDomElement elm = dom_element.firstChildElement("RuntimeDependencies");
     runtime_dependencies = get_dependency_map(elm, false);
 }
+
+QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > PSpecPackage::get_runtime_dependencies()
+{
+    return runtime_dependencies;
+}

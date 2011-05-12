@@ -13,6 +13,9 @@ public:
     virtual void clear();
     virtual void load_from_dom(const QDomElement & dom_element);
 
+    QMap<QString, QMap<VersionReleaseToFromAttr,QString> > get_runtime_dependencies();
+
+private:
     // dependency, {(versionFrom,xxxx),(versionTo,xxxx),...,(release,xxxx)}
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> > runtime_dependencies;
 };

@@ -59,6 +59,21 @@ void PSpecSource::load_from_dom(const QDomElement & dom_element)
     }
 }
 
+QString PSpecSource::get_home_page()
+{
+    return home_page;
+}
+
+QMap<QString,QString> PSpecSource::get_packager()
+{
+    return packager;
+}
+
+QMap<QString, QMap<PSpecSource::ArchiveAttr,QString> > PSpecSource::get_archives()
+{
+    return archives;
+}
+
 PSpecSource::ArchiveAttr PSpecSource::get_archive_attr_property(QString attr_name)
 {
     if(attr_name.toLower() == "sha1sum")

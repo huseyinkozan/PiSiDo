@@ -16,6 +16,30 @@ void PSpecPISI::clear()
     updates.clear();
 }
 
+PSpecSource PSpecPISI::get_source()
+{
+    if(is_loaded())
+        return source;
+    else
+        return PSpecSource();
+}
+
+PSpecPackage PSpecPISI::get_package()
+{
+    if(is_loaded())
+        return package;
+    else
+        return PSpecPackage();
+}
+
+QList<PSpecUpdate> PSpecPISI::get_updates()
+{
+    if(is_loaded())
+        return updates;
+    else
+        return QList<PSpecUpdate>();
+}
+
 void PSpecPISI::load_from_dom(const QDomDocument & dom)
 {
     loaded = false;
