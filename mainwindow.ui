@@ -504,135 +504,25 @@ p, li { white-space: pre-wrap; }
            <string>Update</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="0" column="0">
-            <widget class="QLabel" name="lbl_release_number">
-             <property name="font">
-              <font>
-               <italic>true</italic>
-              </font>
-             </property>
-             <property name="text">
-              <string>Release Number</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QSpinBox" name="sb_release_number">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>999</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="lbl_update_date">
-             <property name="font">
-              <font>
-               <italic>true</italic>
-              </font>
-             </property>
-             <property name="text">
-              <string>Date</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1" colspan="2">
-            <widget class="QDateEdit" name="de_update_date">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-             <property name="displayFormat">
-              <string notr="true">dd MMMM (MM) yyyy</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1" rowspan="2" colspan="2">
+           <item row="0" column="1" rowspan="2" colspan="2">
             <widget class="QLineEdit" name="le_update_version"/>
            </item>
-           <item row="3" column="0">
+           <item row="1" column="0">
             <widget class="QLabel" name="lbl_update_version">
              <property name="text">
               <string>Version</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="0">
+           <item row="2" column="0">
             <widget class="QLabel" name="lbl_update_comment">
              <property name="text">
               <string>Comment</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="1" colspan="5">
+           <item row="2" column="1" colspan="3">
             <widget class="QLineEdit" name="le_update_comment"/>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="lbl_update_name">
-             <property name="font">
-              <font>
-               <italic>true</italic>
-              </font>
-             </property>
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1" colspan="5">
-            <widget class="QLineEdit" name="le_update_name">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="lbl_update_email">
-             <property name="font">
-              <font>
-               <italic>true</italic>
-              </font>
-             </property>
-             <property name="text">
-              <string>Email</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1" colspan="5">
-            <widget class="QLineEdit" name="le_update_email">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2" colspan="4">
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>
@@ -1475,38 +1365,6 @@ Categories=Application;</string>
     <hint type="destinationlabel">
      <x>119</x>
      <y>230</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_packager_name</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>le_update_name</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>323</x>
-     <y>76</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>357</x>
-     <y>479</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>le_packager_email</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>le_update_email</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>323</x>
-     <y>104</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>357</x>
-     <y>507</y>
     </hint>
    </hints>
   </connection>
