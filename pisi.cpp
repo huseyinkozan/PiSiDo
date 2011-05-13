@@ -10,39 +10,50 @@ Pisi::Pisi()
 
 void Pisi::clear()
 {
-    loaded = false;
+    empty = true;
     source.clear();
     package.clear();
     updates.clear();
+    last_update.clear();
+}
+
+bool Pisi::is_empty()
+{
+    return empty;
 }
 
 PisiSource Pisi::get_source()
 {
-    if(is_loaded())
-        return source;
-    else
+    if(is_empty())
         return PisiSource();
+    else
+        return source;
 }
 
 PisiPackage Pisi::get_package()
 {
-    if(is_loaded())
-        return package;
-    else
+    if(is_empty())
         return PisiPackage();
+    else
+        return package;
 }
 
-QList<PisiUpdate> Pisi::get_updates()
+QMap<int, PisiUpdate> Pisi::get_updates()
 {
-    if(is_loaded())
-        return updates;
+    if(is_empty())
+        return QMap<int, PisiUpdate>();
     else
-        return QList<PisiUpdate>();
+        return updates;
+}
+
+PisiUpdate Pisi::get_last_update()
+{
+    return last_update;
 }
 
 void Pisi::load_from_dom(const QDomDocument & dom)
 {
-    loaded = false;
+    empty = true;
 
     QDomElement root = dom.documentElement();
     if( ! root.isNull() && root.tagName().toLower() == "pisi")
@@ -80,6 +91,7 @@ void Pisi::load_from_dom(const QDomDocument & dom)
         QDomElement elm_hist = root.namedItem("History").toElement();
         if( ! elm_hist.isNull() && elm_hist.isElement())
         {
+            int last_release = 0;
             QDomElement elm_upd = elm_hist.firstChildElement("Update");
             for( ; ! elm_upd.isNull(); elm_upd = elm_upd.nextSiblingElement("Update"))
             {
@@ -89,7 +101,10 @@ void Pisi::load_from_dom(const QDomDocument & dom)
                 } catch (QString e) {
                     throw QString("From Update parser : %1").arg(e);
                 }
-                updates.append(upd);
+                int release = upd.get_release();
+                if(release > last_release)
+                    last_update = upd;
+                updates[release] = upd;
             }
         }
         else
@@ -97,7 +112,7 @@ void Pisi::load_from_dom(const QDomDocument & dom)
             throw QString("Can not find History tag !");
         }
 
-        loaded = true;
+        empty = false;
     }
     else
     {

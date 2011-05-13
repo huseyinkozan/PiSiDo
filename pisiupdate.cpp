@@ -43,9 +43,29 @@ void PisiUpdate::load_from_dom(const QDomElement & dom_element)
     else release = 0;
 }
 
+QString PisiUpdate::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
+{
+    if(elm.isNull())
+    {
+        if(mandatory)
+            throw QString("No %1 tag !").arg(tag);
+        else return QString();
+    }
+    else
+    {
+//        qDebug() << tag << " : " << elm.text();
+        return elm.text();
+    }
+}
+
 int PisiUpdate::get_release()
 {
     return release;
+}
+
+QDate PisiUpdate::get_date()
+{
+    return date;
 }
 
 QString PisiUpdate::get_version()
@@ -68,17 +88,34 @@ QString PisiUpdate::get_packager_email()
     return packager_email;
 }
 
-QString PisiUpdate::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
+
+void PisiUpdate::set_release(int r)
 {
-    if(elm.isNull())
-    {
-        if(mandatory)
-            throw QString("No %1 tag !").arg(tag);
-        else return QString();
-    }
-    else
-    {
-//        qDebug() << tag << " : " << elm.text();
-        return elm.text();
-    }
+    if(r>0) release = r;
 }
+
+void PisiUpdate::set_date(QDate d)
+{
+    if(d.isValid()) date = d;
+}
+
+void PisiUpdate::set_version(QString v)
+{
+    version = v;
+}
+
+void PisiUpdate::set_comment(QString c)
+{
+    comment = c;
+}
+
+void PisiUpdate::set_packager_name(QString p_n)
+{
+    packager_name = p_n;
+}
+
+void PisiUpdate::set_packager_email(QString p_e)
+{
+    packager_email = p_e;
+}
+

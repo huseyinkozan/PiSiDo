@@ -4,7 +4,7 @@
 #include "pisisource.h"
 #include "pisipackage.h"
 #include "pisiupdate.h"
-#include <QList>
+#include <QMap>
 
 class QDomDocument;
 
@@ -14,21 +14,23 @@ public:
     Pisi();
 
     void clear();
-    bool is_loaded() { return loaded; }
+    bool is_empty();
 
     void load_from_dom(const QDomDocument & dom);
     bool save_to_dom(QDomDocument & dom);
 
     PisiSource get_source();
     PisiPackage get_package();
-    QList<PisiUpdate> get_updates();
+    QMap<int, PisiUpdate> get_updates();
+    PisiUpdate get_last_update();
 
 private:
-    bool loaded;
+    bool empty;
 
     PisiSource source;
     PisiPackage package;
-    QList<PisiUpdate> updates;
+    QMap<int, PisiUpdate> updates;
+    PisiUpdate last_update;
 };
 
 #endif // PISI_H

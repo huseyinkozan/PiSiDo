@@ -21,7 +21,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_src_code">
        <attribute name="title">
@@ -382,7 +382,7 @@
               </property>
              </widget>
             </item>
-            <item row="9" column="1">
+            <item row="9" column="1" colspan="4">
              <widget class="QLineEdit" name="le_build_dependency">
               <property name="toolTip">
                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -405,7 +405,7 @@ p, li { white-space: pre-wrap; }
               </property>
              </widget>
             </item>
-            <item row="10" column="1">
+            <item row="10" column="1" colspan="4">
              <widget class="QLineEdit" name="le_runtime_dependency">
               <property name="toolTip">
                <string>Comma seperated package names.</string>
@@ -459,16 +459,6 @@ p, li { white-space: pre-wrap; }
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
           </attribute>
-          <row>
-           <property name="text">
-            <string>New Row</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>New Row</string>
-           </property>
-          </row>
           <column>
            <property name="text">
             <string>Rel. No</string>
@@ -502,12 +492,9 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QPushButton" name="pb_delete_update">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
+         <widget class="QPushButton" name="pb_delete_last_update">
           <property name="text">
-           <string>Delete Update</string>
+           <string>Delete Last Update</string>
           </property>
          </widget>
         </item>
@@ -531,6 +518,9 @@ p, li { white-space: pre-wrap; }
            </item>
            <item row="0" column="1">
             <widget class="QSpinBox" name="sb_release_number">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="readOnly">
               <bool>true</bool>
              </property>
@@ -556,6 +546,9 @@ p, li { white-space: pre-wrap; }
            </item>
            <item row="1" column="1" colspan="2">
             <widget class="QDateEdit" name="de_update_date">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="readOnly">
               <bool>true</bool>
              </property>
@@ -598,6 +591,9 @@ p, li { white-space: pre-wrap; }
            </item>
            <item row="5" column="1" colspan="5">
             <widget class="QLineEdit" name="le_update_name">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="readOnly">
               <bool>true</bool>
              </property>
@@ -617,6 +613,9 @@ p, li { white-space: pre-wrap; }
            </item>
            <item row="6" column="1" colspan="5">
             <widget class="QLineEdit" name="le_update_email">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="readOnly">
               <bool>true</bool>
              </property>
@@ -726,6 +725,11 @@ p, li { white-space: pre-wrap; }
                    <string notr="true">SCons</string>
                   </property>
                  </item>
+                 <item>
+                  <property name="text">
+                   <string>Imported</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
               </layout>
@@ -733,7 +737,7 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QStackedWidget" name="sw_action_template">
                <property name="currentIndex">
-                <number>0</number>
+                <number>6</number>
                </property>
                <widget class="QWidget" name="page_1">
                 <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -989,6 +993,24 @@ p, li { white-space: pre-wrap; }
                  </item>
                 </layout>
                </widget>
+               <widget class="QWidget" name="page_imported">
+                <layout class="QVBoxLayout" name="verticalLayout_13">
+                 <item>
+                  <widget class="QTextEdit" name="te_imported">
+                   <property name="statusTip">
+                    <string>This will fill after import. You can change before create.</string>
+                   </property>
+                   <property name="html">
+                    <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
               </widget>
              </item>
             </layout>
@@ -997,44 +1019,24 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_12">
-            <item>
-             <widget class="QCheckBox" name="chk_create_desktop">
-              <property name="text">
-               <string>Create .desktop file</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QPlainTextEdit" name="pte_desktop">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="toolTip">
-             <string>Underscored words will replace with proper values.</string>
-            </property>
-            <property name="statusTip">
-             <string>Underscored words will replace with proper values.</string>
-            </property>
-            <property name="plainText">
-             <string notr="true">#!/usr/bin/env xdg-open
+         <widget class="QGroupBox" name="gb_create_desktop">
+          <property name="title">
+           <string>Create .desktop File</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0" rowspan="2">
+            <widget class="QPlainTextEdit" name="pte_desktop">
+             <property name="toolTip">
+              <string>Underscored words will replace with proper values.</string>
+             </property>
+             <property name="statusTip">
+              <string>Underscored words will replace with proper values.</string>
+             </property>
+             <property name="plainText">
+              <string notr="true">#!/usr/bin/env xdg-open
 [Desktop Entry]
 Type=Application
 Version=___version___
@@ -1050,10 +1052,31 @@ Exec=___package_name___
 Terminal=false
 StartupNotify=false
 Categories=Application;</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QToolButton" name="tb_desktop_reset">
+             <property name="text">
+              <string>Reset</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -1282,8 +1305,6 @@ Categories=Application;</string>
   <tabstop>te_description</tabstop>
   <tabstop>lw_action_template</tabstop>
   <tabstop>te_auto</tabstop>
-  <tabstop>chk_create_desktop</tabstop>
-  <tabstop>pte_desktop</tabstop>
   <tabstop>le_packager_name</tabstop>
   <tabstop>le_packager_email</tabstop>
   <tabstop>pb_clear</tabstop>
@@ -1454,22 +1475,6 @@ Categories=Application;</string>
     <hint type="destinationlabel">
      <x>119</x>
      <y>230</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>chk_create_desktop</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>pte_desktop</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>116</x>
-     <y>464</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>229</x>
-     <y>532</y>
     </hint>
    </hints>
   </connection>

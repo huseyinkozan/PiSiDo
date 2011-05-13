@@ -68,6 +68,7 @@ MainWindow::MainWindow(QWidget *parent) :
     action_defaults.insert(3, ui->te_qt4->toHtml());
     action_defaults.insert(4, ui->te_python->toHtml());
     action_defaults.insert(5, ui->te_scons->toHtml());
+    action_defaults.insert(6, ui->te_imported->toHtml());
 
     desktop_file_default = ui->pte_desktop->toPlainText();
 
@@ -243,7 +244,7 @@ void MainWindow::write_settings()
     settings.endGroup();
     settings.beginGroup("compilation");
     settings.setValue("action_template", ui->lw_action_template->currentIndex().row());
-    settings.setValue("create_desktop", ui->chk_create_desktop->isChecked());
+    settings.setValue("create_desktop", ui->gb_create_desktop->isChecked());
     settings.setValue("desktop_file", ui->pte_desktop->toPlainText());
     settings.setValue("te_auto", ui->te_auto->toHtml());
     settings.setValue("te_cmake", ui->te_cmake->toHtml());
@@ -251,6 +252,7 @@ void MainWindow::write_settings()
     settings.setValue("te_qt4", ui->te_qt4->toHtml());
     settings.setValue("te_python", ui->te_python->toHtml());
     settings.setValue("te_scons", ui->te_scons->toHtml());
+    settings.setValue("te_imported", ui->te_imported->toHtml());
     settings.endGroup();
     settings.beginGroup("packager");
     settings.setValue("packager_name", ui->le_packager_name->text());
@@ -301,7 +303,7 @@ void MainWindow::read_settings()
     settings.beginGroup("compilation");
     ui->lw_action_template->setCurrentRow(settings.value("action_template",0).toInt());
     ui->sw_action_template->setCurrentIndex(settings.value("action_template",0).toInt());
-    ui->chk_create_desktop->setChecked(settings.value("create_desktop", false).toBool());
+    ui->gb_create_desktop->setChecked(settings.value("create_desktop", false).toBool());
     ui->pte_desktop->setPlainText(settings.value("desktop_file", desktop_file_default).toString());
     ui->te_auto->setHtml(settings.value("te_auto", action_defaults.at(0)).toString());
     ui->te_cmake->setHtml(settings.value("te_cmake", action_defaults.at(1)).toString());
@@ -309,6 +311,7 @@ void MainWindow::read_settings()
     ui->te_qt4->setHtml(settings.value("te_qt4", action_defaults.at(3)).toString());
     ui->te_python->setHtml(settings.value("te_python", action_defaults.at(4)).toString());
     ui->te_scons->setHtml(settings.value("te_scons", action_defaults.at(5)).toString());
+    ui->te_imported->setHtml(settings.value("te_imported", action_defaults.at(6)).toString());
     settings.endGroup();
     settings.beginGroup("packager");
     ui->le_packager_name->setText(settings.value("packager_name").toString());
@@ -324,15 +327,19 @@ void MainWindow::on_pb_clear_clicked()
     bool not_clear_packager = settings.value("not_clear_packager").toBool();
     settings.endGroup();
 
-    QList<QLineEdit *> le_list = findChildren<QLineEdit *>();
+    QList<QLineEdit *> le_list;
+    le_list = ui->tab_src_code->findChildren<QLineEdit *>();
     foreach(QLineEdit * le, le_list)
-        if(le == ui->le_packager_name || le == ui->le_packager_email)
-        {
-            if( ! not_clear_packager)
-                le->clear();
-        }
-        else
+        le->clear();
+    le_list = ui->tab_package->findChildren<QLineEdit *>();
+    foreach(QLineEdit * le, le_list)
+        le->clear();
+    if( ! not_clear_packager)
+    {
+        le_list = ui->tab_packager->findChildren<QLineEdit *>();
+        foreach(QLineEdit * le, le_list)
             le->clear();
+    }
 
     QList<QComboBox *> cb_list = findChildren<QComboBox *>();
     foreach(QComboBox * cb, cb_list)
@@ -350,6 +357,13 @@ void MainWindow::on_pb_clear_clicked()
     ui->te_qt4->setText(action_defaults.at(3));
     ui->te_python->setText(action_defaults.at(4));
     ui->te_scons->setText(action_defaults.at(5));
+    ui->te_imported->setText(action_defaults.at(6));
+
+    int row_count = ui->tw_history->rowCount();
+    for(int i=0; i<row_count; ++i)
+    {
+        ui->tw_history->removeRow(0);
+    }
 }
 
 
@@ -435,6 +449,14 @@ void MainWindow::on_pb_create_clicked()
         return;
     }
 
+    if( ui->tw_history->rowCount() == 0 )
+    {
+        QMessageBox::critical(this, tr("Error"), tr("No update in history. Please add an update to history."));
+        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_history));
+        ui->le_update_version->setFocus();
+        return;
+    }
+
 //    if( ui->le_version->text().isEmpty())
 //    {
 //        QMessageBox::critical(this, tr("Error"), tr("No version. Please define version."));
@@ -508,7 +530,7 @@ void MainWindow::on_pb_create_clicked()
     if( ! create_action_py(package_dir))
         return;
 
-    if(ui->chk_create_desktop->isChecked())
+    if(ui->gb_create_desktop->isChecked())
         if( ! create_desktop(package_dir))
             return;
 
@@ -767,7 +789,7 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
                         );
             package_files.appendChild(pkg_files_comment);
 
-        if(ui->chk_create_desktop->isChecked())
+        if(ui->gb_create_desktop->isChecked())
         {
             QDomElement package_additional_files = domdom.createElement("AdditionalFiles");
             package.appendChild(package_additional_files);
@@ -1213,11 +1235,6 @@ void MainWindow::on_le_package_name_textChanged(const QString &arg1)
         ui->pb_import_package->setEnabled(false);
 }
 
-void MainWindow::on_tw_history_itemSelectionChanged()
-{
-    ui->pb_delete_update->setEnabled( ui->tw_history->selectionModel()->hasSelection());
-}
-
 void MainWindow::on_pb_import_package_clicked()
 {
     QString file_name = ui->le_work_dir->text() +
@@ -1225,7 +1242,7 @@ void MainWindow::on_pb_import_package_clicked()
                  ui->le_package_name->text() +
                  QDir::separator() +
                  "pspec.xml";
-    if( ! file_name.isEmpty() && QFile::exists(file_name))
+    if(QFile::exists(file_name))
     {
         QFile file(file_name);
         if( ! file.open(QFile::ReadOnly))
@@ -1266,7 +1283,7 @@ void MainWindow::on_pb_import_package_clicked()
 
         try
         {
-            fill_fields_from_pspec_pisi();
+            fill_fields_from_pisi();
         }
         catch (QString e)
         {
@@ -1281,11 +1298,13 @@ void MainWindow::on_pb_import_package_clicked()
     }
 }
 
-void MainWindow::fill_fields_from_pspec_pisi()
+void MainWindow::fill_fields_from_pisi()
 {
+    if(pisi.is_empty())
+        throw QString("Try to load fileds from pisi, but pisi not loaded !");
+
     PisiSource source = pisi.get_source();
     PisiPackage package = pisi.get_package();
-    QList<PisiUpdate> updates = pisi.get_updates();
 
     // source section
     QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives = source.get_archives();
@@ -1294,20 +1313,24 @@ void MainWindow::fill_fields_from_pspec_pisi()
     {
         throw QString("More than one archive tag.");
     }
-    QString archive = archives.constBegin().key();
-    if(archive.startsWith("http:") || archive.startsWith("ftp:"))
+    QMap<QString, QMap<PisiSource::ArchiveAttr,QString> >::const_iterator archives_it = archives.constBegin();
+    if(archives_it != archives.constEnd())
     {
-        ui->rb_src_url->setChecked(true);
-        ui->le_src_url->setText(archive);
-        QMap<PisiSource::ArchiveAttr,QString> archive_att = archives.constBegin().value();
-        ui->le_src_sha1->setText(archive_att.value(PisiSource::SHA1SUM));
-        ui->chk_cp_to_pisi_archive->setChecked(false);
-    }
-    else
-    {
-        ui->rb_src_compressed->setChecked(true);
-        ui->le_src_compressed->setText(archive);
-        ui->chk_cp_to_pisi_archive->setChecked(true);
+        QString archive = archives_it.key();
+        if(archive.startsWith("http:") || archive.startsWith("ftp:"))
+        {
+            ui->rb_src_url->setChecked(true);
+            ui->le_src_url->setText(archive);
+            QMap<PisiSource::ArchiveAttr,QString> archive_att = archives.constBegin().value();
+            ui->le_src_sha1->setText(archive_att.value(PisiSource::SHA1SUM));
+            ui->chk_cp_to_pisi_archive->setChecked(false);
+        }
+        else
+        {
+            ui->rb_src_compressed->setChecked(true);
+            ui->le_src_compressed->setText(archive);
+            ui->chk_cp_to_pisi_archive->setChecked(true);
+        }
     }
     ui->le_src_home_page->setText(source.get_home_page());
 
@@ -1315,14 +1338,17 @@ void MainWindow::fill_fields_from_pspec_pisi()
 
     // do not edit work_dir and packge_name, only warn
     if(ui->le_package_name->text() != package.get_name())
+    {
+        qDebug() << ui->le_package_name->text() << "!=" << package.get_name();
         QMessageBox::warning(this, tr("Warning"), tr("Package name is not same as in the pspec.xml file !"));
-    ui->le_summary->setText(package.get_summary());
-    ui->te_description->setPlainText(package.get_description());
-    int license_index = ui->combo_licence->findText(package.get_license());
+    }
+    ui->le_summary->setText(source.get_summary());
+    ui->te_description->setPlainText(source.get_description());
+    int license_index = ui->combo_licence->findText(source.get_license());
     if(license_index > 0) ui->combo_licence->setCurrentIndex(license_index);
-    int is_a_index = ui->combo_is_a->findText(package.get_is_a());
+    int is_a_index = ui->combo_is_a->findText(source.get_is_a());
     if(is_a_index > 0) ui->combo_is_a->setCurrentIndex(is_a_index);
-    int part_of_index = ui->combo_part_of->findText(package.get_part_of());
+    int part_of_index = ui->combo_part_of->findText(source.get_part_of());
     if(part_of_index > 0) ui->combo_part_of->setCurrentIndex(part_of_index);
 
     QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > build_dep = source.get_build_dependencies();
@@ -1331,29 +1357,97 @@ void MainWindow::fill_fields_from_pspec_pisi()
     QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > runtime_dep = package.get_runtime_dependencies();
     ui->le_runtime_dependency->setText(package.get_dependency_list(runtime_dep).join(", "));
 
-    qDebug() << "Fields filled.";
+    QString actions_py = ui->le_work_dir->text() +
+                 QDir::separator() +
+                 ui->le_package_name->text() +
+                 QDir::separator() +
+                 "actions.py";
+    if(QFile::exists(actions_py))
+    {
+        QFile actions_file(actions_py);
+        if( ! actions_file.open(QFile::ReadOnly | QFile::Text))
+        {
+            QMessageBox::warning(this, tr("Error"), tr("Can not open action.py file for reading !"));
+        }
+        else
+        {
+            QTextStream actions_py_stream(&actions_file);
+            ui->te_imported->setPlainText(actions_py_stream.readAll());
+        }
+        actions_file.close();
+    }
+    ui->lw_action_template->setCurrentRow(ui->sw_action_template->indexOf(ui->page_imported));
 
-    /*
+    QString desktop_file_name = ui->le_work_dir->text() +
+                 QDir::separator() +
+                 ui->le_package_name->text() +
+                 QDir::separator() +
+                 QString("/files/%1.desktop").arg(ui->le_package_name->text());
+    if(QFile::exists(desktop_file_name))
+    {
+        QFile desktop_file(desktop_file_name);
+        if( ! desktop_file.open(QFile::ReadOnly | QFile::Text))
+        {
+            QMessageBox::warning(this, tr("Error"), tr("Can not open desktop file for reading !"));
+        }
+        else
+        {
+            ui->gb_create_desktop->setChecked(true);
+            QTextStream desktop_file_stream(&desktop_file);
+            ui->pte_desktop->setPlainText(desktop_file_stream.readAll());
+        }
+        desktop_file.close();
+    }
+    else
+    {
+        ui->gb_create_desktop->setChecked(false);
+    }
 
-    settings.endGroup();
-    settings.beginGroup("compilation");
-    ui->lw_action_template->setCurrentRow(settings.value("action_template",0).toInt());
-    ui->sw_action_template->setCurrentIndex(settings.value("action_template",0).toInt());
-    ui->chk_create_desktop->setChecked(settings.value("create_desktop", false).toBool());
-    ui->pte_desktop->setPlainText(settings.value("desktop_file", desktop_file_default).toString());
-    ui->te_auto->setHtml(settings.value("te_auto", action_defaults.at(0)).toString());
-    ui->te_cmake->setHtml(settings.value("te_cmake", action_defaults.at(1)).toString());
-    ui->te_kde4->setHtml(settings.value("te_kde4", action_defaults.at(2)).toString());
-    ui->te_qt4->setHtml(settings.value("te_qt4", action_defaults.at(3)).toString());
-    ui->te_python->setHtml(settings.value("te_python", action_defaults.at(4)).toString());
-    ui->te_scons->setHtml(settings.value("te_scons", action_defaults.at(5)).toString());
-    settings.endGroup();
-    settings.beginGroup("packager");
-    ui->le_packager_name->setText(settings.value("packager_name").toString());
-    ui->le_packager_email->setText(settings.value("packager_email").toString());
-    settings.endGroup();
-    */
+    // history section
+    int row_count = ui->tw_history->rowCount();
+    for(int i=0; i<row_count; ++i)
+    {
+        ui->tw_history->removeRow(0);
+    }
 
+    QMap<int, PisiUpdate> updates = pisi.get_updates();
+    QList<int> releases = updates.keys();   // keys are asc ordered
+    foreach (int r, releases)
+    {
+        QTableWidgetItem * item_release = new QTableWidgetItem(QString::number(updates[r].get_release()));
+        QTableWidgetItem * item_date = new QTableWidgetItem(updates[r].get_date().toString("dd.MM.yyyy"));
+        QTableWidgetItem * item_version = new QTableWidgetItem(updates[r].get_version());
+        QTableWidgetItem * item_comment = new QTableWidgetItem(updates[r].get_comment());
+        QTableWidgetItem * item_name = new QTableWidgetItem(updates[r].get_packager_name());
+        QTableWidgetItem * item_email = new QTableWidgetItem(updates[r].get_packager_email());
+        int row = 0;// ui->tw_history->rowCount();
+        ui->tw_history->insertRow(row);
+        ui->tw_history->setItem(row, 0, item_release);
+        ui->tw_history->setItem(row, 1, item_date);
+        ui->tw_history->setItem(row, 2, item_version);
+        ui->tw_history->setItem(row, 3, item_comment);
+        ui->tw_history->setItem(row, 4, item_name);
+        ui->tw_history->setItem(row, 5, item_email);
+    }
+
+    // packager section
+    // packager will not import
+
+    statusBar()->showMessage(tr("Package build information successfully imported."));
 }
 
+void MainWindow::on_tb_desktop_reset_clicked()
+{
+    ui->pte_desktop->setPlainText(desktop_file_default);
+}
 
+void MainWindow::on_pb_delete_last_update_clicked()
+{
+    if(ui->tw_history->rowCount()>0)
+        ui->tw_history->removeRow(0);
+}
+
+void MainWindow::on_le_package_name_returnPressed()
+{
+    on_pb_import_package_clicked();
+}

@@ -42,9 +42,11 @@ private slots:
     void on_action_Load_Package_Information_triggered();
     void on_le_work_dir_textChanged(const QString &arg1);
     void on_le_package_name_textChanged(const QString &arg1);
-    void on_tw_history_itemSelectionChanged();
     void on_pb_import_package_clicked();
+    void on_tb_desktop_reset_clicked();
+    void on_pb_delete_last_update_clicked();
 
+    void on_le_package_name_returnPressed();
 
 protected:
     virtual void closeEvent(QCloseEvent * event);
@@ -79,8 +81,7 @@ private:
     bool build_package(QDir package_dir, QDir out_dir);
     void copy_source_archive(QString src_path);
 
-    void fill_fields_from_pspec_pisi();
-
+    void fill_fields_from_pisi();
 };
 
 #endif // MAINWINDOW_H
