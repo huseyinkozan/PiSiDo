@@ -1,14 +1,14 @@
-#ifndef PSPECPACKAGE_H
-#define PSPECPACKAGE_H
+#ifndef PISIPACKAGE_H
+#define PISIPACKAGE_H
 
-#include "pspec_base.h"
+#include "pisispbase.h"
 
 class QDomElement;
 
-class PSpecPackage : public PSpecBase
+class PisiPackage : public PisiSPBase
 {
 public:
-    PSpecPackage();
+    PisiPackage();
 
     virtual void clear();
     virtual void load_from_dom(const QDomElement & dom_element);
@@ -20,4 +20,4 @@ private:
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> > runtime_dependencies;
 };
 
-#endif // PSPECPACKAGE_H
+#endif // PISIPACKAGE_H

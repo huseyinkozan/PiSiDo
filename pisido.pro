@@ -16,20 +16,20 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     configurationdialog.cpp \
     helpdialog.cpp \
-    pspec_base.cpp \
-    pspec_package.cpp \
-    pspec_pisi.cpp \
-    pspec_source.cpp \
-    pspec_update.cpp
+    pisispbase.cpp \
+    pisi.cpp \
+    pisipackage.cpp \
+    pisisource.cpp \
+    pisiupdate.cpp
 
 HEADERS  += mainwindow.h \
     configurationdialog.h \
     helpdialog.h \
-    pspec_update.h \
-    pspec_source.h \
-    pspec_pisi.h \
-    pspec_package.h \
-    pspec_base.h
+    pisispbase.h \
+    pisi.h \
+    pisipackage.h \
+    pisisource.h \
+    pisiupdate.h
 
 FORMS    += mainwindow.ui \
     configurationdialog.ui \

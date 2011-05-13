@@ -1,13 +1,13 @@
-#include "pspec_update.h"
+#include "pisiupdate.h"
 
 #include <QDomElement>
 
-PSpecUpdate::PSpecUpdate()
+PisiUpdate::PisiUpdate()
 {
     clear();
 }
 
-void PSpecUpdate::clear()
+void PisiUpdate::clear()
 {
     date = QDate();
     version.clear();
@@ -17,7 +17,7 @@ void PSpecUpdate::clear()
     release = 0;
 }
 
-void PSpecUpdate::load_from_dom(const QDomElement & dom_element)
+void PisiUpdate::load_from_dom(const QDomElement & dom_element)
 {
     if(dom_element.isNull())
         throw QString("Dom Element is null while loading to PspecPackage !");
@@ -43,32 +43,32 @@ void PSpecUpdate::load_from_dom(const QDomElement & dom_element)
     else release = 0;
 }
 
-int PSpecUpdate::get_release()
+int PisiUpdate::get_release()
 {
     return release;
 }
 
-QString PSpecUpdate::get_version()
+QString PisiUpdate::get_version()
 {
     return version;
 }
 
-QString PSpecUpdate::get_comment()
+QString PisiUpdate::get_comment()
 {
     return comment;
 }
 
-QString PSpecUpdate::get_packager_name()
+QString PisiUpdate::get_packager_name()
 {
     return packager_name;
 }
 
-QString PSpecUpdate::get_packager_email()
+QString PisiUpdate::get_packager_email()
 {
     return packager_email;
 }
 
-QString PSpecUpdate::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
+QString PisiUpdate::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
 {
     if(elm.isNull())
     {

@@ -1247,11 +1247,11 @@ void MainWindow::on_pb_import_package_clicked()
             return;
         }
         file.close();
-        pspec_pisi.clear();
+        pisi.clear();
 
         try
         {
-            pspec_pisi.load_from_dom(dom_pspec);
+            pisi.load_from_dom(dom_pspec);
         }
         catch (QString e)
         {
@@ -1283,12 +1283,12 @@ void MainWindow::on_pb_import_package_clicked()
 
 void MainWindow::fill_fields_from_pspec_pisi()
 {
-    PSpecSource source = pspec_pisi.get_source();
-    PSpecPackage package = pspec_pisi.get_package();
-    QList<PSpecUpdate> updates = pspec_pisi.get_updates();
+    PisiSource source = pisi.get_source();
+    PisiPackage package = pisi.get_package();
+    QList<PisiUpdate> updates = pisi.get_updates();
 
     // source section
-    QMap<QString, QMap<PSpecSource::ArchiveAttr,QString> > archives = source.get_archives();
+    QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives = source.get_archives();
     // TODO : revise filling comma seperated archives
     if(archives.count() > 1)
     {
@@ -1299,8 +1299,8 @@ void MainWindow::fill_fields_from_pspec_pisi()
     {
         ui->rb_src_url->setChecked(true);
         ui->le_src_url->setText(archive);
-        QMap<PSpecSource::ArchiveAttr,QString> archive_att = archives.constBegin().value();
-        ui->le_src_sha1->setText(archive_att.value(PSpecSource::SHA1SUM));
+        QMap<PisiSource::ArchiveAttr,QString> archive_att = archives.constBegin().value();
+        ui->le_src_sha1->setText(archive_att.value(PisiSource::SHA1SUM));
         ui->chk_cp_to_pisi_archive->setChecked(false);
     }
     else
@@ -1325,10 +1325,10 @@ void MainWindow::fill_fields_from_pspec_pisi()
     int part_of_index = ui->combo_part_of->findText(package.get_part_of());
     if(part_of_index > 0) ui->combo_part_of->setCurrentIndex(part_of_index);
 
-    QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > build_dep = source.get_build_dependencies();
+    QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > build_dep = source.get_build_dependencies();
     ui->le_build_dependency->setText(source.get_dependency_list(build_dep).join(", "));
 
-    QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > runtime_dep = package.get_runtime_dependencies();
+    QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > runtime_dep = package.get_runtime_dependencies();
     ui->le_runtime_dependency->setText(package.get_dependency_list(runtime_dep).join(", "));
 
     qDebug() << "Fields filled.";

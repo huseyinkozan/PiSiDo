@@ -1,14 +1,14 @@
-#include "pspec_pisi.h"
+#include "pisi.h"
 
 #include <QDomDocument>
 
-PSpecPISI::PSpecPISI()
+Pisi::Pisi()
 {
     clear();
 }
 
 
-void PSpecPISI::clear()
+void Pisi::clear()
 {
     loaded = false;
     source.clear();
@@ -16,31 +16,31 @@ void PSpecPISI::clear()
     updates.clear();
 }
 
-PSpecSource PSpecPISI::get_source()
+PisiSource Pisi::get_source()
 {
     if(is_loaded())
         return source;
     else
-        return PSpecSource();
+        return PisiSource();
 }
 
-PSpecPackage PSpecPISI::get_package()
+PisiPackage Pisi::get_package()
 {
     if(is_loaded())
         return package;
     else
-        return PSpecPackage();
+        return PisiPackage();
 }
 
-QList<PSpecUpdate> PSpecPISI::get_updates()
+QList<PisiUpdate> Pisi::get_updates()
 {
     if(is_loaded())
         return updates;
     else
-        return QList<PSpecUpdate>();
+        return QList<PisiUpdate>();
 }
 
-void PSpecPISI::load_from_dom(const QDomDocument & dom)
+void Pisi::load_from_dom(const QDomDocument & dom)
 {
     loaded = false;
 
@@ -83,7 +83,7 @@ void PSpecPISI::load_from_dom(const QDomDocument & dom)
             QDomElement elm_upd = elm_hist.firstChildElement("Update");
             for( ; ! elm_upd.isNull(); elm_upd = elm_upd.nextSiblingElement("Update"))
             {
-                PSpecUpdate upd;
+                PisiUpdate upd;
                 try {
                     upd.load_from_dom(elm_upd);
                 } catch (QString e) {
@@ -105,7 +105,7 @@ void PSpecPISI::load_from_dom(const QDomDocument & dom)
     }
 }
 
-bool PSpecPISI::save_to_dom(QDomDocument &dom)
+bool Pisi::save_to_dom(QDomDocument &dom)
 {
     if(dom.isNull())
         return false;

@@ -1,25 +1,25 @@
-#include "pspec_source.h"
+#include "pisisource.h"
 
 #include <QDebug>
 #include <QDomElement>
 
-PSpecSource::PSpecSource()
-    : PSpecBase()
+PisiSource::PisiSource()
+    : PisiSPBase()
 {
     clear();
 }
 
-void PSpecSource::clear()
+void PisiSource::clear()
 {
-    PSpecBase::clear();
+    PisiSPBase::clear();
     home_page.clear();
     packager.clear();
     archives.clear();
 }
 
-void PSpecSource::load_from_dom(const QDomElement & dom_element)
+void PisiSource::load_from_dom(const QDomElement & dom_element)
 {
-    PSpecBase::load_from_dom(dom_element);
+    PisiSPBase::load_from_dom(dom_element);
 
     if(dom_element.isNull())
         throw QString("Dom Element is null while loading to PspecSource !");
@@ -59,22 +59,22 @@ void PSpecSource::load_from_dom(const QDomElement & dom_element)
     }
 }
 
-QString PSpecSource::get_home_page()
+QString PisiSource::get_home_page()
 {
     return home_page;
 }
 
-QMap<QString,QString> PSpecSource::get_packager()
+QMap<QString,QString> PisiSource::get_packager()
 {
     return packager;
 }
 
-QMap<QString, QMap<PSpecSource::ArchiveAttr,QString> > PSpecSource::get_archives()
+QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > PisiSource::get_archives()
 {
     return archives;
 }
 
-PSpecSource::ArchiveAttr PSpecSource::get_archive_attr_property(QString attr_name)
+PisiSource::ArchiveAttr PisiSource::get_archive_attr_property(QString attr_name)
 {
     if(attr_name.toLower() == "sha1sum")
         return SHA1SUM;

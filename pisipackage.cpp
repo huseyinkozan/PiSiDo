@@ -1,23 +1,23 @@
-#include "pspec_package.h"
+#include "pisipackage.h"
 
 #include <QDomElement>
 
-PSpecPackage::PSpecPackage()
-    : PSpecBase()
+PisiPackage::PisiPackage()
+    : PisiSPBase()
 {
     clear();
 }
 
 
-void PSpecPackage::clear()
+void PisiPackage::clear()
 {
-    PSpecBase::clear();
+    PisiSPBase::clear();
     runtime_dependencies.clear();
 }
 
-void PSpecPackage::load_from_dom(const QDomElement & dom_element)
+void PisiPackage::load_from_dom(const QDomElement & dom_element)
 {
-    PSpecBase::load_from_dom(dom_element);
+    PisiSPBase::load_from_dom(dom_element);
 
     if(dom_element.isNull())
         throw QString("Dom Element is null while loading to PspecPackage !");
@@ -26,7 +26,7 @@ void PSpecPackage::load_from_dom(const QDomElement & dom_element)
     runtime_dependencies = get_dependency_map(elm, false);
 }
 
-QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > PSpecPackage::get_runtime_dependencies()
+QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiPackage::get_runtime_dependencies()
 {
     return runtime_dependencies;
 }

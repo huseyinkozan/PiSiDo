@@ -1,16 +1,16 @@
-#include "pspec_base.h"
+#include "pisispbase.h"
 
 #include <QDomElement>
 
 #include <QTextStream>
 #include <QDebug>
 
-PSpecBase::PSpecBase()
+PisiSPBase::PisiSPBase()
 {
     clear();
 }
 
-void PSpecBase::clear()
+void PisiSPBase::clear()
 {
     name.clear();
     summary.clear();
@@ -21,7 +21,7 @@ void PSpecBase::clear()
     build_dependencies.clear();
 }
 
-void PSpecBase::load_from_dom(const QDomElement & dom_element)
+void PisiSPBase::load_from_dom(const QDomElement & dom_element)
 {
     if(dom_element.isNull())
         throw QString("Dom Element is null while loading to PspecBase !");
@@ -51,42 +51,42 @@ void PSpecBase::load_from_dom(const QDomElement & dom_element)
     build_dependencies = get_dependency_map(elm, false);
 }
 
-QString PSpecBase::get_name()
+QString PisiSPBase::get_name()
 {
     return name;
 }
 
-QString PSpecBase::get_summary()
+QString PisiSPBase::get_summary()
 {
     return summary;
 }
 
-QString PSpecBase::get_description()
+QString PisiSPBase::get_description()
 {
     return description;
 }
 
-QString PSpecBase::get_part_of()
+QString PisiSPBase::get_part_of()
 {
     return part_of;
 }
 
-QString PSpecBase::get_license()
+QString PisiSPBase::get_license()
 {
     return license;
 }
 
-QString PSpecBase::get_is_a()
+QString PisiSPBase::get_is_a()
 {
     return is_a;
 }
 
-QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > PSpecBase::get_build_dependencies()
+QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::get_build_dependencies()
 {
     return build_dependencies;
 }
 
-QString PSpecBase::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
+QString PisiSPBase::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
 {
     if(elm.isNull())
     {
@@ -101,7 +101,7 @@ QString PSpecBase::get_value_from_element(QString tag, QDomElement elm, bool man
     }
 }
 
-QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > PSpecBase::get_dependency_map(QDomElement elm, bool mandatory)
+QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::get_dependency_map(QDomElement elm, bool mandatory)
 {
     if(elm.isNull())
     {
@@ -136,7 +136,7 @@ QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > PSpecBase::get
     return dependencies;
 }
 
-PSpecBase::VersionReleaseToFromAttr PSpecBase::get_dependency_attr_property(QString attr_name)
+PisiSPBase::VersionReleaseToFromAttr PisiSPBase::get_dependency_attr_property(QString attr_name)
 {
     if(attr_name.toLower() == "versionfrom")
         return VERSIONFROM;
@@ -153,7 +153,7 @@ PSpecBase::VersionReleaseToFromAttr PSpecBase::get_dependency_attr_property(QStr
     else throw QString("Wrong dependency atribute name : %1").arg(attr_name);
 }
 
-QString PSpecBase::get_dependency_attr_property_string(PSpecBase::VersionReleaseToFromAttr attr, bool abbreviation)
+QString PisiSPBase::get_dependency_attr_property_string(PisiSPBase::VersionReleaseToFromAttr attr, bool abbreviation)
 {
     switch(attr)
     {
@@ -184,7 +184,7 @@ QString PSpecBase::get_dependency_attr_property_string(PSpecBase::VersionRelease
 /*
   qt[>4.7,<4.5,==4.6], gtk[>>2], libz, libusb1[=1]
 */
-QStringList PSpecBase::get_dependency_list(QMap<QString, QMap<PSpecBase::VersionReleaseToFromAttr,QString> > dependency)
+QStringList PisiSPBase::get_dependency_list(QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > dependency)
 {
     QStringList dep_list;
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> >::const_iterator dependency_it = dependency.constBegin();

@@ -1,5 +1,5 @@
-#ifndef PSPECBASE_H
-#define PSPECBASE_H
+#ifndef PISISPBASE_H
+#define PISISPBASE_H
 
 #include <QString>
 #include <QStringList>
@@ -7,10 +7,10 @@
 
 class QDomElement;
 
-class PSpecBase
+class PisiSPBase
 {
 public:
-    PSpecBase();
+    PisiSPBase();
 
     enum VersionReleaseToFromAttr {
         VERSIONFROM,
@@ -53,4 +53,4 @@ private:
 
 };
 
-#endif // PSPECBASE_H
+#endif // PISISPBASE_H

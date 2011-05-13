@@ -1,17 +1,17 @@
-#ifndef PSPECSOURCE_H
-#define PSPECSOURCE_H
+#ifndef PISISOURCE_H
+#define PISISOURCE_H
 
 #include <QString>
 #include <QMap>
 
-#include "pspec_base.h"
+#include "pisispbase.h"
 
 class QDomElement;
 
-class PSpecSource : public PSpecBase
+class PisiSource : public PisiSPBase
 {
 public:
-    PSpecSource();
+    PisiSource();
 
     enum ArchiveAttr {
         SHA1SUM,
@@ -35,4 +35,4 @@ private:
     QMap<QString, QMap<ArchiveAttr,QString> > archives;     // archive, {(sha1sum,xxxx),(type,xxxx),(target,xxxx)}
 };
 
-#endif // PSPECSOURCE_H
+#endif // PISISOURCE_H

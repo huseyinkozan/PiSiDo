@@ -1,15 +1,15 @@
-#ifndef PSPECUPDATE_H
-#define PSPECUPDATE_H
+#ifndef PISIUPDATE_H
+#define PISIUPDATE_H
 
 #include <QString>
 #include <QDate>
 
 class QDomElement;
 
-class PSpecUpdate
+class PisiUpdate
 {
 public:
-    PSpecUpdate();
+    PisiUpdate();
 
     void clear();
     void load_from_dom(const QDomElement & dom_element);
@@ -33,4 +33,4 @@ private:
     QString packager_email;
 };
 
-#endif // PSPECUPDATE_H
+#endif // PISIUPDATE_H

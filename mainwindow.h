@@ -6,7 +6,7 @@
 #include <QSettings>
 #include <QDomDocument>
 
-#include "pspec_pisi.h"
+#include "pisi.h"
 
 namespace Ui {
     class MainWindow;
@@ -56,7 +56,7 @@ private:
     QString desktop_file_default;
     QSettings settings;
     QDomDocument dom_pspec;
-    PSpecPISI pspec_pisi;
+    Pisi pisi;
 
     QStringList get_file_strings(const QString & file_name);
 
