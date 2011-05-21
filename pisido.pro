@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     pisi.cpp \
     pisipackage.cpp \
     pisisource.cpp \
-    pisiupdate.cpp
+    pisiupdate.cpp \
+    addupdatedialog.cpp
 
 HEADERS  += mainwindow.h \
     configurationdialog.h \
@@ -29,11 +30,13 @@ HEADERS  += mainwindow.h \
     pisi.h \
     pisipackage.h \
     pisisource.h \
-    pisiupdate.h
+    pisiupdate.h \
+    addupdatedialog.h
 
 FORMS    += mainwindow.ui \
     configurationdialog.ui \
-    helpdialog.ui
+    helpdialog.ui \
+    addupdatedialog.ui
 
 OTHER_FILES += \
     pisido_tr.qm \

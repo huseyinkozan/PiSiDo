@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    tabifyDockWidget(ui->dw_actions, ui->dw_desktop);
+
     // fill comboboxes
     ui->combo_is_a->addItem("");
     ui->combo_is_a->addItems(get_file_strings(":/files/is_a"));
