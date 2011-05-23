@@ -24,6 +24,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     tabifyDockWidget(ui->dw_actions, ui->dw_desktop);
+    ui->dw_actions->raise();
+    ui->menu_View->addAction(ui->dw_actions->toggleViewAction());
+    ui->menu_View->addAction(ui->dw_desktop->toggleViewAction());
+    ui->menu_View->addAction(ui->dw_history->toggleViewAction());
+    ui->menu_View->addSeparator();
+    ui->menu_View->addAction(ui->tBar_build->toggleViewAction());
+    ui->menu_View->addAction(ui->tBar_view->toggleViewAction());
+
+    ui->tBar_view->addAction(ui->dw_actions->toggleViewAction());
+    ui->tBar_view->addAction(ui->dw_desktop->toggleViewAction());
+    ui->tBar_view->addAction(ui->dw_history->toggleViewAction());
 
     // fill comboboxes
     ui->combo_is_a->addItem("");
@@ -98,6 +109,9 @@ void MainWindow::on_action_About_Qt_triggered()
     QMessageBox::aboutQt(this);
 }
 
+/**
+  Helper function to load each line from file to QStringList.
+  */
 
 QStringList MainWindow::get_file_strings(const QString & file_name)
 {
@@ -122,7 +136,7 @@ QStringList MainWindow::get_file_strings(const QString & file_name)
 
 
 /**
-  gets user file or folder selection. Saves selected directory for next call.
+  Helper function to get user file or folder selection. Saves selected directory for next call.
   */
 
 QString MainWindow::get_user_selection( User_Selection_Mode selection_mode, QString setting_group, QString setting_key,
@@ -172,7 +186,7 @@ void MainWindow::on_tb_src_folder_clicked()
         ui->le_src_folder->setText(src_folder);
 }
 
-void MainWindow::on_pb_work_dir_browse_clicked()
+void MainWindow::on_tb_work_dir_browse_clicked()
 {
     QString work_dir = get_user_selection(Folder, "package", "work_dir", this, tr("Select Directory"), "");
     if( ! work_dir.isEmpty())
@@ -190,7 +204,7 @@ void MainWindow::on_pb_work_dir_open_clicked()
     }
 }
 
-void MainWindow::on_actionConfigure_Application_triggered()
+void MainWindow::on_action_Configure_Application_triggered()
 {
     ConfigurationDialog cd(this);
     if(cd.exec() == QDialog::Accepted)
@@ -213,6 +227,10 @@ void MainWindow::on_action_Help_triggered()
 
 void MainWindow::write_settings()
 {
+    settings.beginGroup("main");
+    settings.setValue("window_state", saveState());
+    settings.setValue("window_geometry", saveGeometry());
+    settings.endGroup();
     settings.beginGroup("source");
     foreach(QObject * item, ui->gb_src->children())
     {
@@ -231,7 +249,6 @@ void MainWindow::write_settings()
     settings.endGroup();
     settings.beginGroup("package");
     settings.setValue("name", ui->le_package_name->text());
-//    settings.setValue("version", ui->le_version->text());
     settings.setValue("work_dir", ui->le_work_dir->text());
     settings.setValue("summary", ui->le_summary->text());
     settings.setValue("detailed", ui->te_description->toPlainText());
@@ -242,7 +259,7 @@ void MainWindow::write_settings()
     settings.setValue("runtime_dependency", ui->le_runtime_dependency->text());
     settings.endGroup();
     settings.beginGroup("compilation");
-    settings.setValue("action_template", ui->lw_action_template->currentIndex().row());
+    settings.setValue("action_template", ui->combo_actions_template->currentIndex());
     settings.setValue("create_desktop", ui->gb_create_desktop->isChecked());
     settings.setValue("desktop_file", ui->pte_desktop->toPlainText());
     settings.setValue("te_auto", ui->te_auto->toHtml());
@@ -253,14 +270,14 @@ void MainWindow::write_settings()
     settings.setValue("te_scons", ui->te_scons->toHtml());
     settings.setValue("te_imported", ui->te_imported->toHtml());
     settings.endGroup();
-    settings.beginGroup("packager");
-    settings.setValue("packager_name", ui->le_packager_name->text());
-    settings.setValue("packager_email", ui->le_packager_email->text());
-    settings.endGroup();
 }
 
 void MainWindow::read_settings()
 {
+    settings.beginGroup("main");
+    restoreState(settings.value("window_state").toByteArray());
+    restoreGeometry(settings.value("window_geometry").toByteArray());
+    settings.endGroup();
     settings.beginGroup("source");
     if( ! settings.value("selected_source").toString().isEmpty())
     {
@@ -290,7 +307,6 @@ void MainWindow::read_settings()
     settings.beginGroup("package");
     ui->le_work_dir->setText(settings.value("work_dir").toString());
     ui->le_package_name->setText(settings.value("name").toString());
-//    ui->le_version->setText(settings.value("version").toString());
     ui->le_summary->setText(settings.value("summary").toString());
     ui->te_description->setPlainText(settings.value("detailed").toString());
     ui->combo_licence->setCurrentIndex(ui->combo_licence->findText(settings.value("licence","").toString()));
@@ -300,8 +316,7 @@ void MainWindow::read_settings()
     ui->le_runtime_dependency->setText(settings.value("runtime_dependency").toString());
     settings.endGroup();
     settings.beginGroup("compilation");
-    ui->lw_action_template->setCurrentRow(settings.value("action_template",0).toInt());
-    ui->sw_action_template->setCurrentIndex(settings.value("action_template",0).toInt());
+    ui->combo_actions_template->setCurrentIndex(settings.value("action_template",0).toInt());
     ui->gb_create_desktop->setChecked(settings.value("create_desktop", false).toBool());
     ui->pte_desktop->setPlainText(settings.value("desktop_file", desktop_file_default).toString());
     ui->te_auto->setHtml(settings.value("te_auto", action_defaults.at(0)).toString());
@@ -312,33 +327,23 @@ void MainWindow::read_settings()
     ui->te_scons->setHtml(settings.value("te_scons", action_defaults.at(5)).toString());
     ui->te_imported->setHtml(settings.value("te_imported", action_defaults.at(6)).toString());
     settings.endGroup();
-    settings.beginGroup("packager");
-    ui->le_packager_name->setText(settings.value("packager_name").toString());
-    ui->le_packager_email->setText(settings.value("packager_email").toString());
-    settings.endGroup();
 }
 
 
+// TODO : test clear
 
-void MainWindow::on_pb_clear_clicked()
+void MainWindow::on_action_Clear_triggered()
 {
-    settings.beginGroup("configuration");
-    bool not_clear_packager = settings.value("not_clear_packager").toBool();
-    settings.endGroup();
+    ui->le_work_dir->clear();
+    ui->le_package_name->clear();
 
     QList<QLineEdit *> le_list;
-    le_list = ui->tab_src_code->findChildren<QLineEdit *>();
+    le_list = ui->gb_src->findChildren<QLineEdit *>();
     foreach(QLineEdit * le, le_list)
         le->clear();
-    le_list = ui->tab_package->findChildren<QLineEdit *>();
+    le_list = ui->gb_package->findChildren<QLineEdit *>();
     foreach(QLineEdit * le, le_list)
         le->clear();
-    if( ! not_clear_packager)
-    {
-        le_list = ui->tab_packager->findChildren<QLineEdit *>();
-        foreach(QLineEdit * le, le_list)
-            le->clear();
-    }
 
     QList<QComboBox *> cb_list = findChildren<QComboBox *>();
     foreach(QComboBox * cb, cb_list)
@@ -401,6 +406,9 @@ QString MainWindow::get_archive_type(const QString & src_path)
     return src_file_type;
 }
 
+/**
+  Helper function to create and return package dir.
+  */
 
 QDir MainWindow::get_package_dir(QDir work_dir, QString package_name)
 {
@@ -409,8 +417,7 @@ QDir MainWindow::get_package_dir(QDir work_dir, QString package_name)
         if( ! work_dir.mkdir(package_name) )
         {
             QMessageBox::critical(this, tr("Error"), tr("Can not create package dir in the pisido work dir."));
-            ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
-            ui->pb_work_dir_browse->setFocus();
+            ui->tb_work_dir_browse->setFocus();
             return QDir();
         }
         work_dir.cd(package_name);
@@ -418,7 +425,10 @@ QDir MainWindow::get_package_dir(QDir work_dir, QString package_name)
     return work_dir;
 }
 
-void MainWindow::on_pb_create_clicked()
+
+// TODO : split create and build phases
+
+void MainWindow::on_action_Build_triggered()
 {
     QString work_dir_str = ui->le_work_dir->text();
     QFileInfo work_dir_info(work_dir_str);
@@ -426,16 +436,14 @@ void MainWindow::on_pb_create_clicked()
     if( work_dir_str.isEmpty() || ! work_dir_info.exists())
     {
         QMessageBox::critical(this, tr("Error"), tr("No pisido work directory. Please define a working directory."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
-        ui->pb_work_dir_browse->setFocus();
+        ui->tb_work_dir_browse->setFocus();
         return;
     }
 
     if( ! work_dir_info.isWritable())
     {
         QMessageBox::critical(this, tr("Error"), tr("No writable pisido work directory. Please define a writable working directory."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
-        ui->pb_work_dir_browse->setFocus();
+        ui->tb_work_dir_browse->setFocus();
         return;
     }
 
@@ -443,7 +451,6 @@ void MainWindow::on_pb_create_clicked()
     if( ui->le_package_name->text().isEmpty())
     {
         QMessageBox::critical(this, tr("Error"), tr("No package name. Please define package name."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
         ui->le_package_name->setFocus();
         return;
     }
@@ -451,23 +458,12 @@ void MainWindow::on_pb_create_clicked()
     if( ui->tw_history->rowCount() == 0 )
     {
         QMessageBox::critical(this, tr("Error"), tr("No update in history. Please add an update to history."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_history));
-        ui->le_update_version->setFocus();
         return;
     }
-
-//    if( ui->le_version->text().isEmpty())
-//    {
-//        QMessageBox::critical(this, tr("Error"), tr("No version. Please define version."));
-//        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
-//        ui->le_version->setFocus();
-//        return;
-//    }
 
     if( ui->combo_licence->currentText().isEmpty())
     {
         QMessageBox::critical(this, tr("Error"), tr("No license selected. Please select a license."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
         ui->combo_licence->setFocus();
         return;
     }
@@ -475,7 +471,6 @@ void MainWindow::on_pb_create_clicked()
     if( ui->combo_is_a->currentText().isEmpty())
     {
         QMessageBox::critical(this, tr("Error"), tr("No IsA selected. Please select a IsA."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
         ui->combo_is_a->setFocus();
         return;
     }
@@ -483,7 +478,6 @@ void MainWindow::on_pb_create_clicked()
     if( ui->le_summary->text().isEmpty())
     {
         QMessageBox::critical(this, tr("Error"), tr("No summary. Please enter summary."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
         ui->le_summary->setFocus();
         return;
     }
@@ -491,26 +485,10 @@ void MainWindow::on_pb_create_clicked()
     if( ui->te_description->toPlainText().isEmpty())
     {
         QMessageBox::critical(this, tr("Error"), tr("No Description. Please enter description."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
         ui->te_description->setFocus();
         return;
     }
 
-    if( ui->le_packager_name->text().isEmpty())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No packager name. Please enter packager name."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_packager));
-        ui->le_packager_name->setFocus();
-        return;
-    }
-
-    if( ui->le_packager_email->text().isEmpty())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No packager email. Please enter packager email."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_packager));
-        ui->le_packager_email->setFocus();
-        return;
-    }
 
     QString package_name = ui->le_package_name->text();
     QDir work_dir(ui->le_work_dir->text());
@@ -533,7 +511,9 @@ void MainWindow::on_pb_create_clicked()
         if( ! create_desktop(package_dir))
             return;
 
-    if(ui->chk_build->isChecked())
+    // TODO : revise after split
+    QObject * s = sender();
+    if( s != 0 && s == ui->action_Build)
     {
         build_package(package_dir, work_dir);
     }
@@ -554,7 +534,6 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
         if( src_path.isEmpty() || ! QFile::exists(src_path))
         {
             QMessageBox::critical(this, tr("Error"), tr("Source not defined !"));
-            ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_src_code));
             ui->tb_src_compressed->setFocus();
             return false;
         }
@@ -565,7 +544,6 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
         if(src_path.isEmpty())
         {
             QMessageBox::critical(this, tr("Error"), tr("Empty URL !"));
-            ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_src_code));
             ui->le_src_url->setFocus();
             return false;
         }
@@ -582,7 +560,6 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
         if( src_path.isEmpty() || ! QFile::exists(src_path))
         {
             QMessageBox::critical(this, tr("Error"), tr("Source not defined !"));
-            ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_src_code));
             ui->tb_src_folder->setFocus();
             return false;
         }
@@ -663,8 +640,11 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
     QString release_date = QDate::currentDate().toString("yyyy-MM-dd");
 //    QString release_version = ui->le_version->text();
     QString release_comment = tr("First Release");
-    QString packager_name = ui->le_packager_name->text();
-    QString packager_email = ui->le_packager_email->text();
+
+// TODO : get name and email from last update
+    QString packager_name = ""; // ui->le_packager_name->text();
+    QString packager_email = ""; // ui->le_packager_email->text();
+
     QStringList build_dependencies = ui->le_build_dependency->text().split(",", QString::SkipEmptyParts);
     QStringList runtime_dependencies = ui->le_runtime_dependency->text().split(",", QString::SkipEmptyParts);
 
@@ -1010,7 +990,7 @@ void MainWindow::on_action_Open_PISI_Archive_Dir_As_Root_triggered()
     settings.endGroup();
 }
 
-void MainWindow::on_action_Build_Package_triggered()
+void MainWindow::on_action_Build_Only_triggered()
 {
     QString work_dir_str = ui->le_work_dir->text();
     QFileInfo work_dir_info(work_dir_str);
@@ -1019,14 +999,12 @@ void MainWindow::on_action_Build_Package_triggered()
     if(work_dir_str.isEmpty() || ! work_dir_info.exists())
     {
         QMessageBox::critical(this, tr("Error"), tr("No pisido work directory. Please define a working directory."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
-        ui->pb_work_dir_browse->setFocus();
+        ui->tb_work_dir_browse->setFocus();
         return;
     }
     if( package_name.isEmpty())
     {
         QMessageBox::critical(this, tr("Error"), tr("No package name. Please define package name."));
-        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(ui->tab_package));
         ui->le_package_name->setFocus();
         return;
     }
@@ -1079,6 +1057,9 @@ void MainWindow::on_action_Build_Package_triggered()
     build_package(package_dir, work_dir);
 }
 
+/**
+  Helper function to call "pisi build" from command line.
+  */
 
 bool MainWindow::build_package(QDir package_dir, QDir out_dir)
 {
@@ -1103,6 +1084,9 @@ bool MainWindow::build_package(QDir package_dir, QDir out_dir)
     }
 }
 
+/**
+  Helper function to copy source archive to pisi archive dir.
+  */
 
 void MainWindow::copy_source_archive(QString src_path)
 {
@@ -1116,6 +1100,11 @@ void MainWindow::copy_source_archive(QString src_path)
                                                     "\nProgress will continue without copying."));
     }
 }
+
+
+/**
+  Helper function to convert setting to map for saving info.
+  */
 
 QMap<QString, QVariant> MainWindow::get_settings_group(QString group)
 {
@@ -1195,6 +1184,10 @@ void MainWindow::on_action_Load_Package_Information_triggered()
 
     read_settings();
 }
+
+/**
+  Helper function to convert map to settings for loading info.
+  */
 
 void MainWindow::set_settings_group(QMap<QString, QVariant> map, QString group)
 {
@@ -1302,6 +1295,10 @@ void MainWindow::on_pb_import_package_clicked()
     }
 }
 
+/**
+  Helper function to fill program fields from Pisi class.
+  */
+
 void MainWindow::fill_fields_from_pisi()
 {
     if(pisi.is_empty())
@@ -1380,7 +1377,7 @@ void MainWindow::fill_fields_from_pisi()
         }
         actions_file.close();
     }
-    ui->lw_action_template->setCurrentRow(ui->sw_action_template->indexOf(ui->page_imported));
+    ui->combo_actions_template->setCurrentIndex(ui->sw_action_template->indexOf(ui->page_imported));
 
     QString desktop_file_name = ui->le_work_dir->text() +
                  QDir::separator() +
@@ -1453,23 +1450,32 @@ void MainWindow::on_pb_delete_last_update_clicked()
 
 void MainWindow::on_pb_add_update_clicked()
 {
-    QString release;
-    if(ui->tw_history->rowCount() > 0)
-        release = QString::number(ui->tw_history->item(0,0)->text().toInt()+1);
-    else
-        release = "1";
-    QTableWidgetItem * item_release = new QTableWidgetItem(release);
-    QTableWidgetItem * item_date = new QTableWidgetItem(QDate::currentDate().toString("dd.MM.yyyy"));
-    QTableWidgetItem * item_version = new QTableWidgetItem(ui->le_update_version->text());
-    QTableWidgetItem * item_comment = new QTableWidgetItem(ui->le_update_comment->text());
-    QTableWidgetItem * item_name = new QTableWidgetItem(ui->le_packager_name->text());
-    QTableWidgetItem * item_email = new QTableWidgetItem(ui->le_packager_email->text());
-    int row = 0;
-    ui->tw_history->insertRow(row);
-    ui->tw_history->setItem(row, 0, item_release);
-    ui->tw_history->setItem(row, 1, item_date);
-    ui->tw_history->setItem(row, 2, item_version);
-    ui->tw_history->setItem(row, 3, item_comment);
-    ui->tw_history->setItem(row, 4, item_name);
-    ui->tw_history->setItem(row, 5, item_email);
+    // TODO : move to dialog
+//    QString release;
+//    if(ui->tw_history->rowCount() > 0)
+//        release = QString::number(ui->tw_history->item(0,0)->text().toInt()+1);
+//    else
+//        release = "1";
+//    QTableWidgetItem * item_release = new QTableWidgetItem(release);
+//    QTableWidgetItem * item_date = new QTableWidgetItem(QDate::currentDate().toString("dd.MM.yyyy"));
+//    QTableWidgetItem * item_version = new QTableWidgetItem(ui->le_update_version->text());
+//    QTableWidgetItem * item_comment = new QTableWidgetItem(ui->le_update_comment->text());
+//    QTableWidgetItem * item_name = new QTableWidgetItem(ui->le_packager_name->text());
+//    QTableWidgetItem * item_email = new QTableWidgetItem(ui->le_packager_email->text());
+//    int row = 0;
+//    ui->tw_history->insertRow(row);
+//    ui->tw_history->setItem(row, 0, item_release);
+//    ui->tw_history->setItem(row, 1, item_date);
+//    ui->tw_history->setItem(row, 2, item_version);
+//    ui->tw_history->setItem(row, 3, item_comment);
+//    ui->tw_history->setItem(row, 4, item_name);
+//    ui->tw_history->setItem(row, 5, item_email);
 }
+
+
+
+void MainWindow::on_action_Create_triggered()
+{
+    // TODO : fill
+}
+

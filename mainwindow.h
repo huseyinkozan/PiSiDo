@@ -23,32 +23,39 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_action_About_triggered();
-    void on_action_About_Qt_triggered();
-    void on_action_Help_triggered();
-    void on_tb_src_compressed_clicked();
-    void on_tb_src_folder_clicked();
-    void on_actionConfigure_Application_triggered();
-    void on_pb_create_clicked();
-    void on_pb_clear_clicked();
-    void on_pb_work_dir_browse_clicked();
-    void on_pb_work_dir_open_clicked();
-    void on_action_Open_Actions_API_Page_triggered();
-    void on_action_Open_PISI_Spec_File_triggered();
-    void on_action_Open_PISI_Archive_Dir_triggered();
-    void on_action_Open_PISI_Archive_Dir_As_Root_triggered();
-    void on_action_Build_Package_triggered();
     void on_action_Save_Package_Information_triggered();
     void on_action_Load_Package_Information_triggered();
+
+    void on_action_Open_PISI_Archive_Dir_triggered();
+    void on_action_Open_PISI_Archive_Dir_As_Root_triggered();
+
+    void on_action_Configure_Application_triggered();
+
+    void on_action_Help_triggered();
+    void on_action_Open_PISI_Spec_File_triggered();
+    void on_action_Open_Actions_API_Page_triggered();
+    void on_action_About_triggered();
+    void on_action_About_Qt_triggered();
+
+    void on_tb_work_dir_browse_clicked();
+    void on_pb_work_dir_open_clicked();
     void on_le_work_dir_textChanged(const QString &arg1);
     void on_le_package_name_textChanged(const QString &arg1);
     void on_le_package_name_returnPressed();
-    void on_pb_import_package_clicked();
+
+    void on_tb_src_compressed_clicked();
+    void on_tb_src_folder_clicked();
+
     void on_tb_desktop_reset_clicked();
+    void on_pb_import_package_clicked();
     void on_pb_delete_last_update_clicked();
-
-
     void on_pb_add_update_clicked();
+
+    void on_action_Clear_triggered();
+    void on_action_Create_triggered();
+    void on_action_Build_triggered();
+    void on_action_Build_Only_triggered();
+
 
 protected:
     virtual void closeEvent(QCloseEvent * event);
