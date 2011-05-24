@@ -322,9 +322,6 @@ void MainWindow::read_settings()
     settings.endGroup();
 }
 
-
-// TODO : test clear
-
 void MainWindow::on_action_Clear_triggered()
 {
     ui->le_work_dir->clear();
@@ -338,13 +335,13 @@ void MainWindow::on_action_Clear_triggered()
     foreach(QLineEdit * le, le_list)
         le->clear();
 
-    QList<QComboBox *> cb_list = findChildren<QComboBox *>();
-    foreach(QComboBox * cb, cb_list)
-        cb->setCurrentIndex(0);
-
-    QList<QCheckBox *> chkb_list = findChildren<QCheckBox *>();
+    QList<QCheckBox *> chkb_list = ui->gb_src->findChildren<QCheckBox *>();
     foreach(QCheckBox * chkb, chkb_list)
         chkb->setChecked(false);
+
+    QList<QComboBox *> cb_list = ui->gb_package->findChildren<QComboBox *>();
+    foreach(QComboBox * cb, cb_list)
+        cb->setCurrentIndex(0);
 
     ui->te_description->clear();
 
@@ -356,14 +353,15 @@ void MainWindow::on_action_Clear_triggered()
     ui->te_scons->setText(action_defaults.at(5));
     ui->te_imported->setText(action_defaults.at(6));
 
+    on_tb_desktop_reset_clicked();
+    ui->gb_create_desktop->setChecked(false);
+
     int row_count = ui->tw_history->rowCount();
     for(int i=0; i<row_count; ++i)
     {
         ui->tw_history->removeRow(0);
     }
 }
-
-
 
 QString MainWindow::get_archive_type(const QString & src_path)
 {
