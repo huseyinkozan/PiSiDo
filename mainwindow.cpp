@@ -13,6 +13,7 @@
 #include <QUrl>
 
 #include "configurationdialog.h"
+#include "addupdatedialog.h"
 #include "helpdialog.h"
 
 
@@ -23,15 +24,17 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // TODO : remove
     tabifyDockWidget(ui->dw_actions, ui->dw_desktop);
     ui->dw_actions->raise();
+    // fill view menu
     ui->menu_View->addAction(ui->dw_actions->toggleViewAction());
     ui->menu_View->addAction(ui->dw_desktop->toggleViewAction());
     ui->menu_View->addAction(ui->dw_history->toggleViewAction());
     ui->menu_View->addSeparator();
     ui->menu_View->addAction(ui->tBar_build->toggleViewAction());
     ui->menu_View->addAction(ui->tBar_view->toggleViewAction());
-
+    // fill view tool bar
     ui->tBar_view->addAction(ui->dw_actions->toggleViewAction());
     ui->tBar_view->addAction(ui->dw_desktop->toggleViewAction());
     ui->tBar_view->addAction(ui->dw_history->toggleViewAction());
@@ -44,33 +47,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->combo_part_of->addItem("");
     ui->combo_part_of->addItems(get_file_strings(":/files/part_of"));
 
-    // read and write settings if there is no setting entry
 
-    // action_api_page : http://tr.pardus-wiki.org/Pardus:ActionsAPI
-    // pisi_spec : http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng
-    // pisi_archive_dir : /var/cache/pisi/archives
-    // folder_comp_time_limit : 2
-    // not_clear_packager : true
-
-    bool ok = false;
-
+    // set default settings, needed for first run
     settings.beginGroup( "configuration" );
-
     QString action_api_page = settings.value("action_api_page", QString("http://tr.pardus-wiki.org/Pardus:ActionsAPI")).toString();
     QString pisi_spec = settings.value("pisi_spec", QString("http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng")).toString();
     QString pisi_archive_dir = settings.value("pisi_archive_dir", QString("/var/cache/pisi/archives/")).toString();
-    bool not_clear_packager = settings.value("not_clear_packager", true).toBool();
+    bool ok = false;
     int folder_comp_time_limit = settings.value("folder_comp_time_limit", 2).toInt(&ok);
     if(!ok) folder_comp_time_limit = 2;
-
     settings.setValue("action_api_page", action_api_page);
     settings.setValue("pisi_spec", pisi_spec);
     settings.setValue("pisi_archive_dir", pisi_archive_dir);
     settings.setValue("folder_comp_time_limit", folder_comp_time_limit);
-    settings.setValue("not_clear_packager", not_clear_packager);
-
     settings.endGroup();
 
+    // store default text edit values, needed for clearing them
     action_defaults.clear();
     action_defaults.insert(0, ui->te_auto->toHtml());
     action_defaults.insert(1, ui->te_cmake->toHtml());
@@ -79,7 +71,6 @@ MainWindow::MainWindow(QWidget *parent) :
     action_defaults.insert(4, ui->te_python->toHtml());
     action_defaults.insert(5, ui->te_scons->toHtml());
     action_defaults.insert(6, ui->te_imported->toHtml());
-
     desktop_file_default = ui->pte_desktop->toPlainText();
 
     read_settings();
@@ -200,7 +191,9 @@ void MainWindow::on_pb_work_dir_open_clicked()
     {
         QDir work_dir(work_dir_str);
         if(work_dir.exists())
-            QDesktopServices::openUrl(QUrl(work_dir_str));
+        {
+            QDesktopServices::openUrl(QUrl("file:///" + work_dir.absolutePath()));
+        }
     }
 }
 
@@ -1450,26 +1443,29 @@ void MainWindow::on_pb_delete_last_update_clicked()
 
 void MainWindow::on_pb_add_update_clicked()
 {
-    // TODO : move to dialog
-//    QString release;
-//    if(ui->tw_history->rowCount() > 0)
-//        release = QString::number(ui->tw_history->item(0,0)->text().toInt()+1);
-//    else
-//        release = "1";
-//    QTableWidgetItem * item_release = new QTableWidgetItem(release);
-//    QTableWidgetItem * item_date = new QTableWidgetItem(QDate::currentDate().toString("dd.MM.yyyy"));
-//    QTableWidgetItem * item_version = new QTableWidgetItem(ui->le_update_version->text());
-//    QTableWidgetItem * item_comment = new QTableWidgetItem(ui->le_update_comment->text());
-//    QTableWidgetItem * item_name = new QTableWidgetItem(ui->le_packager_name->text());
-//    QTableWidgetItem * item_email = new QTableWidgetItem(ui->le_packager_email->text());
-//    int row = 0;
-//    ui->tw_history->insertRow(row);
-//    ui->tw_history->setItem(row, 0, item_release);
-//    ui->tw_history->setItem(row, 1, item_date);
-//    ui->tw_history->setItem(row, 2, item_version);
-//    ui->tw_history->setItem(row, 3, item_comment);
-//    ui->tw_history->setItem(row, 4, item_name);
-//    ui->tw_history->setItem(row, 5, item_email);
+    AddUpdateDialog ud(this);
+    if(ud.exec() == QDialog::Accepted)
+    {
+        QString release;
+        if(ui->tw_history->rowCount() > 0)
+            release = QString::number(ui->tw_history->item(0,0)->text().toInt()+1);
+        else
+            release = "1";
+        QTableWidgetItem * item_release = new QTableWidgetItem(release);
+        QTableWidgetItem * item_date = new QTableWidgetItem(ud.get_date());
+        QTableWidgetItem * item_version = new QTableWidgetItem(ud.get_version());
+        QTableWidgetItem * item_comment = new QTableWidgetItem(ud.get_comment());
+        QTableWidgetItem * item_name = new QTableWidgetItem(ud.get_packager_name());
+        QTableWidgetItem * item_email = new QTableWidgetItem(ud.get_packager_email());
+        int row = 0;
+        ui->tw_history->insertRow(row);
+        ui->tw_history->setItem(row, 0, item_release);
+        ui->tw_history->setItem(row, 1, item_date);
+        ui->tw_history->setItem(row, 2, item_version);
+        ui->tw_history->setItem(row, 3, item_comment);
+        ui->tw_history->setItem(row, 4, item_name);
+        ui->tw_history->setItem(row, 5, item_email);
+    }
 }
 
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>770</width>
-    <height>760</height>
+    <height>740</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -223,19 +223,119 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>497</width>
-            <height>350</height>
+            <width>441</width>
+            <height>406</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout">
            <item row="0" column="0">
+            <widget class="QLabel" name="lbl_src_home_page">
+             <property name="text">
+              <string>Home Page</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="le_src_home_page">
+             <property name="toolTip">
+              <string>Package web site.</string>
+             </property>
+             <property name="statusTip">
+              <string>Package web site.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="lbl_licence">
+             <property name="text">
+              <string>Licence</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="combo_licence"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="lbl_is_a">
+             <property name="text">
+              <string>IsA</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QComboBox" name="combo_is_a">
+             <property name="toolTip">
+              <string>Package type.</string>
+             </property>
+             <property name="statusTip">
+              <string>Package type.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="lbl_part_of">
+             <property name="text">
+              <string>PartOf</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QComboBox" name="combo_part_of"/>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="lbl_brief">
+             <property name="text">
+              <string>Summary</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLineEdit" name="le_summary">
+             <property name="toolTip">
+              <string>Shows a brief description on the installer list.</string>
+             </property>
+             <property name="statusTip">
+              <string>Shows a brief description on the installer list.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="lbl_detailed">
+             <property name="text">
+              <string>Description</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QTextEdit" name="te_description">
+             <property name="toolTip">
+              <string>Shows after open detailed description. Should be continuous of the brief.</string>
+             </property>
+             <property name="statusTip">
+              <string>Shows after open detailed description. Should be continuous of the brief.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
             <widget class="QLabel" name="lbl_build_dependency">
              <property name="text">
               <string>Build Dep.</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="1" colspan="6">
+           <item row="8" column="1">
             <widget class="QLineEdit" name="le_build_dependency">
              <property name="toolTip">
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -251,126 +351,20 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="9" column="0">
             <widget class="QLabel" name="lbl_runtime_dependency">
              <property name="text">
               <string>Runtime Dep.</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="1" colspan="6">
+           <item row="9" column="1">
             <widget class="QLineEdit" name="le_runtime_dependency">
              <property name="toolTip">
               <string>Comma seperated package names.</string>
              </property>
              <property name="statusTip">
               <string>Comma seperated package names.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="lbl_licence">
-             <property name="text">
-              <string>Licence</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QComboBox" name="combo_licence"/>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="lbl_is_a">
-             <property name="text">
-              <string>IsA</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3" colspan="2">
-            <widget class="QComboBox" name="combo_is_a">
-             <property name="toolTip">
-              <string>Package type.</string>
-             </property>
-             <property name="statusTip">
-              <string>Package type.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="5">
-            <widget class="QLabel" name="lbl_part_of">
-             <property name="text">
-              <string>PartOf</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="6">
-            <widget class="QComboBox" name="combo_part_of"/>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="lbl_src_home_page">
-             <property name="text">
-              <string>Home Page</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1" colspan="6">
-            <widget class="QLineEdit" name="le_src_home_page">
-             <property name="toolTip">
-              <string>Package web site.</string>
-             </property>
-             <property name="statusTip">
-              <string>Package web site.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="lbl_brief">
-             <property name="text">
-              <string>Summary</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1" colspan="6">
-            <widget class="QLineEdit" name="le_summary">
-             <property name="toolTip">
-              <string>Shows a brief description on the installer list.</string>
-             </property>
-             <property name="statusTip">
-              <string>Shows a brief description on the installer list.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <widget class="QLabel" name="lbl_detailed">
-             <property name="text">
-              <string>Description</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="1" colspan="6">
-            <widget class="QTextEdit" name="te_description">
-             <property name="toolTip">
-              <string>Shows after open detailed description. Should be continuous of the brief.</string>
-             </property>
-             <property name="statusTip">
-              <string>Shows after open detailed description. Should be continuous of the brief.</string>
              </property>
             </widget>
            </item>
@@ -448,7 +442,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dw_history">
    <property name="windowTitle">
-    <string>History</string>
+    <string>History Window</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>
@@ -548,7 +542,7 @@ p, li { white-space: pre-wrap; }
   </widget>
   <widget class="QDockWidget" name="dw_actions">
    <property name="windowTitle">
-    <string>Actions Template</string>
+    <string>Actions Template Window</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -899,7 +893,7 @@ p, li { white-space: pre-wrap; }
   </widget>
   <widget class="QToolBar" name="tBar_build">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Build Toolbar</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -916,7 +910,7 @@ p, li { white-space: pre-wrap; }
   </widget>
   <widget class="QDockWidget" name="dw_desktop">
    <property name="windowTitle">
-    <string>Desktop File</string>
+    <string>Desktop File Window</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -994,7 +988,7 @@ Categories=Application;</string>
   </widget>
   <widget class="QToolBar" name="tBar_view">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>View Toolbar</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>

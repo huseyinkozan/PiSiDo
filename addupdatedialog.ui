@@ -20,47 +20,47 @@
       <string>Update</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
+      <item row="1" column="0">
        <widget class="QLabel" name="lbl_update_version">
         <property name="text">
          <string>Version</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="1" column="1">
        <widget class="QLineEdit" name="le_update_version"/>
       </item>
-      <item row="1" column="0">
+      <item row="2" column="0">
        <widget class="QLabel" name="lbl_update_comment">
         <property name="text">
          <string>Comment</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1" colspan="2">
+      <item row="2" column="1" colspan="2">
        <widget class="QLineEdit" name="le_update_comment"/>
       </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="lbl_packager_name">
         <property name="text">
          <string>Packager Name</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1" colspan="2">
+      <item row="3" column="1" colspan="2">
        <widget class="QLineEdit" name="le_packager_name"/>
       </item>
-      <item row="3" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="lbl_packager_email">
         <property name="text">
          <string>Packager E-Mail</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1" colspan="2">
+      <item row="4" column="1" colspan="2">
        <widget class="QLineEdit" name="le_packager_email"/>
       </item>
-      <item row="0" column="2">
+      <item row="1" column="2">
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -72,6 +72,16 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lbl_date">
+        <property name="text">
+         <string>Date</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QDateEdit" name="de_date"/>
       </item>
      </layout>
     </widget>
