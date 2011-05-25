@@ -26,6 +26,10 @@ public:
     QMap<QString,QString> get_packager();
     QMap<QString, QMap<ArchiveAttr,QString> > get_archives();
 
+    void set_home_page(QString home_page);
+    void set_packager(QMap<QString,QString> packager);
+    void set_archives(QMap<QString, QMap<ArchiveAttr,QString> > archives);
+
 private:
     ArchiveAttr get_archive_attr_property(QString attr_name);
 

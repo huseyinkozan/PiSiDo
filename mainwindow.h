@@ -80,7 +80,9 @@ private:
     QMap<QString, QVariant> get_settings_group(QString group);
     void set_settings_group(QMap<QString, QVariant> map, QString group);
 
+    QString get_sha1sum(QString file_name);
     QString get_archive_type(const QString&);
+    QString get_compressed_archive_path(QDir archive_directory);
     QDir get_package_dir(QDir work_dir, QString package_name);
 
     bool create_pspec_xml(QDir package_dir);
@@ -91,6 +93,7 @@ private:
     void copy_source_archive(QString src_path);
 
     void fill_fields_from_pisi();
+    void fill_pisi_from_fields();
 };
 
 #endif // MAINWINDOW_H

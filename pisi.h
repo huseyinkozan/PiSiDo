@@ -24,6 +24,10 @@ public:
     QMap<int, PisiUpdate> get_updates();
     PisiUpdate get_last_update();
 
+    void set_source(PisiSource source);
+    void set_package(PisiPackage package);
+    void set_updates(QMap<int, PisiUpdate> updates);
+
 private:
     bool empty;
 

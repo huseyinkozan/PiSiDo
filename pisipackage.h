@@ -15,6 +15,8 @@ public:
 
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> > get_runtime_dependencies();
 
+    void set_runtime_dependencies(QMap<QString, QMap<VersionReleaseToFromAttr,QString> > runtime_dependencies);
+
 private:
     // dependency, {(versionFrom,xxxx),(versionTo,xxxx),...,(release,xxxx)}
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> > runtime_dependencies;

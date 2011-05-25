@@ -30,3 +30,8 @@ QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiPackage::
 {
     return runtime_dependencies;
 }
+
+void PisiPackage::set_runtime_dependencies(QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr, QString> > runtime_dependencies)
+{
+    this->runtime_dependencies = runtime_dependencies;
+}

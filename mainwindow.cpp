@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // TODO : remove
+    // tabify for first run
     tabifyDockWidget(ui->dw_actions, ui->dw_desktop);
     ui->dw_actions->raise();
     // fill view menu
@@ -322,6 +322,107 @@ void MainWindow::read_settings()
     settings.endGroup();
 }
 
+void MainWindow::on_action_Save_Package_Information_triggered()
+{
+    QString file_name = QFileDialog::getSaveFileName(this, tr("Save Package Info"),
+                                     QDesktopServices::storageLocation(QDesktopServices::HomeLocation),
+                                     tr("PiSiDo Package Info File (*.pisido)"));
+    if(file_name.isEmpty())
+        return;
+
+    write_settings();
+
+    QMap< int, QMap<QString, QVariant> > map;
+    map[0] = get_settings_group("source");
+    map[1] = get_settings_group("package");
+    map[2] = get_settings_group("compilation");
+    // TODO : remove, add history
+    map[3] = get_settings_group("packager");
+
+    quint32 version = 0x00000001;
+
+    QFile file(file_name);
+    if( ! file.open(QFile::WriteOnly))
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Can not open file for writing !"));
+        return;
+    }
+    QDataStream out(&file);
+    out << version;
+    out << map;
+}
+
+/**
+  Helper function to convert setting to map for saving info.
+  */
+
+QMap<QString, QVariant> MainWindow::get_settings_group(QString group)
+{
+    QMap<QString, QVariant> map;
+
+    settings.beginGroup(group);
+    foreach (QString key, settings.childKeys())
+    {
+        map[key] = settings.value(key);
+    }
+    settings.endGroup();
+    return map;
+}
+
+void MainWindow::on_action_Load_Package_Information_triggered()
+{
+    QString file_name = QFileDialog::getOpenFileName(this, tr("Open Package Info"),
+                                    QDesktopServices::storageLocation(QDesktopServices::HomeLocation),
+                                    tr("PiSiDo Package Info File (*.pisido)"));
+    if(file_name.isEmpty())
+        return;
+
+    QFile file(file_name);
+    if( ! file.open(QFile::ReadOnly))
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Can not open file for reading !"));
+        return;
+    }
+    QDataStream in(&file);
+
+    QMap< int, QMap<QString, QVariant> > map;
+    quint32 version;
+
+    in >> version;
+
+    if(version != 0x00000001)
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Wrong file version !"));
+        return;
+    }
+
+    in >> map;
+
+    set_settings_group(map[0], "source");
+    set_settings_group(map[1], "package");
+    set_settings_group(map[2], "compilation");
+    // TODO : remove, add history
+    set_settings_group(map[3], "packager");
+
+    read_settings();
+}
+
+/**
+  Helper function to convert map to settings for loading info.
+  */
+
+void MainWindow::set_settings_group(QMap<QString, QVariant> map, QString group)
+{
+    settings.beginGroup(group);
+    QMap<QString, QVariant>::const_iterator i = map.constBegin();
+    while(i != map.constEnd())
+    {
+        settings.setValue(i.key(), i.value());
+        ++i;
+    }
+    settings.endGroup();
+}
+
 void MainWindow::on_action_Clear_triggered()
 {
     ui->le_work_dir->clear();
@@ -363,6 +464,20 @@ void MainWindow::on_action_Clear_triggered()
     }
 }
 
+QString MainWindow::get_sha1sum(QString file_name)
+{
+    QFile compressed_file(file_name);
+    if( ! compressed_file.open(QIODevice::ReadOnly))
+    {
+        throw QString("Can not open file to sha1sum.");
+    }
+    QByteArray compressed_file_bytes = compressed_file.readAll();
+    QString sha1sum = QCryptographicHash::hash(compressed_file_bytes, QCryptographicHash::Sha1).toHex();
+    compressed_file_bytes.clear();
+    compressed_file.close();
+    return sha1sum;
+}
+
 QString MainWindow::get_archive_type(const QString & src_path)
 {
     QString src_file_type;
@@ -397,6 +512,12 @@ QString MainWindow::get_archive_type(const QString & src_path)
     return src_file_type;
 }
 
+QString MainWindow::get_compressed_archive_path(QDir archive_directory)
+{
+    // TODO : fill
+}
+
+
 /**
   Helper function to create and return package dir.
   */
@@ -418,6 +539,9 @@ QDir MainWindow::get_package_dir(QDir work_dir, QString package_name)
 
 
 // TODO : split create and build phases
+// fields => pisi
+// pisi => xml
+// build, if xml
 
 void MainWindow::on_action_Build_triggered()
 {
@@ -513,7 +637,6 @@ void MainWindow::on_action_Build_triggered()
                                  tr("PISI build files successfully created."));
 }
 
-
 bool MainWindow::create_pspec_xml(QDir package_dir)
 {
     // define source
@@ -589,16 +712,7 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
     QString sha1sum;
     if(local_file)
     {
-        QFile compressed_file(src_path);
-        if( ! compressed_file.open(QIODevice::ReadOnly))
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Can not open file to sha1sum."));
-            return false;
-        }
-        QByteArray compressed_file_bytes = compressed_file.readAll();
-        sha1sum = QCryptographicHash::hash(compressed_file_bytes, QCryptographicHash::Sha1).toHex();
-        compressed_file_bytes.clear();
-        compressed_file.close();
+        sha1sum = get_sha1sum(src_path);
     }
     else
     {
@@ -865,7 +979,7 @@ bool MainWindow::create_action_py(QDir package_dir)
     {
         QString action_py = te->toPlainText();
         action_py.replace(QString("___package_name___"), ui->le_package_name->text());
-//        action_py.replace(QString("___version___"), ui->le_version->text());
+        action_py.replace(QString("___version___"), pisi.get_last_update().get_version());
         action_py.replace(QString("___summary___"), ui->le_summary->text());
 
         writer << action_py;
@@ -904,7 +1018,7 @@ bool MainWindow::create_desktop(QDir package_dir)
 
     QString desktop_str = ui->pte_desktop->toPlainText();
     desktop_str.replace(QString("___package_name___"), package_name);
-//    desktop_str.replace(QString("___version___"), ui->le_version->text());
+    desktop_str.replace(QString("___version___"), pisi.get_last_update().get_version());
     desktop_str.replace(QString("___summary___"), ui->le_summary->text());
 
     writer << desktop_str;
@@ -1093,104 +1207,6 @@ void MainWindow::copy_source_archive(QString src_path)
 }
 
 
-/**
-  Helper function to convert setting to map for saving info.
-  */
-
-QMap<QString, QVariant> MainWindow::get_settings_group(QString group)
-{
-    QMap<QString, QVariant> map;
-
-    settings.beginGroup(group);
-    foreach (QString key, settings.childKeys())
-    {
-        map[key] = settings.value(key);
-    }
-    settings.endGroup();
-    return map;
-}
-
-void MainWindow::on_action_Save_Package_Information_triggered()
-{
-    QString file_name = QFileDialog::getSaveFileName(this, tr("Save Package Info"),
-                                     QDesktopServices::storageLocation(QDesktopServices::HomeLocation),
-                                     tr("PiSiDo Package Info File (*.pisido)"));
-    if(file_name.isEmpty())
-        return;
-
-    write_settings();
-
-    QMap< int, QMap<QString, QVariant> > map;
-    map[0] = get_settings_group("source");
-    map[1] = get_settings_group("package");
-    map[2] = get_settings_group("compilation");
-    map[3] = get_settings_group("packager");
-
-    quint32 version = 0x00000001;
-
-    QFile file(file_name);
-    if( ! file.open(QFile::WriteOnly))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Can not open file for writing !"));
-        return;
-    }
-    QDataStream out(&file);
-    out << version;
-    out << map;
-}
-
-void MainWindow::on_action_Load_Package_Information_triggered()
-{
-    QString file_name = QFileDialog::getOpenFileName(this, tr("Open Package Info"),
-                                    QDesktopServices::storageLocation(QDesktopServices::HomeLocation),
-                                    tr("PiSiDo Package Info File (*.pisido)"));
-    if(file_name.isEmpty())
-        return;
-
-    QFile file(file_name);
-    if( ! file.open(QFile::ReadOnly))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Can not open file for reading !"));
-        return;
-    }
-    QDataStream in(&file);
-
-    QMap< int, QMap<QString, QVariant> > map;
-    quint32 version;
-
-    in >> version;
-
-    if(version != 0x00000001)
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Wrong file version !"));
-        return;
-    }
-
-    in >> map;
-
-    set_settings_group(map[0], "source");
-    set_settings_group(map[1], "package");
-    set_settings_group(map[2], "compilation");
-    set_settings_group(map[3], "packager");
-
-    read_settings();
-}
-
-/**
-  Helper function to convert map to settings for loading info.
-  */
-
-void MainWindow::set_settings_group(QMap<QString, QVariant> map, QString group)
-{
-    settings.beginGroup(group);
-    QMap<QString, QVariant>::const_iterator i = map.constBegin();
-    while(i != map.constEnd())
-    {
-        settings.setValue(i.key(), i.value());
-        ++i;
-    }
-    settings.endGroup();
-}
 
 void MainWindow::on_le_work_dir_textChanged(const QString &arg1)
 {
@@ -1295,10 +1311,9 @@ void MainWindow::fill_fields_from_pisi()
     if(pisi.is_empty())
         throw QString("Try to load fileds from pisi, but pisi not loaded !");
 
-    PisiSource source = pisi.get_source();
-    PisiPackage package = pisi.get_package();
-
     // source section
+    PisiSource source = pisi.get_source();
+
     QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives = source.get_archives();
     // TODO : revise filling comma seperated archives
     if(archives.count() > 1)
@@ -1327,6 +1342,7 @@ void MainWindow::fill_fields_from_pisi()
     ui->le_src_home_page->setText(source.get_home_page());
 
     // package section
+    PisiPackage package = pisi.get_package();
 
     // do not edit work_dir and packge_name, only warn
     if(ui->le_package_name->text() != package.get_name())
@@ -1428,6 +1444,67 @@ void MainWindow::fill_fields_from_pisi()
     statusBar()->showMessage(tr("Package build information successfully imported."));
 }
 
+void MainWindow::fill_pisi_from_fields()
+{
+    // do not clear pisi, it may have prev values from dom
+    // only change related values
+
+    if(pisi.is_empty())
+        throw QString("Try to load pisi from fileds, but pisi not loaded !");
+
+    // source section
+    PisiSource source = pisi.get_source();
+
+    QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives = source.get_archives();
+    // TODO : revise filling comma seperated archives
+    if(archives.count() > 1)
+    {
+        throw QString("More than one archive tag.");
+    }
+    archives.clear();
+    if(ui->rb_src_compressed->isChecked())
+    {
+        QString a = ui->le_src_compressed->text();
+        if(a.isEmpty() || ! QFile::exists(a))
+            throw QString("Please select a compressed source !");
+        QMap<PisiSource::ArchiveAttr,QString> attr;
+        attr[PisiSource::SHA1SUM] = get_sha1sum(a);
+        attr[PisiSource::TYPE] = get_archive_type(a);
+        archives[a] = attr;
+    }
+    else if(ui->rb_src_folder->isChecked())
+    {
+        // ...
+//        get_compressed_archive_path(dir)
+    }
+    else if(ui->rb_src_url->isChecked())
+    {
+        // ...
+    }
+
+    // TODO : add obligations from pisi-spec at pisibase
+
+    source.set_home_page(ui->le_src_home_page->text());
+
+    // package section
+    PisiPackage package = pisi.get_package();
+    // ...
+
+    // history section
+    QMap<int, PisiUpdate> updates = pisi.get_updates();
+    // ...
+
+    // if exception
+    pisi.set_source(source);
+    pisi.set_package(package);
+    pisi.set_updates(updates);
+}
+
+void MainWindow::on_action_Create_triggered()
+{
+    // TODO : fill
+}
+
 void MainWindow::on_tb_desktop_reset_clicked()
 {
     ui->pte_desktop->setPlainText(desktop_file_default);
@@ -1465,11 +1542,3 @@ void MainWindow::on_pb_add_update_clicked()
         ui->tw_history->setItem(row, 5, item_email);
     }
 }
-
-
-
-void MainWindow::on_action_Create_triggered()
-{
-    // TODO : fill
-}
-

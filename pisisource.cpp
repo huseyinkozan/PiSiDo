@@ -74,6 +74,34 @@ QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > PisiSource::get_archives()
     return archives;
 }
 
+void PisiSource::set_home_page(QString home_page)
+{
+    if(home_page.isEmpty())
+        throw QString("Homepage can not be empty !");
+
+    this->home_page = home_page;
+}
+
+void PisiSource::set_packager(QMap<QString, QString> packager)
+{
+    if(packager.isEmpty())
+        throw QString("Empty packager map !");
+    if(packager.keys().first().isEmpty())
+        throw QString("Empty packager name !");
+    if(packager.values().first().isEmpty())
+        throw QString("Empty packager email !");
+
+    this->packager = packager;
+}
+
+void PisiSource::set_archives(QMap<QString, QMap<PisiSource::ArchiveAttr, QString> > archives)
+{
+    if(archives.count() == 0)
+        throw QString("Empty archive !");
+
+    this->archives = archives;
+}
+
 PisiSource::ArchiveAttr PisiSource::get_archive_attr_property(QString attr_name)
 {
     if(attr_name.toLower() == "sha1sum")

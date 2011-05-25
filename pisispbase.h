@@ -33,6 +33,14 @@ public:
     QString get_is_a();
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> > get_build_dependencies();
 
+    void set_name(QString name);
+    void set_summary(QString summary);
+    void set_description(QString description);
+    void set_part_of(QString part_of);
+    void set_license(QString license);
+    void set_is_a(QString is_a);
+    void set_build_dependencies(QMap<QString, QMap<VersionReleaseToFromAttr,QString> > build_dependencies);
+
 protected:
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> > get_dependency_map(QDomElement elm, bool mandatory);
     VersionReleaseToFromAttr get_dependency_attr_property(QString attr_name);

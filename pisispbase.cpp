@@ -53,6 +53,7 @@ void PisiSPBase::load_from_dom(const QDomElement & dom_element)
 
 QString PisiSPBase::get_name()
 {
+    // TODO : add obligations from pisi-spec
     return name;
 }
 
@@ -84,6 +85,44 @@ QString PisiSPBase::get_is_a()
 QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::get_build_dependencies()
 {
     return build_dependencies;
+}
+
+void PisiSPBase::set_name(QString name)
+{
+    if(packager.isEmpty())
+        throw QString("Empty packager map !");
+
+    this->name = name;
+}
+
+void PisiSPBase::set_summary(QString summary)
+{
+    this->summary = summary;
+}
+
+void PisiSPBase::set_description(QString description)
+{
+    this->description = description;
+}
+
+void PisiSPBase::set_part_of(QString part_of)
+{
+    this->part_of = part_of;
+}
+
+void PisiSPBase::set_license(QString license)
+{
+    this->license = license;
+}
+
+void PisiSPBase::set_is_a(QString is_a)
+{
+    this->is_a = is_a;
+}
+
+void PisiSPBase::set_build_dependencies(QMap<QString, QMap<VersionReleaseToFromAttr, QString> > build_dependencies)
+{
+    this->build_dependencies = build_dependencies;
 }
 
 QString PisiSPBase::get_value_from_element(QString tag, QDomElement elm, bool mandatory)

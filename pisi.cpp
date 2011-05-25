@@ -51,6 +51,21 @@ PisiUpdate Pisi::get_last_update()
     return last_update;
 }
 
+void Pisi::set_source(PisiSource source)
+{
+    this->source = source;
+}
+
+void Pisi::set_package(PisiPackage package)
+{
+    this->package = package;
+}
+
+void Pisi::set_updates(QMap<int, PisiUpdate> updates)
+{
+    this->updates = updates;
+}
+
 void Pisi::load_from_dom(const QDomDocument & dom)
 {
     empty = true;
