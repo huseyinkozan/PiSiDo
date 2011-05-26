@@ -512,9 +512,38 @@ QString MainWindow::get_archive_type(const QString & src_path)
     return src_file_type;
 }
 
-QString MainWindow::get_compressed_archive_path(QDir archive_directory)
+QString MainWindow::get_compressed_archive(QDir compress_dir, QDir work_dir)
 {
-    // TODO : fill
+    if( ! compress_dir.exists())
+        throw QString("Archive directory does not exists !");
+    if( ! package_dir.exists())
+        throw QString("Package directory does not exists !");
+
+    bool ok = false;
+    settings.beginGroup( "configuration" );
+    int time_limit = settings.value("folder_comp_time_limit").toInt(&ok);
+    settings.endGroup();
+    if(!ok || time_limit < 1) time_limit = 1;
+    time_limit = time_limit * 60 * 1000;      // x minutes in miliseconds
+
+    QDir archive_name = work_dir.absoluteFilePath(QString("%1.tar.gz").arg(dir_name));
+    QString dir_name = compress_dir.dirName();
+    compress_dir.cdUp();
+
+    QProcess proc_tar;
+    QStringList parameters;
+    parameters << "-zcf" << archive_name;                       // save in to this archive file
+    parameters << "--directory" << compress_dir.absolutePath();  // change tar working dir to this
+    parameters << dir_name;                                     // compress this dir
+    proc_tar.start("tar", parameters);
+
+    statusBar()->showMessage(tr("Compressing directory ......"));
+
+    if (!proc_tar.waitForFinished(time_limit))
+        throw QString("Source folder could not compress.");
+
+    statusBar()->showMessage(tr("Directory compression finished."));
+    return archive_name;
 }
 
 
@@ -1471,18 +1500,25 @@ void MainWindow::fill_pisi_from_fields()
         attr[PisiSource::SHA1SUM] = get_sha1sum(a);
         attr[PisiSource::TYPE] = get_archive_type(a);
         archives[a] = attr;
+        if(ui->chk_cp_to_pisi_archive->isChecked())
+            copy_source_archive(a);
     }
     else if(ui->rb_src_folder->isChecked())
     {
-        // ...
-//        get_compressed_archive_path(dir)
+        QString f = ui->le_src_folder->text();
+        if(f.isEmpty() || ! QDir(f).exists())
+            throw QString("Please select a source folder !");
+        QString w = ui->le_work_dir->text();
+        if(w.isEmpty() || ! QDir(w).exists())
+            throw QString("Please select a work dir !");
+        QString a = get_compressed_archive(f, w);
+        if(ui->chk_cp_to_pisi_archive->isChecked())
+            copy_source_archive(a);
     }
     else if(ui->rb_src_url->isChecked())
     {
         // ...
     }
-
-    // TODO : add obligations from pisi-spec at pisibase
 
     source.set_home_page(ui->le_src_home_page->text());
 

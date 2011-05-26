@@ -12,6 +12,7 @@ namespace Ui {
     class MainWindow;
 }
 class QDir;
+class QFile;
 class HelpDialog;
 
 class MainWindow : public QMainWindow
@@ -82,8 +83,8 @@ private:
 
     QString get_sha1sum(QString file_name);
     QString get_archive_type(const QString&);
-    QString get_compressed_archive_path(QDir archive_directory);
     QDir get_package_dir(QDir work_dir, QString package_name);
+    void compress_archive(QDir compress_dir, QDir work_dir);
 
     bool create_pspec_xml(QDir package_dir);
     bool create_action_py(QDir package_dir);
