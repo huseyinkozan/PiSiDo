@@ -91,31 +91,49 @@ QString PisiUpdate::get_packager_email()
 
 void PisiUpdate::set_release(int r)
 {
+    if(r<=0)
+        throw QString("Release number error : %1").arg(r);
+
     if(r>0) release = r;
 }
 
 void PisiUpdate::set_date(QDate d)
 {
+    if(d == QDate())
+        throw QString("Empty update date !");
+
     if(d.isValid()) date = d;
 }
 
 void PisiUpdate::set_version(QString v)
 {
+    if(v.isEmpty())
+        throw QString("Empty update version !");
+
     version = v;
 }
 
 void PisiUpdate::set_comment(QString c)
 {
+    if(c.isEmpty())
+        throw QString("Empty update comment !");
+
     comment = c;
 }
 
 void PisiUpdate::set_packager_name(QString p_n)
 {
+    if(p_n.isEmpty())
+        throw QString("Empty update packager name !");
+
     packager_name = p_n;
 }
 
 void PisiUpdate::set_packager_email(QString p_e)
 {
+    if(p_e.isEmpty())
+        throw QString("Empty update packager email !");
+
     packager_email = p_e;
 }
 

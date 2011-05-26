@@ -53,16 +53,25 @@ PisiUpdate Pisi::get_last_update()
 
 void Pisi::set_source(PisiSource source)
 {
+    if(source == PisiSource())
+        throw QString("Empty source !");
+
     this->source = source;
 }
 
 void Pisi::set_package(PisiPackage package)
 {
+    if(package == PisiPackage())
+        throw QString("Empty package !");
+
     this->package = package;
 }
 
 void Pisi::set_updates(QMap<int, PisiUpdate> updates)
 {
+    if(updates.isEmpty())
+        throw QString("Empty history updates !");
+
     this->updates = updates;
 }
 
