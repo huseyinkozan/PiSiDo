@@ -516,8 +516,8 @@ QString MainWindow::get_compressed_archive(QDir compress_dir, QDir work_dir)
 {
     if( ! compress_dir.exists())
         throw QString("Archive directory does not exists !");
-    if( ! package_dir.exists())
-        throw QString("Package directory does not exists !");
+    if( ! work_dir.exists())
+        throw QString("Working directory does not exists !");
 
     bool ok = false;
     settings.beginGroup( "configuration" );
@@ -526,9 +526,9 @@ QString MainWindow::get_compressed_archive(QDir compress_dir, QDir work_dir)
     if(!ok || time_limit < 1) time_limit = 1;
     time_limit = time_limit * 60 * 1000;      // x minutes in miliseconds
 
-    QDir archive_name = work_dir.absoluteFilePath(QString("%1.tar.gz").arg(dir_name));
     QString dir_name = compress_dir.dirName();
     compress_dir.cdUp();
+    QString archive_name = work_dir.absoluteFilePath(QString("%1.tar.gz").arg(dir_name));
 
     QProcess proc_tar;
     QStringList parameters;
