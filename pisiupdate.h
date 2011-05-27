@@ -28,6 +28,11 @@ public:
     void set_packager_name(QString p_n);
     void set_packager_email(QString p_e);
 
+    friend bool operator ==(const PisiUpdate & left, const PisiUpdate & right);
+    friend bool operator !=(const PisiUpdate & left, const PisiUpdate & right);
+    friend bool operator <(const PisiUpdate & left, const PisiUpdate & right);
+    friend bool operator >(const PisiUpdate & left, const PisiUpdate & right);
+
 private:
     QString get_value_from_element(QString tag, QDomElement elm, bool mandatory);
 

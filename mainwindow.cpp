@@ -567,6 +567,47 @@ QDir MainWindow::get_package_dir(QDir work_dir, QString package_name)
 }
 
 
+PisiUpdate MainWindow::get_last_history_update()
+{
+    int row_count = ui->tw_history->rowCount();
+    if(row_count < 1)
+        return PisiUpdate();
+    int last_release = 0;
+    int last_release_row = 0;
+    for(int row=0; row<row_count; ++row)
+    {
+        bool ok = false;
+        int current_release = ui->tw_history->item(row,0)->text().toInt(&ok);
+        if(ok)
+        {
+            if(current_release > last_release)
+            {
+                last_release = current_release;
+                last_release_row = row;
+            }
+        }
+        else
+        {
+            throw QString("Error at conversion release string to integer !");
+        }
+    }
+    if(last_release_row != 0)
+    {
+        PisiUpdate update;
+        update.set_release(last_release);
+        update.set_date(QDate::fromString(ui->tw_history->item(last_release_row, 1)->text(),"dd.MM.yyyy"));
+        update.set_version(ui->tw_history->item(last_release_row, 2)->text());
+        update.set_comment(ui->tw_history->item(last_release_row, 3)->text());
+        update.set_packager_name(ui->tw_history->item(last_release_row, 4)->text());
+        update.set_packager_email(ui->tw_history->item(last_release_row, 5)->text());
+        return update;
+    }
+    else
+    {
+        throw QString("Release error at history update !");
+    }
+}
+
 // TODO : split create and build phases
 // fields => pisi
 // pisi => xml
@@ -1512,15 +1553,35 @@ void MainWindow::fill_pisi_from_fields()
         if(w.isEmpty() || ! QDir(w).exists())
             throw QString("Please select a work dir !");
         QString a = get_compressed_archive(f, w);
+        QMap<PisiSource::ArchiveAttr,QString> attr;
+        attr[PisiSource::SHA1SUM] = get_sha1sum(a);
+        attr[PisiSource::TYPE] = get_archive_type(a);
+        archives[a] = attr;
         if(ui->chk_cp_to_pisi_archive->isChecked())
             copy_source_archive(a);
     }
     else if(ui->rb_src_url->isChecked())
     {
-        // ...
+        QString u = ui->le_src_url->text();
+        if(u.isEmpty() || ! (u.startsWith("http:") || u.startsWith("ftp:")))
+            throw QString("Please enter a proper url (starts with http: or ftp:) !");
+        QString s1 = ui->le_src_sha1->text();
+        if(s1.isEmpty() || s1.length() < 40)
+            throw QString("Please enter a proper sha1sum value !");
+        QMap<PisiSource::ArchiveAttr,QString> attr;
+        attr[PisiSource::SHA1SUM] = s1;
+        attr[PisiSource::TYPE] = get_archive_type(u);
+        archives[u] = attr;
     }
-
+    source.set_archives(archives);
     source.set_home_page(ui->le_src_home_page->text());
+
+    PisiUpdate last_update = get_last_history_update();
+    if(last_update == PisiUpdate())
+        throw QString("Please define an update in history !");
+    QMap<QString,QString> packager;
+    packager[last_update.get_packager_name()] = last_update.get_packager_email();
+    source.set_packager(packager);
 
     // package section
     PisiPackage package = pisi.get_package();

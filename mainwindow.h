@@ -85,6 +85,7 @@ private:
     QString get_archive_type(const QString&);
     QString get_compressed_archive(QDir compress_dir, QDir work_dir);
     QDir get_package_dir(QDir work_dir, QString package_name);
+    PisiUpdate get_last_history_update();
 
     bool create_pspec_xml(QDir package_dir);
     bool create_action_py(QDir package_dir);

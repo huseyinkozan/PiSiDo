@@ -137,3 +137,27 @@ void PisiUpdate::set_packager_email(QString p_e)
     packager_email = p_e;
 }
 
+bool PisiUpdate::operator ==(const PisiUpdate & left, const PisiUpdate & right)
+{
+    return ( left.get_comment() == right.get_comment()
+             && left.get_date() == right.get_date()
+             && left.get_packager_email() == right.get_packager_email()
+             && left.get_packager_name() == right.get_packager_name()
+             && left.get_release() == right.get_release()
+             && left.get_version() == right.get_version() );
+}
+
+bool PisiUpdate::operator !=(const PisiUpdate & left, const PisiUpdate & right)
+{
+    return  ! ( left == right );
+}
+
+bool PisiUpdate::operator <(const PisiUpdate & left, const PisiUpdate & right)
+{
+    return left.get_release() < right.get_release();
+}
+
+bool PisiUpdate::operator >(const PisiUpdate & left, const PisiUpdate & right)
+{
+    return left.get_release() > right.get_release();
+}
