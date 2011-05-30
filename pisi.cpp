@@ -17,12 +17,12 @@ void Pisi::clear()
     last_update.clear();
 }
 
-bool Pisi::is_empty()
+bool Pisi::is_empty() const
 {
     return empty;
 }
 
-PisiSource Pisi::get_source()
+PisiSource Pisi::get_source() const
 {
     if(is_empty())
         return PisiSource();
@@ -30,7 +30,7 @@ PisiSource Pisi::get_source()
         return source;
 }
 
-PisiPackage Pisi::get_package()
+PisiPackage Pisi::get_package() const
 {
     if(is_empty())
         return PisiPackage();
@@ -38,7 +38,7 @@ PisiPackage Pisi::get_package()
         return package;
 }
 
-QMap<int, PisiUpdate> Pisi::get_updates()
+QMap<int, PisiUpdate> Pisi::get_updates() const
 {
     if(is_empty())
         return QMap<int, PisiUpdate>();
@@ -46,7 +46,7 @@ QMap<int, PisiUpdate> Pisi::get_updates()
         return updates;
 }
 
-PisiUpdate Pisi::get_last_update()
+PisiUpdate Pisi::get_last_update() const
 {
     return last_update;
 }

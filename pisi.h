@@ -14,15 +14,15 @@ public:
     Pisi();
 
     void clear();
-    bool is_empty();
+    bool is_empty() const;
 
     void load_from_dom(const QDomDocument & dom);
     bool save_to_dom(QDomDocument & dom);
 
-    PisiSource get_source();
-    PisiPackage get_package();
-    QMap<int, PisiUpdate> get_updates();
-    PisiUpdate get_last_update();
+    PisiSource get_source() const;
+    PisiPackage get_package() const;
+    QMap<int, PisiUpdate> get_updates() const;
+    PisiUpdate get_last_update() const;
 
     void set_source(PisiSource source);
     void set_package(PisiPackage package);
