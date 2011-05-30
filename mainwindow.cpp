@@ -593,19 +593,30 @@ PisiUpdate MainWindow::get_last_history_update()
     }
     if(last_release_row != 0)
     {
-        PisiUpdate update;
-        update.set_release(last_release);
-        update.set_date(QDate::fromString(ui->tw_history->item(last_release_row, 1)->text(),"dd.MM.yyyy"));
-        update.set_version(ui->tw_history->item(last_release_row, 2)->text());
-        update.set_comment(ui->tw_history->item(last_release_row, 3)->text());
-        update.set_packager_name(ui->tw_history->item(last_release_row, 4)->text());
-        update.set_packager_email(ui->tw_history->item(last_release_row, 5)->text());
-        return update;
+        return get_history_update(last_release_row);
     }
     else
     {
         throw QString("Release error at history update !");
     }
+}
+
+PisiUpdate MainWindow::get_history_update(int row)
+{
+    PisiUpdate update;
+    if(ui->tw_history->itemAt(row, 0) == 0)
+        return update;
+    bool ok = false;
+    int release = ui->tw_history->item(row,0)->text().toInt(&ok);
+    if( ! ok)
+        throw QString("Error at conversion release string to integer !");
+    update.set_release(release);
+    update.set_date(QDate::fromString(ui->tw_history->item(row, 1)->text(),"dd.MM.yyyy"));
+    update.set_version(ui->tw_history->item(row, 2)->text());
+    update.set_comment(ui->tw_history->item(row, 3)->text());
+    update.set_packager_name(ui->tw_history->item(row, 4)->text());
+    update.set_packager_email(ui->tw_history->item(row, 5)->text());
+    return update;
 }
 
 // TODO : split create and build phases
@@ -1516,14 +1527,50 @@ void MainWindow::fill_fields_from_pisi()
 
 void MainWindow::fill_pisi_from_fields()
 {
-    // do not clear pisi, it may have prev values from dom
-    // only change related values
-
     if(pisi.is_empty())
         throw QString("Try to load pisi from fileds, but pisi not loaded !");
 
     // source section
-    PisiSource source = pisi.get_source();
+    PisiSource source;
+
+    QString package_name = ui->le_package_name->text().trimmed();
+    if(package_name.isEmpty())
+        throw QString("Please select a package name !");
+    source.set_name(package_name);
+
+    QString home_page = ui->le_src_home_page->text().trimmed();
+    if(home_page.isEmpty())
+        throw QString("Please enter homepage !");
+    source.set_name(home_page);
+
+    PisiUpdate last_update = get_last_history_update();
+    if(last_update == PisiUpdate())
+        throw QString("Please define an update in history !");
+    QMap<QString,QString> packager;
+    packager[last_update.get_packager_name()] = last_update.get_packager_email();
+    source.set_packager(packager);
+
+    QString license = ui->combo_licence->currentText().trimmed();
+    if(license.isEmpty())
+        throw QString("Please select a license !");
+    source.set_license(license);
+
+    QString is_a = ui->combo_is_a->currentText().trimmed();
+    if( ! is_a.isEmpty())
+        source.set_is_a(is_a);
+
+    QString part_of = ui->combo_part_of->currentText().trimmed();
+    if( ! part_of.isEmpty())
+        source.set_part_of(part_of);
+
+    QString summary = ui->le_summary->text().trimmed();
+    if(summary.isEmpty())
+        throw QString("Please enter summary !");
+    source.set_summary(summary);
+
+    QString description = ui->te_description->toPlainText().trimmed();
+    if( ! description.isEmpty())
+        source.set_description(description);
 
     QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives = source.get_archives();
     // TODO : revise filling comma seperated archives
@@ -1574,24 +1621,44 @@ void MainWindow::fill_pisi_from_fields()
         archives[u] = attr;
     }
     source.set_archives(archives);
-    source.set_home_page(ui->le_src_home_page->text());
 
-    PisiUpdate last_update = get_last_history_update();
-    if(last_update == PisiUpdate())
-        throw QString("Please define an update in history !");
-    QMap<QString,QString> packager;
-    packager[last_update.get_packager_name()] = last_update.get_packager_email();
-    source.set_packager(packager);
+    QString b_dep_str = ui->le_build_dependency->text().trimmed();
+    if( ! b_dep_str.isEmpty())
+        source.set_build_dependencies(b_dep_str);
 
     // package section
-    PisiPackage package = pisi.get_package();
-    // ...
+    PisiPackage package;
+    package.set_name(package_name);
+    package.set_license(license);
+    if( ! is_a.isEmpty())
+        package.set_is_a(is_a);
+    if( ! part_of.isEmpty())
+        package.set_part_of(part_of);
+    package.set_summary(summary);
+    if( ! description.isEmpty())
+        package.set_description(description);
+    QString r_dep_str = ui->le_runtime_dependency->text().trimmed();
+    if( ! r_dep_str.isEmpty())
+        package.set_runtime_dependencies(r_dep_str);
+
+    QMultiMap<PisiPackage::FileType, QString> files;
+    files.insert(PisiPackage::ALL, "/");
+    package.set_files(files);
 
     // history section
-    QMap<int, PisiUpdate> updates = pisi.get_updates();
-    // ...
+    QMap<int, PisiUpdate> updates;
+    int history_row_count = ui->tw_history->rowCount();
+    for(int i=0; i<history_row_count; ++i)
+    {
+        bool ok = false;
+        int release = ui->tw_history->item(i,0)->text().toInt(&ok);
+        if(ok)
+            updates[release] = get_history_update(i);
+        else
+            throw QString("Error at conversion release string to integer !");
+    }
 
-    // if exception
+    // if not exception threw
     pisi.set_source(source);
     pisi.set_package(package);
     pisi.set_updates(updates);

@@ -14,12 +14,12 @@ public:
     void clear();
     void load_from_dom(const QDomElement & dom_element);
 
-    int get_release();
-    QDate get_date();
-    QString get_version();
-    QString get_comment();
-    QString get_packager_name();
-    QString get_packager_email();
+    int get_release() const;
+    QDate get_date() const;
+    QString get_version() const;
+    QString get_comment() const;
+    QString get_packager_name() const;
+    QString get_packager_email() const;
 
     void set_release(int r);
     void set_date(QDate d);
@@ -28,10 +28,10 @@ public:
     void set_packager_name(QString p_n);
     void set_packager_email(QString p_e);
 
-    friend bool operator ==(const PisiUpdate & left, const PisiUpdate & right);
-    friend bool operator !=(const PisiUpdate & left, const PisiUpdate & right);
-    friend bool operator <(const PisiUpdate & left, const PisiUpdate & right);
-    friend bool operator >(const PisiUpdate & left, const PisiUpdate & right);
+    bool operator ==(const PisiUpdate & other);
+    bool operator !=(const PisiUpdate & other);
+    bool operator <(const PisiUpdate & other);
+    bool operator >(const PisiUpdate & other);
 
 private:
     QString get_value_from_element(QString tag, QDomElement elm, bool mandatory);

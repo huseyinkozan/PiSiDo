@@ -59,17 +59,17 @@ void PisiSource::load_from_dom(const QDomElement & dom_element)
     }
 }
 
-QString PisiSource::get_home_page()
+QString PisiSource::get_home_page() const
 {
     return home_page;
 }
 
-QMap<QString,QString> PisiSource::get_packager()
+QMap<QString,QString> PisiSource::get_packager() const
 {
     return packager;
 }
 
-QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > PisiSource::get_archives()
+QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > PisiSource::get_archives() const
 {
     return archives;
 }
@@ -111,4 +111,19 @@ PisiSource::ArchiveAttr PisiSource::get_archive_attr_property(QString attr_name)
     else if(attr_name.toLower() == "target")
         return TARGET;
     else throw QString("Wrong archive atribute name : %1").arg(attr_name);
+}
+
+bool PisiSource::operator ==(const PisiSource & other)
+{
+    return (
+                PisiSPBase::operator ==(other)
+                && get_home_page() == other.get_home_page()
+                && get_packager() == other.get_packager()
+                && get_archives() == other.get_archives()
+                );
+}
+
+bool PisiSource::operator !=(const PisiSource & other)
+{
+    return ! (*this == other);
 }

@@ -22,13 +22,16 @@ public:
     virtual void clear();
     virtual void load_from_dom(const QDomElement & dom_element);
 
-    QString get_home_page();
-    QMap<QString,QString> get_packager();
-    QMap<QString, QMap<ArchiveAttr,QString> > get_archives();
+    QString get_home_page() const;
+    QMap<QString,QString> get_packager() const;
+    QMap<QString, QMap<ArchiveAttr,QString> > get_archives() const;
 
     void set_home_page(QString home_page);
     void set_packager(QMap<QString,QString> packager);
     void set_archives(QMap<QString, QMap<ArchiveAttr,QString> > archives);
+
+    bool operator ==(const PisiSource & other);
+    bool operator !=(const PisiSource & other);
 
 private:
     ArchiveAttr get_archive_attr_property(QString attr_name);

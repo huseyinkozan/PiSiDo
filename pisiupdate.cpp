@@ -58,32 +58,32 @@ QString PisiUpdate::get_value_from_element(QString tag, QDomElement elm, bool ma
     }
 }
 
-int PisiUpdate::get_release()
+int PisiUpdate::get_release() const
 {
     return release;
 }
 
-QDate PisiUpdate::get_date()
+QDate PisiUpdate::get_date() const
 {
     return date;
 }
 
-QString PisiUpdate::get_version()
+QString PisiUpdate::get_version() const
 {
     return version;
 }
 
-QString PisiUpdate::get_comment()
+QString PisiUpdate::get_comment() const
 {
     return comment;
 }
 
-QString PisiUpdate::get_packager_name()
+QString PisiUpdate::get_packager_name() const
 {
     return packager_name;
 }
 
-QString PisiUpdate::get_packager_email()
+QString PisiUpdate::get_packager_email() const
 {
     return packager_email;
 }
@@ -137,27 +137,27 @@ void PisiUpdate::set_packager_email(QString p_e)
     packager_email = p_e;
 }
 
-bool PisiUpdate::operator ==(const PisiUpdate & left, const PisiUpdate & right)
+bool PisiUpdate::operator ==(const PisiUpdate & other)
 {
-    return ( left.get_comment() == right.get_comment()
-             && left.get_date() == right.get_date()
-             && left.get_packager_email() == right.get_packager_email()
-             && left.get_packager_name() == right.get_packager_name()
-             && left.get_release() == right.get_release()
-             && left.get_version() == right.get_version() );
+    return ( get_comment() == other.get_comment()
+             && get_date() == other.get_date()
+             && get_packager_email() == other.get_packager_email()
+             && get_packager_name() == other.get_packager_name()
+             && get_release() == other.get_release()
+             && get_version() == other.get_version() );
 }
 
-bool PisiUpdate::operator !=(const PisiUpdate & left, const PisiUpdate & right)
+bool PisiUpdate::operator !=(const PisiUpdate & other)
 {
-    return  ! ( left == right );
+    return  ! ( *this == other );
 }
 
-bool PisiUpdate::operator <(const PisiUpdate & left, const PisiUpdate & right)
+bool PisiUpdate::operator <(const PisiUpdate & other)
 {
-    return left.get_release() < right.get_release();
+    return get_release() < other.get_release();
 }
 
-bool PisiUpdate::operator >(const PisiUpdate & left, const PisiUpdate & right)
+bool PisiUpdate::operator >(const PisiUpdate & other)
 {
-    return left.get_release() > right.get_release();
+    return get_release() > other.get_release();
 }
