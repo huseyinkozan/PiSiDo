@@ -21,6 +21,7 @@ public:
 
     virtual void clear();
     virtual void load_from_dom(const QDomElement & dom_element);
+    virtual void save_to_dom(QDomElement & dom_element);
 
     QString get_home_page() const;
     QMap<QString,QString> get_packager() const;

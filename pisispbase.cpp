@@ -51,6 +51,11 @@ void PisiSPBase::load_from_dom(const QDomElement & dom_element)
     build_dependencies = get_dependency_map(elm, false);
 }
 
+void PisiSPBase::save_to_dom(QDomElement & dom_element)
+{
+    // TODO : implement
+}
+
 QString PisiSPBase::get_name() const
 {
     return name;

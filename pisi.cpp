@@ -57,6 +57,7 @@ void Pisi::set_source(PisiSource source)
         throw QString("Empty source class !");
 
     this->source = source;
+    empty = false;
 }
 
 void Pisi::set_package(PisiPackage package)
@@ -65,6 +66,7 @@ void Pisi::set_package(PisiPackage package)
         throw QString("Empty package class !");
 
     this->package = package;
+    empty = false;
 }
 
 void Pisi::set_updates(QMap<int, PisiUpdate> updates)
@@ -73,12 +75,11 @@ void Pisi::set_updates(QMap<int, PisiUpdate> updates)
         throw QString("Empty history update !");
 
     this->updates = updates;
+    empty = false;
 }
 
 void Pisi::load_from_dom(const QDomDocument & dom)
 {
-    empty = true;
-
     QDomElement root = dom.documentElement();
     if( ! root.isNull() && root.tagName().toLower() == "pisi")
     {
@@ -147,9 +148,54 @@ void Pisi::load_from_dom(const QDomDocument & dom)
 bool Pisi::save_to_dom(QDomDocument &dom)
 {
     if(dom.isNull())
-        return false;
+        throw QString("Empty dom while saving pisi class values to dom !");
+    if(is_empty())
+        throw QString("Empty pisi class while saving pisi class values to dom !");
 
-    // TODO : implement
+    QDomElement root = dom.documentElement();
+    if( ! root.isNull() && root.tagName().toLower() == "pisi")
+    {
+        QDomElement elm_src = root.namedItem("Source").toElement();
+        try {
+            source.save_to_dom(elm_src);
+        } catch (QString e) {
+            throw QString("From Source saver : %1").arg(e);
+        }
+
+        QDomElement elm_pkg = root.namedItem("Package").toElement();
+        try {
+            package.save_to_dom(elm_pkg);
+        } catch (QString e) {
+            throw QString("From Package parser : %1").arg(e);
+        }
+
+        QDomElement elm_hist = root.namedItem("History").toElement();
+        if( ! elm_hist.isNull() && elm_hist.isElement())
+        {
+            if(elm_hist.hasChildNodes())
+            {
+                QDomNodeList nodes = elm_hist.childNodes();
+                for(int i=0; i<nodes.count(); ++i)
+                {
+                    elm_hist.removeChild(nodes.at(i));
+                }
+            }
+
+            QList<int> releases = updates.keys();
+            for(int i=releases.count()-1; i>=0; --i)
+            {
+                updates[releases.at(i)].save_to_dom(elm_hist);
+            }
+        }
+        else
+        {
+            throw QString("Can not find History tag !");
+        }
+    }
+    else
+    {
+        throw QString("Can not find PISI tag !");
+    }
 
     return true;
 }

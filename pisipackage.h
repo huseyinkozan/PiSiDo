@@ -25,6 +25,7 @@ public:
 
     virtual void clear();
     virtual void load_from_dom(const QDomElement & dom_element);
+    virtual void save_to_dom(QDomElement & dom_element);
 
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> > get_runtime_dependencies() const;
     QMultiMap<FileType, QString> get_files() const;

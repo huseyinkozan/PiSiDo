@@ -23,6 +23,8 @@ public:
 
     virtual void clear();
     virtual void load_from_dom(const QDomElement & dom_element);
+    virtual void save_to_dom(QDomElement & dom_element);
+
     virtual QStringList get_dependency_list(QMap<QString, QMap<VersionReleaseToFromAttr,QString> > dependencies);
     virtual QMap<QString, QMap<VersionReleaseToFromAttr,QString> > get_dependency_list(QString dependency);
 

@@ -26,6 +26,11 @@ void PisiPackage::load_from_dom(const QDomElement & dom_element)
     runtime_dependencies = get_dependency_map(elm, false);
 }
 
+void PisiPackage::save_to_dom(QDomElement & dom_element)
+{
+    // TODO : implement
+}
+
 QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiPackage::get_runtime_dependencies() const
 {
     return runtime_dependencies;

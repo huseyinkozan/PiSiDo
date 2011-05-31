@@ -13,6 +13,7 @@ public:
 
     void clear();
     void load_from_dom(const QDomElement & dom_element);
+    void save_to_dom(QDomElement & dom_element);
 
     int get_release() const;
     QDate get_date() const;

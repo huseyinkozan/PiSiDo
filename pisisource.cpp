@@ -59,6 +59,11 @@ void PisiSource::load_from_dom(const QDomElement & dom_element)
     }
 }
 
+void PisiSource::save_to_dom(QDomElement & dom_element)
+{
+    // TODO : implement
+}
+
 QString PisiSource::get_home_page() const
 {
     return home_page;
