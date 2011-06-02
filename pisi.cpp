@@ -156,7 +156,7 @@ bool Pisi::save_to_dom(QDomDocument &dom)
     if( ! root.isNull() && root.tagName().toLower() == "pisi")
     {
         QDomElement elm_src = root.namedItem("Source").toElement();
-        if(elm_src.isNull())
+        if(elm_src.isNull() || ! elm_src.isElement())
         {
             elm_src = root.ownerDocument().createElement("Source");
             root.appendChild(elm_src);
@@ -168,7 +168,7 @@ bool Pisi::save_to_dom(QDomDocument &dom)
         }
 
         QDomElement elm_pkg = root.namedItem("Package").toElement();
-        if(elm_pkg.isNull())
+        if(elm_pkg.isNull() || ! elm_pkg.isElement())
         {
             elm_pkg = root.ownerDocument().createElement("Package");
             root.appendChild(elm_pkg);
@@ -180,7 +180,7 @@ bool Pisi::save_to_dom(QDomDocument &dom)
         }
 
         QDomElement elm_hist = root.namedItem("History").toElement();
-        if(elm_hist.isNull())
+        if(elm_hist.isNull() || ! elm_hist.isElement())
         {
             elm_hist = root.ownerDocument().createElement("History");
             root.appendChild(elm_hist);

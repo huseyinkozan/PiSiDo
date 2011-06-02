@@ -22,7 +22,7 @@ void PisiSource::load_from_dom(const QDomElement & dom_element)
     PisiSPBase::load_from_dom(dom_element);
 
     if(dom_element.isNull())
-        throw QString("Dom Element is null while loading to PspecSource !");
+        throw QString("Dom Element is null while loading to PisiSource !");
 
     QDomElement elm = dom_element.firstChildElement("Homepage");
     if(elm.isNull()) throw QString("No Homepage tag !");
@@ -62,6 +62,10 @@ void PisiSource::load_from_dom(const QDomElement & dom_element)
 void PisiSource::save_to_dom(QDomElement & dom_element)
 {
     // TODO : implement
+    PisiSPBase::save_to_dom(dom_element);
+
+    if(dom_element.isNull())
+        throw QString("Dom Element is null while saving from PisiSource to dom !");
 }
 
 QString PisiSource::get_home_page() const

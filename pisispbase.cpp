@@ -21,39 +21,37 @@ void PisiSPBase::clear()
     build_dependencies.clear();
 }
 
-void PisiSPBase::load_from_dom(const QDomElement & dom_element)
+void PisiSPBase::load_from_dom(const QDomElement & root_elm)
 {
-    if(dom_element.isNull())
-        throw QString("Dom Element is null while loading to PspecBase !");
+    if(root_elm.isNull())
+        throw QString("Dom Element is null while loading to PisiSPBase !");
 
-    bool is_src_tag = dom_element.tagName().toLower() == "source";
-    //    qDebug() << (is_src_tag?"Source":"Package") << ":: Base";
 
-    QDomElement elm = dom_element.firstChildElement("Name");
-    name = get_value_from_element("Name", elm, true);
+    name = get_value_from_element("Name", root_elm);
+    license = get_value_from_element("License", root_elm);
+    summary = get_value_from_element("Summary", root_elm);
+    description = get_value_from_element("Description", root_elm);
+    part_of = get_value_from_element("PartOf", root_elm);
+    is_a = get_value_from_element("IsA", root_elm);
 
-    elm = dom_element.firstChildElement("License");
-    license = get_value_from_element("License", elm, is_src_tag);
-
-    elm = dom_element.firstChildElement("Summary");
-    summary = get_value_from_element("Summary", elm, is_src_tag);
-
-    elm = dom_element.firstChildElement("Description");
-    description = get_value_from_element("Description", elm, false);
-
-    elm = dom_element.firstChildElement("PartOf");
-    part_of = get_value_from_element("PartOf", elm, false);
-
-    elm = dom_element.firstChildElement("IsA");
-    is_a = get_value_from_element("IsA", elm, false);
-
-    elm = dom_element.firstChildElement("BuildDependencies");
-    build_dependencies = get_dependency_map(elm, false);
+    QDomElement elm = root_elm.firstChildElement("BuildDependencies");
+    build_dependencies = get_dep_from_element(elm, is_mandatory(root_elm, "BuildDependencies"));
 }
 
-void PisiSPBase::save_to_dom(QDomElement & dom_element)
+void PisiSPBase::save_to_dom(QDomElement & root_elm)
 {
     // TODO : implement
+    if(root_elm.isNull())
+        throw QString("Dom Element is null while saving from PisiSPBase to dom !");
+
+    set_value_to_element(name, "Name", root_elm);
+    set_value_to_element(license, "License", root_elm);
+    set_value_to_element(summary, "Summary", root_elm);
+    set_value_to_element(description, "Description", root_elm);
+    set_value_to_element(part_of, "PartOf", root_elm);
+    set_value_to_element(is_a, "IsA", root_elm);
+
+    // TODO : set_dep_to_element()
 }
 
 QString PisiSPBase::get_name() const
@@ -145,11 +143,12 @@ void PisiSPBase::set_build_dependencies(QString build_dependency_string)
     set_build_dependencies(build_dependencies);
 }
 
-QString PisiSPBase::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
+QString PisiSPBase::get_value_from_element(QString tag, QDomElement root)
 {
+    QDomElement elm = root.firstChildElement("Name");
     if(elm.isNull())
     {
-        if(mandatory)
+        if(is_mandatory(root, tag))
             throw QString("No %1 tag !").arg(tag);
         else return QString();
     }
@@ -160,7 +159,57 @@ QString PisiSPBase::get_value_from_element(QString tag, QDomElement elm, bool ma
     }
 }
 
-QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::get_dependency_map(QDomElement elm, bool mandatory)
+void PisiSPBase::set_value_to_element(QString value, QString tag, QDomElement root)
+{
+    QDomElement elm = root.firstChildElement(tag);
+    if(elm.isNull())
+        elm = get_appended_dom(root, tag);
+
+    if(is_mandatory(root, tag) && value.isEmpty())
+        throw QString("%1 tag is mandatory but empty !");
+
+    QDomText text = root.ownerDocument().createTextNode(value);
+    if(text.isNull() || elm.appendChild(text).isNull())
+        throw QString("Error while creating dom text element %1 with value = %2").arg(tag).arg(value);
+}
+
+QDomElement PisiSPBase::get_appended_dom(QDomElement & root, QString tag)
+{
+    QDomElement elm = root.ownerDocument().createElement(tag);
+    if(elm.isNull() || root.appendChild(elm).isNull())
+        throw QString("Error while creating dom element %1").arg(tag);
+    return elm;
+}
+
+bool PisiSPBase::is_mandatory(QDomElement root, QString tag)
+{
+    bool is_src;
+    if(root.tagName().toLower() == "source")
+        is_src = true;
+    else if(root.tagName().toLower() == "package")
+        is_src = false;
+    else
+        throw QString("Wrong root dom passed to is_mandatory() !");
+
+    if(tag == "Name")
+        return true;
+    else if(tag == "License")
+        return is_src;
+    else if(tag == "Summary")
+        return is_src;
+    else if(tag == "Description")
+        return false;
+    else if(tag == "PartOf")
+        return false;
+    else if(tag == "IsA")
+        return false;
+    else if(tag == "BuildDependencies")
+        return false;
+    else
+        throw QString("Undefined tag name in is_mandatory() !");
+}
+
+QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::get_dep_from_element(QDomElement elm, bool mandatory)
 {
     if(elm.isNull())
     {

@@ -54,7 +54,10 @@ protected:
     QString get_dependency_attr_property_string(VersionReleaseToFromAttr attr, bool abbreviation = false);
 
 private:
-    QString get_value_from_element(QString tag, QDomElement elm, bool mandatory);
+    QString get_value_from_element(QString tag, QDomElement root);
+    void set_value_to_element(QString value, QString tag, QDomElement root);
+    QDomElement get_appended_dom(QDomElement & root_elm, QString tag);
+    bool is_mandatory(QDomElement root, QString tag);
     QMap<VersionReleaseToFromAttr,QString> get_dependency_attr_list(QString attr_string);
 
 private:

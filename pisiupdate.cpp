@@ -20,7 +20,7 @@ void PisiUpdate::clear()
 void PisiUpdate::load_from_dom(const QDomElement & dom_element)
 {
     if(dom_element.isNull())
-        throw QString("Dom Element is null while loading to PspecPackage !");
+        throw QString("Dom Element is null while loading to PisiUpdate !");
 
     QDomElement elm = dom_element.firstChildElement("Version");
     version = get_value_from_element("Version", elm, true);
@@ -46,6 +46,8 @@ void PisiUpdate::load_from_dom(const QDomElement & dom_element)
 void PisiUpdate::save_to_dom(QDomElement & dom_element)
 {
     // TODO : implement
+    if(dom_element.isNull())
+        throw QString("Dom Element is null while saving from PisiUpdate to dom !");
 }
 
 QString PisiUpdate::get_value_from_element(QString tag, QDomElement elm, bool mandatory)

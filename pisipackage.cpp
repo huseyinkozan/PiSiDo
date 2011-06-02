@@ -20,15 +20,19 @@ void PisiPackage::load_from_dom(const QDomElement & dom_element)
     PisiSPBase::load_from_dom(dom_element);
 
     if(dom_element.isNull())
-        throw QString("Dom Element is null while loading to PspecPackage !");
+        throw QString("Dom Element is null while loading to PisiPackage !");
 
     QDomElement elm = dom_element.firstChildElement("RuntimeDependencies");
-    runtime_dependencies = get_dependency_map(elm, false);
+    runtime_dependencies = get_dep_from_element(elm, false);
 }
 
 void PisiPackage::save_to_dom(QDomElement & dom_element)
 {
     // TODO : implement
+    PisiSPBase::save_to_dom(dom_element);
+
+    if(dom_element.isNull())
+        throw QString("Dom Element is null while saving from PisiPackage to dom !");
 }
 
 QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiPackage::get_runtime_dependencies() const
