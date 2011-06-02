@@ -156,6 +156,11 @@ bool Pisi::save_to_dom(QDomDocument &dom)
     if( ! root.isNull() && root.tagName().toLower() == "pisi")
     {
         QDomElement elm_src = root.namedItem("Source").toElement();
+        if(elm_src.isNull())
+        {
+            elm_src = root.ownerDocument().createElement("Source");
+            root.appendChild(elm_src);
+        }
         try {
             source.save_to_dom(elm_src);
         } catch (QString e) {
@@ -163,15 +168,23 @@ bool Pisi::save_to_dom(QDomDocument &dom)
         }
 
         QDomElement elm_pkg = root.namedItem("Package").toElement();
+        if(elm_pkg.isNull())
+        {
+            elm_pkg = root.ownerDocument().createElement("Package");
+            root.appendChild(elm_pkg);
+        }
         try {
             package.save_to_dom(elm_pkg);
         } catch (QString e) {
-            throw QString("From Package parser : %1").arg(e);
+            throw QString("From Package saver : %1").arg(e);
         }
 
         QDomElement elm_hist = root.namedItem("History").toElement();
-        if( ! elm_hist.isNull() && elm_hist.isElement())
+        if(elm_hist.isNull())
         {
+            elm_hist = root.ownerDocument().createElement("History");
+            root.appendChild(elm_hist);
+        } else
             if(elm_hist.hasChildNodes())
             {
                 QDomNodeList nodes = elm_hist.childNodes();
@@ -181,15 +194,16 @@ bool Pisi::save_to_dom(QDomDocument &dom)
                 }
             }
 
-            QList<int> releases = updates.keys();
-            for(int i=releases.count()-1; i>=0; --i)
-            {
-                updates[releases.at(i)].save_to_dom(elm_hist);
-            }
-        }
-        else
+        QList<int> releases = updates.keys();
+        for(int i=releases.count()-1; i>=0; --i)
         {
-            throw QString("Can not find History tag !");
+            QDomElement elm_upd = root.ownerDocument().createElement("Update");
+            elm_hist.appendChild(elm_upd);
+            try {
+                updates[releases.at(i)].save_to_dom(elm_upd);
+            } catch (QString e) {
+                throw QString("From Update saver : %1").arg(e);
+            }
         }
     }
     else

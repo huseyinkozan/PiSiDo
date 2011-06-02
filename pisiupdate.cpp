@@ -46,7 +46,6 @@ void PisiUpdate::load_from_dom(const QDomElement & dom_element)
 void PisiUpdate::save_to_dom(QDomElement & dom_element)
 {
     // TODO : implement
-    // Note : each append will add update to history in descending manner
 }
 
 QString PisiUpdate::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
