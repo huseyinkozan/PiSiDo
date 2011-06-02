@@ -49,7 +49,7 @@ public:
     bool operator !=(const PisiSPBase & other) const;
 
 protected:
-    QMap<QString, QMap<VersionReleaseToFromAttr,QString> > get_dependency_map(QDomElement elm, bool mandatory);
+    QMap<QString, QMap<VersionReleaseToFromAttr,QString> > get_dep_from_element(QDomElement elm, bool mandatory);
     VersionReleaseToFromAttr get_dependency_attr_property(QString attr_name, bool abbreviation = false);
     QString get_dependency_attr_property_string(VersionReleaseToFromAttr attr, bool abbreviation = false);
 
