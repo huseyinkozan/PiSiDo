@@ -180,19 +180,12 @@ bool Pisi::save_to_dom(QDomDocument &dom)
         }
 
         QDomElement elm_hist = root.namedItem("History").toElement();
-        if(elm_hist.isNull() || ! elm_hist.isElement())
+        if( ! elm_hist.isNull() && elm_hist.isElement())
         {
-            elm_hist = root.ownerDocument().createElement("History");
-            root.appendChild(elm_hist);
-        } else
-            if(elm_hist.hasChildNodes())
-            {
-                QDomNodeList nodes = elm_hist.childNodes();
-                for(int i=0; i<nodes.count(); ++i)
-                {
-                    elm_hist.removeChild(nodes.at(i));
-                }
-            }
+            root.removeChild(elm_hist);
+        }
+        elm_hist = root.ownerDocument().createElement("History");
+        root.appendChild(elm_hist);
 
         QList<int> releases = updates.keys();
         for(int i=releases.count()-1; i>=0; --i)

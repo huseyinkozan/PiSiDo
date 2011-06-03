@@ -45,9 +45,10 @@ void PisiUpdate::load_from_dom(const QDomElement & dom_element)
 
 void PisiUpdate::save_to_dom(QDomElement & dom_element)
 {
-    // TODO : implement
     if(dom_element.isNull())
         throw QString("Dom Element is null while saving from PisiUpdate to dom !");
+
+    // TODO : implement
 }
 
 QString PisiUpdate::get_value_from_element(QString tag, QDomElement elm, bool mandatory)

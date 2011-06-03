@@ -61,11 +61,12 @@ void PisiSource::load_from_dom(const QDomElement & dom_element)
 
 void PisiSource::save_to_dom(QDomElement & dom_element)
 {
-    // TODO : implement
     PisiSPBase::save_to_dom(dom_element);
 
     if(dom_element.isNull())
         throw QString("Dom Element is null while saving from PisiSource to dom !");
+
+    // TODO : implement
 }
 
 QString PisiSource::get_home_page() const

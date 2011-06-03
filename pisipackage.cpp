@@ -24,15 +24,24 @@ void PisiPackage::load_from_dom(const QDomElement & dom_element)
 
     QDomElement elm = dom_element.firstChildElement("RuntimeDependencies");
     runtime_dependencies = get_dep_from_element(elm, false);
+
+    // TODO : do it for files !
 }
 
-void PisiPackage::save_to_dom(QDomElement & dom_element)
+void PisiPackage::save_to_dom(QDomElement & root_elm)
 {
-    // TODO : implement
-    PisiSPBase::save_to_dom(dom_element);
+    PisiSPBase::save_to_dom(root_elm);
 
-    if(dom_element.isNull())
+    if(root_elm.isNull())
         throw QString("Dom Element is null while saving from PisiPackage to dom !");
+
+    QDomElement elm = root_elm.firstChildElement("RuntimeDependencies");
+    if( ! elm.isNull())
+        root_elm.removeChild(elm);
+    elm = get_appended_dom_elm(root_elm, "RuntimeDependencies");
+    set_dep_to_element(runtime_dependencies, elm, is_mandatory(root_elm, "RuntimeDependencies"));
+
+    // TODO : do it for files !
 }
 
 QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiPackage::get_runtime_dependencies() const
@@ -74,4 +83,18 @@ bool PisiPackage::operator ==(const PisiPackage & other)
 bool PisiPackage::operator !=(const PisiPackage & other)
 {
     return ! (*this == other);
+}
+
+bool PisiPackage::is_mandatory(QDomElement root, QString tag)
+{
+    if(tag == "RuntimeDependencies")
+    {
+        return false;
+    }
+    else if(tag == "Files")
+    {
+        return true;
+    }
+    else
+        PisiSPBase::is_mandatory(root, tag);
 }

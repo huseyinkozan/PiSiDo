@@ -37,6 +37,9 @@ public:
     bool operator ==(const PisiPackage & other);
     bool operator !=(const PisiPackage & other);
 
+protected:
+    virtual bool is_mandatory(QDomElement root, QString tag);
+
 private:
     // dependency, {(versionFrom,xxxx),(versionTo,xxxx),...,(release,xxxx)}
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> > runtime_dependencies;

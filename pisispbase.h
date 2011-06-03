@@ -6,6 +6,7 @@
 #include <QMap>
 
 class QDomElement;
+class QDomText;
 
 class PisiSPBase
 {
@@ -50,14 +51,18 @@ public:
 
 protected:
     QMap<QString, QMap<VersionReleaseToFromAttr,QString> > get_dep_from_element(QDomElement elm, bool mandatory);
+    void set_dep_to_element(QMap<QString, QMap<VersionReleaseToFromAttr,QString> > dep, QDomElement elm, bool mandatory);
+
     VersionReleaseToFromAttr get_dependency_attr_property(QString attr_name, bool abbreviation = false);
     QString get_dependency_attr_property_string(VersionReleaseToFromAttr attr, bool abbreviation = false);
+
+    virtual bool is_mandatory(QDomElement root, QString tag);
 
 private:
     QString get_value_from_element(QString tag, QDomElement root);
     void set_value_to_element(QString value, QString tag, QDomElement root);
-    QDomElement get_appended_dom(QDomElement & root_elm, QString tag);
-    bool is_mandatory(QDomElement root, QString tag);
+    QDomElement get_appended_dom_elm(QDomElement & root_elm, QString tag);
+    QDomText appended_dom_text(QDomElement elm, QString value);
     QMap<VersionReleaseToFromAttr,QString> get_dependency_attr_list(QString attr_string);
 
 private:

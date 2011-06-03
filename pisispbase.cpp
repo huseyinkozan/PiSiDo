@@ -40,7 +40,6 @@ void PisiSPBase::load_from_dom(const QDomElement & root_elm)
 
 void PisiSPBase::save_to_dom(QDomElement & root_elm)
 {
-    // TODO : implement
     if(root_elm.isNull())
         throw QString("Dom Element is null while saving from PisiSPBase to dom !");
 
@@ -51,7 +50,11 @@ void PisiSPBase::save_to_dom(QDomElement & root_elm)
     set_value_to_element(part_of, "PartOf", root_elm);
     set_value_to_element(is_a, "IsA", root_elm);
 
-    // TODO : set_dep_to_element()
+    QDomElement elm = root_elm.firstChildElement("BuildDependencies");
+    if( ! elm.isNull())
+        root_elm.removeChild(elm);
+    elm = get_appended_dom_elm(root_elm, "BuildDependencies");
+    set_dep_to_element(build_dependencies, elm, is_mandatory(root_elm, "BuildDependencies"));
 }
 
 QString PisiSPBase::get_name() const
@@ -163,22 +166,26 @@ void PisiSPBase::set_value_to_element(QString value, QString tag, QDomElement ro
 {
     QDomElement elm = root.firstChildElement(tag);
     if(elm.isNull())
-        elm = get_appended_dom(root, tag);
+        elm = get_appended_dom_elm(root, tag);
 
     if(is_mandatory(root, tag) && value.isEmpty())
         throw QString("%1 tag is mandatory but empty !");
-
-    QDomText text = root.ownerDocument().createTextNode(value);
-    if(text.isNull() || elm.appendChild(text).isNull())
-        throw QString("Error while creating dom text element %1 with value = %2").arg(tag).arg(value);
+    appended_dom_text(elm, value);
 }
 
-QDomElement PisiSPBase::get_appended_dom(QDomElement & root, QString tag)
+QDomElement PisiSPBase::get_appended_dom_elm(QDomElement & root, QString tag)
 {
     QDomElement elm = root.ownerDocument().createElement(tag);
     if(elm.isNull() || root.appendChild(elm).isNull())
         throw QString("Error while creating dom element %1").arg(tag);
     return elm;
+}
+
+QDomText PisiSPBase::appended_dom_text(QDomElement elm, QString value)
+{
+    QDomText text = elm.ownerDocument().createTextNode(value);
+    if(text.isNull() || elm.appendChild(text).isNull())
+        throw QString("Error while creating dom text element with value = %2").arg(value);
 }
 
 bool PisiSPBase::is_mandatory(QDomElement root, QString tag)
@@ -242,6 +249,34 @@ QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::g
 //        qDebug() << "Dep:" << elm.text();
     }
     return dependencies;
+}
+
+void PisiSPBase::set_dep_to_element(QMap<QString, QMap<VersionReleaseToFromAttr,QString> > dep, QDomElement elm, bool mandatory)
+{
+    if(dep.isEmpty())
+    {
+        if(mandatory)
+            throw QString("Empty dependency while setting dependency tag.");
+        else
+            return;
+    }
+
+    QList<QString> dependencies = dep.keys();
+    for(int i=0; i<dependencies.count(); ++i)
+    {
+        QString dependency = dependencies.at(i);
+        QDomElement elm = get_appended_dom_elm(elm, "Dependency");
+        appended_dom_text(elm, dependency);
+
+        QMap<VersionReleaseToFromAttr,QString> attr = dep[dependency];
+        QList<VersionReleaseToFromAttr> attributes = attr.keys();
+        for(int j=0; j<attributes.count(); ++j)
+        {
+            VersionReleaseToFromAttr v = attributes.at(j);
+            QString release = attr[v];
+            elm.setAttribute(get_dependency_attr_property_string(v), release);
+        }
+    }
 }
 
 PisiSPBase::VersionReleaseToFromAttr PisiSPBase::get_dependency_attr_property(QString attr_name, bool abbreviation)
