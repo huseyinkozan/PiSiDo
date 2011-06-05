@@ -1,0 +1,19 @@
+
+1.1.0 İçin:
+
+    * Yeni arayüz tasarımı __TMM
+
+    * pspec.xml dosyasının içe/dışa aktarımı.
+        * pspec bilgisini barındıracak C++ sınıfları tasarlanacak. __ÜstündeÇalışılıyor
+        * Pisi sınıfıyla pspec.xml dosyasından QDomDocument'e bilgilerin yüklenmesi. __TMM
+        * Pisi sınıfıyla pspec.xml dosyasına arayüzden bilgilerin yüklenmesi. __ÜstündeÇalışılıyor
+
+    * İnşa sürecinin araç çubuğu/ menü yardımıyla gerçeklenmesi.
+        * Şimdiki inşa süreci gözden geçirilmeli. Arayüz değişikliğinden sonra inşa adımları
+          uyumsuzlaştı.
+        * pspec.xml deki file etiketi için yeni pencere tasarımı. Kullanıcıya hangi dosyanın
+          nereye konacağı, hangi etiketlere sahip olacağı vs.
+          (bakınız: http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng Files etiketi)
+
+    * actions.py arayüz nesnesine kod renklendirici eklenmesi.
+    * actions.py arayüz nesnesine otomatik tamamlama eklenmesi.

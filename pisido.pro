@@ -44,7 +44,9 @@ OTHER_FILES += \
     README \
     OKUBUNU \
     LICENSE \
-    LISANS
+    LISANS \
+    ROADMAP \
+    YOLHARITASI
 
 RESOURCES += \
     pisido.qrc
