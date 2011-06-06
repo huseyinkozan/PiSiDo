@@ -45,8 +45,8 @@ OTHER_FILES += \
     OKUBUNU \
     LICENSE \
     LISANS \
-    ROADMAP \
-    YOLHARITASI
+    TODO \
+    YAPILACAKLAR
 
 RESOURCES += \
     pisido.qrc

@@ -1,0 +1,52 @@
+
+1.1.0 için:
+-----------
+    (X) Yeni arayüz tasarımı yapılacak.
+
+    (*) pspec.xml dosyasının içe/dışa aktarımı sağlanacak.
+        (->) pspec bilgisini barındıracak C++ sınıfları tasarlanacak.
+            (X) Pisi sınıfıyla pspec.xml dosyasından QDomDocument'e bilgilerin
+                yüklenmesi sağlanacak.
+            (->) Pisi sınıfıyla pspec.xml dosyasına arayüzden bilgilerin
+                yüklenmesi sağlanacak.
+
+    (*) İnşa adımları yeniden tasarlanacak.
+        (*) İnşa adımları belirlenecek. Pspec.xml oluşumu, action.py oluşumu,
+            arşiv indirilmesi, ... sonrasında pisi nin desteklediği adımlar.
+
+    (*) Program yardımı hazırlanacak.
+
+    (*) Program test edilecek.
+
+
+Sonraki sürümler için:
+----------------------
+    (*) pspec.xml deki File etiketi için yeni arayüz tasarımı yapılacak.
+        (*) Ayrıntılar için : http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng yolundaki
+          dosyada bulunan Files etiketine bakınız.
+        (*) Paketin inşa klasöründeki dosyalar/klasörler işaretlenecekler listesine alınacak.
+            (/var/pisi/PACKAGE/work/*)
+        (*) İşaretlenecekler listesi boşalıncaya kadar işlem zorlanacak.
+        (*) İşaretleme için ayrı bir dialog tasarlanacak. Bu dialog ile herhangi bir dosya veya
+            klasör için fileType belirtilebilecek. Dialog'dan alınan veri tabloya veya
+            listeye eklenecek.
+        (*) Eğer bir klasör işaretlenmişse altındaki dosyalar işaretlenecek listesinden çıkarılacak.
+
+    (*) pspec.xml deki AdditionalFiles etiketi için yeni arayüz tasarımı yapılacak.
+        (*) İnşa klasöründeki files klasörüne koyulan dosyalar dialog içinde listelenerek
+          tabloya veya listeye eklenmesi sağlanacak.
+    (*) actions.py Action API dosyası için metin editörüne python desteği eklenecek.
+        (*) Metin editörüne kod renklendirici eklenecek
+        (*) Metin editörüne otomatik tamamlama eklenecek.
+    (*) pspec.xml gösterim arabirimi eklenecek.
+        (*) Yeni oluşturulan veya içe aktarılan pspec.xml dosyasının arayüzde gösterilmesi için
+            ui tasarlanacak. Arabirimde yapılan değişiklikler pspec.xml ui nesnesine aktarılacak.
+
+
+
+
+İşaret haritası:
+----------------
+    (*) yapılmadı
+    (->) yapılıyor
+    (X) yapıldı

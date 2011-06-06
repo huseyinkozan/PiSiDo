@@ -1,0 +1,54 @@
+
+For 1.1.0:
+----------
+    (X) New GUI design.
+
+    (*) Import/Export pspec.xml file.
+        (->) Design C++ class to package pspec information.
+            (*) Load pisi info to QDomDocument from pspec.xml file by Pisi class.
+            (->) Save pisi info to pspec.xml from GUI by Pisi class.
+
+    (*) Redefine building steps.
+        (*) Building steps will define. Pspec.xml creation, action.py creation,
+            download archive, ... and later steps that pisi supports.
+
+    (*) Prepare program help.
+
+    (*) Test program.
+
+
+For next releases:
+------------------
+    (*) Design a new ui to select File tag for pspec.xml.
+        (*) For more information see File tag from here :
+            http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng
+    (*) A new ui method needs to select AdditionalFiles tag for pspec.xml.
+        (*) Add files and folders to check list in pisi build directory.
+            (/var/pisi/PACKAGE/work/*)
+        (*) Operation will force until all files are on check list.
+        (*) Design a new dialog for check list operation. With this dialog,
+            any file or folder can tagged with a fileType. The datas taken from
+            this dialog will add a table or list.
+        (*) If a folder tagged, all files under that folder will remove from check list.
+
+    (*) Design a new ui to select AdditionalFiles tag for pspec.xml.
+        (*) The files under file directory can be selected and able to add a table
+            or a list.
+    (*) Python support will add to actions.py Action API text editor.
+        (*) Syntax highlighter will add to editor.
+        (*) Autocomplater will add to editor.
+    (*) pspec.xml view will add.
+        (*) Newly created or imported pspec.xml file will shown to the user. GUI changes
+            will reflect to user.
+
+
+
+
+
+
+
+Sign Map:
+----------------
+    (*) not done
+    (-) doing
+    (X) done
