@@ -1,6 +1,6 @@
 
-1.1.0 İçin:
-
+1.1.0 için:
+-----------
     * Yeni arayüz tasarımı __TMM
 
     * pspec.xml dosyasının içe/dışa aktarımı.
@@ -11,9 +11,14 @@
     * İnşa sürecinin araç çubuğu/ menü yardımıyla gerçeklenmesi.
         * Şimdiki inşa süreci gözden geçirilmeli. Arayüz değişikliğinden sonra inşa adımları
           uyumsuzlaştı.
-        * pspec.xml deki file etiketi için yeni pencere tasarımı. Kullanıcıya hangi dosyanın
-          nereye konacağı, hangi etiketlere sahip olacağı vs.
-          (bakınız: http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng Files etiketi)
 
+
+Sonraki sürümler için:
+----------------------
+    * pspec.xml deki File etiketi için yeni arayüz tasarımı yapılacak. Kullanıcıya hangi dosyanın
+      nereye konacağı, hangi etiketlere sahip olacağı vs. sorulacak.
+      (bakınız: http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng Files etiketi)
+    * pspec.xml deki AdditionalFiles etiketi için yeni arayüz tasarımı yapılacak.
+      Şimdilik eğer arayüzde desktop dosyası istenmişse .desktop ve .png dosyası için ekleniyor.
     * actions.py arayüz nesnesine kod renklendirici eklenmesi.
     * actions.py arayüz nesnesine otomatik tamamlama eklenmesi.

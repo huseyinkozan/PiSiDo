@@ -1,6 +1,6 @@
 
 For 1.1.0:
-
+----------
     * New GUI design. __OK
 
     * Import/Export pspec.xml file.
@@ -11,9 +11,15 @@ For 1.1.0:
     * Define building process by toolbar/menu actions
         * Current building process must review. After changing gui building
           steps are incompatible.
-        * A new dialog needs to select file tag for pspec.xml. Prompt user
-          to select which type of file, where it goes to etc.
-          (see http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng Files tag)
 
+
+For next releases:
+------------------
+    * A new ui method needs to select File tag for pspec.xml. Prompt user
+      to select which type of file, where it goes to etc.
+      (see http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng Files tag)
+    * A new ui method needs to select AdditionalFiles tag for pspec.xml.
+      Currently only added for .desktop and .png file if a .desktop is defined
+      from ui.
     * Add syntaxhighlighter to actions.py widget
     * Add autocomplater to actions.py widget
