@@ -59,14 +59,28 @@ void PisiSource::load_from_dom(const QDomElement & dom_element)
     }
 }
 
-void PisiSource::save_to_dom(QDomElement & dom_element)
+void PisiSource::save_to_dom(QDomElement & root_elm)
 {
-    PisiSPBase::save_to_dom(dom_element);
+    PisiSPBase::save_to_dom(root_elm);
 
-    if(dom_element.isNull())
+    if(root_elm.isNull())
         throw QString("Dom Element is null while saving from PisiSource to dom !");
 
-    // TODO : implement
+    set_value_to_element(home_page, "Homepage", root_elm);
+
+    QDomElement elm = root_elm.firstChildElement("Packager");
+    if( ! elm.isNull())
+        root_elm.removeChild(elm);
+    elm = get_appended_dom_elm(root_elm, "Packager");
+    QList<QString> packager_names = packager.keys();
+    if(packager_names.count() > 1)
+        throw QString("More than one packager info !");
+    else if(packager_names.count() < 1)
+        throw QString("There is no packager info !");
+    else
+    {
+//        set_value_to_element(packager_names.first(), "Name", elm);
+    }
 }
 
 QString PisiSource::get_home_page() const
@@ -136,4 +150,16 @@ bool PisiSource::operator ==(const PisiSource & other)
 bool PisiSource::operator !=(const PisiSource & other)
 {
     return ! (*this == other);
+}
+
+bool PisiSource::is_mandatory(QDomElement root, QString tag)
+{
+    -/-
+    else if(root.tagName().toLower() == "packager")
+    {
+        if(tag == "Name")
+            return true;
+        else if(tag == "Email")
+            return true;
+    }
 }

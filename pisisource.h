@@ -34,6 +34,9 @@ public:
     bool operator ==(const PisiSource & other);
     bool operator !=(const PisiSource & other);
 
+protected:
+    virtual bool is_mandatory(QDomElement root, QString tag);
+
 private:
     ArchiveAttr get_archive_attr_property(QString attr_name);
 

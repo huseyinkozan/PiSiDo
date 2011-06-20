@@ -58,10 +58,11 @@ protected:
 
     virtual bool is_mandatory(QDomElement root, QString tag);
 
-private:
     QString get_value_from_element(QString tag, QDomElement root);
     void set_value_to_element(QString value, QString tag, QDomElement root);
     QDomElement get_appended_dom_elm(QDomElement & root_elm, QString tag);
+
+private:
     QDomText appended_dom_text(QDomElement elm, QString value);
     QMap<VersionReleaseToFromAttr,QString> get_dependency_attr_list(QString attr_string);
 

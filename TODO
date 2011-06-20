@@ -1,6 +1,6 @@
 
-For 1.1.0:
-----------
+First:
+------
     (X) New GUI design.
 
     (*) Import/Export pspec.xml file.
@@ -17,8 +17,8 @@ For 1.1.0:
     (*) Test program.
 
 
-For next releases:
-------------------
+Later:
+------
     (*) Design a new ui to select File tag for pspec.xml.
         (*) For more information see File tag from here :
             http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng

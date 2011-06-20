@@ -1,6 +1,6 @@
 
-1.1.0 için:
------------
+İlk önce yapılacaklar:
+---------------------
     (X) Yeni arayüz tasarımı yapılacak.
 
     (*) pspec.xml dosyasının içe/dışa aktarımı sağlanacak.
@@ -19,8 +19,8 @@
     (*) Program test edilecek.
 
 
-Sonraki sürümler için:
-----------------------
+Sonra yapılacaklar:
+-------------------
     (*) pspec.xml deki File etiketi için yeni arayüz tasarımı yapılacak.
         (*) Ayrıntılar için : http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng yolundaki
           dosyada bulunan Files etiketine bakınız.
