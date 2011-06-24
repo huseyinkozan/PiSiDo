@@ -21,40 +21,40 @@ void PisiSPBase::clear()
     build_dependencies.clear();
 }
 
-void PisiSPBase::load_from_dom(const QDomElement & root_elm)
+void PisiSPBase::load_from_dom(const QDomElement & root)
 {
-    if(root_elm.isNull())
+    if(root.isNull())
         throw QString("Dom Element is null while loading to PisiSPBase !");
 
 
-    name = get_value_from_element("Name", root_elm);
-    license = get_value_from_element("License", root_elm);
-    summary = get_value_from_element("Summary", root_elm);
-    description = get_value_from_element("Description", root_elm);
-    part_of = get_value_from_element("PartOf", root_elm);
-    is_a = get_value_from_element("IsA", root_elm);
+    name = get_element_value(root, "Name");
+    license = get_element_value(root, "License");
+    summary = get_element_value(root, "Summary");
+    description = get_element_value(root, "Description");
+    part_of = get_element_value(root, "PartOf");
+    is_a = get_element_value(root, "IsA");
 
-    QDomElement elm = root_elm.firstChildElement("BuildDependencies");
-    build_dependencies = get_dep_from_element(elm, is_mandatory(root_elm, "BuildDependencies"));
+    QDomElement elm = root.firstChildElement("BuildDependencies");
+    build_dependencies = get_dep_from_element(elm, is_mandatory(root, "BuildDependencies"));
 }
 
-void PisiSPBase::save_to_dom(QDomElement & root_elm)
+void PisiSPBase::save_to_dom(QDomElement & root)
 {
-    if(root_elm.isNull())
+    if(root.isNull())
         throw QString("Dom Element is null while saving from PisiSPBase to dom !");
 
-    set_value_to_element(name, "Name", root_elm);
-    set_value_to_element(license, "License", root_elm);
-    set_value_to_element(summary, "Summary", root_elm);
-    set_value_to_element(description, "Description", root_elm);
-    set_value_to_element(part_of, "PartOf", root_elm);
-    set_value_to_element(is_a, "IsA", root_elm);
+    set_element_value(root, "Name", name);
+    set_element_value(root, "License", license);
+    set_element_value(root, "Summary", summary);
+    set_element_value(root, "Description", description);
+    set_element_value(root, "PartOf", part_of);
+    set_element_value(root, "IsA", is_a);
 
-    QDomElement elm = root_elm.firstChildElement("BuildDependencies");
+    QDomElement elm = root.firstChildElement("BuildDependencies");
     if( ! elm.isNull())
-        root_elm.removeChild(elm);
-    elm = get_appended_dom_elm(root_elm, "BuildDependencies");
-    set_dep_to_element(build_dependencies, elm, is_mandatory(root_elm, "BuildDependencies"));
+        root.removeChild(elm);
+    elm = append_element(root, "BuildDependencies");
+    set_dep_to_element(build_dependencies, elm, is_mandatory(root, "BuildDependencies"));
 }
 
 QString PisiSPBase::get_name() const
@@ -87,7 +87,7 @@ QString PisiSPBase::get_is_a() const
     return is_a;
 }
 
-QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::get_build_dependencies() const
+QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_build_dependencies() const
 {
     return build_dependencies;
 }
@@ -134,7 +134,7 @@ void PisiSPBase::set_is_a(QString is_a)
     this->is_a = is_a;
 }
 
-void PisiSPBase::set_build_dependencies(QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr, QString> > build_dependencies)
+void PisiSPBase::set_build_dependencies(QMap<QString, QMap<PisiSPBase::VRTFAttr, QString> > build_dependencies)
 {
     // optional, no check
     this->build_dependencies = build_dependencies;
@@ -142,11 +142,11 @@ void PisiSPBase::set_build_dependencies(QMap<QString, QMap<PisiSPBase::VersionRe
 
 void PisiSPBase::set_build_dependencies(QString build_dependency_string)
 {
-    QMap<QString, QMap<VersionReleaseToFromAttr, QString> > build_dependencies = get_dependency_list(build_dependency_string);
+    QMap<QString, QMap<VRTFAttr, QString> > build_dependencies = get_dependency_list(build_dependency_string);
     set_build_dependencies(build_dependencies);
 }
 
-QString PisiSPBase::get_value_from_element(QString tag, QDomElement root)
+QString PisiSPBase::get_element_value(QDomElement root, QString tag)
 {
     QDomElement elm = root.firstChildElement("Name");
     if(elm.isNull())
@@ -162,30 +162,32 @@ QString PisiSPBase::get_value_from_element(QString tag, QDomElement root)
     }
 }
 
-void PisiSPBase::set_value_to_element(QString value, QString tag, QDomElement root)
+QDomElement PisiSPBase::set_element_value(QDomElement root, QString tag, QString value)
 {
     QDomElement elm = root.firstChildElement(tag);
     if(elm.isNull())
-        elm = get_appended_dom_elm(root, tag);
+        elm = append_element(root, tag);
 
     if(is_mandatory(root, tag) && value.isEmpty())
         throw QString("%1 tag is mandatory but empty !");
-    appended_dom_text(elm, value);
-}
+    append_text_element(elm, value);
 
-QDomElement PisiSPBase::get_appended_dom_elm(QDomElement & root, QString tag)
-{
-    QDomElement elm = root.ownerDocument().createElement(tag);
-    if(elm.isNull() || root.appendChild(elm).isNull())
-        throw QString("Error while creating dom element %1").arg(tag);
     return elm;
 }
 
-QDomText PisiSPBase::appended_dom_text(QDomElement elm, QString value)
+QDomElement PisiSPBase::append_element(QDomElement & root, QString tag)
 {
-    QDomText text = elm.ownerDocument().createTextNode(value);
-    if(text.isNull() || elm.appendChild(text).isNull())
-        throw QString("Error while creating dom text element with value = %2").arg(value);
+    QDomElement elm = root.ownerDocument().createElement(tag);
+    if(elm.isNull() || root.appendChild(elm).isNull())
+        throw QString("Error while creating dom element %1 in %2").arg(tag).arg(root.tagName());
+    return elm;
+}
+
+QDomText PisiSPBase::append_text_element(QDomElement root, QString value)
+{
+    QDomText text = root.ownerDocument().createTextNode(value);
+    if(text.isNull() || root.appendChild(text).isNull())
+        throw QString("Error creating text element with %2 in to the %2").arg(value).arg(root.tagName());
 }
 
 bool PisiSPBase::is_mandatory(QDomElement root, QString tag)
@@ -216,16 +218,16 @@ bool PisiSPBase::is_mandatory(QDomElement root, QString tag)
         throw QString("Undefined tag name in is_mandatory() !");
 }
 
-QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::get_dep_from_element(QDomElement elm, bool mandatory)
+QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dep_from_element(QDomElement elm, bool mandatory)
 {
     if(elm.isNull())
     {
         if(mandatory)
             throw QString("Empty element while getting dependency map.");
-        else return QMap<QString, QMap<VersionReleaseToFromAttr,QString> >();
+        else return QMap<QString, QMap<VRTFAttr,QString> >();
     }
 
-    QMap<QString, QMap<VersionReleaseToFromAttr,QString> > dependencies;
+    QMap<QString, QMap<VRTFAttr,QString> > dependencies;
 
     elm = elm.firstChildElement("Dependency");
     if(elm.isNull())
@@ -233,7 +235,7 @@ QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::g
 
     for( ; ! elm.isNull(); elm = elm.nextSiblingElement("Dependency"))
     {
-        QMap<VersionReleaseToFromAttr,QString> attributes;
+        QMap<VRTFAttr,QString> attributes;
         QDomNamedNodeMap elm_node_map = elm.attributes();
         int count = elm_node_map.count();
         for(int i=0; i<count; ++i)
@@ -242,7 +244,7 @@ QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::g
             QDomAttr a = n.toAttr();
             if(a.isNull())
                 throw QString("Can not convert to attribute !");
-            attributes[get_dependency_attr_property(a.name())] = a.value();
+            attributes[get_dep_attribute(a.name())] = a.value();
 //            qDebug() << "DepAttr = " << a.name() << " : " << a.value();
         }
         dependencies[elm.text()] = attributes;
@@ -251,7 +253,7 @@ QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::g
     return dependencies;
 }
 
-void PisiSPBase::set_dep_to_element(QMap<QString, QMap<VersionReleaseToFromAttr,QString> > dep, QDomElement elm, bool mandatory)
+void PisiSPBase::set_dep_to_element(QMap<QString, QMap<VRTFAttr,QString> > dep, QDomElement elm, bool mandatory)
 {
     if(dep.isEmpty())
     {
@@ -265,21 +267,21 @@ void PisiSPBase::set_dep_to_element(QMap<QString, QMap<VersionReleaseToFromAttr,
     for(int i=0; i<dependencies.count(); ++i)
     {
         QString dependency = dependencies.at(i);
-        QDomElement elm = get_appended_dom_elm(elm, "Dependency");
-        appended_dom_text(elm, dependency);
+        QDomElement elm = append_element(elm, "Dependency");
+        append_text_element(elm, dependency);
 
-        QMap<VersionReleaseToFromAttr,QString> attr = dep[dependency];
-        QList<VersionReleaseToFromAttr> attributes = attr.keys();
+        QMap<VRTFAttr,QString> attr = dep[dependency];
+        QList<VRTFAttr> attributes = attr.keys();
         for(int j=0; j<attributes.count(); ++j)
         {
-            VersionReleaseToFromAttr v = attributes.at(j);
+            VRTFAttr v = attributes.at(j);
             QString release = attr[v];
-            elm.setAttribute(get_dependency_attr_property_string(v), release);
+            elm.setAttribute(get_dep_string(v), release);
         }
     }
 }
 
-PisiSPBase::VersionReleaseToFromAttr PisiSPBase::get_dependency_attr_property(QString attr_name, bool abbreviation)
+PisiSPBase::VRTFAttr PisiSPBase::get_dep_attribute(QString attr_name, bool abbreviation)
 {
     if( ! abbreviation)
     {
@@ -315,7 +317,7 @@ PisiSPBase::VersionReleaseToFromAttr PisiSPBase::get_dependency_attr_property(QS
     }
 }
 
-QString PisiSPBase::get_dependency_attr_property_string(PisiSPBase::VersionReleaseToFromAttr attr, bool abbreviation)
+QString PisiSPBase::get_dep_string(PisiSPBase::VRTFAttr attr, bool abbreviation)
 {
     switch(attr)
     {
@@ -346,18 +348,18 @@ QString PisiSPBase::get_dependency_attr_property_string(PisiSPBase::VersionRelea
 /**
   returns dependencies like : qt[>4.7;<4.5;==4.6], gtk[>>2], libz, libusb1[=1]
 */
-QStringList PisiSPBase::get_dependency_list(QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > dependencies)
+QStringList PisiSPBase::get_dependency_list(QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > dependencies)
 {
     QStringList dep_list;
-    QMap<QString, QMap<VersionReleaseToFromAttr,QString> >::const_iterator dependency_it = dependencies.constBegin();
+    QMap<QString, QMap<VRTFAttr,QString> >::const_iterator dependency_it = dependencies.constBegin();
     for( ; dependency_it != dependencies.constEnd(); dependency_it++)
     {
         QStringList attr_list;
-        QMap<VersionReleaseToFromAttr,QString> attr = dependency_it.value();
-        QMap<VersionReleaseToFromAttr,QString>::const_iterator attr_it = attr.constBegin();
+        QMap<VRTFAttr,QString> attr = dependency_it.value();
+        QMap<VRTFAttr,QString>::const_iterator attr_it = attr.constBegin();
         for( ; attr_it != attr.constEnd(); attr_it++)
         {
-            attr_list << QString("%1%2").arg(get_dependency_attr_property_string(attr_it.key(), true)).arg(attr_it.value());
+            attr_list << QString("%1%2").arg(get_dep_string(attr_it.key(), true)).arg(attr_it.value());
         }
         QString attributes = ((attr_list.count()>0)?QString("%1%2%3").arg("[").arg(attr_list.join(";")).arg("]"):"");
         dep_list << QString("%1%2").arg(dependency_it.key()).arg(attributes);
@@ -369,9 +371,9 @@ QStringList PisiSPBase::get_dependency_list(QMap<QString, QMap<PisiSPBase::Versi
 /**
   takes string like : qt[>4.7;<4.5;==4.6], gtk[>>2], libz, libusb1[=1], returns dependencies
 */
-QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::get_dependency_list(QString dependency_string)
+QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency_list(QString dependency_string)
 {
-    QMap<QString, QMap<VersionReleaseToFromAttr,QString> > dependencies;
+    QMap<QString, QMap<VRTFAttr,QString> > dependencies;
     QStringList dependency_list = dependency_string.split(',', QString::SkipEmptyParts);
     if(dependency_list.count() < 1)
         return dependencies;
@@ -402,9 +404,9 @@ QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiSPBase::g
   helper function to return dependency attributes, takes strin like : >4.7;<4.5;==4.6
 */
 
-QMap<PisiSPBase::VersionReleaseToFromAttr,QString> PisiSPBase::get_dependency_attr_list(QString attr_string)
+QMap<PisiSPBase::VRTFAttr,QString> PisiSPBase::get_dependency_attr_list(QString attr_string)
 {
-    QMap<VersionReleaseToFromAttr,QString> attributes;
+    QMap<VRTFAttr,QString> attributes;
     QStringList attr_list = attr_string.split(';', QString::SkipEmptyParts);
     if(attr_list.count() < 1)
         return attributes;
@@ -413,8 +415,8 @@ QMap<PisiSPBase::VersionReleaseToFromAttr,QString> PisiSPBase::get_dependency_at
         QString attr = attr_list.at(i).trimmed();
         if( ! attr.isEmpty())
         {
-            VersionReleaseToFromAttr a = get_dependency_attr_property(attr, true);
-            QString t = get_dependency_attr_property_string(a, true);
+            VRTFAttr a = get_dep_attribute(attr, true);
+            QString t = get_dep_string(a, true);
             int start_index = attr.indexOf(t) + t.length();
             attributes[a] = t.mid(start_index);
         }

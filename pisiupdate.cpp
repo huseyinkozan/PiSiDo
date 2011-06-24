@@ -23,19 +23,19 @@ void PisiUpdate::load_from_dom(const QDomElement & dom_element)
         throw QString("Dom Element is null while loading to PisiUpdate !");
 
     QDomElement elm = dom_element.firstChildElement("Version");
-    version = get_value_from_element("Version", elm, true);
+    version = get_element_value(elm, "Version", true);
 
     elm = dom_element.firstChildElement("Comment");
-    comment = get_value_from_element("Comment", elm, true);
+    comment = get_element_value(elm, "Comment", true);
 
     elm = dom_element.firstChildElement("Name");
-    packager_name = get_value_from_element("Name", elm, true);
+    packager_name = get_element_value(elm, "Name", true);
 
     elm = dom_element.firstChildElement("Email");
-    packager_email = get_value_from_element("Email", elm, true);
+    packager_email = get_element_value(elm, "Email", true);
 
     elm = dom_element.firstChildElement("Date");
-    date = QDate::fromString(get_value_from_element("Date", elm, true),"yyyy-MM-dd");
+    date = QDate::fromString(get_element_value(elm, "Date", true),"yyyy-MM-dd");
 
     bool ok = false;
     int v = dom_element.attribute("release", "0").toInt(&ok);
@@ -48,10 +48,15 @@ void PisiUpdate::save_to_dom(QDomElement & dom_element)
     if(dom_element.isNull())
         throw QString("Dom Element is null while saving from PisiUpdate to dom !");
 
-    // TODO : implement
+    dom_element.setAttribute("release", release);
+    append_text_element(dom_element, "Date", date.toString("yyyy-MM-dd"));
+    append_text_element(dom_element, "Version", version);
+    append_text_element(dom_element, "Comment", comment);
+    append_text_element(dom_element, "Name", packager_name);
+    append_text_element(dom_element, "Email", packager_email);
 }
 
-QString PisiUpdate::get_value_from_element(QString tag, QDomElement elm, bool mandatory)
+QString PisiUpdate::get_element_value(QDomElement elm, QString tag, bool mandatory)
 {
     if(elm.isNull())
     {
@@ -65,6 +70,27 @@ QString PisiUpdate::get_value_from_element(QString tag, QDomElement elm, bool ma
         return elm.text();
     }
 }
+
+QDomElement PisiUpdate::append_text_element(QDomElement root, QString tag, QString value)
+{
+    QDomElement elm = root.firstChildElement(tag);
+    if( ! elm.isNull())
+        root.removeChild(elm);
+
+    elm = root.ownerDocument().createElement(tag);
+    if(elm.isNull() || root.appendChild(elm).isNull())
+        throw QString("Error while creating dom element %1").arg(tag);
+
+    if(value.isEmpty())
+        throw QString("%1 tag is mandatory but empty !");
+
+    QDomText text = root.ownerDocument().createTextNode(value);
+    if(text.isNull() || elm.appendChild(text).isNull())
+        throw QString("Error while creating dom text element with value = %2").arg(value);
+
+    return elm;
+}
+
 
 int PisiUpdate::get_release() const
 {

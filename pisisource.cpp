@@ -59,27 +59,62 @@ void PisiSource::load_from_dom(const QDomElement & dom_element)
     }
 }
 
-void PisiSource::save_to_dom(QDomElement & root_elm)
+void PisiSource::save_to_dom(QDomElement & root)
 {
-    PisiSPBase::save_to_dom(root_elm);
+    PisiSPBase::save_to_dom(root);
 
-    if(root_elm.isNull())
+    if(root.isNull())
         throw QString("Dom Element is null while saving from PisiSource to dom !");
 
-    set_value_to_element(home_page, "Homepage", root_elm);
+    set_element_value(root, "Homepage", home_page);
 
-    QDomElement elm = root_elm.firstChildElement("Packager");
+    QDomElement elm = root.firstChildElement("Packager");
     if( ! elm.isNull())
-        root_elm.removeChild(elm);
-    elm = get_appended_dom_elm(root_elm, "Packager");
+        root.removeChild(elm);
+    elm = append_element(root, "Packager");
+
     QList<QString> packager_names = packager.keys();
     if(packager_names.count() > 1)
+    {
         throw QString("More than one packager info !");
+    }
     else if(packager_names.count() < 1)
+    {
         throw QString("There is no packager info !");
+    }
     else
     {
-//        set_value_to_element(packager_names.first(), "Name", elm);
+        set_element_value(elm, "Name", packager_names.first());
+        set_element_value(elm, "Email", packager[packager_names.first()]);
+    }
+
+    elm = root.firstChildElement("Archive");
+
+    QDomElement second_archive = elm.nextSiblingElement("Archive");
+    if( ! second_archive.isNull())
+        throw QString("More than one archive tag. Multiple archives not supported !");
+
+    if( ! elm.isNull())
+        root.removeChild(elm);
+
+    QList<QString> archive_names = archives.keys();
+    if(archive_names.count() > 1)
+    {
+        throw QString("More than one archive !");
+    }
+    else if(archive_names.count() < 1)
+    {
+        throw QString("There is no archive !");
+    }
+    else
+    {
+        QString archive = archive_names.first();
+        elm = set_element_value(root, "Archive", archive);
+        QList<ArchiveAttr> attributes = archives[archive].keys();
+        foreach (ArchiveAttr attr, attributes)
+        {
+            elm.setAttribute(get_archive_attr_string(attr), archives[archive][attr]);
+        }
     }
 }
 
@@ -137,6 +172,18 @@ PisiSource::ArchiveAttr PisiSource::get_archive_attr_property(QString attr_name)
     else throw QString("Wrong archive atribute name : %1").arg(attr_name);
 }
 
+QString PisiSource::get_archive_attr_string(ArchiveAttr attr)
+{
+    if(attr == SHA1SUM)
+        return QString("sha1sum");
+    else if(attr == TYPE)
+        return QString("type");
+    else if(attr == TARGET)
+        return QString("target");
+    else
+        throw QString("Wrong archive atribute index : %1").arg(attr);
+}
+
 bool PisiSource::operator ==(const PisiSource & other)
 {
     return (
@@ -154,12 +201,17 @@ bool PisiSource::operator !=(const PisiSource & other)
 
 bool PisiSource::is_mandatory(QDomElement root, QString tag)
 {
-    -/-
-    else if(root.tagName().toLower() == "packager")
+    if(root.tagName().toLower() == "packager")
     {
         if(tag == "Name")
             return true;
         else if(tag == "Email")
             return true;
+        else
+            throw QString("Undefined tag name in is_mandatory() for packager tag !");
+    }
+    else
+    {
+        return PisiSPBase::is_mandatory(root, tag);
     }
 }

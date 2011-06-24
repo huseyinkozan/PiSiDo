@@ -1440,10 +1440,10 @@ void MainWindow::fill_fields_from_pisi()
     int part_of_index = ui->combo_part_of->findText(source.get_part_of());
     if(part_of_index > 0) ui->combo_part_of->setCurrentIndex(part_of_index);
 
-    QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > build_dep = source.get_build_dependencies();
+    QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > build_dep = source.get_build_dependencies();
     ui->le_build_dependency->setText(source.get_dependency_list(build_dep).join(", "));
 
-    QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > runtime_dep = package.get_runtime_dependencies();
+    QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > runtime_dep = package.get_runtime_dependencies();
     ui->le_runtime_dependency->setText(package.get_dependency_list(runtime_dep).join(", "));
 
     QString actions_py = ui->le_work_dir->text() +

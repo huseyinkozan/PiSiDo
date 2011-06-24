@@ -35,7 +35,8 @@ public:
     bool operator >(const PisiUpdate & other);
 
 private:
-    QString get_value_from_element(QString tag, QDomElement elm, bool mandatory);
+    QString get_element_value(QDomElement elm, QString tag, bool mandatory);
+    QDomElement append_text_element(QDomElement root, QString tag, QString value);
 
 private:
     int release;

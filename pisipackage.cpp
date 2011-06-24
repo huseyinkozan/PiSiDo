@@ -24,8 +24,6 @@ void PisiPackage::load_from_dom(const QDomElement & dom_element)
 
     QDomElement elm = dom_element.firstChildElement("RuntimeDependencies");
     runtime_dependencies = get_dep_from_element(elm, false);
-
-    // TODO : do it for files !
 }
 
 void PisiPackage::save_to_dom(QDomElement & root_elm)
@@ -38,13 +36,11 @@ void PisiPackage::save_to_dom(QDomElement & root_elm)
     QDomElement elm = root_elm.firstChildElement("RuntimeDependencies");
     if( ! elm.isNull())
         root_elm.removeChild(elm);
-    elm = get_appended_dom_elm(root_elm, "RuntimeDependencies");
+    elm = append_element(root_elm, "RuntimeDependencies");
     set_dep_to_element(runtime_dependencies, elm, is_mandatory(root_elm, "RuntimeDependencies"));
-
-    // TODO : do it for files !
 }
 
-QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr,QString> > PisiPackage::get_runtime_dependencies() const
+QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiPackage::get_runtime_dependencies() const
 {
     return runtime_dependencies;
 }
@@ -54,7 +50,7 @@ QMultiMap<PisiPackage::FileType, QString> PisiPackage::get_files() const
     return files;
 }
 
-void PisiPackage::set_runtime_dependencies(QMap<QString, QMap<PisiSPBase::VersionReleaseToFromAttr, QString> > runtime_dependencies)
+void PisiPackage::set_runtime_dependencies(QMap<QString, QMap<PisiSPBase::VRTFAttr, QString> > runtime_dependencies)
 {
     // optional, no check
     this->runtime_dependencies = runtime_dependencies;
@@ -62,7 +58,7 @@ void PisiPackage::set_runtime_dependencies(QMap<QString, QMap<PisiSPBase::Versio
 
 void PisiPackage::set_runtime_dependencies(QString runtime_dependency_string)
 {
-    QMap<QString, QMap<VersionReleaseToFromAttr, QString> > run_deps = get_dependency_list(runtime_dependency_string);
+    QMap<QString, QMap<VRTFAttr, QString> > run_deps = get_dependency_list(runtime_dependency_string);
     set_runtime_dependencies(run_deps);
 }
 

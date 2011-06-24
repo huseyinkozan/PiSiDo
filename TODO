@@ -3,10 +3,12 @@ First:
 ------
     (X) New GUI design.
 
-    (*) Import/Export pspec.xml file.
+    (->) Import/Export pspec.xml file.
         (->) Design C++ class to package pspec information.
-            (*) Load pisi info to QDomDocument from pspec.xml file by Pisi class.
+            (X) Load pisi info to QDomDocument from pspec.xml file by Pisi class.
             (->) Save pisi info to pspec.xml from GUI by Pisi class.
+                (X) Update::save_to_dom()
+                (*) save_to_dom(); Package::Files, Souce::Patches, SPBase::AdditionalFiles
 
     (*) Redefine building steps.
         (*) Building steps will define. Pspec.xml creation, action.py creation,
