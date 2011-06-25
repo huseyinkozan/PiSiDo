@@ -13,6 +13,7 @@ void PisiPackage::clear()
 {
     PisiSPBase::clear();
     runtime_dependencies.clear();
+    files.clear();
 }
 
 void PisiPackage::load_from_dom(const QDomElement & dom_element)
@@ -23,7 +24,7 @@ void PisiPackage::load_from_dom(const QDomElement & dom_element)
         throw QString("Dom Element is null while loading to PisiPackage !");
 
     QDomElement elm = dom_element.firstChildElement("RuntimeDependencies");
-    runtime_dependencies = get_dep_from_element(elm, false);
+    runtime_dependencies = get_dependency(elm, false);
 }
 
 void PisiPackage::save_to_dom(QDomElement & root_elm)
@@ -37,7 +38,7 @@ void PisiPackage::save_to_dom(QDomElement & root_elm)
     if( ! elm.isNull())
         root_elm.removeChild(elm);
     elm = append_element(root_elm, "RuntimeDependencies");
-    set_dep_to_element(runtime_dependencies, elm, is_mandatory(root_elm, "RuntimeDependencies"));
+    set_dependency(runtime_dependencies, elm, is_mandatory(root_elm, "RuntimeDependencies"));
 }
 
 QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiPackage::get_runtime_dependencies() const

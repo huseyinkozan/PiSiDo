@@ -21,6 +21,12 @@ public:
         RELEASETO,
         RELEASE
     };
+    enum AFileAttr {
+        TARGET,
+        PERMISSION,
+        OWNER,
+        GROUP
+    };
 
     virtual void clear();
     virtual void load_from_dom(const QDomElement & root);
@@ -36,6 +42,8 @@ public:
     QString get_license() const;
     QString get_is_a() const;
     QMap<QString, QMap<VRTFAttr,QString> > get_build_dependencies() const;
+    QMap<QString, QMap<AFileAttr,QString> > get_aditional_files() const;
+
 
     void set_name(QString name);
     void set_summary(QString summary);
@@ -45,24 +53,30 @@ public:
     void set_is_a(QString is_a);
     void set_build_dependencies(QMap<QString, QMap<VRTFAttr,QString> > build_dependencies);
     void set_build_dependencies(QString build_dependency_string);
+    void set_aditional_files(QMap<QString, QMap<AFileAttr,QString> > aditional_files);
 
     bool operator ==(const PisiSPBase & other) const;
     bool operator !=(const PisiSPBase & other) const;
 
 protected:
-    QMap<QString, QMap<VRTFAttr,QString> > get_dep_from_element(QDomElement elm, bool mandatory);
-    void set_dep_to_element(QMap<QString, QMap<VRTFAttr,QString> > dep, QDomElement elm, bool mandatory);
+    QDomElement append_element(QDomElement & root, QString tag);
 
-    VRTFAttr get_dep_attribute(QString attr_name, bool abbreviation = false);
-    QString get_dep_string(VRTFAttr attr, bool abbreviation = false);
+    QString get_element_value(QDomElement root, QString tag);
+    QDomElement set_element_value(QDomElement root, QString tag, QString value);
 
     virtual bool is_mandatory(QDomElement root, QString tag);
 
-    QString get_element_value(QDomElement root, QString tag);
+    QMap<QString, QMap<VRTFAttr,QString> > get_dependency(QDomElement elm);
+    void set_dependency(QDomElement root, QMap<QString, QMap<VRTFAttr,QString> > dep);
 
-    QDomElement set_element_value(QDomElement root, QString tag, QString value);
+    VRTFAttr get_dependency_attribute(QString attr_name, bool abbreviation = false);
+    QString get_dependency_attribute(VRTFAttr attr, bool abbreviation = false);
 
-    QDomElement append_element(QDomElement & root, QString tag);
+    QMap<QString, QMap<AFileAttr,QString> > get_aditional_file(QDomElement elm);
+    void set_aditional_file(QDomElement root, QMap<QString, QMap<AFileAttr,QString> > a_files);
+
+    AFileAttr get_aditional_file_attribute(QString attr_name);
+    QString get_aditional_file_attribute(AFileAttr attr);
 
 private:
     QDomText append_text_element(QDomElement root, QString value);
@@ -77,7 +91,8 @@ private:
     QString is_a;                                      // zero or more, only first !
     // dependency, {(versionFrom,xxxx),(versionTo,xxxx),...,(release,xxxx)}
     QMap<QString, QMap<VRTFAttr,QString> > build_dependencies;
-
+    // file, {(target:xxxx),(permission:xxx),(owner:xxx),(group:xxx)}
+    QMap<QString, QMap<AFileAttr,QString> > aditional_files;
 };
 
 #endif // PISISPBASE_H

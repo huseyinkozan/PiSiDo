@@ -10,11 +10,20 @@
             (->) Pisi sınıfıyla pspec.xml dosyasına arayüzden bilgilerin
                 yüklenmesi sağlanacak.
                 (X) Update::save_to_dom()
-                (*) save_to_dom(); Package::Files, Souce::Patches, SPBase::AdditionalFiles
+                (*) save_to_dom();
+                    (*) Package::Files,
+                    (*) Souce::Patches,
+                    (X) SPBase::AdditionalFiles
+                (*) arayüze ve arayüzden doldur.
+                    (*) Package::Files,
+                    (*) Souce::Patches,
+                    (*) SPBase::AdditionalFiles
 
     (*) İnşa adımları yeniden tasarlanacak.
         (*) İnşa adımları belirlenecek. Pspec.xml oluşumu, action.py oluşumu,
             arşiv indirilmesi, ... sonrasında pisi nin desteklediği adımlar.
+
+    (*) Stable dalındaki renklendirme ve otomatik tamamlama desteği eklenecek.
 
     (*) Program yardımı hazırlanacak.
 

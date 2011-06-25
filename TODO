@@ -7,12 +7,22 @@ First:
         (->) Design C++ class to package pspec information.
             (X) Load pisi info to QDomDocument from pspec.xml file by Pisi class.
             (->) Save pisi info to pspec.xml from GUI by Pisi class.
-                (X) Update::save_to_dom()
-                (*) save_to_dom(); Package::Files, Souce::Patches, SPBase::AdditionalFiles
+            (X) Update::save_to_dom()
+            (*) save_to_dom();
+                (*) Package::Files,
+                (*) Souce::Patches,
+                (X) SPBase::AdditionalFiles
+            (*) load from gui and save to gui.
+                (*) Package::Files,
+                (*) Souce::Patches,
+                (*) SPBase::AdditionalFiles
+
 
     (*) Redefine building steps.
         (*) Building steps will define. Pspec.xml creation, action.py creation,
             download archive, ... and later steps that pisi supports.
+
+    (*) Highlighter and automatic complete feature will add which is on stable branch now.
 
     (*) Prepare program help.
 

@@ -19,6 +19,7 @@ void PisiSPBase::clear()
     license.clear();
     is_a.clear();
     build_dependencies.clear();
+    aditional_files.clear();
 }
 
 void PisiSPBase::load_from_dom(const QDomElement & root)
@@ -35,7 +36,8 @@ void PisiSPBase::load_from_dom(const QDomElement & root)
     is_a = get_element_value(root, "IsA");
 
     QDomElement elm = root.firstChildElement("BuildDependencies");
-    build_dependencies = get_dep_from_element(elm, is_mandatory(root, "BuildDependencies"));
+    build_dependencies = get_dependency(elm);
+    aditional_files = get_aditional_file(elm);
 }
 
 void PisiSPBase::save_to_dom(QDomElement & root)
@@ -50,11 +52,26 @@ void PisiSPBase::save_to_dom(QDomElement & root)
     set_element_value(root, "PartOf", part_of);
     set_element_value(root, "IsA", is_a);
 
-    QDomElement elm = root.firstChildElement("BuildDependencies");
-    if( ! elm.isNull())
-        root.removeChild(elm);
-    elm = append_element(root, "BuildDependencies");
-    set_dep_to_element(build_dependencies, elm, is_mandatory(root, "BuildDependencies"));
+    if( ! build_dependencies.isEmpty())
+    {
+        // optional
+        QDomElement elm = root.firstChildElement("BuildDependencies");
+        if( ! elm.isNull())
+            root.removeChild(elm);
+        elm = append_element(root, "BuildDependencies");
+        set_dependency(build_dependencies, elm);
+    }
+
+    if( ! aditional_files.isEmpty())
+    {
+        // optional
+        elm = root.firstChildElement("AditionalFiles");
+        if( ! elm.isNull())
+            root.removeChild(elm);
+        elm = append_element(root, "AditionalFiles");
+        set_aditional_file(aditional_files, elm);
+    }
+
 }
 
 QString PisiSPBase::get_name() const
@@ -90,6 +107,11 @@ QString PisiSPBase::get_is_a() const
 QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_build_dependencies() const
 {
     return build_dependencies;
+}
+
+QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > PisiSPBase::get_aditional_files() const
+{
+    return aditional_files;
 }
 
 void PisiSPBase::set_name(QString name)
@@ -144,6 +166,12 @@ void PisiSPBase::set_build_dependencies(QString build_dependency_string)
 {
     QMap<QString, QMap<VRTFAttr, QString> > build_dependencies = get_dependency_list(build_dependency_string);
     set_build_dependencies(build_dependencies);
+}
+
+void PisiSPBase::set_aditional_files(QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > aditional_files)
+{
+    // optional, no check
+    this->aditional_files = aditional_files;
 }
 
 QString PisiSPBase::get_element_value(QDomElement root, QString tag)
@@ -212,19 +240,15 @@ bool PisiSPBase::is_mandatory(QDomElement root, QString tag)
         return false;
     else if(tag == "IsA")
         return false;
-    else if(tag == "BuildDependencies")
-        return false;
     else
         throw QString("Undefined tag name in is_mandatory() !");
 }
 
-QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dep_from_element(QDomElement elm, bool mandatory)
+QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency(QDomElement elm)
 {
     if(elm.isNull())
     {
-        if(mandatory)
-            throw QString("Empty element while getting dependency map.");
-        else return QMap<QString, QMap<VRTFAttr,QString> >();
+        return QMap<QString, QMap<VRTFAttr,QString> >();
     }
 
     QMap<QString, QMap<VRTFAttr,QString> > dependencies;
@@ -244,7 +268,7 @@ QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dep_from_elem
             QDomAttr a = n.toAttr();
             if(a.isNull())
                 throw QString("Can not convert to attribute !");
-            attributes[get_dep_attribute(a.name())] = a.value();
+            attributes[get_dependency_attribute(a.name())] = a.value();
 //            qDebug() << "DepAttr = " << a.name() << " : " << a.value();
         }
         dependencies[elm.text()] = attributes;
@@ -253,35 +277,32 @@ QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dep_from_elem
     return dependencies;
 }
 
-void PisiSPBase::set_dep_to_element(QMap<QString, QMap<VRTFAttr,QString> > dep, QDomElement elm, bool mandatory)
+void PisiSPBase::set_dependency(QDomElement root, QMap<QString, QMap<VRTFAttr,QString> > deps)
 {
-    if(dep.isEmpty())
+    if(deps.isEmpty())
     {
-        if(mandatory)
-            throw QString("Empty dependency while setting dependency tag.");
-        else
-            return;
+        return;
     }
 
-    QList<QString> dependencies = dep.keys();
+    QList<QString> dependencies = deps.keys();
     for(int i=0; i<dependencies.count(); ++i)
     {
         QString dependency = dependencies.at(i);
-        QDomElement elm = append_element(elm, "Dependency");
+        QDomElement elm = append_element(root, "Dependency");
         append_text_element(elm, dependency);
 
-        QMap<VRTFAttr,QString> attr = dep[dependency];
+        QMap<VRTFAttr,QString> attr = deps[dependency];
         QList<VRTFAttr> attributes = attr.keys();
         for(int j=0; j<attributes.count(); ++j)
         {
-            VRTFAttr v = attributes.at(j);
-            QString release = attr[v];
-            elm.setAttribute(get_dep_string(v), release);
+            VRTFAttr a = attributes.at(j);
+            QString a_value = attr[a];
+            elm.setAttribute(get_dependency_attribute(a), a_value);
         }
     }
 }
 
-PisiSPBase::VRTFAttr PisiSPBase::get_dep_attribute(QString attr_name, bool abbreviation)
+PisiSPBase::VRTFAttr PisiSPBase::get_dependency_attribute(QString attr_name, bool abbreviation)
 {
     if( ! abbreviation)
     {
@@ -317,7 +338,7 @@ PisiSPBase::VRTFAttr PisiSPBase::get_dep_attribute(QString attr_name, bool abbre
     }
 }
 
-QString PisiSPBase::get_dep_string(PisiSPBase::VRTFAttr attr, bool abbreviation)
+QString PisiSPBase::get_dependency_attribute(PisiSPBase::VRTFAttr attr, bool abbreviation)
 {
     switch(attr)
     {
@@ -345,6 +366,100 @@ QString PisiSPBase::get_dep_string(PisiSPBase::VRTFAttr attr, bool abbreviation)
     }
 }
 
+QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > PisiSPBase::get_aditional_file(QDomElement elm)
+{
+    if(elm.isNull())
+    {
+        return QMap<QString, QMap<AFileAttr,QString> >();
+    }
+
+    QMap<QString, QMap<AFileAttr,QString> > aditional_files;
+
+    elm = elm.firstChildElement("AditionalFile");
+    if(elm.isNull())
+        throw QString("No AditionalFile in AditionalFiles");
+
+    for( ; ! elm.isNull(); elm = elm.nextSiblingElement("AditionalFile"))
+    {
+        QMap<AFileAttr,QString> attributes;
+        QDomNamedNodeMap elm_node_map = elm.attributes();
+        int count = elm_node_map.count();
+        for(int i=0; i<count; ++i)
+        {
+            QDomNode n = elm_node_map.item(i);
+            QDomAttr a = n.toAttr();
+            if(a.isNull())
+                throw QString("Can not convert to attribute !");
+            attributes[get_aditional_file_attribute(a.name())] = a.value();
+//            qDebug() << "AFileAttr = " << a.name() << " : " << a.value();
+        }
+        aditional_files[elm.text()] = attributes;
+//        qDebug() << "AFile:" << elm.text();
+    }
+    return aditional_files;
+}
+
+void PisiSPBase::set_aditional_file(QDomElement root, QMap<QString, QMap<AFileAttr,QString> > a_files)
+{
+    if(a_files.isEmpty())
+    {
+        return;
+    }
+
+    QList<QString> aditional_files = a_files.keys();
+    for(int i=0; i<aditional_files.count(); ++i)
+    {
+        QString aditional_file = aditional_files.at(i);
+        QDomElement elm = append_element(root, "AditionalFile");
+        append_text_element(elm, aditional_file);
+
+        QMap<AFileAttr,QString> attr = a_files[aditional_file];
+        QList<AFileAttr> attributes = attr.keys();
+        for(int j=0; j<attributes.count(); ++j)
+        {
+            AFileAttr a = attributes.at(j);
+            QString a_value = attr[a];
+            elm.setAttribute(get_aditional_file_attribute(a), a_value);
+        }
+    }
+}
+
+PisiSPBase::AFileAttr PisiSPBase::get_aditional_file_attribute(QString attr_name)
+{
+        if(attr_name.toLower() == "target")
+            return TARGET;
+        else if(attr_name.toLower() == "permission")
+            return PERMISSION;
+        else if(attr_name.toLower() == "owner")
+            return OWNER;
+        else if(attr_name.toLower() == "group")
+            return GROUP;
+        else
+            throw QString("Wrong aditional_files atribute name : %1").arg(attr_name);
+}
+
+QString PisiSPBase::get_aditional_file_attribute(PisiSPBase::AFileAttr attr)
+{
+    switch(attr)
+    {
+    case TARGET:
+        return "target";
+        break;
+    case PERMISSION:
+        return "permission";
+        break;
+    case OWNER:
+        return "owner";
+        break;
+    case GROUP:
+        return "group";
+        break;
+    default:
+        return "";
+        break;
+    }
+}
+
 /**
   returns dependencies like : qt[>4.7;<4.5;==4.6], gtk[>>2], libz, libusb1[=1]
 */
@@ -359,7 +474,7 @@ QStringList PisiSPBase::get_dependency_list(QMap<QString, QMap<PisiSPBase::VRTFA
         QMap<VRTFAttr,QString>::const_iterator attr_it = attr.constBegin();
         for( ; attr_it != attr.constEnd(); attr_it++)
         {
-            attr_list << QString("%1%2").arg(get_dep_string(attr_it.key(), true)).arg(attr_it.value());
+            attr_list << QString("%1%2").arg(get_dependency_attribute(attr_it.key(), true)).arg(attr_it.value());
         }
         QString attributes = ((attr_list.count()>0)?QString("%1%2%3").arg("[").arg(attr_list.join(";")).arg("]"):"");
         dep_list << QString("%1%2").arg(dependency_it.key()).arg(attributes);
@@ -415,8 +530,8 @@ QMap<PisiSPBase::VRTFAttr,QString> PisiSPBase::get_dependency_attr_list(QString 
         QString attr = attr_list.at(i).trimmed();
         if( ! attr.isEmpty())
         {
-            VRTFAttr a = get_dep_attribute(attr, true);
-            QString t = get_dep_string(a, true);
+            VRTFAttr a = get_dependency_attribute(attr, true);
+            QString t = get_dependency_attribute(a, true);
             int start_index = attr.indexOf(t) + t.length();
             attributes[a] = t.mid(start_index);
         }
@@ -428,13 +543,14 @@ QMap<PisiSPBase::VRTFAttr,QString> PisiSPBase::get_dependency_attr_list(QString 
 bool PisiSPBase::operator ==(const PisiSPBase & other) const
 {
     return (
-                get_name() == other.get_name()
-                && get_summary() == other.get_summary()
-                && get_description() == other.get_description()
-                && get_part_of() == other.get_part_of()
-                && get_license() == other.get_license()
-                && get_is_a() == other.get_is_a()
+                get_name()                  == other.get_name()
+                && get_summary()            == other.get_summary()
+                && get_description()        == other.get_description()
+                && get_part_of()            == other.get_part_of()
+                && get_license()            == other.get_license()
+                && get_is_a()               == other.get_is_a()
                 && get_build_dependencies() == other.get_build_dependencies()
+                && get_aditional_files()    == other.get_aditional_files()
                 );
 }
 
