@@ -7,15 +7,15 @@ First:
         (->) Design C++ class to package pspec information.
             (X) Load pisi info to QDomDocument from pspec.xml file by Pisi class.
             (->) Save pisi info to pspec.xml from GUI by Pisi class.
-            (X) Update::save_to_dom()
-            (*) save_to_dom();
-                (*) Package::Files,
-                (*) Souce::Patches,
-                (X) SPBase::AdditionalFiles
-            (*) load from gui and save to gui.
-                (*) Package::Files,
-                (*) Souce::Patches,
-                (*) SPBase::AdditionalFiles
+                (->) save_to_dom();
+                    (X) Update
+                    (X) Package::Files,
+                    (*) Souce::Patches,
+                    (X) SPBase::AdditionalFiles
+                (*) load from gui and save to gui.
+                    (*) Package::Files,
+                    (*) Souce::Patches,
+                    (*) SPBase::AdditionalFiles
 
 
     (*) Redefine building steps.

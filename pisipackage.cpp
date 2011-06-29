@@ -24,21 +24,32 @@ void PisiPackage::load_from_dom(const QDomElement & dom_element)
         throw QString("Dom Element is null while loading to PisiPackage !");
 
     QDomElement elm = dom_element.firstChildElement("RuntimeDependencies");
-    runtime_dependencies = get_dependency(elm, false);
+    runtime_dependencies = get_dependency(elm);
+
+    elm = dom_element.firstChildElement("Files");
+    files = get_files(elm);
 }
 
-void PisiPackage::save_to_dom(QDomElement & root_elm)
+void PisiPackage::save_to_dom(QDomElement & root)
 {
-    PisiSPBase::save_to_dom(root_elm);
+    PisiSPBase::save_to_dom(root);
 
-    if(root_elm.isNull())
+    if(root.isNull())
         throw QString("Dom Element is null while saving from PisiPackage to dom !");
 
-    QDomElement elm = root_elm.firstChildElement("RuntimeDependencies");
+    QDomElement elm = root.firstChildElement("RuntimeDependencies");
     if( ! elm.isNull())
-        root_elm.removeChild(elm);
-    elm = append_element(root_elm, "RuntimeDependencies");
-    set_dependency(runtime_dependencies, elm, is_mandatory(root_elm, "RuntimeDependencies"));
+        root.removeChild(elm);
+    elm = append_element(root, "RuntimeDependencies");
+    set_dependency(elm, runtime_dependencies);
+
+    if( ! files.isEmpty())
+        throw QString("%1 tag is mandatory but empty !").arg("Files");
+    elm = root.firstChildElement("Files");
+    if( ! elm.isNull())
+        root.removeChild(elm);
+    elm = append_element(root, "Files");
+    set_files(elm, files);
 }
 
 QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiPackage::get_runtime_dependencies() const
@@ -46,7 +57,7 @@ QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiPackage::get_runtime_depe
     return runtime_dependencies;
 }
 
-QMultiMap<PisiPackage::FileType, QString> PisiPackage::get_files() const
+QMap<QString, QMap<PisiPackage::FileType, bool> > PisiPackage::get_files() const
 {
     return files;
 }
@@ -63,8 +74,11 @@ void PisiPackage::set_runtime_dependencies(QString runtime_dependency_string)
     set_runtime_dependencies(run_deps);
 }
 
-void PisiPackage::set_files(QMultiMap<PisiPackage::FileType, QString> files)
+void PisiPackage::set_files(QMap<QString, QMap<FileType, bool> > files)
 {
+    if(files.isEmpty())
+        throw QString("Empty files !");
+
     this->files = files;
 }
 
@@ -93,5 +107,120 @@ bool PisiPackage::is_mandatory(QDomElement root, QString tag)
         return true;
     }
     else
-        PisiSPBase::is_mandatory(root, tag);
+        return PisiSPBase::is_mandatory(root, tag);
+}
+
+QMap<QString, QMap<PisiPackage::FileType, bool> > PisiPackage::get_files(QDomElement elm)
+{
+    if(elm.isNull())
+    {
+        return QMap<QString, QMap<FileType, bool> >();
+    }
+
+    QMap<QString, QMap<FileType, bool> > files;
+
+    elm = elm.firstChildElement("Path");
+    if(elm.isNull())
+        throw QString("No Path in Files");
+
+    for( ; ! elm.isNull(); elm = elm.nextSiblingElement("Path"))
+    {
+        QMap<FileType, bool> attributes;
+        QString file_type = elm.attribute("fileType");
+        if(file_type.isNull())
+            throw QString("There is no fileType attribute in Path tag !");
+        bool permanent = false;
+        if(elm.attribute("permanent").toLower() == "true")
+            permanent = true;
+        attributes[get_files_file_type(file_type)] = permanent;
+        files[elm.text()] = attributes;
+    }
+    return files;
+}
+
+void PisiPackage::set_files(QDomElement root, QMap<QString, QMap<FileType, bool> > files)
+{
+    if(files.isEmpty())
+    {
+        throw QString("No %1 tag !").arg("Files");
+    }
+
+    QList<QString> files_keys = files.keys();
+    for(int i=0; i<files_keys.count(); ++i)
+    {
+        QString path = files_keys.at(i);
+        QDomElement elm = append_element(root, "Path");
+        append_text_element(elm, path);
+
+        QMap<FileType, bool> attr = files[path];
+        FileType file_type = attr.keys().first();
+        elm.setAttribute("fileType", get_files_file_type(file_type));
+        elm.setAttribute("permanent", attr[file_type]);
+    }
+}
+
+QString PisiPackage::get_files_file_type(PisiPackage::FileType attr)
+{
+    switch(attr)
+    {
+    case EXECUTABLE:
+        return "executable";
+        break;
+    case LIBRARY:
+        return "library";
+        break;
+    case DATA:
+        return "data";
+        break;
+    case CONFIG:
+        return "config";
+        break;
+    case DOC:
+        return "doc";
+        break;
+    case MAN:
+        return "man";
+        break;
+    case INFO:
+        return "info";
+        break;
+    case LOCALEDATA:
+        return "localedata";
+        break;
+    case HEADER:
+        return "header";
+        break;
+    case ALL:
+        return "all";
+        break;
+    default:
+        return "";
+        break;
+    }
+}
+
+PisiPackage::FileType PisiPackage::get_files_file_type(QString attr_name)
+{
+        if(attr_name.toLower() == "executable")
+            return EXECUTABLE;
+        else if(attr_name.toLower() == "library")
+            return LIBRARY;
+        else if(attr_name.toLower() == "data")
+            return DATA;
+        else if(attr_name.toLower() == "config")
+            return CONFIG;
+        else if(attr_name.toLower() == "doc")
+            return DOC;
+        else if(attr_name.toLower() == "man")
+            return MAN;
+        else if(attr_name.toLower() == "info")
+            return INFO;
+        else if(attr_name.toLower() == "localedata")
+            return LOCALEDATA;
+        else if(attr_name.toLower() == "header")
+            return HEADER;
+        else if(attr_name.toLower() == "all")
+            return ALL;
+        else
+            throw QString("Wrong files atribute name : %1").arg(attr_name);
 }

@@ -60,6 +60,7 @@ public:
 
 protected:
     QDomElement append_element(QDomElement & root, QString tag);
+    QDomText append_text_element(QDomElement root, QString value);
 
     QString get_element_value(QDomElement root, QString tag);
     QDomElement set_element_value(QDomElement root, QString tag, QString value);
@@ -79,7 +80,6 @@ protected:
     QString get_aditional_file_attribute(AFileAttr attr);
 
 private:
-    QDomText append_text_element(QDomElement root, QString value);
     QMap<VRTFAttr,QString> get_dependency_attr_list(QString attr_string);
 
 private:

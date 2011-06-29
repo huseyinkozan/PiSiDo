@@ -59,17 +59,17 @@ void PisiSPBase::save_to_dom(QDomElement & root)
         if( ! elm.isNull())
             root.removeChild(elm);
         elm = append_element(root, "BuildDependencies");
-        set_dependency(build_dependencies, elm);
+        set_dependency(elm, build_dependencies);
     }
 
     if( ! aditional_files.isEmpty())
     {
         // optional
-        elm = root.firstChildElement("AditionalFiles");
+        QDomElement elm = root.firstChildElement("AditionalFiles");
         if( ! elm.isNull())
             root.removeChild(elm);
         elm = append_element(root, "AditionalFiles");
-        set_aditional_file(aditional_files, elm);
+        set_aditional_file(elm, aditional_files);
     }
 
 }
@@ -216,6 +216,7 @@ QDomText PisiSPBase::append_text_element(QDomElement root, QString value)
     QDomText text = root.ownerDocument().createTextNode(value);
     if(text.isNull() || root.appendChild(text).isNull())
         throw QString("Error creating text element with %2 in to the %2").arg(value).arg(root.tagName());
+    return text;
 }
 
 bool PisiSPBase::is_mandatory(QDomElement root, QString tag)

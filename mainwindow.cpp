@@ -1641,8 +1641,10 @@ void MainWindow::fill_pisi_from_fields()
     if( ! r_dep_str.isEmpty())
         package.set_runtime_dependencies(r_dep_str);
 
-    QMultiMap<PisiPackage::FileType, QString> files;
-    files.insert(PisiPackage::ALL, "/");
+    QMap<QString, QMap<PisiPackage::FileType, bool> > files;
+    QMap<PisiPackage::FileType, bool> files_attribute;
+    files_attribute.insert(PisiPackage::ALL, false);
+    files.insert("/", files_attribute);
     package.set_files(files);
 
     // history section
