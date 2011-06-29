@@ -47,6 +47,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->combo_part_of->addItem("");
     ui->combo_part_of->addItems(get_file_strings(":/files/part_of"));
 
+    // hide sha1 widgets, read_settings will show if needs
+    ui->lbl_src_sha1->hide();
+    ui->le_src_sha1->hide();
 
     // set default settings, needed for first run
     settings.beginGroup( "configuration" );
@@ -238,7 +241,6 @@ void MainWindow::write_settings()
     settings.setValue("src_url", ui->le_src_url->text());
     settings.setValue("src_sha1", ui->le_src_sha1->text());
     settings.setValue("src_home_page", ui->le_src_home_page->text());
-    settings.setValue("cp_to_pisi_archive", ui->chk_cp_to_pisi_archive->isChecked());
     settings.endGroup();
     settings.beginGroup("package");
     settings.setValue("name", ui->le_package_name->text());
@@ -295,7 +297,6 @@ void MainWindow::read_settings()
     ui->le_src_url->setText(settings.value("src_url").toString());
     ui->le_src_sha1->setText(settings.value("src_sha1").toString());
     ui->le_src_home_page->setText(settings.value("src_home_page").toString());
-    ui->chk_cp_to_pisi_archive->setChecked(settings.value("cp_to_pisi_archive", false).toBool());
     settings.endGroup();
     settings.beginGroup("package");
     ui->le_work_dir->setText(settings.value("work_dir").toString());
@@ -435,10 +436,6 @@ void MainWindow::on_action_Clear_triggered()
     le_list = ui->gb_package->findChildren<QLineEdit *>();
     foreach(QLineEdit * le, le_list)
         le->clear();
-
-    QList<QCheckBox *> chkb_list = ui->gb_src->findChildren<QCheckBox *>();
-    foreach(QCheckBox * chkb, chkb_list)
-        chkb->setChecked(false);
 
     QList<QComboBox *> cb_list = ui->gb_package->findChildren<QComboBox *>();
     foreach(QComboBox * cb, cb_list)
@@ -800,12 +797,6 @@ bool MainWindow::create_pspec_xml(QDir package_dir)
         sha1sum = ui->le_src_sha1->text();
     }
 
-
-    //copy archive to pisi archive dir
-    if(ui->chk_cp_to_pisi_archive->isChecked())
-    {
-        copy_source_archive(src_path);
-    }
 
 
     // collect other data
@@ -1202,44 +1193,6 @@ void MainWindow::on_action_Build_Only_triggered()
         return;
     }
 
-    if(ui->chk_cp_to_pisi_archive->isChecked())
-    {
-        QString src_path;
-        if(ui->rb_src_compressed->isChecked())
-        {
-            src_path = ui->le_src_compressed->text();
-            if( ! QFile::exists(src_path))
-                src_path.clear();
-        }
-        else if(ui->rb_src_folder->isChecked())
-        {
-            if( ! ui->le_src_folder->text().isEmpty())
-            {
-                QDir src_path_dir(ui->le_src_folder->text());
-                if(src_path_dir.exists())
-                {
-                    QString dir_name = src_path_dir.dirName();
-                    if( ! dir_name.isEmpty())
-                    {
-                        // do not compress folder, copy if you can find !
-                        QDir work_dir = package_dir;
-                        work_dir.cdUp();
-                        QString file_path = work_dir.absoluteFilePath(QString("%1.tar.gz").arg(dir_name));
-                        if(QFile::exists(file_path))
-                            src_path = file_path;
-                    }
-                }
-            }
-        }
-        else if(ui->rb_src_url->isChecked())
-        {
-            // no copy, pisi will download
-        }
-
-        if( ! src_path.isEmpty())
-            copy_source_archive(src_path);
-    }
-
     build_package(package_dir, work_dir);
 }
 
@@ -1269,25 +1222,6 @@ bool MainWindow::build_package(QDir package_dir, QDir out_dir)
         return true;
     }
 }
-
-/**
-  Helper function to copy source archive to pisi archive dir.
-  */
-
-void MainWindow::copy_source_archive(QString src_path)
-{
-    settings.beginGroup( "configuration" );
-    QString pisi_dir = settings.value("pisi_archive_dir").toString();
-    settings.endGroup();
-    QString cmd = QString("/usr/bin/xdg-su -u root -c \"/bin/cp %1 %2\"").arg(src_path).arg(pisi_dir);
-    if(system(qPrintable(cmd)))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Can not copy source archive to pisi archive directory !"
-                                                    "\nProgress will continue without copying."));
-    }
-}
-
-
 
 void MainWindow::on_le_work_dir_textChanged(const QString &arg1)
 {
@@ -1411,13 +1345,11 @@ void MainWindow::fill_fields_from_pisi()
             ui->le_src_url->setText(archive);
             QMap<PisiSource::ArchiveAttr,QString> archive_att = archives.constBegin().value();
             ui->le_src_sha1->setText(archive_att.value(PisiSource::SHA1SUM));
-            ui->chk_cp_to_pisi_archive->setChecked(false);
         }
         else
         {
             ui->rb_src_compressed->setChecked(true);
             ui->le_src_compressed->setText(archive);
-            ui->chk_cp_to_pisi_archive->setChecked(true);
         }
     }
     ui->le_src_home_page->setText(source.get_home_page());
@@ -1588,8 +1520,6 @@ void MainWindow::fill_pisi_from_fields()
         attr[PisiSource::SHA1SUM] = get_sha1sum(a);
         attr[PisiSource::TYPE] = get_archive_type(a);
         archives[a] = attr;
-        if(ui->chk_cp_to_pisi_archive->isChecked())
-            copy_source_archive(a);
     }
     else if(ui->rb_src_folder->isChecked())
     {
@@ -1604,8 +1534,6 @@ void MainWindow::fill_pisi_from_fields()
         attr[PisiSource::SHA1SUM] = get_sha1sum(a);
         attr[PisiSource::TYPE] = get_archive_type(a);
         archives[a] = attr;
-        if(ui->chk_cp_to_pisi_archive->isChecked())
-            copy_source_archive(a);
     }
     else if(ui->rb_src_url->isChecked())
     {

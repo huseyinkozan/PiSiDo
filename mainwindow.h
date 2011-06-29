@@ -93,7 +93,6 @@ private:
     bool create_desktop(QDir package_dir);
 
     bool build_package(QDir package_dir, QDir out_dir);
-    void copy_source_archive(QString src_path);
 
     void fill_fields_from_pisi();
     void fill_pisi_from_fields();
