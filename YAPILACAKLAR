@@ -7,12 +7,12 @@
         (->) pspec bilgisini barındıracak C++ sınıfları tasarlanacak.
             (X) Pisi sınıfıyla pspec.xml dosyasından QDomDocument'e bilgilerin yüklenmesi sağlanacak.
             (->) Pisi sınıfıyla pspec.xml dosyasına arayüzden bilgilerin yüklenmesi sağlanacak.
-                (->) save_to_dom();
+                (X) save_to_dom();
                     (X) Update
                     (X) Package::Files,
-                    (*) Souce::Patches,
+                    (X) Souce::Patches,
                     (X) SPBase::AdditionalFiles
-                (*) arayüze ve arayüzden doldur.
+                (->) arayüze ve arayüzden doldur.
                     (*) Package::Files,
                     (*) Souce::Patches,
                     (*) SPBase::AdditionalFiles
