@@ -58,6 +58,8 @@ private slots:
     void on_action_Build_Only_triggered();
 
 
+    void on_action_Application_Language_triggered();
+
 protected:
     virtual void closeEvent(QCloseEvent * event);
 

@@ -394,6 +394,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>&amp;Settings</string>
     </property>
+    <addaction name="action_Application_Language"/>
     <addaction name="action_Configure_Application"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -1084,6 +1085,11 @@ Categories=Application;</string>
    </property>
    <property name="toolTip">
     <string>Builds only, not creates</string>
+   </property>
+  </action>
+  <action name="action_Application_Language">
+   <property name="text">
+    <string>Application Language...</string>
    </property>
   </action>
  </widget>

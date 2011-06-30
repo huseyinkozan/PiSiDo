@@ -12,9 +12,10 @@
 #include <QProcess>
 #include <QUrl>
 
-#include "configurationdialog.h"
 #include "addupdatedialog.h"
+#include "configurationdialog.h"
 #include "helpdialog.h"
+#include "languagedialog.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -1634,5 +1635,41 @@ void MainWindow::on_pb_add_update_clicked()
         ui->tw_history->setItem(row, 3, item_comment);
         ui->tw_history->setItem(row, 4, item_name);
         ui->tw_history->setItem(row, 5, item_email);
+    }
+}
+
+void MainWindow::on_action_Application_Language_triggered()
+{
+    QDir lang_dir(PISIDO_LANG_DIR);
+    QStringList file_list = lang_dir.entryList(
+                            QStringList() << "*.qm",
+                            QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot | QDir::Readable,
+                            QDir::Name
+                            );
+    if(file_list.isEmpty())
+    {
+        QMessageBox::critical(this, tr("Error"), tr("There are no translation files !"));
+        return;
+    }
+    QMap<QString, QString> lang_map;
+    foreach (QString file, file_list)
+    {
+        file.remove(".qm");
+        QStringList f = file.split('_');
+        f.removeFirst();
+        QString loc_abr = f.join("_");
+        QLocale loc(loc_abr);
+        lang_map[QLocale::languageToString(loc.language())] = loc_abr;
+    }
+
+    LanguageDialog ld(lang_map.keys(), this);
+    int ret = ld.exec();
+    if(ret == QDialog::Accepted)
+    {
+        QString lang = ld.selectedLanguage();
+        QString lang_code = lang_map[lang];
+        settings.beginGroup("configuration");
+        settings.setValue("language", lang_code);
+        settings.endGroup();
     }
 }

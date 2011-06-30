@@ -1,7 +1,4 @@
 <RCC>
-    <qresource prefix="/translations">
-        <file alias="pisido_tr.qm">resource/translation/pisido_tr.qm</file>
-    </qresource>
     <qresource prefix="/images">
         <file alias="pardus-logo.png">resource/images/pardus-logo.png</file>
     </qresource>

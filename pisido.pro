@@ -12,6 +12,13 @@ TEMPLATE = app
 VERSION = 1.1.0
 DEFINES += PISIDO_VERSION=\\\"$$VERSION\\\"
 
+# program will scan this dir for *.qm translation files.
+# each file name must be like this : pisido_xx_XX.qm
+# xx must be a valid language_COUNTRY pair, see QLocale doc.
+# for example : pisido_tr_TR.qm , pisido_fr_FR.qm , ...
+DEFINES += PISIDO_LANG_DIR=\\\"/home/huseyinkozan/calismalar/pisido/resource/translation/\\\"
+#
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     configurationdialog.cpp \
@@ -21,7 +28,8 @@ SOURCES += main.cpp\
     pisipackage.cpp \
     pisisource.cpp \
     pisiupdate.cpp \
-    addupdatedialog.cpp
+    addupdatedialog.cpp \
+    languagedialog.cpp
 
 HEADERS  += mainwindow.h \
     configurationdialog.h \
@@ -31,16 +39,16 @@ HEADERS  += mainwindow.h \
     pisipackage.h \
     pisisource.h \
     pisiupdate.h \
-    addupdatedialog.h
+    addupdatedialog.h \
+    languagedialog.h
 
 FORMS    += mainwindow.ui \
     configurationdialog.ui \
     helpdialog.ui \
-    addupdatedialog.ui
+    addupdatedialog.ui \
+    languagedialog.ui
 
 OTHER_FILES += \
-    pisido_tr.qm \
-    pisido_tr.ts \
     README \
     OKUBUNU \
     LICENSE \

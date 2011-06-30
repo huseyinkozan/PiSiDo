@@ -3,6 +3,9 @@
 ---------------------
     (X) Yeni arayüz tasarımı yapılacak.
 
+    (X) Lisan seçimi penceresi oluştur.
+        (X) *.qm çeviri dosyalarını önceden tanımlanan klasörden al.
+
     (->) pspec.xml dosyasının içe/dışa aktarımı sağlanacak.
         (->) pspec bilgisini barındıracak C++ sınıfları tasarlanacak.
             (X) Pisi sınıfıyla pspec.xml dosyasından QDomDocument'e bilgilerin yüklenmesi sağlanacak.
@@ -17,11 +20,16 @@
                     (*) Souce::Patches,
                     (*) SPBase::AdditionalFiles
 
+    (*) translation.xml oluşturulacak.
+
     (*) İnşa adımları yeniden tasarlanacak.
         (*) İnşa adımları belirlenecek. Pspec.xml oluşumu, action.py oluşumu,
             arşiv indirilmesi, ... sonrasında pisi nin desteklediği adımlar.
 
     (*) Stable dalındaki renklendirme ve otomatik tamamlama desteği eklenecek.
+        (*) actions.py Action API dosyası için metin editörüne python desteği eklenecek.
+            (*) Metin editörüne kod renklendirici eklenecek
+            (*) Metin editörüne otomatik tamamlama eklenecek.
 
     (*) Program yardımı hazırlanacak.
 
@@ -40,13 +48,9 @@ Sonra yapılacaklar:
             klasör için fileType belirtilebilecek. Dialog'dan alınan veri tabloya veya
             listeye eklenecek.
         (*) Eğer bir klasör işaretlenmişse altındaki dosyalar işaretlenecek listesinden çıkarılacak.
-
     (*) pspec.xml deki AdditionalFiles etiketi için yeni arayüz tasarımı yapılacak.
         (*) İnşa klasöründeki files klasörüne koyulan dosyalar dialog içinde listelenerek
           tabloya veya listeye eklenmesi sağlanacak.
-    (*) actions.py Action API dosyası için metin editörüne python desteği eklenecek.
-        (*) Metin editörüne kod renklendirici eklenecek
-        (*) Metin editörüne otomatik tamamlama eklenecek.
     (*) pspec.xml gösterim arabirimi eklenecek.
         (*) Yeni oluşturulan veya içe aktarılan pspec.xml dosyasının arayüzde gösterilmesi için
             ui tasarlanacak. Arabirimde yapılan değişiklikler pspec.xml ui nesnesine aktarılacak.
