@@ -184,8 +184,10 @@ void MainWindow::on_tb_src_folder_clicked()
 void MainWindow::on_tb_work_dir_browse_clicked()
 {
     QString work_dir = get_user_selection(Folder, "package", "work_dir", this, tr("Select Directory"), "");
-    if( ! work_dir.isEmpty())
-        ui->le_work_dir->setText(work_dir);
+    if(work_dir.isEmpty())
+        return;
+
+    ui->le_work_dir->setText(work_dir);
 }
 
 void MainWindow::on_pb_work_dir_open_clicked()
@@ -209,6 +211,43 @@ void MainWindow::on_action_Configure_Application_triggered()
         // apply settings if needed.
     }
 }
+
+void MainWindow::on_action_Application_Language_triggered()
+{
+    QDir lang_dir(PISIDO_LANG_DIR);
+    QStringList file_list = lang_dir.entryList(
+                            QStringList() << "*.qm",
+                            QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot | QDir::Readable,
+                            QDir::Name
+                            );
+    if(file_list.isEmpty())
+    {
+        QMessageBox::critical(this, tr("Error"), tr("There are no translation files !"));
+        return;
+    }
+    QMap<QString, QString> lang_map;
+    foreach (QString file, file_list)
+    {
+        file.remove(".qm");
+        QStringList f = file.split('_');
+        f.removeFirst();
+        QString loc_abr = f.join("_");
+        QLocale loc(loc_abr);
+        lang_map[QLocale::languageToString(loc.language())] = loc_abr;
+    }
+
+    LanguageDialog ld(lang_map.keys(), this);
+    int ret = ld.exec();
+    if(ret == QDialog::Accepted)
+    {
+        QString lang = ld.selectedLanguage();
+        QString lang_code = lang_map[lang];
+        settings.beginGroup("configuration");
+        settings.setValue("language", lang_code);
+        settings.endGroup();
+    }
+}
+
 
 void MainWindow::on_action_Help_triggered()
 {
@@ -1638,38 +1677,3 @@ void MainWindow::on_pb_add_update_clicked()
     }
 }
 
-void MainWindow::on_action_Application_Language_triggered()
-{
-    QDir lang_dir(PISIDO_LANG_DIR);
-    QStringList file_list = lang_dir.entryList(
-                            QStringList() << "*.qm",
-                            QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot | QDir::Readable,
-                            QDir::Name
-                            );
-    if(file_list.isEmpty())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("There are no translation files !"));
-        return;
-    }
-    QMap<QString, QString> lang_map;
-    foreach (QString file, file_list)
-    {
-        file.remove(".qm");
-        QStringList f = file.split('_');
-        f.removeFirst();
-        QString loc_abr = f.join("_");
-        QLocale loc(loc_abr);
-        lang_map[QLocale::languageToString(loc.language())] = loc_abr;
-    }
-
-    LanguageDialog ld(lang_map.keys(), this);
-    int ret = ld.exec();
-    if(ret == QDialog::Accepted)
-    {
-        QString lang = ld.selectedLanguage();
-        QString lang_code = lang_map[lang];
-        settings.beginGroup("configuration");
-        settings.setValue("language", lang_code);
-        settings.endGroup();
-    }
-}

@@ -56,8 +56,6 @@ private slots:
     void on_action_Create_triggered();
     void on_action_Build_triggered();
     void on_action_Build_Only_triggered();
-
-
     void on_action_Application_Language_triggered();
 
 protected:
@@ -71,6 +69,9 @@ private:
     QSettings settings;
     QDomDocument dom_pspec;
     Pisi pisi;
+
+    QDir workspace;
+    QDir package_dir;
 
     QStringList get_file_strings(const QString & file_name);
 
