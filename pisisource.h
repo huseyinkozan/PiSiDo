@@ -35,6 +35,8 @@ public:
     QMap<QString, QMap<ArchiveAttr,QString> > get_archives() const;
     QMap<QString, QMap<PatchAttr,QString> > get_patches() const;
 
+    static QString get_archive_type(const QString & file_name);
+
     void set_home_page(QString home_page);
     void set_packager(QMap<QString,QString> packager);
     void set_archives(QMap<QString, QMap<ArchiveAttr,QString> > archives);

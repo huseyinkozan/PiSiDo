@@ -6,6 +6,10 @@
     (X) Lisan seçimi penceresi oluştur.
         (X) *.qm çeviri dosyalarını önceden tanımlanan klasörden al.
 
+    (X) Paket inşa bilgisi (*.pisido) iptal edilcek.
+    (*) Çalışma Dizini yerine Çalışma Alanı (Workspace) kavramı gelecek. Programın açılışında bir kere sorulacak.
+    (*) Kaynak dizin sıkıştırması iptal edilebilecek.
+
     (->) pspec.xml dosyasının içe/dışa aktarımı sağlanacak.
         (->) pspec bilgisini barındıracak C++ sınıfları tasarlanacak.
             (X) Pisi sınıfıyla pspec.xml dosyasından QDomDocument'e bilgilerin yüklenmesi sağlanacak.
@@ -34,6 +38,9 @@
     (*) Program yardımı hazırlanacak.
 
     (*) Program test edilecek.
+
+    (*) Pisi paketi için:
+        (*)
 
 
 Sonra yapılacaklar:

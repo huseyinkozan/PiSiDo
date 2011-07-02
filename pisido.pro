@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     pisisource.cpp \
     pisiupdate.cpp \
     addupdatedialog.cpp \
-    languagedialog.cpp
+    languagedialog.cpp \
+    workspacedialog.cpp
 
 HEADERS  += mainwindow.h \
     configurationdialog.h \
@@ -40,13 +41,15 @@ HEADERS  += mainwindow.h \
     pisisource.h \
     pisiupdate.h \
     addupdatedialog.h \
-    languagedialog.h
+    languagedialog.h \
+    workspacedialog.h
 
 FORMS    += mainwindow.ui \
     configurationdialog.ui \
     helpdialog.ui \
     addupdatedialog.ui \
-    languagedialog.ui
+    languagedialog.ui \
+    workspacedialog.ui
 
 OTHER_FILES += \
     README \

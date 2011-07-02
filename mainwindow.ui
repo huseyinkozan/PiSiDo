@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>770</width>
+    <width>946</width>
     <height>740</height>
    </rect>
   </property>
@@ -14,359 +14,260 @@
    <string>PiSiDo</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
-     <widget class="QLabel" name="lbl_work_dir">
-      <property name="text">
-       <string>PiSiDo Work Dir</string>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
       </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="le_work_dir">
-      <property name="toolTip">
-       <string>pspec.xml, actions.py and other files will be created in here.</string>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
-      <property name="statusTip">
-       <string>pspec.xml, actions.py and other files will be created in here.</string>
-      </property>
-      <property name="readOnly">
+      <property name="widgetResizable">
        <bool>true</bool>
       </property>
-     </widget>
-    </item>
-    <item row="0" column="3">
-     <widget class="QPushButton" name="pb_work_dir_open">
-      <property name="toolTip">
-       <string>Open Selected Directory.</string>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
-      <property name="statusTip">
-       <string>Open Selected Directory.</string>
-      </property>
-      <property name="text">
-       <string>Open</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="lbl_package_name">
-      <property name="text">
-       <string>Package Name</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="le_package_name">
-      <property name="toolTip">
-       <string>Package name.</string>
-      </property>
-      <property name="statusTip">
-       <string>Package name.</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QPushButton" name="pb_import_package">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>İmport</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0" colspan="4">
-     <widget class="QGroupBox" name="gb_src">
-      <property name="title">
-       <string>Source</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QRadioButton" name="rb_src_compressed">
-         <property name="text">
-          <string>Compressed File</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="le_src_compressed">
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QToolButton" name="tb_src_compressed">
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QRadioButton" name="rb_src_folder">
-         <property name="text">
-          <string>Folder Path</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="le_src_folder">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="toolTip">
-          <string>Folder will compress to use as source archive.</string>
-         </property>
-         <property name="statusTip">
-          <string>Folder will compress to use as source archive.</string>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QToolButton" name="tb_src_folder">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QRadioButton" name="rb_src_url">
-         <property name="text">
-          <string>Url Address</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="le_src_url">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="toolTip">
-          <string>Only writes Url to pspec.xml file. Does not download it.</string>
-         </property>
-         <property name="statusTip">
-          <string>Only writes Url to pspec.xml file. Does not download it.</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLabel" name="lbl_src_sha1">
-           <property name="text">
-            <string>SHA1</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="le_src_sha1">
-           <property name="inputMask">
-            <string>HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH;_</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="4">
-     <widget class="QGroupBox" name="gb_package">
-      <property name="title">
-       <string>Package</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="spacing">
-        <number>0</number>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>615</width>
+         <height>544</height>
+        </rect>
        </property>
-       <property name="margin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QScrollArea" name="scrollArea">
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="horizontalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>435</width>
-            <height>406</height>
-           </rect>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="3" column="0">
+         <widget class="QLabel" name="lbl_src_home_page">
+          <property name="text">
+           <string>Home Page</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="0">
-            <widget class="QLabel" name="lbl_src_home_page">
-             <property name="text">
-              <string>Home Page</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="le_src_home_page">
-             <property name="toolTip">
-              <string>Package web site.</string>
-             </property>
-             <property name="statusTip">
-              <string>Package web site.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="lbl_licence">
-             <property name="text">
-              <string>Licence</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QComboBox" name="combo_licence"/>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="lbl_is_a">
-             <property name="text">
-              <string>IsA</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QComboBox" name="combo_is_a">
-             <property name="toolTip">
-              <string>Package type.</string>
-             </property>
-             <property name="statusTip">
-              <string>Package type.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="lbl_part_of">
-             <property name="text">
-              <string>PartOf</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QComboBox" name="combo_part_of"/>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="lbl_brief">
-             <property name="text">
-              <string>Summary</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QLineEdit" name="le_summary">
-             <property name="toolTip">
-              <string>Shows a brief description on the installer list.</string>
-             </property>
-             <property name="statusTip">
-              <string>Shows a brief description on the installer list.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="lbl_detailed">
-             <property name="text">
-              <string>Description</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QTextEdit" name="te_description">
-             <property name="toolTip">
-              <string>Shows after open detailed description. Should be continuous of the brief.</string>
-             </property>
-             <property name="statusTip">
-              <string>Shows after open detailed description. Should be continuous of the brief.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
-            <widget class="QLabel" name="lbl_build_dependency">
-             <property name="text">
-              <string>Build Dep.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
-            <widget class="QLineEdit" name="le_build_dependency">
-             <property name="toolTip">
-              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+         </widget>
+        </item>
+        <item row="3" column="1" colspan="2">
+         <widget class="QLineEdit" name="le_homepage">
+          <property name="toolTip">
+           <string>Package web site.</string>
+          </property>
+          <property name="statusTip">
+           <string>Package web site.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QLabel" name="lbl_licence">
+          <property name="text">
+           <string>Licence</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QComboBox" name="combo_license"/>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="lbl_is_a">
+          <property name="text">
+           <string>IsA</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QComboBox" name="combo_is_a">
+          <property name="toolTip">
+           <string>Package type.</string>
+          </property>
+          <property name="statusTip">
+           <string>Package type.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QLabel" name="lbl_part_of">
+          <property name="text">
+           <string>PartOf</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QComboBox" name="combo_part_of"/>
+        </item>
+        <item row="9" column="0">
+         <widget class="QLabel" name="lbl_brief">
+          <property name="text">
+           <string>Summary</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1" colspan="2">
+         <widget class="QLineEdit" name="le_summary">
+          <property name="toolTip">
+           <string>Shows a brief description on the installer list.</string>
+          </property>
+          <property name="statusTip">
+           <string>Shows a brief description on the installer list.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0">
+         <widget class="QLabel" name="lbl_detailed">
+          <property name="text">
+           <string>Description</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="1" colspan="2">
+         <widget class="QTextEdit" name="te_description">
+          <property name="toolTip">
+           <string>Shows after open detailed description. Should be continuous of the brief.</string>
+          </property>
+          <property name="statusTip">
+           <string>Shows after open detailed description. Should be continuous of the brief.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0">
+         <widget class="QLabel" name="lbl_build_dependency">
+          <property name="text">
+           <string>Build Dep.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="1" colspan="2">
+         <widget class="QLineEdit" name="le_build_dependency">
+          <property name="toolTip">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Comma seperated package names:&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qt Version From 4.6.0 And Gtk Version To 2.4 : &lt;span style=&quot; font-weight:600;&quot;&gt;qt&amp;gt;4.6.0, gtk&amp;lt;2.4&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qt Version 4.6.0 : &lt;span style=&quot; font-weight:600;&quot;&gt;qt=4.6.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="statusTip">
-              <string>Comma seperated package names.</string>
+          </property>
+          <property name="statusTip">
+           <string>Comma seperated package names.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="0">
+         <widget class="QLabel" name="lbl_runtime_dependency">
+          <property name="text">
+           <string>Runtime Dep.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="1" colspan="2">
+         <widget class="QLineEdit" name="le_runtime_dependency">
+          <property name="toolTip">
+           <string>Comma seperated package names.</string>
+          </property>
+          <property name="statusTip">
+           <string>Comma seperated package names.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lbl_package_name">
+          <property name="text">
+           <string>Package Name</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="le_package_name">
+          <property name="toolTip">
+           <string>Package name.</string>
+          </property>
+          <property name="statusTip">
+           <string>Package name.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="pb_import_package">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>İmport</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="3">
+         <widget class="QGroupBox" name="gb_src">
+          <property name="title">
+           <string>Source</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="1" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLabel" name="lbl_source_sha1">
+               <property name="text">
+                <string>SHA1</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="le_source_sha1">
+               <property name="inputMask">
+                <string>HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH;_</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="0" column="0">
+            <widget class="QComboBox" name="combo_source">
+             <item>
+              <property name="text">
+               <string>Compressed File</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Folder Path</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Url Address</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="le_source">
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item row="9" column="0">
-            <widget class="QLabel" name="lbl_runtime_dependency">
+           <item row="0" column="2">
+            <widget class="QToolButton" name="tb_source">
              <property name="text">
-              <string>Runtime Dep.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="1">
-            <widget class="QLineEdit" name="le_runtime_dependency">
-             <property name="toolTip">
-              <string>Comma seperated package names.</string>
-             </property>
-             <property name="statusTip">
-              <string>Comma seperated package names.</string>
+              <string>...</string>
              </property>
             </widget>
            </item>
           </layout>
          </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="2">
-     <widget class="QToolButton" name="tb_work_dir_browse">
-      <property name="text">
-       <string>...</string>
-      </property>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -376,7 +277,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>770</width>
+     <width>946</width>
      <height>25</height>
     </rect>
    </property>
@@ -387,6 +288,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
+    <addaction name="action_Change_Workspace"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -413,6 +315,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="action_Open_PISI_Archive_Dir"/>
     <addaction name="action_Open_PISI_Archive_Dir_As_Root"/>
+    <addaction name="action_Open_Workspace"/>
    </widget>
    <widget class="QMenu" name="menu_View">
     <property name="title">
@@ -1080,19 +983,21 @@ Categories=Application;</string>
     <string>Application Language...</string>
    </property>
   </action>
+  <action name="action_Change_Workspace">
+   <property name="text">
+    <string>&amp;Change Workspace</string>
+   </property>
+  </action>
+  <action name="action_Open_Workspace">
+   <property name="text">
+    <string>Open Workspace</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>rb_src_compressed</tabstop>
-  <tabstop>le_src_compressed</tabstop>
-  <tabstop>tb_src_compressed</tabstop>
-  <tabstop>rb_src_folder</tabstop>
-  <tabstop>le_src_folder</tabstop>
-  <tabstop>tb_src_folder</tabstop>
-  <tabstop>rb_src_url</tabstop>
-  <tabstop>le_src_url</tabstop>
-  <tabstop>le_src_sha1</tabstop>
-  <tabstop>combo_licence</tabstop>
+  <tabstop>le_source_sha1</tabstop>
+  <tabstop>combo_license</tabstop>
   <tabstop>le_summary</tabstop>
   <tabstop>te_description</tabstop>
   <tabstop>te_auto</tabstop>
@@ -1117,118 +1022,6 @@ Categories=Application;</string>
     <hint type="destinationlabel">
      <x>268</x>
      <y>298</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rb_src_compressed</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>le_src_compressed</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>110</x>
-     <y>181</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>377</x>
-     <y>181</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rb_src_compressed</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>tb_src_compressed</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>110</x>
-     <y>181</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>458</x>
-     <y>183</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rb_src_folder</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>le_src_folder</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>110</x>
-     <y>212</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>377</x>
-     <y>212</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rb_src_folder</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>tb_src_folder</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>110</x>
-     <y>212</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>458</x>
-     <y>214</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rb_src_url</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>le_src_url</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>99</x>
-     <y>242</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>398</x>
-     <y>242</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rb_src_url</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lbl_src_sha1</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>81</x>
-     <y>242</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>186</x>
-     <y>271</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rb_src_url</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>le_src_sha1</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>69</x>
-     <y>242</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>420</x>
-     <y>271</y>
     </hint>
    </hints>
   </connection>

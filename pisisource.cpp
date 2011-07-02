@@ -1,7 +1,9 @@
 #include "pisisource.h"
 
-#include <QDebug>
+#include <QFile>
+#include <QCryptographicHash>
 #include <QDomElement>
+#include <QDebug>
 
 PisiSource::PisiSource()
     : PisiSPBase()
@@ -295,3 +297,39 @@ bool PisiSource::is_mandatory(QDomElement root, QString tag)
         return PisiSPBase::is_mandatory(root, tag);
     }
 }
+
+QString PisiSource::get_archive_type(const QString & file_name)
+{
+    QString file_type;
+    if(file_name.endsWith(".tgz") || file_name.endsWith(".tar.gz"))
+        file_type = "targz";
+    else if(file_name.endsWith(".tar.bz2"))
+        file_type = "tarbz2";
+    else if(file_name.endsWith(".tar.lzma"))
+        file_type = "tarlzma";
+    else if(file_name.endsWith(".tar.xz"))
+        file_type = "tarxz";
+    else if(file_name.endsWith(".tar.Z"))
+        file_type = "tarZ";
+    else if(file_name.endsWith(".tar"))
+        file_type = "tar";
+    else if(file_name.endsWith(".zip"))
+        file_type = "zip";
+    else if(file_name.endsWith(".gz"))
+        file_type = "gz";
+    else if(file_name.endsWith(".gzip"))
+        file_type = "gzip";
+    else if(file_name.endsWith(".bz2"))
+        file_type = "bz2";
+    else if(file_name.endsWith(".bzip2"))
+        file_type = "bzip2";
+    else if(file_name.endsWith(".lzma"))
+        file_type = "lzma";
+    else if(file_name.endsWith(".xz"))
+        file_type = "xz";
+    else
+        file_type = "binary";
+    return file_type;
+}
+
+

@@ -24,28 +24,23 @@ public:
     ~MainWindow();
 
 private slots:
+    void on_action_Change_Workspace_triggered();
+
     void on_action_Open_PISI_Archive_Dir_triggered();
     void on_action_Open_PISI_Archive_Dir_As_Root_triggered();
 
     void on_action_Configure_Application_triggered();
 
     void on_action_Help_triggered();
+
     void on_action_Open_PISI_Spec_File_triggered();
     void on_action_Open_Actions_API_Page_triggered();
+    void on_action_Open_Workspace_triggered();
+
     void on_action_About_triggered();
     void on_action_About_Qt_triggered();
 
-    void on_tb_work_dir_browse_clicked();
-    void on_pb_work_dir_open_clicked();
-    void on_le_work_dir_textChanged(const QString &arg1);
-    void on_le_package_name_textChanged(const QString &arg1);
-    void on_le_package_name_returnPressed();
-
-    void on_tb_src_compressed_clicked();
-    void on_tb_src_folder_clicked();
-
     void on_tb_desktop_reset_clicked();
-    void on_pb_import_package_clicked();
     void on_pb_delete_last_update_clicked();
     void on_pb_add_update_clicked();
 
@@ -54,6 +49,35 @@ private slots:
     void on_action_Build_triggered();
     void on_action_Build_Only_triggered();
     void on_action_Application_Language_triggered();
+
+    void on_combo_source_currentIndexChanged(int index);
+    void on_tb_source_clicked();
+
+    void on_le_package_name_textChanged(const QString &text);
+    void on_le_package_name_returnPressed();
+    void on_pb_import_package_clicked();
+
+    void on_le_source_sha1_editingFinished();
+
+    void on_combo_license_currentIndexChanged(const QString & text);
+    void on_combo_is_a_currentIndexChanged(const QString & text);
+    void on_combo_part_of_currentIndexChanged(const QString &  text);
+
+    void on_le_summary_editingFinished();
+    void on_te_description_textChanged();
+
+    void on_le_build_dependency_editingFinished();
+    void on_le_runtime_dependency_editingFinished();
+
+    void on_le_source_textChanged(const QString & text);
+
+    void on_le_homepage_textChanged(const QString & text);
+
+    void on_le_summary_textChanged(const QString & text);
+
+    void on_le_build_dependency_textChanged(const QString & text);
+
+    void on_le_runtime_dependency_textChanged(const QString & text);
 
 protected:
     virtual void closeEvent(QCloseEvent * event);
@@ -67,20 +91,33 @@ private:
     QDomDocument dom_pspec;
     Pisi pisi;
 
+    bool not_ask_workspace;
+
+    int selected_source;
+
     QDir workspace;
     QDir package_dir;
+    QDir package_files_dir;
 
-    QStringList get_file_strings(const QString & file_name);
+    QString package_name;
+    QString source;
+    QString source_sha1;
+    QString homepage;
+    QString license;
+    QString is_a;
+    QString part_of;
+    QString summary;
+    QString description;
+    QString build_dependency;
+    QString runtime_dependency;
 
-    enum User_Selection_Mode {Folder, File};
-    QString get_user_selection( User_Selection_Mode selection_mode, QString setting_group, QString setting_key,
-                               QWidget * parent = 0, QString title = QString(), QString file_filter = QString());
     void write_settings();
     void read_settings();
 
+    QStringList get_file_strings(const QString & file_name);
     QString get_sha1sum(QString file_name);
-    QString get_archive_type(const QString&);
-    QString get_compressed_archive(QDir compress_dir, QDir work_dir);
+    QString get_compressed_archive(QDir dir_to_compress, QDir out_dir);
+
     QDir get_package_dir(QDir work_dir, QString package_name);
     PisiUpdate get_last_history_update();
     PisiUpdate get_history_update(int row);
