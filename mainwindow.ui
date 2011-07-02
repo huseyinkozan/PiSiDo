@@ -385,8 +385,6 @@ p, li { white-space: pre-wrap; }
      <string>&amp;File</string>
     </property>
     <addaction name="separator"/>
-    <addaction name="action_Save_Package_Information"/>
-    <addaction name="action_Load_Package_Information"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -1034,16 +1032,6 @@ Categories=Application;</string>
   <action name="action_Open_PISI_Archive_Dir_As_Root">
    <property name="text">
     <string>Open PISI Archive Dir As Root</string>
-   </property>
-  </action>
-  <action name="action_Save_Package_Information">
-   <property name="text">
-    <string>Save Package Build Information...</string>
-   </property>
-  </action>
-  <action name="action_Load_Package_Information">
-   <property name="text">
-    <string>Load Package Build Information...</string>
    </property>
   </action>
   <action name="action_Clear">

@@ -24,9 +24,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_action_Save_Package_Information_triggered();
-    void on_action_Load_Package_Information_triggered();
-
     void on_action_Open_PISI_Archive_Dir_triggered();
     void on_action_Open_PISI_Archive_Dir_As_Root_triggered();
 
@@ -80,9 +77,6 @@ private:
                                QWidget * parent = 0, QString title = QString(), QString file_filter = QString());
     void write_settings();
     void read_settings();
-
-    QMap<QString, QVariant> get_settings_group(QString group);
-    void set_settings_group(QMap<QString, QVariant> map, QString group);
 
     QString get_sha1sum(QString file_name);
     QString get_archive_type(const QString&);
