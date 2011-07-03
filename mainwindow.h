@@ -5,13 +5,13 @@
 #include <QMap>
 #include <QSettings>
 #include <QDomDocument>
+#include <QDir>
 
 #include "pisi.h"
 
 namespace Ui {
     class MainWindow;
 }
-class QDir;
 class QFile;
 class HelpDialog;
 
@@ -57,26 +57,17 @@ private slots:
     void on_le_package_name_returnPressed();
     void on_pb_import_package_clicked();
 
+    void on_le_source_textChanged(const QString & text);
     void on_le_source_sha1_editingFinished();
 
     void on_combo_license_currentIndexChanged(const QString & text);
     void on_combo_is_a_currentIndexChanged(const QString & text);
     void on_combo_part_of_currentIndexChanged(const QString &  text);
 
-    void on_le_summary_editingFinished();
-    void on_te_description_textChanged();
-
-    void on_le_build_dependency_editingFinished();
-    void on_le_runtime_dependency_editingFinished();
-
-    void on_le_source_textChanged(const QString & text);
-
     void on_le_homepage_textChanged(const QString & text);
-
     void on_le_summary_textChanged(const QString & text);
-
+    void on_te_description_textChanged();
     void on_le_build_dependency_textChanged(const QString & text);
-
     void on_le_runtime_dependency_textChanged(const QString & text);
 
 protected:
@@ -115,14 +106,12 @@ private:
     void read_settings();
 
     QStringList get_file_strings(const QString & file_name);
-    QString get_sha1sum(QString file_name);
+    QString get_sha1sum(const QString & file_name);
     QString get_compressed_archive(QDir dir_to_compress, QDir out_dir);
 
-    QDir get_package_dir(QDir work_dir, QString package_name);
     PisiUpdate get_last_history_update();
     PisiUpdate get_history_update(int row);
 
-    bool create_pspec_xml(QDir package_dir);
     bool create_action_py(QDir package_dir);
     bool create_desktop(QDir package_dir);
 

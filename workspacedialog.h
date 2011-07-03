@@ -16,6 +16,7 @@ public:
     ~WorkspaceDialog();
 
     QString get_workspace();
+    bool get_not_ask_workspace();
 
 private slots:
     void save_settings();
@@ -24,9 +25,12 @@ private slots:
     void on_pb_browse_clicked();
     void on_le_workspace_textChanged(const QString &arg1);
 
+    void on_check_not_ask_stateChanged(int arg1);
+
 private:
     Ui::WorkspaceDialog *ui;
     QString workspace;
+    bool not_ask_workspace;
 };
 
 #endif // WORKSPACEDIALOG_H

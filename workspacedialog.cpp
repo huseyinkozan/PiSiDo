@@ -49,7 +49,7 @@ void WorkspaceDialog::save_settings()
         return;
     QSettings settings;
     settings.beginGroup("main");
-    settings.setValue("not_ask_workspace", ui->check_not_ask->isChecked());
+    settings.setValue("not_ask_workspace", not_ask_workspace);
     settings.setValue("workspace", workspace);
     settings.endGroup();
 }
@@ -59,11 +59,23 @@ void WorkspaceDialog::read_settings()
     QSettings settings;
     settings.beginGroup("main");
     workspace = settings.value("workspace").toString();
+    not_ask_workspace = settings.value("not_ask_workspace", false).toBool();
     settings.endGroup();
     ui->le_workspace->setText(workspace);
+    ui->check_not_ask->setChecked(not_ask_workspace);
 }
 
 QString WorkspaceDialog::get_workspace()
 {
     return workspace;
+}
+
+bool WorkspaceDialog::get_not_ask_workspace()
+{
+    return not_ask_workspace;
+}
+
+void WorkspaceDialog::on_check_not_ask_stateChanged(int arg1)
+{
+    not_ask_workspace = (arg1 == Qt::Checked);
 }

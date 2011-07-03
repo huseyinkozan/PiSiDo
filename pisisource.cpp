@@ -1,7 +1,5 @@
 #include "pisisource.h"
 
-#include <QFile>
-#include <QCryptographicHash>
 #include <QDomElement>
 #include <QDebug>
 

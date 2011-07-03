@@ -10,6 +10,8 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QUrl>
+#include <QCryptographicHash>
+#include <QTimer>
 
 #include "addupdatedialog.h"
 #include "configurationdialog.h"
@@ -49,10 +51,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->combo_license->addItems(get_file_strings(":/files/license"));
     ui->combo_part_of->addItem("");
     ui->combo_part_of->addItems(get_file_strings(":/files/part_of"));
-
-    // hide sha1 widgets, read_settings will show if needs
-    ui->lbl_src_sha1->hide();
-    ui->le_source_sha1->hide();
 
     // set default settings, needed for first run
     settings.beginGroup( "configuration" );
@@ -124,9 +122,12 @@ void MainWindow::on_action_Change_Workspace_triggered()
 {
     WorkspaceDialog wd(this);
     if(wd.exec() == QDialog::Accepted)
+    {
         workspace = QDir(wd.get_workspace());
+        not_ask_workspace = wd.get_not_ask_workspace();
+    }
     else
-        qApp->exit();
+        QTimer::singleShot(0, qApp, SLOT(quit()));
 
     // TODO : revise after other actions !
 }
@@ -379,22 +380,27 @@ void MainWindow::on_action_Clear_triggered()
     }
 }
 
+void MainWindow::on_tb_desktop_reset_clicked()
+{
+    ui->pte_desktop->setPlainText(desktop_file_default);
+}
+
 QString MainWindow::get_sha1sum(const QString & file_name)
 {
-    QFile compressed_file(file_name);
-    if( ! compressed_file.open(QIODevice::ReadOnly))
+    QProcess system;
+    system.start("sha1sum", QStringList() << file_name);
+    if( ! system.waitForFinished())
     {
-        throw QString("Can not open file to sha1sum.");
+        throw QString("sha1sum process timeout within 30 seconds.");
     }
-    QByteArray compressed_file_bytes = compressed_file.readAll();
-    QString sha1sum = QCryptographicHash::hash(compressed_file_bytes, QCryptographicHash::Sha1).toHex();
-    compressed_file_bytes.clear();
-    compressed_file.close();
-    return sha1sum;
+    QString sha1(system.readAll());
+    return sha1.split(' ').first();
 }
 
 QString MainWindow::get_compressed_archive(QDir dir_to_compress, QDir out_dir)
 {
+    // TODO : add a messagebox to be able to stop compression, and clean the code
+
     if( ! dir_to_compress.exists())
         throw QString("Archive directory does not exists !");
     if( ! out_dir.exists())
@@ -479,9 +485,44 @@ PisiUpdate MainWindow::get_history_update(int row)
     return update;
 }
 
+void MainWindow::on_pb_delete_last_update_clicked()
+{
+    if(ui->tw_history->rowCount()>0)
+        ui->tw_history->removeRow(0);
+}
+
+void MainWindow::on_pb_add_update_clicked()
+{
+    AddUpdateDialog ud(this);
+    if(ud.exec() == QDialog::Accepted)
+    {
+        QString release;
+        if(ui->tw_history->rowCount() > 0)
+            release = QString::number(ui->tw_history->item(0,0)->text().toInt()+1);
+        else
+            release = "1";
+        QTableWidgetItem * item_release = new QTableWidgetItem(release);
+        QTableWidgetItem * item_date = new QTableWidgetItem(ud.get_date());
+        QTableWidgetItem * item_version = new QTableWidgetItem(ud.get_version());
+        QTableWidgetItem * item_comment = new QTableWidgetItem(ud.get_comment());
+        QTableWidgetItem * item_name = new QTableWidgetItem(ud.get_packager_name());
+        QTableWidgetItem * item_email = new QTableWidgetItem(ud.get_packager_email());
+        int row = 0;
+        ui->tw_history->insertRow(row);
+        ui->tw_history->setItem(row, 0, item_release);
+        ui->tw_history->setItem(row, 1, item_date);
+        ui->tw_history->setItem(row, 2, item_version);
+        ui->tw_history->setItem(row, 3, item_comment);
+        ui->tw_history->setItem(row, 4, item_name);
+        ui->tw_history->setItem(row, 5, item_email);
+    }
+}
+
 void MainWindow::on_combo_source_currentIndexChanged(int index)
 {
     selected_source = index;
+    ui->le_source->clear();
+    ui->le_source_sha1->clear();
     if(index == 0)
     {
         ui->le_source_sha1->setVisible(false);
@@ -530,28 +571,6 @@ void MainWindow::on_tb_source_clicked()
     ui->le_source->setText(selection);
 }
 
-
-//---------------------
-
-/**
-  Helper function to create and return package dir.
-  */
-
-QDir MainWindow::get_package_dir(QDir work_dir, QString package_name)
-{
-    if( ! work_dir.cd(package_name) )
-    {
-        if( ! work_dir.mkdir(package_name) )
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Can not create package dir in the pisido work dir."));
-            ui->tb_work_dir_browse->setFocus();
-            return QDir();
-        }
-        work_dir.cd(package_name);
-    }
-    return work_dir;
-}
-
 // TODO : split create and build phases
 // fields => pisi
 // pisi => xml
@@ -559,23 +578,11 @@ QDir MainWindow::get_package_dir(QDir work_dir, QString package_name)
 
 void MainWindow::on_action_Build_triggered()
 {
-    QString work_dir_str = ui->le_work_dir->text();
-    QFileInfo work_dir_info(work_dir_str);
-
-    if( work_dir_str.isEmpty() || ! work_dir_info.exists())
+    if( ! workspace.exists())
     {
         QMessageBox::critical(this, tr("Error"), tr("No pisido work directory. Please define a working directory."));
-        ui->tb_work_dir_browse->setFocus();
         return;
     }
-
-    if( ! work_dir_info.isWritable())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No writable pisido work directory. Please define a writable working directory."));
-        ui->tb_work_dir_browse->setFocus();
-        return;
-    }
-
 
     if( ui->le_package_name->text().isEmpty())
     {
@@ -619,19 +626,9 @@ void MainWindow::on_action_Build_triggered()
     }
 
 
-    QString package_name = ui->le_package_name->text();
-    QDir work_dir(ui->le_work_dir->text());
-    QDir package_dir;
-
-    if((package_dir = get_package_dir(work_dir, package_name)) == QDir())
-    {
+    if( ! package_dir.exists())
         return;
-    }
 
-    // call creation functions
-
-    if( ! create_pspec_xml(package_dir))
-        return;
 
     if( ! create_action_py(package_dir))
         return;
@@ -644,330 +641,13 @@ void MainWindow::on_action_Build_triggered()
     QObject * s = sender();
     if( s != 0 && s == ui->action_Build)
     {
-        build_package(package_dir, work_dir);
+        build_package(package_dir, workspace);
     }
     else
         QMessageBox::information(this, tr("Success"),
                                  tr("PISI build files successfully created."));
 }
 
-bool MainWindow::create_pspec_xml(QDir package_dir)
-{
-    // define source
-    QString src_path;
-    bool local_file = true;
-    if(ui->rb_src_compressed->isChecked())
-    {
-        src_path = ui->le_src_compressed->text();
-        if( src_path.isEmpty() || ! QFile::exists(src_path))
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Source not defined !"));
-            ui->tb_src_compressed->setFocus();
-            return false;
-        }
-    }
-    else if(ui->rb_src_url->isChecked())
-    {
-        src_path = ui->le_src_url->text();
-        if(src_path.isEmpty())
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Empty URL !"));
-            ui->le_src_url->setFocus();
-            return false;
-        }
-        local_file = false;
-        if(ui->le_source_sha1->text().isEmpty() || ui->le_source_sha1->text().length() < 40)
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Fill SHA1 value."));
-            return false;
-        }
-    }
-    else if (ui->rb_src_folder)
-    {
-        src_path = ui->le_src_folder->text();
-        if( src_path.isEmpty() || ! QFile::exists(src_path))
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Source not defined !"));
-            ui->tb_src_folder->setFocus();
-            return false;
-        }
-        // compress and copy to work dir
-        QDir src_path_dir(src_path);
-        QString dir_name = src_path_dir.dirName();
-        QDir work_dir = package_dir;
-        work_dir.cdUp();
-        src_path = work_dir.absoluteFilePath(QString("%1.tar.gz").arg(dir_name));
-        src_path_dir.cdUp();
-        QProcess tar;
-        QStringList parameters;
-        parameters << "-zcf" << src_path;
-        parameters << "--directory" << src_path_dir.absolutePath() << dir_name;
-        tar.start("tar", parameters);
-        statusBar()->showMessage(tr("Compressing directory ......"));
-        bool ok = false;
-        settings.beginGroup( "configuration" );
-        int limit = settings.value("folder_comp_time_limit").toInt(&ok);
-        settings.endGroup();
-        if(!ok) limit = 1;
-        if (!tar.waitForFinished(limit*60*1000))        // 5 minutes
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Source folder could not compress."));
-            return false;
-        }
-        statusBar()->showMessage(tr("Directory compression finished."));
-    }
-    else
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Source not selected."));
-        return false;
-    }
-
-    // compute sha1sum
-    QString sha1sum;
-    if(local_file)
-    {
-        sha1sum = PisiSource::get_sha1sum(src_path);
-    }
-    else
-    {
-        sha1sum = ui->le_source_sha1->text();
-    }
-
-
-
-    // collect other data
-    QString package_name = ui->le_package_name->text();
-    QString src_home_page = ui->le_src_home_page->text();
-    QString is_a = ui->combo_is_a->currentText();
-    QString part_of = ui->combo_part_of->currentText();
-    QString license = ui->combo_license->currentText();
-    QString summary = ui->le_summary->text();
-    QString detailed = ui->te_description->toPlainText();
-    QString archive_name;
-    if(local_file)
-        archive_name = QFileInfo(src_path).fileName();
-    else
-        archive_name = src_path;
-    QString src_file_type = PisiSource::get_archive_type(src_path);
-    int release = 1;
-    QString release_date = QDate::currentDate().toString("yyyy-MM-dd");
-//    QString release_version = ui->le_version->text();
-    QString release_comment = tr("First Release");
-
-// TODO : get name and email from last update
-    QString packager_name = ""; // ui->le_packager_name->text();
-    QString packager_email = ""; // ui->le_packager_email->text();
-
-    QStringList build_dependencies = ui->le_build_dependency->text().split(",", QString::SkipEmptyParts);
-    QStringList runtime_dependencies = ui->le_runtime_dependency->text().split(",", QString::SkipEmptyParts);
-
-
-    // prepare xml
-    QDomDocument domdom("PISI SYSTEM \"http://www.pardus.org.tr/projeler/pisi/pisi-spec.dtd\"");
-
-    QDomElement pisi = domdom.createElement("PISI");
-    domdom.appendChild(pisi);
-
-    QDomElement source = domdom.createElement("Source");
-    pisi.appendChild(source);
-
-        QDomElement source_name = domdom.createElement("Name");
-        source_name.appendChild(domdom.createTextNode(package_name));
-        source.appendChild(source_name);
-
-        QDomElement source_home_page = domdom.createElement("Homepage");
-        source_home_page.appendChild(domdom.createTextNode(src_home_page));
-        source.appendChild(source_home_page);
-
-        QDomElement source_packager = domdom.createElement("Packager");
-        QDomElement source_packager_name = domdom.createElement("Name");
-        QDomElement source_packager_email = domdom.createElement("Email");
-        source_packager_name.appendChild(domdom.createTextNode(packager_name));
-        source_packager_email.appendChild(domdom.createTextNode(packager_email));
-        source_packager.appendChild(source_packager_name);
-        source_packager.appendChild(source_packager_email);
-        source.appendChild(source_packager);
-
-        QDomElement source_is_a = domdom.createElement("IsA");
-        source_is_a.appendChild(domdom.createTextNode(is_a));
-        source.appendChild(source_is_a);
-
-        QDomElement source_partof = domdom.createElement("PartOf");
-        source_partof.appendChild(domdom.createTextNode(part_of));
-        source.appendChild(source_partof);
-
-        QDomElement source_license = domdom.createElement("License");
-        source_license.appendChild(domdom.createTextNode(license));
-        source.appendChild(source_license);
-
-        QDomElement source_summary = domdom.createElement("Summary");
-        source_summary.appendChild(domdom.createTextNode(summary));
-        source.appendChild(source_summary);
-
-        QDomComment source_summary_comment = domdom.createComment("<Summary xml:lang=\"tr\">Summary in Turkish </Summary>");
-        source.insertAfter(source_summary_comment, source_summary);
-
-        QDomElement source_description = domdom.createElement("Description");
-        source_description.appendChild(domdom.createTextNode(detailed));
-        source.appendChild(source_description);
-
-        QDomComment source_description_comment = domdom.createComment("<Description xml:lang=\"tr\">Description in Turkish</Description>");
-        source.insertAfter(source_description_comment, source_description);
-
-        QDomElement source_archive = domdom.createElement("Archive");
-        source_archive.setAttribute("type", src_file_type);
-        source_archive.setAttribute("sha1sum", sha1sum);
-        source_archive.appendChild(domdom.createTextNode(archive_name));
-        source.appendChild(source_archive);
-
-        QDomElement source_build_dependencies = domdom.createElement("BuildDependencies");
-        source.appendChild(source_build_dependencies);
-
-            foreach (QString dependency, build_dependencies)
-            {
-                QDomElement source_build_dependency = domdom.createElement("Dependency");
-                source_build_dependency.appendChild(domdom.createTextNode(dependency.trimmed()));
-                source_build_dependencies.appendChild(source_build_dependency);
-            }
-
-        QDomComment source_dependency_patch_comment = domdom.createComment(
-                    "\n"
-                    "<Patches>\n"
-                    "    <Patch>Build path, if any</Patch>\n"
-                    "</Patches>"
-                    "\n"
-                    );
-        source.insertAfter(source_dependency_patch_comment, source_archive);
-
-
-    QDomElement package = domdom.createElement("Package");
-    pisi.appendChild(package);
-
-        QDomElement pkg_name = domdom.createElement("Name");
-        pkg_name.appendChild(domdom.createTextNode(package_name));
-        package.appendChild(pkg_name);
-
-
-        QDomElement package_runtime_dependencies = domdom.createElement("RuntimeDependencies");
-        package.appendChild(package_runtime_dependencies);
-
-            foreach (QString dependency, runtime_dependencies)
-            {
-                QDomElement package_runtime_dependency = domdom.createElement("Dependency");
-                package_runtime_dependency.appendChild(domdom.createTextNode(dependency.trimmed()));
-                package_runtime_dependencies.appendChild(package_runtime_dependency);
-            }
-
-        QDomElement package_files = domdom.createElement("Files");
-        package.appendChild(package_files);
-
-            QDomElement pkg_files_path = domdom.createElement("Path");
-            pkg_files_path.setAttribute("fileType", "All");
-            pkg_files_path.appendChild(domdom.createTextNode("/"));
-            package_files.appendChild(pkg_files_path);
-
-            QDomComment pkg_files_comment = domdom.createComment(
-                        "\n"
-                        "<Path fileType=\"executable\">/usr/bin</Path>\n"
-                        "<Path fileType=\"config\">/etc</Path>\n"
-                        "<Path fileType=\"library\">/usr/lib</Path>\n"
-                        "<Path fileType=\"header\">/usr/include</Path>\n"
-                        "<Path fileType=\"data\">/usr/share</Path>\n"
-                        "<Path fileType=\"localedata\">/usr/share/locale</Path>\n"
-                        "<Path fileType=\"man\">/usr/share/man</Path>\n"
-                        "<Path fileType=\"info\">/usr/share/info</Path>\n"
-                        "<Path fileType=\"doc\">/usr/share/doc</Path>\n"
-                        "\n"
-                        );
-            package_files.appendChild(pkg_files_comment);
-
-        if(ui->gb_create_desktop->isChecked())
-        {
-            QDomElement package_additional_files = domdom.createElement("AdditionalFiles");
-            package.appendChild(package_additional_files);
-
-                QDomElement package_ad_file_desktop = domdom.createElement("AdditionalFile");
-                package_ad_file_desktop.setAttribute("owner", "root");
-                package_ad_file_desktop.setAttribute("permission", "0644");
-                package_ad_file_desktop.setAttribute("target", QString("/usr/share/applications/%1.desktop").arg(package_name));
-                package_ad_file_desktop.appendChild(domdom.createTextNode(QString("%1.desktop").arg(package_name)));
-                package_additional_files.appendChild(package_ad_file_desktop);
-
-                QDomElement package_ad_file_image = domdom.createElement("AdditionalFile");
-                package_ad_file_image.setAttribute("owner", "root");
-                package_ad_file_image.setAttribute("permission", "0644");
-                package_ad_file_image.setAttribute("target", QString("/usr/share/pixmaps/%1.png").arg(package_name));
-                package_ad_file_image.appendChild(domdom.createTextNode(QString("%1.png").arg(package_name)));
-                package_additional_files.appendChild(package_ad_file_image);
-        }
-        else
-        {
-            QDomComment package_additional_files_comment = domdom.createComment(
-                        "\n"
-                        "<AdditionalFiles>\n"
-                            "<AdditionalFile owner=\"root\" permission=\"0644\" target=\"/usr/share/applications/package_name.desktop\">package_name.desktop</AdditionalFile>\n"
-                            "<AdditionalFile owner=\"root\" permission=\"0644\" target=\"/usr/share/pixmaps/package_name.png\">package_name.png</AdditionalFile>\n"
-                        "</AdditionalFiles>\n"
-                        "\n"
-                        );
-            package.appendChild(package_additional_files_comment);
-        }
-
-        QDomComment package_provides_comment = domdom.createComment(
-                    "\n"
-                    "<Provides>\n"
-                        "<COMAR script=\"package.py\">System.Package</COMAR>\n"
-                        "<COMAR script=\"service.py\">System.Service</COMAR>\n"
-                    "</Provides>\n"
-                    "\n"
-                    );
-        package.appendChild(package_provides_comment);
-
-    QDomElement history = domdom.createElement("History");
-    pisi.appendChild(history);
-
-        QDomElement history_update = domdom.createElement("Update");
-        history_update.setAttribute("release", QString::number(release));
-        history.appendChild(history_update);
-
-            QDomElement history_update_date = domdom.createElement("Date");
-            history_update_date.appendChild(domdom.createTextNode(release_date));
-            history_update.appendChild(history_update_date);
-
-            QDomElement history_update_version = domdom.createElement("Version");
-            history_update_version.appendChild(domdom.createTextNode("1" /*release_version*/));
-            history_update.appendChild(history_update_version);
-
-            QDomElement history_update_comment = domdom.createElement("Comment");
-            history_update_comment.appendChild(domdom.createTextNode(release_comment));
-            history_update.appendChild(history_update_comment);
-
-            QDomElement history_update_name = domdom.createElement("Name");
-            history_update_name.appendChild(domdom.createTextNode(packager_name));
-            history_update.appendChild(history_update_name);
-
-            QDomElement history_update_email = domdom.createElement("Email");
-            history_update_email.appendChild(domdom.createTextNode(packager_email));
-            history_update.appendChild(history_update_email);
-
-
-
-    // write processed text to file
-    QString file_name = package_dir.absoluteFilePath("pspec.xml");
-    QFile file(file_name);
-
-    if ( ! file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(file_name));
-        return false;
-    }
-
-    QTextStream writer(&file);
-
-    writer << domdom.toString(4);
-
-    return true;
-}
 
 bool MainWindow::create_action_py(QDir package_dir)
 {
@@ -1054,20 +734,11 @@ bool MainWindow::create_desktop(QDir package_dir)
 
 
 
-
-
-
-
 void MainWindow::on_action_Build_Only_triggered()
 {
-    QString work_dir_str = ui->le_work_dir->text();
-    QFileInfo work_dir_info(work_dir_str);
-    QString package_name(ui->le_package_name->text());
-
-    if(work_dir_str.isEmpty() || ! work_dir_info.exists())
+    if(! workspace.exists())
     {
         QMessageBox::critical(this, tr("Error"), tr("No pisido work directory. Please define a working directory."));
-        ui->tb_work_dir_browse->setFocus();
         return;
     }
     if( package_name.isEmpty())
@@ -1077,14 +748,10 @@ void MainWindow::on_action_Build_Only_triggered()
         return;
     }
 
-    QDir work_dir(work_dir_str);
-    QDir package_dir;
-    if((package_dir = get_package_dir(work_dir, package_name)) == QDir())
-    {
+    if( ! package_dir.exists())
         return;
-    }
 
-    build_package(package_dir, work_dir);
+    build_package(package_dir, workspace);
 }
 
 /**
@@ -1276,18 +943,18 @@ void MainWindow::fill_fields_from_pisi()
         QString archive = archives_it.key();
         if(archive.startsWith("http:") || archive.startsWith("ftp:"))
         {
-            ui->rb_src_url->setChecked(true);
-            ui->le_src_url->setText(archive);
+//            ui->rb_src_url->setChecked(true);
+//            ui->le_src_url->setText(archive);
             QMap<PisiSource::ArchiveAttr,QString> archive_att = archives.constBegin().value();
             ui->le_source_sha1->setText(archive_att.value(PisiSource::SHA1SUM));
         }
         else
         {
-            ui->rb_src_compressed->setChecked(true);
-            ui->le_src_compressed->setText(archive);
+//            ui->rb_src_compressed->setChecked(true);
+//            ui->le_src_compressed->setText(archive);
         }
     }
-    ui->le_src_home_page->setText(source.get_home_page());
+//    ui->le_src_home_page->setText(source.get_home_page());
 
     // package section
     PisiPackage package = pisi.get_package();
@@ -1399,10 +1066,9 @@ void MainWindow::fill_pisi_from_fields()
         throw QString("Please select a package name !");
     source.set_name(package_name);
 
-    QString home_page = ui->le_src_home_page->text().trimmed();
-    if(home_page.isEmpty())
+    if(homepage.isEmpty())
         throw QString("Please enter homepage !");
-    source.set_name(home_page);
+    source.set_name(homepage);
 
     PisiUpdate last_update = get_last_history_update();
     if(last_update == PisiUpdate())
@@ -1440,44 +1106,44 @@ void MainWindow::fill_pisi_from_fields()
         throw QString("More than one archive tag.");
     }
     archives.clear();
-    if(ui->rb_src_compressed->isChecked())
-    {
-        QString a = ui->le_src_compressed->text();
-        if(a.isEmpty() || ! QFile::exists(a))
-            throw QString("Please select a compressed source !");
-        QMap<PisiSource::ArchiveAttr,QString> attr;
-        attr[PisiSource::SHA1SUM] = PisiSource::get_sha1sum(a);
-        attr[PisiSource::TYPE] = PisiSource::get_archive_type(a);
-        archives[a] = attr;
-    }
-    else if(ui->rb_src_folder->isChecked())
-    {
-        QString f = ui->le_src_folder->text();
-        if(f.isEmpty() || ! QDir(f).exists())
-            throw QString("Please select a source folder !");
-        QString w = ui->le_work_dir->text();
-        if(w.isEmpty() || ! QDir(w).exists())
-            throw QString("Please select a work dir !");
-        QString a = get_compressed_archive(f, w);
-        QMap<PisiSource::ArchiveAttr,QString> attr;
-        attr[PisiSource::SHA1SUM] = PisiSource::get_sha1sum(a);
-        attr[PisiSource::TYPE] = PisiSource::get_archive_type(a);
-        archives[a] = attr;
-    }
-    else if(ui->rb_src_url->isChecked())
-    {
-        QString u = ui->le_src_url->text();
-        if(u.isEmpty() || ! (u.startsWith("http:") || u.startsWith("ftp:")))
-            throw QString("Please enter a proper url (starts with http: or ftp:) !");
-        QString s1 = ui->le_source_sha1->text();
-        if(s1.isEmpty() || s1.length() < 40)
-            throw QString("Please enter a proper sha1sum value !");
-        QMap<PisiSource::ArchiveAttr,QString> attr;
-        attr[PisiSource::SHA1SUM] = s1;
-        attr[PisiSource::TYPE] = PisiSource::get_archive_type(u);
-        archives[u] = attr;
-    }
-    source.set_archives(archives);
+//    if(ui->rb_src_compressed->isChecked())
+//    {
+//        QString a = ui->le_src_compressed->text();
+//        if(a.isEmpty() || ! QFile::exists(a))
+//            throw QString("Please select a compressed source !");
+//        QMap<PisiSource::ArchiveAttr,QString> attr;
+//        attr[PisiSource::SHA1SUM] = PisiSource::get_sha1sum(a);
+//        attr[PisiSource::TYPE] = PisiSource::get_archive_type(a);
+//        archives[a] = attr;
+//    }
+//    else if(ui->rb_src_folder->isChecked())
+//    {
+//        QString f = ui->le_src_folder->text();
+//        if(f.isEmpty() || ! QDir(f).exists())
+//            throw QString("Please select a source folder !");
+//        QString w = ui->le_work_dir->text();
+//        if(w.isEmpty() || ! QDir(w).exists())
+//            throw QString("Please select a work dir !");
+//        QString a = get_compressed_archive(f, w);
+//        QMap<PisiSource::ArchiveAttr,QString> attr;
+//        attr[PisiSource::SHA1SUM] = PisiSource::get_sha1sum(a);
+//        attr[PisiSource::TYPE] = PisiSource::get_archive_type(a);
+//        archives[a] = attr;
+//    }
+//    else if(ui->rb_src_url->isChecked())
+//    {
+//        QString u = ui->le_src_url->text();
+//        if(u.isEmpty() || ! (u.startsWith("http:") || u.startsWith("ftp:")))
+//            throw QString("Please enter a proper url (starts with http: or ftp:) !");
+//        QString s1 = ui->le_source_sha1->text();
+//        if(s1.isEmpty() || s1.length() < 40)
+//            throw QString("Please enter a proper sha1sum value !");
+//        QMap<PisiSource::ArchiveAttr,QString> attr;
+//        attr[PisiSource::SHA1SUM] = s1;
+//        attr[PisiSource::TYPE] = PisiSource::get_archive_type(u);
+//        archives[u] = attr;
+//    }
+//    source.set_archives(archives);
 
     QString b_dep_str = ui->le_build_dependency->text().trimmed();
     if( ! b_dep_str.isEmpty())
@@ -1527,50 +1193,4 @@ void MainWindow::on_action_Create_triggered()
 {
     // TODO : fill
 }
-
-void MainWindow::on_tb_desktop_reset_clicked()
-{
-    ui->pte_desktop->setPlainText(desktop_file_default);
-}
-
-void MainWindow::on_pb_delete_last_update_clicked()
-{
-    if(ui->tw_history->rowCount()>0)
-        ui->tw_history->removeRow(0);
-}
-
-void MainWindow::on_pb_add_update_clicked()
-{
-    AddUpdateDialog ud(this);
-    if(ud.exec() == QDialog::Accepted)
-    {
-        QString release;
-        if(ui->tw_history->rowCount() > 0)
-            release = QString::number(ui->tw_history->item(0,0)->text().toInt()+1);
-        else
-            release = "1";
-        QTableWidgetItem * item_release = new QTableWidgetItem(release);
-        QTableWidgetItem * item_date = new QTableWidgetItem(ud.get_date());
-        QTableWidgetItem * item_version = new QTableWidgetItem(ud.get_version());
-        QTableWidgetItem * item_comment = new QTableWidgetItem(ud.get_comment());
-        QTableWidgetItem * item_name = new QTableWidgetItem(ud.get_packager_name());
-        QTableWidgetItem * item_email = new QTableWidgetItem(ud.get_packager_email());
-        int row = 0;
-        ui->tw_history->insertRow(row);
-        ui->tw_history->setItem(row, 0, item_release);
-        ui->tw_history->setItem(row, 1, item_date);
-        ui->tw_history->setItem(row, 2, item_version);
-        ui->tw_history->setItem(row, 3, item_comment);
-        ui->tw_history->setItem(row, 4, item_name);
-        ui->tw_history->setItem(row, 5, item_email);
-    }
-}
-
-
-
-
-
-
-
-
 

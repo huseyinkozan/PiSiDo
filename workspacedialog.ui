@@ -89,6 +89,9 @@
        <property name="text">
         <string>&amp;Ok</string>
        </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>

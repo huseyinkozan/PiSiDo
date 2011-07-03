@@ -20,7 +20,7 @@ DEFINES += PISIDO_LANG_DIR=\\\"/home/huseyinkozan/calismalar/pisido/resource/tra
 #
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     configurationdialog.cpp \
     helpdialog.cpp \
     pisispbase.cpp \
@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     pisiupdate.cpp \
     addupdatedialog.cpp \
     languagedialog.cpp \
-    workspacedialog.cpp
+    workspacedialog.cpp \
+    consolewidget.cpp
 
 HEADERS  += mainwindow.h \
     configurationdialog.h \
@@ -42,14 +43,16 @@ HEADERS  += mainwindow.h \
     pisiupdate.h \
     addupdatedialog.h \
     languagedialog.h \
-    workspacedialog.h
+    workspacedialog.h \
+    consolewidget.h
 
 FORMS    += mainwindow.ui \
     configurationdialog.ui \
     helpdialog.ui \
     addupdatedialog.ui \
     languagedialog.ui \
-    workspacedialog.ui
+    workspacedialog.ui \
+    consolewidget.ui
 
 OTHER_FILES += \
     README \

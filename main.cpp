@@ -1,9 +1,14 @@
 #include <QtGui/QApplication>
-#include "mainwindow.h"
-#include <QTranslator>
-#include <QLocale>
-#include <QDebug>
 #include <QDir>
+#include <QLocale>
+#include <QTranslator>
+#include <QDebug>
+
+#include "mainwindow.h"
+
+void load_translation(const QApplication & a);
+
+
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +20,18 @@ int main(int argc, char *argv[])
     a.setApplicationName(QString("pisido"));
     a.setApplicationVersion(QString("%1").arg(PISIDO_VERSION));
 
+    load_translation(a);
+
+    MainWindow w;
+    w.show();
+
+    return a.exec();
+}
+
+
+
+void load_translation(const QApplication & a)
+{
     // do translation bussiness
     QSettings settings;
     settings.beginGroup("configuration");
@@ -39,10 +56,4 @@ int main(int argc, char *argv[])
     else{
         qDebug() << QObject::tr("Translator file does not exists : ") << lang_file;
     }
-
-
-    MainWindow w;
-    w.show();
-
-    return a.exec();
 }
