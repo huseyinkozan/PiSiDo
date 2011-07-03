@@ -3,6 +3,7 @@
 
 #include <QSettings>
 #include <QFileDialog>
+#include <QDesktopServices>
 
 WorkspaceDialog::WorkspaceDialog(QWidget *parent) :
     QDialog(parent),
@@ -56,9 +57,10 @@ void WorkspaceDialog::save_settings()
 
 void WorkspaceDialog::read_settings()
 {
+    QString default_workspace = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
     QSettings settings;
     settings.beginGroup("main");
-    workspace = settings.value("workspace").toString();
+    workspace = settings.value("workspace", default_workspace).toString();
     not_ask_workspace = settings.value("not_ask_workspace", false).toBool();
     settings.endGroup();
     ui->le_workspace->setText(workspace);

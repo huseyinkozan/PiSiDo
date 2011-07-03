@@ -44,10 +44,6 @@ private slots:
     void on_pb_delete_last_update_clicked();
     void on_pb_add_update_clicked();
 
-    void on_action_Clear_triggered();
-    void on_action_Create_triggered();
-    void on_action_Build_triggered();
-    void on_action_Build_Only_triggered();
     void on_action_Application_Language_triggered();
 
     void on_combo_source_currentIndexChanged(int index);
@@ -69,6 +65,8 @@ private slots:
     void on_te_description_textChanged();
     void on_le_build_dependency_textChanged(const QString & text);
     void on_le_runtime_dependency_textChanged(const QString & text);
+
+    void on_action_Reset_Fields_triggered();
 
 protected:
     virtual void closeEvent(QCloseEvent * event);

@@ -29,20 +29,25 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    addDockWidget(Qt::RightDockWidgetArea, ui->dw_history);
+    addDockWidget(Qt::RightDockWidgetArea, ui->dw_build);
     // tabify for first run
     tabifyDockWidget(ui->dw_actions, ui->dw_desktop);
+    tabifyDockWidget(ui->dw_desktop, ui->dw_history);
+    tabifyDockWidget(ui->dw_history, ui->dw_build);
     ui->dw_actions->raise();
     // fill view menu
     ui->menu_View->addAction(ui->dw_actions->toggleViewAction());
     ui->menu_View->addAction(ui->dw_desktop->toggleViewAction());
     ui->menu_View->addAction(ui->dw_history->toggleViewAction());
+    ui->menu_View->addAction(ui->dw_build->toggleViewAction());
     ui->menu_View->addSeparator();
-    ui->menu_View->addAction(ui->tBar_build->toggleViewAction());
     ui->menu_View->addAction(ui->tBar_view->toggleViewAction());
     // fill view tool bar
     ui->tBar_view->addAction(ui->dw_actions->toggleViewAction());
     ui->tBar_view->addAction(ui->dw_desktop->toggleViewAction());
     ui->tBar_view->addAction(ui->dw_history->toggleViewAction());
+    ui->tBar_view->addAction(ui->dw_build->toggleViewAction());
 
     // fill comboboxes
     ui->combo_is_a->addItem("");
@@ -81,6 +86,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     if( ! not_ask_workspace)
         on_action_Change_Workspace_triggered();
+
+    // now, there is a workspace
+    ui->w_console->execute(QString("cd %1").arg(workspace.absolutePath()));
 }
 
 MainWindow::~MainWindow()
@@ -344,7 +352,7 @@ void MainWindow::read_settings()
     ui->le_runtime_dependency->setText(runtime_dependency);
 }
 
-void MainWindow::on_action_Clear_triggered()
+void MainWindow::on_action_Reset_Fields_triggered()
 {
     ui->le_package_name->clear();
     ui->combo_source->setCurrentIndex(0);
@@ -571,84 +579,6 @@ void MainWindow::on_tb_source_clicked()
     ui->le_source->setText(selection);
 }
 
-// TODO : split create and build phases
-// fields => pisi
-// pisi => xml
-// build, if xml
-
-void MainWindow::on_action_Build_triggered()
-{
-    if( ! workspace.exists())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No pisido work directory. Please define a working directory."));
-        return;
-    }
-
-    if( ui->le_package_name->text().isEmpty())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No package name. Please define package name."));
-        ui->le_package_name->setFocus();
-        return;
-    }
-
-    if( ui->tw_history->rowCount() == 0 )
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No update in history. Please add an update to history."));
-        return;
-    }
-
-    if( ui->combo_license->currentText().isEmpty())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No license selected. Please select a license."));
-        ui->combo_license->setFocus();
-        return;
-    }
-
-    if( ui->combo_is_a->currentText().isEmpty())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No IsA selected. Please select a IsA."));
-        ui->combo_is_a->setFocus();
-        return;
-    }
-
-    if( ui->le_summary->text().isEmpty())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No summary. Please enter summary."));
-        ui->le_summary->setFocus();
-        return;
-    }
-
-    if( ui->te_description->toPlainText().isEmpty())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No Description. Please enter description."));
-        ui->te_description->setFocus();
-        return;
-    }
-
-
-    if( ! package_dir.exists())
-        return;
-
-
-    if( ! create_action_py(package_dir))
-        return;
-
-    if(ui->gb_create_desktop->isChecked())
-        if( ! create_desktop(package_dir))
-            return;
-
-    // TODO : revise after split
-    QObject * s = sender();
-    if( s != 0 && s == ui->action_Build)
-    {
-        build_package(package_dir, workspace);
-    }
-    else
-        QMessageBox::information(this, tr("Success"),
-                                 tr("PISI build files successfully created."));
-}
-
-
 bool MainWindow::create_action_py(QDir package_dir)
 {
     QString file_name = package_dir.absoluteFilePath("actions.py");
@@ -732,27 +662,6 @@ bool MainWindow::create_desktop(QDir package_dir)
     return true;
 }
 
-
-
-void MainWindow::on_action_Build_Only_triggered()
-{
-    if(! workspace.exists())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No pisido work directory. Please define a working directory."));
-        return;
-    }
-    if( package_name.isEmpty())
-    {
-        QMessageBox::critical(this, tr("Error"), tr("No package name. Please define package name."));
-        ui->le_package_name->setFocus();
-        return;
-    }
-
-    if( ! package_dir.exists())
-        return;
-
-    build_package(package_dir, workspace);
-}
 
 /**
   Helper function to call "pisi build" from command line.
@@ -1189,8 +1098,4 @@ void MainWindow::fill_pisi_from_fields()
     pisi.set_updates(updates);
 }
 
-void MainWindow::on_action_Create_triggered()
-{
-    // TODO : fill
-}
 
