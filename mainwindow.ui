@@ -31,7 +31,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>470</width>
+         <width>510</width>
          <height>530</height>
         </rect>
        </property>
@@ -834,7 +834,7 @@ p, li { white-space: pre-wrap; }
     <string>Menu Icon</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>8</number>
+    <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3">
     <layout class="QGridLayout" name="gridLayout_7">
@@ -923,161 +923,110 @@ Categories=Application;</string>
     <string>Build</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>8</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_4">
-    <layout class="QVBoxLayout" name="verticalLayout_10">
+    <layout class="QHBoxLayout" name="horizontalLayout_9">
      <item>
-      <widget class="QSplitter" name="splitter">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <widget class="ConsoleWidget" name="w_console" native="true"/>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gb_custom_build_steps">
+       <property name="title">
+        <string>Build Commands</string>
        </property>
-       <widget class="ConsoleWidget" name="w_console" native="true"/>
-       <widget class="QGroupBox" name="gb_custom_build_steps">
-        <property name="title">
-         <string>Build Commands</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QCheckBox" name="check_create_build_files">
-           <property name="text">
-            <string>Create build files</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="rb_custom_build_steps">
-           <property name="text">
-            <string>Custom build steps</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QScrollArea" name="scrollArea_2">
-           <property name="widgetResizable">
-            <bool>true</bool>
-           </property>
-           <widget class="QWidget" name="scrollAreaWidgetContents_2">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>-47</y>
-              <width>251</width>
-              <height>137</height>
-             </rect>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>Up To</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_2">
-             <property name="leftMargin">
-              <number>15</number>
-             </property>
-             <property name="topMargin">
-              <number>3</number>
-             </property>
-             <property name="rightMargin">
-              <number>3</number>
-             </property>
-             <property name="bottomMargin">
-              <number>3</number>
-             </property>
-             <item row="0" column="0">
-              <widget class="QRadioButton" name="rb_fecth">
-               <property name="text">
-                <string>Fetch</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QRadioButton" name="rb_unpack">
-               <property name="text">
-                <string>Unpack</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QRadioButton" name="rb_setup">
-               <property name="text">
-                <string>Setup</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QRadioButton" name="rb_build">
-               <property name="text">
-                <string>Build</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QRadioButton" name="rb_install">
-               <property name="text">
-                <string>Install</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QRadioButton" name="rb_check">
-               <property name="text">
-                <string>Check</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </widget>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="rb_package_only">
-           <property name="text">
-            <string>Package Only</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="rb_build_all">
-           <property name="text">
-            <string>Build all</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_6">
-           <item>
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pb_do_it">
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox">
+            <item>
              <property name="text">
-              <string>Do it</string>
+              <string notr="true">Fetch</string>
              </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Unpack</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Setup</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Build</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Install</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Check</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="text">
+             <string>Only</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_2">
+            <item>
+             <property name="text">
+              <string>Build Files</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Package</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pb_build_all">
+          <property name="text">
+           <string>Build All</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
@@ -1206,22 +1155,6 @@ Categories=Application;</string>
     <hint type="destinationlabel">
      <x>936</x>
      <y>223</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rb_custom_build_steps</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>scrollArea_2</receiver>
-   <slot>setVisible(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>688</x>
-     <y>503</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>823</x>
-     <y>521</y>
     </hint>
    </hints>
   </connection>

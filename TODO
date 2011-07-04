@@ -6,25 +6,34 @@ First:
     (X) Create language selector dialog.
         (X) Load *.qm translation file from defined dir.
 
-    (->) Import/Export pspec.xml file.
-        (->) Design C++ class to package pspec information.
+    (X) Package build information file support (*.pisido) will remove.
+    (X) Switching to workspace concept. Will ask at the start of program.
+
+    (X) Import/Export pspec.xml file.
+        (X) Design C++ class to package pspec information.
             (X) Load pisi info to QDomDocument from pspec.xml file by Pisi class.
-            (->) Save pisi info to pspec.xml from GUI by Pisi class.
+            (X) Save pisi info to pspec.xml from GUI by Pisi class.
                 (X) save_to_dom();
                     (X) Update
                     (X) Package::Files,
                     (X) Souce::Patches,
                     (X) SPBase::AdditionalFiles
-                (->) load from gui and save to gui.
-                    (*) Package::Files,
-                    (*) Souce::Patches,
-                    (*) SPBase::AdditionalFiles
 
-    (*) create translation.xml
+    (*) load from gui and save to gui for these:
+        (*) Package::Files,
+            (*) Add files and folders to check list in pisi build directory. (/var/pisi/PACKAGE/install/*)
+            (*) Operation will force until all files are on check list.
+            (*) Design a new dialog for check list operation. With this dialog, any file or folder
+                can tagged with a fileType. The datas taken from this dialog will add a table or list.
+            (*) If a folder tagged, all files under that folder will remove from check list.
+        (*) Souce::Patches,
+        (*) SPBase::AdditionalFiles
+            (*) With using a timer, package_name/files folder listing will include to a list.
 
-    (*) Redefine building steps.
-        (*) Building steps will define. Pspec.xml creation, action.py creation,
+    (X) Redefine building steps.
+        (X) Building steps will define. Pspec.xml creation, action.py creation,
             download archive, ... and later steps that pisi supports.
+        (*) With using a timer, building steps will restrict.
 
     (*) Highlighter and automatic complete feature will add which is on stable branch now.
         (*) Python support will add to actions.py Action API text editor.
@@ -38,20 +47,10 @@ First:
 
 Later:
 ------
-    (*) Design a new ui to select File tag for pspec.xml.
-        (*) For more information see File tag from here :
-            http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng
-    (*) A new ui method needs to select AdditionalFiles tag for pspec.xml.
-        (*) Add files and folders to check list in pisi build directory.
-            (/var/pisi/PACKAGE/work/*)
-        (*) Operation will force until all files are on check list.
-        (*) Design a new dialog for check list operation. With this dialog,
-            any file or folder can tagged with a fileType. The datas taken from
-            this dialog will add a table or list.
-        (*) If a folder tagged, all files under that folder will remove from check list.
-    (*) Design a new ui to select AdditionalFiles tag for pspec.xml.
-        (*) The files under file directory can be selected and able to add a table
-            or a list.
+    (*) Compressing the source folder process can be able to cancel. Now, qprocess runs and we are waiting to finish its job.
+
+    (*) create translation.xml
+
     (*) pspec.xml view will add.
         (*) Newly created or imported pspec.xml file will shown to the user. GUI changes
             will reflect to user.

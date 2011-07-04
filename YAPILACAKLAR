@@ -7,28 +7,33 @@
         (X) *.qm çeviri dosyalarını önceden tanımlanan klasörden al.
 
     (X) Paket inşa bilgisi (*.pisido) iptal edilcek.
-    (*) Çalışma Dizini yerine Çalışma Alanı (Workspace) kavramı gelecek. Programın açılışında bir kere sorulacak.
-    (*) Kaynak dizin sıkıştırması iptal edilebilecek.
+    (X) Çalışma Dizini yerine Çalışma Alanı (Workspace) kavramı gelecek. Programın açılışında bir kere sorulacak.
 
-    (->) pspec.xml dosyasının içe/dışa aktarımı sağlanacak.
-        (->) pspec bilgisini barındıracak C++ sınıfları tasarlanacak.
+    (X) pspec.xml dosyasının içe/dışa aktarımı sağlanacak.
+        (X) pspec bilgisini barındıracak C++ sınıfları tasarlanacak.
             (X) Pisi sınıfıyla pspec.xml dosyasından QDomDocument'e bilgilerin yüklenmesi sağlanacak.
-            (->) Pisi sınıfıyla pspec.xml dosyasına arayüzden bilgilerin yüklenmesi sağlanacak.
+            (X) Pisi sınıfıyla pspec.xml dosyasına arayüzden bilgilerin yüklenmesi sağlanacak.
                 (X) save_to_dom();
                     (X) Update
                     (X) Package::Files,
                     (X) Souce::Patches,
                     (X) SPBase::AdditionalFiles
-                (->) arayüze ve arayüzden doldur.
-                    (*) Package::Files,
-                    (*) Souce::Patches,
-                    (*) SPBase::AdditionalFiles
 
-    (*) translation.xml oluşturulacak.
+    (*) Şunlar için arayüze ve arayüzden doldurma yapılacak.
+        (*) Package::Files,
+            (*) Paketin inşa klasöründeki dosyalar/klasörler işaretlenecekler listesine alınacak. (/var/pisi/PACKAGE/install/*)
+            (*) İşaretlenecekler listesi boşalıncaya kadar işlem zorlanacak.
+            (*) İşaretleme için ayrı bir dialog tasarlanacak. Bu dialog ile herhangi bir dosya veya
+                klasör için fileType belirtilebilecek. Dialog'dan alınan veri tabloya veya listeye eklenecek.
+            (*) Eğer bir klasör işaretlenmişse altındaki dosyalar işaretlenecek listesinden çıkarılacak.
+        (*) Souce::Patches,
+        (*) SPBase::AdditionalFiles
+            (*) Zamanlayıcı kullanarak paket_adı/files klasörüne koyulan dosyalar arayüzde listelenecek.
 
-    (*) İnşa adımları yeniden tasarlanacak.
-        (*) İnşa adımları belirlenecek. Pspec.xml oluşumu, action.py oluşumu,
+    (X) İnşa adımları yeniden tasarlanacak.
+        (X) İnşa adımları belirlenecek. Pspec.xml oluşumu, action.py oluşumu,
             arşiv indirilmesi, ... sonrasında pisi nin desteklediği adımlar.
+        (*) Zamanlayıcı ile adımların yapılıp yapılamayacağına göre kısıtlanacaklar.
 
     (*) Stable dalındaki renklendirme ve otomatik tamamlama desteği eklenecek.
         (*) actions.py Action API dosyası için metin editörüne python desteği eklenecek.
@@ -39,29 +44,17 @@
 
     (*) Program test edilecek.
 
-    (*) Pisi paketi için:
-        (*)
-
 
 Sonra yapılacaklar:
 -------------------
-    (*) pspec.xml deki File etiketi için yeni arayüz tasarımı yapılacak.
-        (*) Ayrıntılar için : http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng yolundaki
-          dosyada bulunan Files etiketine bakınız.
-        (*) Paketin inşa klasöründeki dosyalar/klasörler işaretlenecekler listesine alınacak.
-            (/var/pisi/PACKAGE/work/*)
-        (*) İşaretlenecekler listesi boşalıncaya kadar işlem zorlanacak.
-        (*) İşaretleme için ayrı bir dialog tasarlanacak. Bu dialog ile herhangi bir dosya veya
-            klasör için fileType belirtilebilecek. Dialog'dan alınan veri tabloya veya
-            listeye eklenecek.
-        (*) Eğer bir klasör işaretlenmişse altındaki dosyalar işaretlenecek listesinden çıkarılacak.
-    (*) pspec.xml deki AdditionalFiles etiketi için yeni arayüz tasarımı yapılacak.
-        (*) İnşa klasöründeki files klasörüne koyulan dosyalar dialog içinde listelenerek
-          tabloya veya listeye eklenmesi sağlanacak.
+    (*) Kaynak dizin sıkıştırma işlemi iptal edilebilecek. Şu anda statusbar a mesaj yazılıyor ve qprocess in işini yapması bekleniyor.
+
+    (*) translation.xml oluşturulacak.
+
+
     (*) pspec.xml gösterim arabirimi eklenecek.
         (*) Yeni oluşturulan veya içe aktarılan pspec.xml dosyasının arayüzde gösterilmesi için
             ui tasarlanacak. Arabirimde yapılan değişiklikler pspec.xml ui nesnesine aktarılacak.
-
 
 
 

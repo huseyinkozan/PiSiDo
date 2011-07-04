@@ -57,5 +57,6 @@ void ConsoleWidget::execute(const QString & command)
 void ConsoleWidget::write_output()
 {
     QByteArray bytes = bash->readAllStandardOutput();
-    ui->te_output->append(QString::fromUtf8(bytes.constData()));
+    QString string = QString::fromUtf8(bytes.constData());
+    ui->te_output->append(string);
 }

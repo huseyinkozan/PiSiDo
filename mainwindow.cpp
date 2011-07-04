@@ -30,11 +30,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     addDockWidget(Qt::RightDockWidgetArea, ui->dw_history);
-    addDockWidget(Qt::RightDockWidgetArea, ui->dw_build);
     // tabify for first run
     tabifyDockWidget(ui->dw_actions, ui->dw_desktop);
     tabifyDockWidget(ui->dw_desktop, ui->dw_history);
-    tabifyDockWidget(ui->dw_history, ui->dw_build);
     ui->dw_actions->raise();
     // fill view menu
     ui->menu_View->addAction(ui->dw_actions->toggleViewAction());
@@ -87,6 +85,9 @@ MainWindow::MainWindow(QWidget *parent) :
     if( ! not_ask_workspace)
         on_action_Change_Workspace_triggered();
 
+    // remove color support
+    ui->w_console->execute("unalias ls ll dir");
+    ui->w_console->execute("alias ll=\"ls -l\"");
     // now, there is a workspace
     ui->w_console->execute(QString("cd %1").arg(workspace.absolutePath()));
 }
