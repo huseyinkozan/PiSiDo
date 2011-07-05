@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>841</width>
-    <height>591</height>
+    <width>815</width>
+    <height>785</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>466</width>
+         <width>325</width>
          <height>530</height>
         </rect>
        </property>
@@ -300,7 +300,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>841</width>
+     <width>815</width>
      <height>25</height>
     </rect>
    </property>
@@ -526,13 +526,6 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <widget class="QToolButton" name="tb_zoom_in">
-         <property name="font">
-          <font>
-           <family>DejaVu Sans Mono</family>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
          <property name="toolTip">
           <string>Zoom In</string>
          </property>
@@ -540,19 +533,16 @@ p, li { white-space: pre-wrap; }
           <string>Zoom In</string>
          </property>
          <property name="text">
-          <string>+</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="pisido.qrc">
+           <normaloff>:/images/zoom-in.png</normaloff>:/images/zoom-in.png</iconset>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QToolButton" name="tb_zoom_out">
-         <property name="font">
-          <font>
-           <family>DejaVu Sans Mono</family>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
          <property name="toolTip">
           <string>Zoom Out</string>
          </property>
@@ -560,7 +550,11 @@ p, li { white-space: pre-wrap; }
           <string>Zoom Out</string>
          </property>
          <property name="text">
-          <string>-</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="pisido.qrc">
+           <normaloff>:/images/zoom-out.png</normaloff>:/images/zoom-out.png</iconset>
          </property>
         </widget>
        </item>
@@ -726,7 +720,7 @@ Categories=Application;</string>
             </property>
             <property name="icon">
              <iconset resource="pisido.qrc">
-              <normaloff>:/images/build-icon.png</normaloff>:/images/build-icon.png</iconset>
+              <normaloff>:/images/build.png</normaloff>:/images/build.png</iconset>
             </property>
            </widget>
           </item>
@@ -762,7 +756,7 @@ Categories=Application;</string>
             </property>
             <property name="icon">
              <iconset resource="pisido.qrc">
-              <normaloff>:/images/build-icon.png</normaloff>:/images/build-icon.png</iconset>
+              <normaloff>:/images/build.png</normaloff>:/images/build.png</iconset>
             </property>
            </widget>
           </item>
@@ -784,7 +778,7 @@ Categories=Application;</string>
             </property>
             <property name="icon">
              <iconset resource="pisido.qrc">
-              <normaloff>:/images/build-icon.png</normaloff>:/images/build-icon.png</iconset>
+              <normaloff>:/images/build.png</normaloff>:/images/build.png</iconset>
             </property>
            </widget>
           </item>
@@ -804,6 +798,163 @@ Categories=Application;</string>
          </spacer>
         </item>
        </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dw_files">
+   <property name="windowTitle">
+    <string>Files</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dw_files_contents">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Install Files And Directories</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <widget class="QTreeView" name="treeV_files"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Labeled Files And Directories</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0" colspan="2">
+      <widget class="QTableWidget" name="tableW_files"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QToolButton" name="toolButton">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pisido.qrc">
+         <normaloff>:/images/down.png</normaloff>:/images/down.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="2">
+      <widget class="QToolButton" name="toolButton_2">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pisido.qrc">
+         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dw_patches">
+   <property name="windowTitle">
+    <string>Patches</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dw_patches_contents">
+    <layout class="QGridLayout" name="gridLayout_8">
+     <item row="0" column="0" rowspan="4">
+      <widget class="QTableWidget" name="tableW_patches"/>
+     </item>
+     <item row="2" column="2">
+      <widget class="QToolButton" name="tb_patch_delete">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pisido.qrc">
+         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QToolButton" name="tb_patch_up">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pisido.qrc">
+         <normaloff>:/images/up.png</normaloff>:/images/up.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QToolButton" name="tb_patch_down">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pisido.qrc">
+         <normaloff>:/images/down.png</normaloff>:/images/down.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dw_aditional_files">
+   <property name="windowTitle">
+    <string>Aditional Files</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dw_aditional_files_content">
+    <layout class="QGridLayout" name="gridLayout_9">
+     <item row="0" column="0" rowspan="3">
+      <widget class="QListWidget" name="listW_aditional_files"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QToolButton" name="toolButton_3">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pisido.qrc">
+         <normaloff>:/images/edit.png</normaloff>:/images/edit.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QToolButton" name="toolButton_4">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="pisido.qrc">
+         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+       </property>
       </widget>
      </item>
     </layout>

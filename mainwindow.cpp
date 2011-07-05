@@ -13,6 +13,7 @@
 #include <QCryptographicHash>
 #include <QTimer>
 #include <QShortcut>
+#include <QFileSystemModel>
 
 #include <Qsci/qsciscintilla.h>
 #include <Qsci/qscilexerpython.h>
@@ -36,7 +37,10 @@ MainWindow::MainWindow(QWidget *parent) :
     addDockWidget(Qt::RightDockWidgetArea, ui->dw_history);
     // tabify for first run
     tabifyDockWidget(ui->dw_actions, ui->dw_desktop);
-    tabifyDockWidget(ui->dw_desktop, ui->dw_history);
+    tabifyDockWidget(ui->dw_desktop, ui->dw_files);
+    tabifyDockWidget(ui->dw_files, ui->dw_aditional_files);
+    tabifyDockWidget(ui->dw_aditional_files, ui->dw_patches);
+    tabifyDockWidget(ui->dw_patches, ui->dw_history);
     ui->dw_actions->raise();
     // fill view menu
     ui->menu_View->addAction(ui->dw_actions->toggleViewAction());
