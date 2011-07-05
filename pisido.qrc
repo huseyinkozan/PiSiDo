@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/images">
         <file alias="pardus-logo.png">resource/images/pardus-logo.png</file>
+        <file alias="build-icon.png">resource/images/build-icon.png</file>
     </qresource>
     <qresource prefix="/files">
         <file alias="help.html">resource/files/help.html</file>

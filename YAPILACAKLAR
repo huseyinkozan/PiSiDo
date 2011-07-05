@@ -21,12 +21,14 @@
 
     (*) Şunlar için arayüze ve arayüzden doldurma yapılacak.
         (*) Package::Files,
+            (*) Zamanlayıcı kullanarak /var/pisi/PACKAGE/install/ klasörüne koyulan dosyalar arayüzde listelenecek.
             (*) Paketin inşa klasöründeki dosyalar/klasörler işaretlenecekler listesine alınacak. (/var/pisi/PACKAGE/install/*)
             (*) İşaretlenecekler listesi boşalıncaya kadar işlem zorlanacak.
             (*) İşaretleme için ayrı bir dialog tasarlanacak. Bu dialog ile herhangi bir dosya veya
                 klasör için fileType belirtilebilecek. Dialog'dan alınan veri tabloya veya listeye eklenecek.
             (*) Eğer bir klasör işaretlenmişse altındaki dosyalar işaretlenecek listesinden çıkarılacak.
         (*) Souce::Patches,
+            (*) Zamanlayıcı kullanarak paket_adı/files klasörüne koyulan dosyalar arayüzde listelenecek.
         (*) SPBase::AdditionalFiles
             (*) Zamanlayıcı kullanarak paket_adı/files klasörüne koyulan dosyalar arayüzde listelenecek.
 
@@ -39,6 +41,9 @@
         (X) actions.py Action API dosyası için metin editörüne python desteği eklenecek.
             (X) Metin editörüne kod renklendirici eklenecek
             (X) Metin editörüne otomatik tamamlama eklenecek.
+
+    (*) gui tab sırası kontrol edilecek.
+    (*) gui tooltip leri kontrol edilecek.
 
     (*) Program yardımı hazırlanacak.
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>841</width>
-    <height>746</height>
+    <height>591</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -679,14 +679,14 @@ Categories=Application;</string>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QLabel" name="lbl_build_up_to">
             <property name="text">
              <string>Up To</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="combo_build_up_to">
             <item>
              <property name="text">
               <string notr="true">Fetch</string>
@@ -719,19 +719,30 @@ Categories=Application;</string>
             </item>
            </widget>
           </item>
+          <item>
+           <widget class="QToolButton" name="tb_build_up_to">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="pisido.qrc">
+              <normaloff>:/images/build-icon.png</normaloff>:/images/build-icon.png</iconset>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_8">
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QLabel" name="lbl_build_only">
             <property name="text">
              <string>Only</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox_2">
+           <widget class="QComboBox" name="combo_build_only">
             <item>
              <property name="text">
               <string>Build Files</string>
@@ -744,14 +755,40 @@ Categories=Application;</string>
             </item>
            </widget>
           </item>
+          <item>
+           <widget class="QToolButton" name="tb_build_only">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="pisido.qrc">
+              <normaloff>:/images/build-icon.png</normaloff>:/images/build-icon.png</iconset>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="pb_build_all">
-          <property name="text">
-           <string>Build All</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="lbl_build_all">
+            <property name="text">
+             <string>Build All</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tb_build_all">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="pisido.qrc">
+              <normaloff>:/images/build-icon.png</normaloff>:/images/build-icon.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <spacer name="verticalSpacer">
@@ -858,7 +895,9 @@ Categories=Application;</string>
   <tabstop>le_summary</tabstop>
   <tabstop>te_description</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="pisido.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionExit</sender>

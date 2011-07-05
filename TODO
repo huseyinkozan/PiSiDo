@@ -21,12 +21,14 @@ First:
 
     (*) load from gui and save to gui for these:
         (*) Package::Files,
+            (*) With using a timer, /var/pisi/PACKAGE/install/ folder listing will include to a list.
             (*) Add files and folders to check list in pisi build directory. (/var/pisi/PACKAGE/install/*)
             (*) Operation will force until all files are on check list.
             (*) Design a new dialog for check list operation. With this dialog, any file or folder
                 can tagged with a fileType. The datas taken from this dialog will add a table or list.
             (*) If a folder tagged, all files under that folder will remove from check list.
         (*) Souce::Patches,
+            (*) With using a timer, package_name/files folder listing will include to a list.
         (*) SPBase::AdditionalFiles
             (*) With using a timer, package_name/files folder listing will include to a list.
 
@@ -39,6 +41,9 @@ First:
         (X) Python support will add to actions.py Action API text editor.
             (X) Syntax highlighter will add to editor.
             (X) Autocomplater will add to editor.
+
+    (*) check gui tab order.
+    (*) check gui tooltips.
 
     (*) Prepare program help.
 
