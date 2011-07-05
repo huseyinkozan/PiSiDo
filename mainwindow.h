@@ -12,8 +12,10 @@
 namespace Ui {
     class MainWindow;
 }
-class QFile;
+
 class HelpDialog;
+class QsciScintilla;
+class QsciLexerPython;
 
 class MainWindow : public QMainWindow
 {
@@ -24,6 +26,9 @@ public:
     ~MainWindow();
 
 private slots:
+    void save_actions_editor_change();
+    void complete_word();
+
     void on_action_Change_Workspace_triggered();
 
     void on_action_Open_PISI_Archive_Dir_triggered();
@@ -68,15 +73,23 @@ private slots:
 
     void on_action_Reset_Fields_triggered();
 
+    void on_combo_actions_template_currentIndexChanged(int index);
+    void on_tb_zoom_in_clicked();
+    void on_tb_zoom_out_clicked();
+
+
 protected:
     virtual void closeEvent(QCloseEvent * event);
 
 private:
     Ui::MainWindow *ui;
     HelpDialog * help_dialog;
-    QStringList action_defaults;
     QString desktop_file_default;
     QSettings settings;
+    QMap<int, QString> actions_templates_defaults;
+    QMap<int, QString> actions_templates;
+    QsciScintilla * actions_editor;
+    QsciLexerPython * python_lexer;
     QDomDocument dom_pspec;
     Pisi pisi;
 
@@ -104,6 +117,7 @@ private:
     void read_settings();
 
     QStringList get_file_strings(const QString & file_name);
+    QString get_file_contents(const QString & file_name);
     QString get_sha1sum(const QString & file_name);
     QString get_compressed_archive(QDir dir_to_compress, QDir out_dir);
 

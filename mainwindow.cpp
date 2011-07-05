@@ -12,6 +12,10 @@
 #include <QUrl>
 #include <QCryptographicHash>
 #include <QTimer>
+#include <QShortcut>
+
+#include <Qsci/qsciscintilla.h>
+#include <Qsci/qscilexerpython.h>
 
 #include "addupdatedialog.h"
 #include "configurationdialog.h"
@@ -47,6 +51,31 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tBar_view->addAction(ui->dw_history->toggleViewAction());
     ui->tBar_view->addAction(ui->dw_build->toggleViewAction());
 
+    // initialize scintilla
+    actions_editor = new QsciScintilla(ui->dw_actions_contents);
+    actions_editor->setIndentationsUseTabs(false);
+    actions_editor->setTabWidth(4);
+    actions_editor->setMarginLineNumbers(1, true);
+    actions_editor->setMarginWidth(1, "12345");
+    QFont f = actions_editor->font();
+    f.setFamily("monospace");
+    actions_editor->setFont(f);
+    ui->dw_actions_contents->layout()->addWidget(actions_editor);
+    // add python highlight support
+    python_lexer = new QsciLexerPython(this);
+    python_lexer->setIndentationWarning(QsciLexerPython::Inconsistent);
+    actions_editor->setLexer(python_lexer);
+    // autocompletion related bussiness
+    actions_editor->setAutoCompletionSource(QsciScintilla::AcsDocument);
+    actions_editor->setAutoCompletionCaseSensitivity(false);
+    actions_editor->setAutoCompletionThreshold(1);
+    actions_editor->setAutoCompletionShowSingle(false);
+    // manually complete
+    QShortcut * sc_auto_comp = new QShortcut(QKeySequence("Ctrl+Space"), this);
+    connect(sc_auto_comp, SIGNAL(activated()), this, SLOT(complete_word()));
+    // to save editor contents
+    connect(actions_editor, SIGNAL(textChanged()), SLOT(save_actions_editor_change()));
+
     // fill comboboxes
     ui->combo_is_a->addItem("");
     ui->combo_is_a->addItems(get_file_strings(":/files/is_a"));
@@ -69,15 +98,15 @@ MainWindow::MainWindow(QWidget *parent) :
     settings.setValue("folder_comp_time_limit", folder_comp_time_limit);
     settings.endGroup();
 
-    // store default text edit values, needed for clearing them
-    action_defaults.clear();
-    action_defaults.insert(0, ui->te_auto->toHtml());
-    action_defaults.insert(1, ui->te_cmake->toHtml());
-    action_defaults.insert(2, ui->te_kde4->toHtml());
-    action_defaults.insert(3, ui->te_qt4->toHtml());
-    action_defaults.insert(4, ui->te_python->toHtml());
-    action_defaults.insert(5, ui->te_scons->toHtml());
-    action_defaults.insert(6, ui->te_imported->toHtml());
+    actions_templates_defaults.clear();
+    actions_templates_defaults[0] = get_file_contents(":/files/actions_template_auto.py");
+    actions_templates_defaults[1] = get_file_contents(":/files/actions_template_cmake.py");
+    actions_templates_defaults[2] = get_file_contents(":/files/actions_template_kde4.py");
+    actions_templates_defaults[3] = get_file_contents(":/files/actions_template_python.py");
+    actions_templates_defaults[4] = get_file_contents(":/files/actions_template_qt4.py");
+    actions_templates_defaults[5] = get_file_contents(":/files/actions_template_scons.py");
+    actions_templates_defaults[6] = "";
+
     desktop_file_default = ui->pte_desktop->toPlainText();
 
     read_settings();
@@ -125,6 +154,21 @@ QStringList MainWindow::get_file_strings(const QString & file_name)
     }
     file.close();
     return list;
+}
+
+QString MainWindow::get_file_contents(const QString & file_name)
+{
+    QFile file(file_name);
+    QString contents;
+    if(file.open(QFile::ReadOnly | QFile::Text))
+    {
+        contents = file.readAll();
+    }
+    else
+    {
+        qDebug() << "Can not load contents of file: " << file_name;
+    }
+    return contents;
 }
 
 void MainWindow::on_action_Change_Workspace_triggered()
@@ -289,16 +333,16 @@ void MainWindow::write_settings()
     settings.endGroup();
 
     settings.beginGroup("compilation");
-    settings.setValue("action_template", ui->combo_actions_template->currentIndex());
+    settings.setValue("actions_template_index", ui->combo_actions_template->currentIndex());
     settings.setValue("create_desktop", ui->gb_create_desktop->isChecked());
     settings.setValue("desktop_file", ui->pte_desktop->toPlainText());
-    settings.setValue("te_auto", ui->te_auto->toHtml());
-    settings.setValue("te_cmake", ui->te_cmake->toHtml());
-    settings.setValue("te_kde4", ui->te_kde4->toHtml());
-    settings.setValue("te_qt4", ui->te_qt4->toHtml());
-    settings.setValue("te_python", ui->te_python->toHtml());
-    settings.setValue("te_scons", ui->te_scons->toHtml());
-    settings.setValue("te_imported", ui->te_imported->toHtml());
+    settings.setValue("actions_template_auto", actions_templates[0]);
+    settings.setValue("actions_template_cmake", actions_templates[1]);
+    settings.setValue("actions_template_kde4", actions_templates[2]);
+    settings.setValue("actions_template_python", actions_templates[3]);
+    settings.setValue("actions_template_qt4", actions_templates[4]);
+    settings.setValue("actions_template_scons", actions_templates[5]);
+    settings.setValue("actions_template_imported", actions_templates[6]);
     settings.endGroup();
 }
 
@@ -327,16 +371,18 @@ void MainWindow::read_settings()
     settings.endGroup();
 
     settings.beginGroup("compilation");
-    ui->combo_actions_template->setCurrentIndex(settings.value("action_template",0).toInt());
     ui->gb_create_desktop->setChecked(settings.value("create_desktop", false).toBool());
     ui->pte_desktop->setPlainText(settings.value("desktop_file", desktop_file_default).toString());
-    ui->te_auto->setHtml(settings.value("te_auto", action_defaults.at(0)).toString());
-    ui->te_cmake->setHtml(settings.value("te_cmake", action_defaults.at(1)).toString());
-    ui->te_kde4->setHtml(settings.value("te_kde4", action_defaults.at(2)).toString());
-    ui->te_qt4->setHtml(settings.value("te_qt4", action_defaults.at(3)).toString());
-    ui->te_python->setHtml(settings.value("te_python", action_defaults.at(4)).toString());
-    ui->te_scons->setHtml(settings.value("te_scons", action_defaults.at(5)).toString());
-    ui->te_imported->setHtml(settings.value("te_imported", action_defaults.at(6)).toString());
+    int last_index = settings.value("actions_template_index",0).toInt();
+    ui->combo_actions_template->setCurrentIndex(last_index);
+    actions_templates[0] = settings.value("actions_template_auto", actions_templates_defaults[0]).toString();
+    actions_templates[1] = settings.value("actions_template_cmake", actions_templates_defaults[1]).toString();
+    actions_templates[2] = settings.value("actions_template_kde4", actions_templates_defaults[2]).toString();
+    actions_templates[3] = settings.value("actions_template_python", actions_templates_defaults[3]).toString();
+    actions_templates[4] = settings.value("actions_template_qt4", actions_templates_defaults[4]).toString();
+    actions_templates[5] = settings.value("actions_template_scons", actions_templates_defaults[5]).toString();
+    actions_templates[6] = settings.value("actions_template_imported", actions_templates_defaults[6]).toString();
+    actions_editor->setText(actions_templates[last_index]);
     settings.endGroup();
 
     on_combo_source_currentIndexChanged(selected_source);
@@ -371,13 +417,9 @@ void MainWindow::on_action_Reset_Fields_triggered()
     // other values clears after widget changes
     source_sha1.clear();
 
-    ui->te_auto->setText(action_defaults.at(0));
-    ui->te_cmake->setText(action_defaults.at(1));
-    ui->te_kde4->setText(action_defaults.at(2));
-    ui->te_qt4->setText(action_defaults.at(3));
-    ui->te_python->setText(action_defaults.at(4));
-    ui->te_scons->setText(action_defaults.at(5));
-    ui->te_imported->setText(action_defaults.at(6));
+    actions_templates.clear();
+    actions_templates = actions_templates_defaults;
+    actions_editor->setText(actions_templates[ui->combo_actions_template->currentIndex()]);
 
     on_tb_desktop_reset_clicked();
     ui->gb_create_desktop->setChecked(false);
@@ -591,24 +633,12 @@ bool MainWindow::create_action_py(QDir package_dir)
     }
 
     QTextStream writer(&file);
-
-    QTextEdit * te = ui->sw_action_template->currentWidget()->findChild<QTextEdit*>();
-
-    if(te)
-    {
-        QString action_py = te->toPlainText();
-        action_py.replace(QString("___package_name___"), ui->le_package_name->text());
-        action_py.replace(QString("___version___"), pisi.get_last_update().get_version());
-        action_py.replace(QString("___summary___"), ui->le_summary->text());
-
-        writer << action_py;
-        return true;
-    }
-    else
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Can not find object !"));
-        return false;
-    }
+    QString action_py = actions_editor->text();
+    action_py.replace(QString("___package_name___"), ui->le_package_name->text());
+    action_py.replace(QString("___version___"), get_last_history_update().get_version());
+    action_py.replace(QString("___summary___"), ui->le_summary->text());
+    writer << action_py;
+    return true;
 }
 
 bool MainWindow::create_desktop(QDir package_dir)
@@ -894,19 +924,9 @@ void MainWindow::fill_fields_from_pisi()
 
     if(QFile::exists(actions_py))
     {
-        QFile actions_file(actions_py);
-        if( ! actions_file.open(QFile::ReadOnly | QFile::Text))
-        {
-            QMessageBox::warning(this, tr("Error"), tr("Can not open action.py file for reading !"));
-        }
-        else
-        {
-            QTextStream actions_py_stream(&actions_file);
-            ui->te_imported->setPlainText(actions_py_stream.readAll());
-        }
-        actions_file.close();
+        actions_templates[6] = get_file_contents(actions_py);
     }
-    ui->combo_actions_template->setCurrentIndex(ui->sw_action_template->indexOf(ui->page_imported));
+    ui->combo_actions_template->setCurrentIndex(6);
 
     QString desktop_file_name = package_files_dir.absoluteFilePath(QString("%1.desktop").arg(package_name));
 
@@ -1099,4 +1119,31 @@ void MainWindow::fill_pisi_from_fields()
     pisi.set_updates(updates);
 }
 
+
+void MainWindow::on_combo_actions_template_currentIndexChanged(int index)
+{
+    actions_editor->setText(actions_templates[index]);
+}
+
+void MainWindow::save_actions_editor_change()
+{
+    int current_index = ui->combo_actions_template->currentIndex();
+    actions_templates[current_index] = actions_editor->text();
+}
+
+void MainWindow::on_tb_zoom_in_clicked()
+{
+    actions_editor->zoomIn();
+}
+
+void MainWindow::on_tb_zoom_out_clicked()
+{
+    actions_editor->zoomOut();
+}
+
+void MainWindow::complete_word()
+{
+    if(actions_editor->hasFocus())
+        actions_editor->autoCompleteFromDocument();
+}
 

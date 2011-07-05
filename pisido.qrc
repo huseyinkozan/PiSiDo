@@ -8,5 +8,11 @@
         <file alias="is_a">resource/files/is_a</file>
         <file alias="license">resource/files/license</file>
         <file alias="part_of">resource/files/part_of</file>
+        <file alias="actions_template_auto.py">resource/files/actions_template_auto.py</file>
+        <file alias="actions_template_cmake.py">resource/files/actions_template_cmake.py</file>
+        <file alias="actions_template_kde4.py">resource/files/actions_template_kde4.py</file>
+        <file alias="actions_template_python.py">resource/files/actions_template_python.py</file>
+        <file alias="actions_template_qt4.py">resource/files/actions_template_qt4.py</file>
+        <file alias="actions_template_scons.py">resource/files/actions_template_scons.py</file>
     </qresource>
 </RCC>

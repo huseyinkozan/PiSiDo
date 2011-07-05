@@ -35,10 +35,10 @@ First:
             download archive, ... and later steps that pisi supports.
         (*) With using a timer, building steps will restrict.
 
-    (*) Highlighter and automatic complete feature will add which is on stable branch now.
-        (*) Python support will add to actions.py Action API text editor.
-            (*) Syntax highlighter will add to editor.
-            (*) Autocomplater will add to editor.
+    (X) Highlighter and automatic complete feature will add which is on stable branch now.
+        (X) Python support will add to actions.py Action API text editor.
+            (X) Syntax highlighter will add to editor.
+            (X) Autocomplater will add to editor.
 
     (*) Prepare program help.
 

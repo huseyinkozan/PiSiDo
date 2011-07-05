@@ -9,8 +9,9 @@ QT       += core gui xml network
 TARGET = pisido
 TEMPLATE = app
 
-VERSION = 1.1.0
+VERSION = 2.0.0
 DEFINES += PISIDO_VERSION=\\\"$$VERSION\\\"
+LIBS += -lqscintilla2
 
 # program will scan this dir for *.qm translation files.
 # each file name must be like this : pisido_xx_XX.qm

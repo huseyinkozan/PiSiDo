@@ -35,10 +35,10 @@
             arşiv indirilmesi, ... sonrasında pisi nin desteklediği adımlar.
         (*) Zamanlayıcı ile adımların yapılıp yapılamayacağına göre kısıtlanacaklar.
 
-    (*) Stable dalındaki renklendirme ve otomatik tamamlama desteği eklenecek.
-        (*) actions.py Action API dosyası için metin editörüne python desteği eklenecek.
-            (*) Metin editörüne kod renklendirici eklenecek
-            (*) Metin editörüne otomatik tamamlama eklenecek.
+    (X) Stable dalındaki renklendirme ve otomatik tamamlama desteği eklenecek.
+        (X) actions.py Action API dosyası için metin editörüne python desteği eklenecek.
+            (X) Metin editörüne kod renklendirici eklenecek
+            (X) Metin editörüne otomatik tamamlama eklenecek.
 
     (*) Program yardımı hazırlanacak.
 
