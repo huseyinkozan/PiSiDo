@@ -9,6 +9,15 @@ First:
     (X) Package build information file support (*.pisido) will remove.
     (X) Switching to workspace concept. Will ask at the start of program.
 
+    (X) Highlighter and automatic complete feature will add which is on stable branch now.
+        (X) Python support will add to actions.py Action API text editor.
+            (X) Syntax highlighter will add to editor.
+            (X) Autocomplater will add to editor.
+
+    (X) Redefine building steps.
+        (X) Building steps will define. Pspec.xml creation, action.py creation,
+            download archive, ... and later steps that pisi supports.
+
     (X) Import/Export pspec.xml file.
         (X) Design C++ class to package pspec information.
             (X) Load pisi info to QDomDocument from pspec.xml file by Pisi class.
@@ -19,28 +28,18 @@ First:
                     (X) Souce::Patches,
                     (X) SPBase::AdditionalFiles
 
+
     (*) load from gui and save to gui for these:
         (*) Package::Files,
-            (*) With using a timer, /var/pisi/PACKAGE/install/ folder listing will include to a list.
-            (*) Add files and folders to check list in pisi build directory. (/var/pisi/PACKAGE/install/*)
-            (*) Operation will force until all files are on check list.
-            (*) Design a new dialog for check list operation. With this dialog, any file or folder
-                can tagged with a fileType. The datas taken from this dialog will add a table or list.
-            (*) If a folder tagged, all files under that folder will remove from check list.
         (*) Souce::Patches,
-            (*) With using a timer, package_name/files folder listing will include to a list.
         (*) SPBase::AdditionalFiles
-            (*) With using a timer, package_name/files folder listing will include to a list.
 
-    (X) Redefine building steps.
-        (X) Building steps will define. Pspec.xml creation, action.py creation,
-            download archive, ... and later steps that pisi supports.
-        (*) With using a timer, building steps will restrict.
+    (*) QFileSystemWatcher (or QFileSystemModel) will be used here :
+        (*) __workspace__/__package_name__/
+        (*) __workspace__/__package_name__/files/
+        (*) /var/pisi/__package_name__/install/
 
-    (X) Highlighter and automatic complete feature will add which is on stable branch now.
-        (X) Python support will add to actions.py Action API text editor.
-            (X) Syntax highlighter will add to editor.
-            (X) Autocomplater will add to editor.
+    (*) Add line limit to console.
 
     (*) check gui tab order.
     (*) check gui tooltips.
@@ -55,6 +54,10 @@ Later:
     (*) Compressing the source folder process can be able to cancel. Now, qprocess runs and we are waiting to finish its job.
 
     (*) create translation.xml
+
+    (*) multiple archive source support.
+
+    (*) make autocomplete for actions api.
 
     (*) pspec.xml view will add.
         (*) Newly created or imported pspec.xml file will shown to the user. GUI changes

@@ -24,6 +24,8 @@
 #include "languagedialog.h"
 #include "workspacedialog.h"
 
+#define FILE_SYSTEM_TIMEOUT 1000
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -45,6 +47,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // fill view menu
     ui->menu_View->addAction(ui->dw_actions->toggleViewAction());
     ui->menu_View->addAction(ui->dw_desktop->toggleViewAction());
+    ui->menu_View->addAction(ui->dw_files->toggleViewAction());
+    ui->menu_View->addAction(ui->dw_aditional_files->toggleViewAction());
+    ui->menu_View->addAction(ui->dw_patches->toggleViewAction());
     ui->menu_View->addAction(ui->dw_history->toggleViewAction());
     ui->menu_View->addAction(ui->dw_build->toggleViewAction());
     ui->menu_View->addSeparator();
@@ -52,6 +57,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // fill view tool bar
     ui->tBar_view->addAction(ui->dw_actions->toggleViewAction());
     ui->tBar_view->addAction(ui->dw_desktop->toggleViewAction());
+    ui->tBar_view->addAction(ui->dw_files->toggleViewAction());
+    ui->tBar_view->addAction(ui->dw_aditional_files->toggleViewAction());
+    ui->tBar_view->addAction(ui->dw_patches->toggleViewAction());
     ui->tBar_view->addAction(ui->dw_history->toggleViewAction());
     ui->tBar_view->addAction(ui->dw_build->toggleViewAction());
 
@@ -112,6 +120,13 @@ MainWindow::MainWindow(QWidget *parent) :
     actions_templates_defaults[6] = "";
 
     desktop_file_default = ui->pte_desktop->toPlainText();
+
+    // checks build dir and install dir for file changes
+    file_system_timer = new QTimer(this);
+    connect(file_system_timer, SIGNAL(timeout()), SLOT(check_build_files()));
+    connect(file_system_timer, SIGNAL(timeout()), SLOT(check_install_files()));
+    connect(file_system_timer, SIGNAL(timeout()), SLOT(check_aditional_files()));
+    connect(file_system_timer, SIGNAL(timeout()), SLOT(check_patches()));
 
     read_settings();
 
@@ -731,20 +746,30 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
 
     if(text.isEmpty())
     {
+        package_name.clear();
         package_dir = QDir();
         package_files_dir = QDir();
-        package_name.clear();
+        package_install_dir = QDir();
         return;
     }
 
-    package_dir = QDir(text);
-    package_files_dir = QDir(text + QDir::separator() + "files");
     package_name = text;
+    package_dir = QDir(workspace.absoluteFilePath(package_name));
+    package_files_dir = QDir(package_dir.absoluteFilePath("files"));
+    package_install_dir= QDir(QString("/var/pisi/%1/install/").arg(package_name));
 
-    if(package_dir.exists())
+    if(package_name.isEmpty())
     {
-        if(QFile::exists(package_dir.absoluteFilePath("pspec.xml")))
-            ui->pb_import_package->setEnabled(true);
+        file_system_timer->stop();
+        // to clear operations
+        check_build_files();
+        check_install_files();
+        check_aditional_files();
+        check_patches();
+    }
+    else
+    {
+        file_system_timer->start(FILE_SYSTEM_TIMEOUT);
     }
 }
 
@@ -1150,4 +1175,59 @@ void MainWindow::complete_word()
     if(actions_editor->hasFocus())
         actions_editor->autoCompleteFromDocument();
 }
+
+void MainWindow::check_build_files()
+{
+    if(QFile::exists(package_dir.absoluteFilePath("pspec.xml"))
+            && QFile::exists(package_dir.absoluteFilePath("actions.py")))
+    {
+        ui->pb_import_package->setEnabled(true);
+    }
+    else
+    {
+        ui->pb_import_package->setEnabled(false);
+    }
+}
+
+void MainWindow::check_install_files()
+{
+    // TODO :
+    if(package_install_dir.exists()){
+        // ckeck files
+        // fill widgets
+        // enable package only
+    }
+    else{
+        // clear widgets
+        // disable package only
+    }
+
+}
+
+void MainWindow::check_aditional_files()
+{
+    // TODO :
+    if(package_files_dir.exists()){
+        // ckeck aditional files
+        // fill widgets
+    }
+    else{
+        // clear widgets
+    }
+}
+
+void MainWindow::check_patches()
+{
+    // TODO :
+    if(package_files_dir.exists()){
+        // ckeck patches
+        // fill widgets
+    }
+    else{
+        // clear widgets
+    }
+}
+
+
+
 

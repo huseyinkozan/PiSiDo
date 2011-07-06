@@ -9,6 +9,15 @@
     (X) Paket inşa bilgisi (*.pisido) iptal edilcek.
     (X) Çalışma Dizini yerine Çalışma Alanı (Workspace) kavramı gelecek. Programın açılışında bir kere sorulacak.
 
+    (X) Stable dalındaki renklendirme ve otomatik tamamlama desteği eklenecek.
+        (X) actions.py Action API dosyası için metin editörüne python desteği eklenecek.
+            (X) Metin editörüne kod renklendirici eklenecek
+            (X) Metin editörüne otomatik tamamlama eklenecek.
+
+    (X) İnşa adımları yeniden tasarlanacak.
+        (X) İnşa adımları belirlenecek. Pspec.xml oluşumu, action.py oluşumu,
+            arşiv indirilmesi, ... sonrasında pisi nin desteklediği adımlar.
+
     (X) pspec.xml dosyasının içe/dışa aktarımı sağlanacak.
         (X) pspec bilgisini barındıracak C++ sınıfları tasarlanacak.
             (X) Pisi sınıfıyla pspec.xml dosyasından QDomDocument'e bilgilerin yüklenmesi sağlanacak.
@@ -19,28 +28,18 @@
                     (X) Souce::Patches,
                     (X) SPBase::AdditionalFiles
 
+
     (*) Şunlar için arayüze ve arayüzden doldurma yapılacak.
         (*) Package::Files,
-            (*) Zamanlayıcı kullanarak /var/pisi/PACKAGE/install/ klasörüne koyulan dosyalar arayüzde listelenecek.
-            (*) Paketin inşa klasöründeki dosyalar/klasörler işaretlenecekler listesine alınacak. (/var/pisi/PACKAGE/install/*)
-            (*) İşaretlenecekler listesi boşalıncaya kadar işlem zorlanacak.
-            (*) İşaretleme için ayrı bir dialog tasarlanacak. Bu dialog ile herhangi bir dosya veya
-                klasör için fileType belirtilebilecek. Dialog'dan alınan veri tabloya veya listeye eklenecek.
-            (*) Eğer bir klasör işaretlenmişse altındaki dosyalar işaretlenecek listesinden çıkarılacak.
         (*) Souce::Patches,
-            (*) Zamanlayıcı kullanarak paket_adı/files klasörüne koyulan dosyalar arayüzde listelenecek.
         (*) SPBase::AdditionalFiles
-            (*) Zamanlayıcı kullanarak paket_adı/files klasörüne koyulan dosyalar arayüzde listelenecek.
 
-    (X) İnşa adımları yeniden tasarlanacak.
-        (X) İnşa adımları belirlenecek. Pspec.xml oluşumu, action.py oluşumu,
-            arşiv indirilmesi, ... sonrasında pisi nin desteklediği adımlar.
-        (*) Zamanlayıcı ile adımların yapılıp yapılamayacağına göre kısıtlanacaklar.
+    (*) QFileSystemWatcher (veya QFileSystemModel) kullanılacak dizinler:
+        (*) __workspace__/__package_name__/
+        (*) __workspace__/__package_name__/files/
+        (*) /var/pisi/__package_name__/install/
 
-    (X) Stable dalındaki renklendirme ve otomatik tamamlama desteği eklenecek.
-        (X) actions.py Action API dosyası için metin editörüne python desteği eklenecek.
-            (X) Metin editörüne kod renklendirici eklenecek
-            (X) Metin editörüne otomatik tamamlama eklenecek.
+    (*) Konsol için satır limiti konacak.
 
     (*) gui tab sırası kontrol edilecek.
     (*) gui tooltip leri kontrol edilecek.
@@ -56,6 +55,9 @@ Sonra yapılacaklar:
 
     (*) translation.xml oluşturulacak.
 
+    (*) birden fazla kaynak arşivi desteği.
+
+    (*) actions api için otomatik tamamlama yapılacak.
 
     (*) pspec.xml gösterim arabirimi eklenecek.
         (*) Yeni oluşturulan veya içe aktarılan pspec.xml dosyasının arayüzde gösterilmesi için

@@ -28,6 +28,10 @@ public:
 private slots:
     void save_actions_editor_change();
     void complete_word();
+    void check_build_files();
+    void check_install_files();
+    void check_aditional_files();
+    void check_patches();
 
     void on_action_Change_Workspace_triggered();
 
@@ -92,6 +96,7 @@ private:
     QsciLexerPython * python_lexer;
     QDomDocument dom_pspec;
     Pisi pisi;
+    QTimer * file_system_timer;
 
     bool not_ask_workspace;
 
@@ -100,6 +105,7 @@ private:
     QDir workspace;
     QDir package_dir;
     QDir package_files_dir;
+    QDir package_install_dir;
 
     QString package_name;
     QString source;
