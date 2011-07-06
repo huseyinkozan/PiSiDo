@@ -119,6 +119,7 @@ private:
     QString build_dependency;
     QString runtime_dependency;
 
+    void appy_default_settings();
     void write_settings();
     void read_settings();
 

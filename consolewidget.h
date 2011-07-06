@@ -26,6 +26,8 @@ private slots:
 private:
     Ui::ConsoleWidget *ui;
     QProcess * bash;
+    int current_console_line;
+    int max_console_line;
 };
 
 #endif // CONSOLEWIDGET_H

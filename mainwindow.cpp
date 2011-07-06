@@ -24,7 +24,7 @@
 #include "languagedialog.h"
 #include "workspacedialog.h"
 
-#define FILE_SYSTEM_TIMEOUT 1000
+#define FILE_SYSTEM_CHECK_TIMEOUT 1000
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -96,19 +96,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->combo_part_of->addItem("");
     ui->combo_part_of->addItems(get_file_strings(":/files/part_of"));
 
-    // set default settings, needed for first run
-    settings.beginGroup( "configuration" );
-    QString action_api_page = settings.value("action_api_page", QString("http://tr.pardus-wiki.org/Pardus:ActionsAPI")).toString();
-    QString pisi_spec = settings.value("pisi_spec", QString("http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng")).toString();
-    QString pisi_archive_dir = settings.value("pisi_archive_dir", QString("/var/cache/pisi/archives/")).toString();
-    bool ok = false;
-    int folder_comp_time_limit = settings.value("folder_comp_time_limit", 2).toInt(&ok);
-    if(!ok) folder_comp_time_limit = 2;
-    settings.setValue("action_api_page", action_api_page);
-    settings.setValue("pisi_spec", pisi_spec);
-    settings.setValue("pisi_archive_dir", pisi_archive_dir);
-    settings.setValue("folder_comp_time_limit", folder_comp_time_limit);
-    settings.endGroup();
+    appy_default_settings();
 
     actions_templates_defaults.clear();
     actions_templates_defaults[0] = get_file_contents(":/files/actions_template_auto.py");
@@ -325,6 +313,25 @@ void MainWindow::on_action_Help_triggered()
     help_dialog->show();
     help_dialog->raise();
     help_dialog->activateWindow();
+}
+
+void MainWindow::appy_default_settings()
+{
+    // set default settings, needed for first run
+    settings.beginGroup( "configuration" );
+    QString action_api_page = settings.value("action_api_page", QString("http://tr.pardus-wiki.org/Pardus:ActionsAPI")).toString();
+    QString pisi_spec = settings.value("pisi_spec", QString("http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng")).toString();
+    QString pisi_archive_dir = settings.value("pisi_archive_dir", QString("/var/cache/pisi/archives/")).toString();
+    bool ok = false;
+    int folder_comp_time_limit = settings.value("folder_comp_time_limit", 2).toInt(&ok);
+    if(!ok) folder_comp_time_limit = 2;
+    int console_max_line = settings.value("console_max_line", 100).toInt();
+    settings.setValue("action_api_page", action_api_page);
+    settings.setValue("pisi_spec", pisi_spec);
+    settings.setValue("pisi_archive_dir", pisi_archive_dir);
+    settings.setValue("folder_comp_time_limit", folder_comp_time_limit);
+    settings.setValue("console_max_line", console_max_line);
+    settings.endGroup();
 }
 
 void MainWindow::write_settings()
@@ -769,7 +776,7 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
     }
     else
     {
-        file_system_timer->start(FILE_SYSTEM_TIMEOUT);
+        file_system_timer->start(FILE_SYSTEM_CHECK_TIMEOUT);
     }
 }
 

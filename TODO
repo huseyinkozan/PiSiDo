@@ -28,6 +28,8 @@ First:
                     (X) Souce::Patches,
                     (X) SPBase::AdditionalFiles
 
+    (X) Add line limit to console.
+
 
     (*) load from gui and save to gui for these:
         (*) Package::Files,
@@ -38,8 +40,6 @@ First:
         (*) __workspace__/__package_name__/
         (*) __workspace__/__package_name__/files/
         (*) /var/pisi/__package_name__/install/
-
-    (*) Add line limit to console.
 
     (*) check gui tab order.
     (*) check gui tooltips.

@@ -28,6 +28,8 @@
                     (X) Souce::Patches,
                     (X) SPBase::AdditionalFiles
 
+    (X) Konsol için satır limiti konacak.
+
 
     (*) Şunlar için arayüze ve arayüzden doldurma yapılacak.
         (*) Package::Files,
@@ -38,8 +40,6 @@
         (*) __workspace__/__package_name__/
         (*) __workspace__/__package_name__/files/
         (*) /var/pisi/__package_name__/install/
-
-    (*) Konsol için satır limiti konacak.
 
     (*) gui tab sırası kontrol edilecek.
     (*) gui tooltip leri kontrol edilecek.
