@@ -1204,7 +1204,7 @@ void MainWindow::package_files_changed()
             for (int i = 0; i < row_count; ++i) {
                 ui->tableW_patches->removeRow(0);
             }
-            patches.clear();
+            temp_patches.clear();
 
             package_files_process(package_files_dir.absolutePath());
 
@@ -1217,6 +1217,20 @@ void MainWindow::package_files_changed()
 
                 package_files_process(sub);
             }
+            patches = temp_patches;
+            temp_patches.clear();
+
+            QMultiMap<int, QString>::iterator patch_it = patches.begin();
+            int patch_index = 0;
+            while(patch_it != patches.end())
+            {
+                ui->tableW_patches->insertRow(patch_index);
+                ui->tableW_patches->setItem(patch_index, 0, new QTableWidgetItem(QString::number(patch_it.key())));
+                ui->tableW_patches->setItem(patch_index, 1, new QTableWidgetItem(patch_it.value()));
+                patch_index++;
+                patch_it++;
+            }
+            ui->tableW_patches->sortByColumn(0, Qt::AscendingOrder);
         }
     }
 
@@ -1263,13 +1277,13 @@ void MainWindow::package_files_process(const QString & dir)
 
         QString patch = patch_info.absoluteFilePath().remove(package_files_dir.absolutePath() + QDir::separator());
 
-        if( ! patches.keys().contains(patch))
+        if(patches.values().contains(patch))
         {
-            patches[patch] = 1;
-            ui->tableW_patches->insertRow(0);
-            ui->tableW_patches->setItem(0, 0, new QTableWidgetItem("1"));
-            ui->tableW_patches->setItem(0, 1, new QTableWidgetItem(patch));
-            ui->tableW_patches->sortItems(1);
+            temp_patches.insert(patches.key(patch), patch);
+        }
+        else
+        {
+            temp_patches.insert(1, patch);
         }
     }
 }
@@ -1289,3 +1303,43 @@ void MainWindow::package_install_changed()
     }
 }
 
+
+void MainWindow::on_tb_patch_down_clicked()
+{
+    QModelIndexList list = ui->tableW_patches->selectionModel()->selectedRows(1);
+    if(list.count() != 1 )
+        return;
+    bool ok = false;
+    int key = key = ui->tableW_patches->item(list.first().row(), 0)->data(Qt::DisplayRole).toInt(&ok);
+    if( ! ok) key = 1;
+    QString value = ui->tableW_patches->item(list.first().row(), 1)->data(Qt::DisplayRole).toString();
+    QMultiMap<int, QString>::iterator it = patches.find(key, value);
+    if(it != patches.end())
+    {
+        patches.remove(it.key(), it.value());
+        key++;
+        patches.insert(key, value);
+    }
+    package_files_changed();
+}
+
+void MainWindow::on_tb_patch_up_clicked()
+{
+    QModelIndexList list = ui->tableW_patches->selectionModel()->selectedRows(1);
+    if(list.count() != 1 )
+        return;
+    bool ok = false;
+    int key = key = ui->tableW_patches->item(list.first().row(), 0)->data(Qt::DisplayRole).toInt(&ok);
+    if( ! ok) key = 1;
+    if(key <= 1)
+        return;
+    QString value = ui->tableW_patches->item(list.first().row(), 1)->data(Qt::DisplayRole).toString();
+    QMultiMap<int, QString>::iterator it = patches.find(key, value);
+    if(it != patches.end())
+    {
+        patches.remove(it.key(), it.value());
+        key--;
+        patches.insert(key, value);
+    }
+    package_files_changed();
+}

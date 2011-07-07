@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>815</width>
+    <width>1041</width>
     <height>785</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>451</width>
+         <width>677</width>
          <height>530</height>
         </rect>
        </property>
@@ -300,7 +300,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>815</width>
+     <width>1041</width>
      <height>25</height>
     </rect>
    </property>
@@ -898,7 +898,7 @@ Categories=Application;</string>
    </attribute>
    <widget class="QWidget" name="dw_patches_contents">
     <layout class="QGridLayout" name="gridLayout_8">
-     <item row="0" column="0" rowspan="4">
+     <item row="0" column="0" rowspan="3">
       <widget class="QTableWidget" name="tableW_patches">
        <property name="alternatingRowColors">
         <bool>true</bool>
@@ -934,17 +934,6 @@ Categories=Application;</string>
          <string>Name</string>
         </property>
        </column>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QToolButton" name="tb_patch_delete">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="pisido.qrc">
-         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
-       </property>
       </widget>
      </item>
      <item row="0" column="2">

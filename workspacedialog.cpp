@@ -32,6 +32,7 @@ void WorkspaceDialog::on_pb_browse_clicked()
 
 void WorkspaceDialog::on_le_workspace_textChanged(const QString &arg1)
 {
+    Q_UNUSED(arg1);
     if(QDir(workspace).exists())
     {
         ui->check_not_ask->setEnabled(true);

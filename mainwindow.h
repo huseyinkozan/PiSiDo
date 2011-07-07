@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMap>
+#include <QMultiMap>
 #include <QSettings>
 #include <QDomDocument>
 #include <QDir>
@@ -83,6 +84,9 @@ private slots:
     void on_tb_zoom_out_clicked();
 
 
+    void on_tb_patch_up_clicked();
+    void on_tb_patch_down_clicked();
+
 protected:
     virtual void closeEvent(QCloseEvent * event);
 
@@ -121,7 +125,8 @@ private:
     QString description;
     QString build_dependency;
     QString runtime_dependency;
-    QMap<QString, int> patches;
+    QMultiMap<int, QString> patches;
+    QMultiMap<int, QString> temp_patches;
 
     void appy_default_settings();
     void write_settings();
