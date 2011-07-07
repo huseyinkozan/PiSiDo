@@ -13,7 +13,8 @@
 #include <QCryptographicHash>
 #include <QTimer>
 #include <QShortcut>
-#include <QFileSystemModel>
+#include <QFileSystemWatcher>
+#include <QDirIterator>
 
 #include <Qsci/qsciscintilla.h>
 #include <Qsci/qscilexerpython.h>
@@ -23,8 +24,6 @@
 #include "helpdialog.h"
 #include "languagedialog.h"
 #include "workspacedialog.h"
-
-#define FILE_SYSTEM_CHECK_TIMEOUT 1000
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -110,16 +109,26 @@ MainWindow::MainWindow(QWidget *parent) :
     desktop_file_default = ui->pte_desktop->toPlainText();
 
     // checks build dir and install dir for file changes
-    file_system_timer = new QTimer(this);
-    connect(file_system_timer, SIGNAL(timeout()), SLOT(check_build_files()));
-    connect(file_system_timer, SIGNAL(timeout()), SLOT(check_install_files()));
-    connect(file_system_timer, SIGNAL(timeout()), SLOT(check_aditional_files()));
-    connect(file_system_timer, SIGNAL(timeout()), SLOT(check_patches()));
+
+    package_files_watcher = new QFileSystemWatcher(this);
+    package_install_watcher = new QFileSystemWatcher(this);
+    connect(package_files_watcher, SIGNAL(directoryChanged(QString)), this, SLOT(package_files_changed()));
+    connect(package_install_watcher, SIGNAL(directoryChanged(QString)), this, SLOT(package_install_changed()));
+
 
     read_settings();
 
     if( ! not_ask_workspace)
-        on_action_Change_Workspace_triggered();
+    {
+        WorkspaceDialog wd(this);
+        if(wd.exec() == QDialog::Accepted)
+        {
+            workspace = QDir(wd.get_workspace());
+            not_ask_workspace = wd.get_not_ask_workspace();
+        }
+        else
+            QTimer::singleShot(0, qApp, SLOT(quit()));
+    }
 
     // remove color support
     ui->w_console->execute("unalias ls ll dir");
@@ -186,8 +195,6 @@ void MainWindow::on_action_Change_Workspace_triggered()
         workspace = QDir(wd.get_workspace());
         not_ask_workspace = wd.get_not_ask_workspace();
     }
-    else
-        QTimer::singleShot(0, qApp, SLOT(quit()));
 
     // TODO : revise after other actions !
 }
@@ -749,35 +756,39 @@ bool MainWindow::build_package(QDir package_dir, QDir out_dir)
 
 void MainWindow::on_le_package_name_textChanged(const QString &text)
 {
-    ui->pb_import_package->setEnabled(false);
-
     if(text.isEmpty())
     {
         package_name.clear();
         package_dir = QDir();
         package_files_dir = QDir();
         package_install_dir = QDir();
-        return;
-    }
 
-    package_name = text;
-    package_dir = QDir(workspace.absoluteFilePath(package_name));
-    package_files_dir = QDir(package_dir.absoluteFilePath("files"));
-    package_install_dir= QDir(QString("/var/pisi/%1/install/").arg(package_name));
-
-    if(package_name.isEmpty())
-    {
-        file_system_timer->stop();
-        // to clear operations
-        check_build_files();
-        check_install_files();
-        check_aditional_files();
-        check_patches();
+        package_files_watcher->removePaths(package_files_watcher->directories());
+        package_install_watcher->removePaths(package_install_watcher->directories());
     }
     else
     {
-        file_system_timer->start(FILE_SYSTEM_CHECK_TIMEOUT);
+        package_name = text;
+        package_dir = QDir(workspace.absoluteFilePath(package_name));
+        package_files_dir = QDir(package_dir.absoluteFilePath("files"));
+        package_install_dir= QDir(QString("/var/pisi/%1/install/").arg(package_name));
+
+        if(package_files_dir.exists()){
+            package_files_watcher->addPath(package_files_dir.absolutePath());
+        }
+        else{
+            package_files_watcher->removePaths(package_files_watcher->directories());
+        }
+        if(package_install_dir.exists()){
+            package_install_watcher->addPath(package_install_dir.absolutePath());
+        }
+        else{
+            package_install_watcher->removePaths(package_install_watcher->directories());
+        }
     }
+    // to handle text change event
+    package_files_changed();
+    package_install_changed();
 }
 
 void MainWindow::on_le_source_textChanged(const QString & text)
@@ -1183,8 +1194,45 @@ void MainWindow::complete_word()
         actions_editor->autoCompleteFromDocument();
 }
 
-void MainWindow::check_build_files()
+void MainWindow::package_files_changed()
 {
+    if(package_dir.exists())
+    {
+        if(package_files_dir.exists())
+        {
+            int row_count = ui->tableW_patches->rowCount();
+            for (int i = 0; i < row_count; ++i) {
+                ui->tableW_patches->removeRow(0);
+            }
+            patches.clear();
+
+            package_files_process(package_files_dir.absolutePath());
+
+            QDirIterator it(package_files_dir.absolutePath(), QDir::Dirs|QDir::NoDotAndDotDot|QDir::NoSymLinks|QDir::Readable, QDirIterator::Subdirectories);
+            while(it.hasNext())
+            {
+                QString sub = it.next();
+                if( ! package_files_watcher->directories().contains(sub))
+                    package_files_watcher->addPath(sub);
+
+                package_files_process(sub);
+            }
+        }
+    }
+
+    if( ! package_dir.exists())
+    {
+    }
+
+    if( ! package_files_dir.exists())
+    {
+        int row_count = ui->tableW_patches->rowCount();
+        for (int i = 0; i < row_count; ++i) {
+            ui->tableW_patches->removeRow(0);
+        }
+        // clear aditional files
+    }
+
     if(QFile::exists(package_dir.absoluteFilePath("pspec.xml"))
             && QFile::exists(package_dir.absoluteFilePath("actions.py")))
     {
@@ -1196,7 +1244,38 @@ void MainWindow::check_build_files()
     }
 }
 
-void MainWindow::check_install_files()
+void MainWindow::package_files_process(const QString & dir)
+{
+    QDir sub_dir(dir);
+    QFileInfoList patches_info_list = sub_dir.entryInfoList(
+                                QStringList() << "*.patch",
+                                QDir::NoDotAndDotDot | QDir::Files | QDir::NoSymLinks | QDir::Readable,
+                                QDir::Name);
+    QFileInfoList aditional_files_info_list = sub_dir.entryInfoList(
+                QDir::NoDotAndDotDot | QDir::Files | QDir::NoSymLinks | QDir::Readable,
+                QDir::Name);
+
+    foreach (QFileInfo patch_info, patches_info_list) {
+
+        // exclude patch from ad. files
+        if(aditional_files_info_list.contains(patch_info))
+            aditional_files_info_list.removeAll(patch_info);
+
+        QString patch = patch_info.absoluteFilePath().remove(package_files_dir.absolutePath() + QDir::separator());
+
+        if( ! patches.keys().contains(patch))
+        {
+            patches[patch] = 1;
+            ui->tableW_patches->insertRow(0);
+            ui->tableW_patches->setItem(0, 0, new QTableWidgetItem("1"));
+            ui->tableW_patches->setItem(0, 1, new QTableWidgetItem(patch));
+            ui->tableW_patches->sortItems(1);
+        }
+    }
+}
+
+
+void MainWindow::package_install_changed()
 {
     // TODO :
     if(package_install_dir.exists()){
@@ -1208,33 +1287,5 @@ void MainWindow::check_install_files()
         // clear widgets
         // disable package only
     }
-
 }
-
-void MainWindow::check_aditional_files()
-{
-    // TODO :
-    if(package_files_dir.exists()){
-        // ckeck aditional files
-        // fill widgets
-    }
-    else{
-        // clear widgets
-    }
-}
-
-void MainWindow::check_patches()
-{
-    // TODO :
-    if(package_files_dir.exists()){
-        // ckeck patches
-        // fill widgets
-    }
-    else{
-        // clear widgets
-    }
-}
-
-
-
 

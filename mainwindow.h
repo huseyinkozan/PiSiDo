@@ -16,6 +16,7 @@ namespace Ui {
 class HelpDialog;
 class QsciScintilla;
 class QsciLexerPython;
+class QFileSystemWatcher;
 
 class MainWindow : public QMainWindow
 {
@@ -28,10 +29,10 @@ public:
 private slots:
     void save_actions_editor_change();
     void complete_word();
-    void check_build_files();
-    void check_install_files();
-    void check_aditional_files();
-    void check_patches();
+
+    void package_files_changed();
+    void package_files_process(const QString & dir);
+    void package_install_changed();
 
     void on_action_Change_Workspace_triggered();
 
@@ -96,7 +97,6 @@ private:
     QsciLexerPython * python_lexer;
     QDomDocument dom_pspec;
     Pisi pisi;
-    QTimer * file_system_timer;
 
     bool not_ask_workspace;
 
@@ -106,6 +106,9 @@ private:
     QDir package_dir;
     QDir package_files_dir;
     QDir package_install_dir;
+
+    QFileSystemWatcher * package_files_watcher;
+    QFileSystemWatcher * package_install_watcher;
 
     QString package_name;
     QString source;
@@ -118,6 +121,7 @@ private:
     QString description;
     QString build_dependency;
     QString runtime_dependency;
+    QMap<QString, int> patches;
 
     void appy_default_settings();
     void write_settings();

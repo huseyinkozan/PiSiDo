@@ -320,6 +320,7 @@ p, li { white-space: pre-wrap; }
      <string>&amp;Settings</string>
     </property>
     <addaction name="action_Application_Language"/>
+    <addaction name="separator"/>
     <addaction name="action_Configure_Application"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
