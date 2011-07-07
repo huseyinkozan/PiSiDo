@@ -12,6 +12,7 @@ TEMPLATE = app
 VERSION = 2.0.0
 DEFINES += PISIDO_VERSION=\\\"$$VERSION\\\"
 LIBS += -lqscintilla2
+INCLUDEPATH += ./h
 
 # program will scan this dir for *.qm translation files.
 # each file name must be like this : pisido_xx_XX.qm
@@ -20,40 +21,40 @@ LIBS += -lqscintilla2
 DEFINES += PISIDO_LANG_DIR=\\\"/home/huseyinkozan/calismalar/pisido/resource/translation/\\\"
 #
 
-SOURCES += main.cpp\
-    mainwindow.cpp \
-    configurationdialog.cpp \
-    helpdialog.cpp \
-    pisispbase.cpp \
-    pisi.cpp \
-    pisipackage.cpp \
-    pisisource.cpp \
-    pisiupdate.cpp \
-    addupdatedialog.cpp \
-    languagedialog.cpp \
-    workspacedialog.cpp \
-    consolewidget.cpp
+SOURCES += cpp/main.cpp\
+    cpp/mainwindow.cpp \
+    cpp/configurationdialog.cpp \
+    cpp/helpdialog.cpp \
+    cpp/pisispbase.cpp \
+    cpp/pisi.cpp \
+    cpp/pisipackage.cpp \
+    cpp/pisisource.cpp \
+    cpp/pisiupdate.cpp \
+    cpp/addupdatedialog.cpp \
+    cpp/languagedialog.cpp \
+    cpp/workspacedialog.cpp \
+    cpp/consolewidget.cpp
 
-HEADERS  += mainwindow.h \
-    configurationdialog.h \
-    helpdialog.h \
-    pisispbase.h \
-    pisi.h \
-    pisipackage.h \
-    pisisource.h \
-    pisiupdate.h \
-    addupdatedialog.h \
-    languagedialog.h \
-    workspacedialog.h \
-    consolewidget.h
+HEADERS  += h/mainwindow.h \
+    h/configurationdialog.h \
+    h/helpdialog.h \
+    h/pisispbase.h \
+    h/pisi.h \
+    h/pisipackage.h \
+    h/pisisource.h \
+    h/pisiupdate.h \
+    h/addupdatedialog.h \
+    h/languagedialog.h \
+    h/workspacedialog.h \
+    h/consolewidget.h
 
-FORMS    += mainwindow.ui \
-    configurationdialog.ui \
-    helpdialog.ui \
-    addupdatedialog.ui \
-    languagedialog.ui \
-    workspacedialog.ui \
-    consolewidget.ui
+FORMS    += ui/mainwindow.ui \
+    ui/configurationdialog.ui \
+    ui/helpdialog.ui \
+    ui/addupdatedialog.ui \
+    ui/languagedialog.ui \
+    ui/workspacedialog.ui \
+    ui/consolewidget.ui
 
 OTHER_FILES += \
     README \
@@ -64,4 +65,4 @@ OTHER_FILES += \
     YAPILACAKLAR
 
 RESOURCES += \
-    pisido.qrc
+    resource/pisido.qrc

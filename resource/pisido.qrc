@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="pardus-logo.png">images/pardus-logo.png</file>
+        <file alias="add.png">images/add.png</file>
+        <file alias="build.png">images/build.png</file>
+        <file alias="delete.png">images/delete.png</file>
+        <file alias="down.png">images/down.png</file>
+        <file alias="ok.png">images/ok.png</file>
+        <file alias="up.png">images/up.png</file>
+        <file alias="left.png">images/left.png</file>
+        <file alias="right.png">images/right.png</file>
+        <file alias="edit.png">images/edit.png</file>
+        <file alias="zoom-in.png">images/zoom-in.png</file>
+        <file alias="zoom-out.png">images/zoom-out.png</file>
+    </qresource>
+    <qresource prefix="/files">
+        <file alias="help.html">files/help.html</file>
+        <file alias="help_tr.html">files/help_tr.html</file>
+        <file alias="is_a">files/is_a</file>
+        <file alias="license">files/license</file>
+        <file alias="part_of">files/part_of</file>
+        <file alias="actions_template_auto.py">files/actions_template_auto.py</file>
+        <file alias="actions_template_cmake.py">files/actions_template_cmake.py</file>
+        <file alias="actions_template_kde4.py">files/actions_template_kde4.py</file>
+        <file alias="actions_template_python.py">files/actions_template_python.py</file>
+        <file alias="actions_template_qt4.py">files/actions_template_qt4.py</file>
+        <file alias="actions_template_scons.py">files/actions_template_scons.py</file>
+    </qresource>
+</RCC>

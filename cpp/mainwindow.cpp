@@ -763,8 +763,12 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
         package_files_dir = QDir();
         package_install_dir = QDir();
 
-        package_files_watcher->removePaths(package_files_watcher->directories());
-        package_install_watcher->removePaths(package_install_watcher->directories());
+        QStringList p_f_w_dirs = package_files_watcher->directories();
+        if( ! p_f_w_dirs.isEmpty())
+            package_files_watcher->removePaths(p_f_w_dirs);
+        QStringList p_i_w_dirs = package_install_watcher->directories();
+        if( ! p_i_w_dirs.isEmpty())
+            package_install_watcher->removePaths(p_i_w_dirs);
     }
     else
     {
@@ -777,13 +781,17 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
             package_files_watcher->addPath(package_files_dir.absolutePath());
         }
         else{
-            package_files_watcher->removePaths(package_files_watcher->directories());
+            QStringList p_f_w_dirs = package_files_watcher->directories();
+            if( ! p_f_w_dirs.isEmpty())
+                package_files_watcher->removePaths(p_f_w_dirs);
         }
         if(package_install_dir.exists()){
             package_install_watcher->addPath(package_install_dir.absolutePath());
         }
         else{
-            package_install_watcher->removePaths(package_install_watcher->directories());
+            QStringList p_i_w_dirs = package_install_watcher->directories();
+            if( ! p_i_w_dirs.isEmpty())
+                package_install_watcher->removePaths(p_i_w_dirs);
         }
     }
     // to handle text change event
@@ -1310,7 +1318,7 @@ void MainWindow::on_tb_patch_down_clicked()
     if(list.count() != 1 )
         return;
     bool ok = false;
-    int key = key = ui->tableW_patches->item(list.first().row(), 0)->data(Qt::DisplayRole).toInt(&ok);
+    int key = ui->tableW_patches->item(list.first().row(), 0)->data(Qt::DisplayRole).toInt(&ok);
     if( ! ok) key = 1;
     QString value = ui->tableW_patches->item(list.first().row(), 1)->data(Qt::DisplayRole).toString();
     QMultiMap<int, QString>::iterator it = patches.find(key, value);
@@ -1329,7 +1337,7 @@ void MainWindow::on_tb_patch_up_clicked()
     if(list.count() != 1 )
         return;
     bool ok = false;
-    int key = key = ui->tableW_patches->item(list.first().row(), 0)->data(Qt::DisplayRole).toInt(&ok);
+    int key = ui->tableW_patches->item(list.first().row(), 0)->data(Qt::DisplayRole).toInt(&ok);
     if( ! ok) key = 1;
     if(key <= 1)
         return;
