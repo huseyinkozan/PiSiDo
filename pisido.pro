@@ -33,7 +33,8 @@ SOURCES += cpp/main.cpp\
     cpp/addupdatedialog.cpp \
     cpp/languagedialog.cpp \
     cpp/workspacedialog.cpp \
-    cpp/consolewidget.cpp
+    cpp/consolewidget.cpp \
+    cpp/aditionalfiledialog.cpp
 
 HEADERS  += h/mainwindow.h \
     h/configurationdialog.h \
@@ -46,7 +47,8 @@ HEADERS  += h/mainwindow.h \
     h/addupdatedialog.h \
     h/languagedialog.h \
     h/workspacedialog.h \
-    h/consolewidget.h
+    h/consolewidget.h \
+    h/aditionalfiledialog.h
 
 FORMS    += ui/mainwindow.ui \
     ui/configurationdialog.ui \
@@ -54,7 +56,8 @@ FORMS    += ui/mainwindow.ui \
     ui/addupdatedialog.ui \
     ui/languagedialog.ui \
     ui/workspacedialog.ui \
-    ui/consolewidget.ui
+    ui/consolewidget.ui \
+    ui/aditionalfiledialog.ui
 
 OTHER_FILES += \
     README \

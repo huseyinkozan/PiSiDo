@@ -35,6 +35,9 @@ private slots:
     void package_files_process(const QString & dir);
     void package_install_changed();
 
+    void clear_tableW_patches();
+    void clear_tableW_aditional_files();
+
     void on_action_Change_Workspace_triggered();
 
     void on_action_Open_PISI_Archive_Dir_triggered();
@@ -83,9 +86,10 @@ private slots:
     void on_tb_zoom_in_clicked();
     void on_tb_zoom_out_clicked();
 
-
     void on_tb_patch_up_clicked();
     void on_tb_patch_down_clicked();
+
+    void on_tb_edit_aditional_files_clicked();
 
 protected:
     virtual void closeEvent(QCloseEvent * event);
@@ -127,6 +131,8 @@ private:
     QString runtime_dependency;
     QMultiMap<int, QString> patches;
     QMultiMap<int, QString> temp_patches;
+    QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > aditional_files;
+    QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > temp_aditional_files;
 
     void appy_default_settings();
     void write_settings();
@@ -147,6 +153,7 @@ private:
 
     void fill_fields_from_pisi();
     void fill_pisi_from_fields();
+
 };
 
 #endif // MAINWINDOW_H

@@ -41,6 +41,9 @@
         (*) __workspace__/__package_name__/files/
         (*) /var/pisi/__package_name__/install/
 
+    (*) İnşa işlemleri yapılacak.
+        (*) aditional_files daki __package_name__ dönüştürülecek
+
     (*) gui tab sırası kontrol edilecek.
     (*) gui tooltip leri kontrol edilecek.
 
@@ -64,6 +67,8 @@ Sonra yapılacaklar:
     (*) pspec.xml gösterim arabirimi eklenecek.
         (*) Yeni oluşturulan veya içe aktarılan pspec.xml dosyasının arayüzde gösterilmesi için
             ui tasarlanacak. Arabirimde yapılan değişiklikler pspec.xml ui nesnesine aktarılacak.
+
+    (*) Source::Patch yapısı arayüze aktarılacak. Şimdilik sadece level aktarıldı.
 
 
 

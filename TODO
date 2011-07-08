@@ -41,6 +41,9 @@ First:
         (*) __workspace__/__package_name__/files/
         (*) /var/pisi/__package_name__/install/
 
+    (*) Make build process.
+        (*) __package_name__ will convert at the aditional_files
+
     (*) check gui tab order.
     (*) check gui tooltips.
 
@@ -64,7 +67,7 @@ Later:
         (*) Newly created or imported pspec.xml file will shown to the user. GUI changes
             will reflect to user.
 
-
+    (*) Source::Patch properties will reflect to gui. For now, only level is working.
 
 
 

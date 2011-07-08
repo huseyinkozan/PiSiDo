@@ -20,11 +20,13 @@
 #include <Qsci/qscilexerpython.h>
 
 #include "addupdatedialog.h"
+#include "aditionalfiledialog.h"
 #include "configurationdialog.h"
 #include "helpdialog.h"
 #include "languagedialog.h"
 #include "workspacedialog.h"
 
+#define DEFAULT_PATCH_LEVEL 1
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -1208,11 +1210,10 @@ void MainWindow::package_files_changed()
     {
         if(package_files_dir.exists())
         {
-            int row_count = ui->tableW_patches->rowCount();
-            for (int i = 0; i < row_count; ++i) {
-                ui->tableW_patches->removeRow(0);
-            }
+            clear_tableW_patches();
             temp_patches.clear();
+            clear_tableW_aditional_files();
+            temp_aditional_files.clear();
 
             package_files_process(package_files_dir.absolutePath());
 
@@ -1225,9 +1226,9 @@ void MainWindow::package_files_changed()
 
                 package_files_process(sub);
             }
+
             patches = temp_patches;
             temp_patches.clear();
-
             QMultiMap<int, QString>::iterator patch_it = patches.begin();
             int patch_index = 0;
             while(patch_it != patches.end())
@@ -1239,6 +1240,21 @@ void MainWindow::package_files_changed()
                 patch_it++;
             }
             ui->tableW_patches->sortByColumn(0, Qt::AscendingOrder);
+
+            aditional_files = temp_aditional_files;
+            temp_aditional_files.clear();
+            QStringList a_files_keys = aditional_files.keys();
+            int a_file_index = 0;
+            foreach (QString a_file, a_files_keys) {
+                QMap<PisiSPBase::AFileAttr,QString> attr = aditional_files.value(a_file);
+                ui->tableW_aditional_files->insertRow(a_file_index);
+                ui->tableW_aditional_files->setItem(a_file_index, 0, new QTableWidgetItem(a_file));
+                ui->tableW_aditional_files->setItem(a_file_index, 1, new QTableWidgetItem(attr.value(PisiSPBase::TARGET)));
+                ui->tableW_aditional_files->setItem(a_file_index, 2, new QTableWidgetItem(attr.value(PisiSPBase::PERMISSION)));
+                ui->tableW_aditional_files->setItem(a_file_index, 3, new QTableWidgetItem(attr.value(PisiSPBase::OWNER)));
+                ui->tableW_aditional_files->setItem(a_file_index, 4, new QTableWidgetItem(attr.value(PisiSPBase::GROUP)));
+                a_file_index++;
+            }
         }
     }
 
@@ -1248,11 +1264,8 @@ void MainWindow::package_files_changed()
 
     if( ! package_files_dir.exists())
     {
-        int row_count = ui->tableW_patches->rowCount();
-        for (int i = 0; i < row_count; ++i) {
-            ui->tableW_patches->removeRow(0);
-        }
-        // clear aditional files
+        clear_tableW_patches();
+        clear_tableW_aditional_files();
     }
 
     if(QFile::exists(package_dir.absoluteFilePath("pspec.xml"))
@@ -1269,29 +1282,36 @@ void MainWindow::package_files_changed()
 void MainWindow::package_files_process(const QString & dir)
 {
     QDir sub_dir(dir);
-    QFileInfoList patches_info_list = sub_dir.entryInfoList(
-                                QStringList() << "*.patch",
-                                QDir::NoDotAndDotDot | QDir::Files | QDir::NoSymLinks | QDir::Readable,
-                                QDir::Name);
-    QFileInfoList aditional_files_info_list = sub_dir.entryInfoList(
+    QFileInfoList files_info_list = sub_dir.entryInfoList(
                 QDir::NoDotAndDotDot | QDir::Files | QDir::NoSymLinks | QDir::Readable,
                 QDir::Name);
 
-    foreach (QFileInfo patch_info, patches_info_list) {
+    QStringList patches_values = patches.values();
+    QStringList aditional_files_keys = aditional_files.keys();
 
-        // exclude patch from ad. files
-        if(aditional_files_info_list.contains(patch_info))
-            aditional_files_info_list.removeAll(patch_info);
-
-        QString patch = patch_info.absoluteFilePath().remove(package_files_dir.absolutePath() + QDir::separator());
-
-        if(patches.values().contains(patch))
+    foreach (QFileInfo file_info, files_info_list) {
+        QString relative_file_path = file_info.absoluteFilePath().remove(package_files_dir.absolutePath() + QDir::separator());
+        if(file_info.suffix() == "patch")
         {
-            temp_patches.insert(patches.key(patch), patch);
+            if(patches_values.contains(relative_file_path)){
+                temp_patches.insert(patches.key(relative_file_path), relative_file_path);
+            }
+            else{
+                temp_patches.insert(DEFAULT_PATCH_LEVEL, relative_file_path);
+            }
         }
-        else
-        {
-            temp_patches.insert(1, patch);
+        else{
+            if(aditional_files_keys.contains(relative_file_path)){
+                temp_aditional_files.insert(relative_file_path, aditional_files.value(relative_file_path));
+            }
+            else{
+                QMap<PisiSPBase::AFileAttr,QString> value;
+                value.insert(PisiSPBase::TARGET, QString("/usr/share/%1/%2").arg("__package_name__").arg(file_info.fileName()));
+                value.insert(PisiSPBase::PERMISSION, QString("0644"));
+                value.insert(PisiSPBase::OWNER, QString("root"));
+                value.insert(PisiSPBase::GROUP, QString("root"));
+                temp_aditional_files.insert(relative_file_path, value);
+            }
         }
     }
 }
@@ -1350,4 +1370,36 @@ void MainWindow::on_tb_patch_up_clicked()
         patches.insert(key, value);
     }
     package_files_changed();
+}
+
+void MainWindow::clear_tableW_patches()
+{
+    int row_count = ui->tableW_patches->rowCount();
+    for (int i = 0; i < row_count; ++i) {
+        ui->tableW_patches->removeRow(0);
+    }
+}
+
+void MainWindow::clear_tableW_aditional_files()
+{
+    int row_count = ui->tableW_aditional_files->rowCount();
+    for (int i = 0; i < row_count; ++i) {
+        ui->tableW_aditional_files->removeRow(0);
+    }
+}
+
+
+void MainWindow::on_tb_edit_aditional_files_clicked()
+{
+    QModelIndexList list = ui->tableW_aditional_files->selectionModel()->selectedRows(0);
+    if(list.count() != 1 )
+        return;
+    QString a_file = ui->tableW_aditional_files->item(list.first().row(), 0)->data(Qt::DisplayRole).toString();
+    // TODO : call dialog(this, a_file,aditional_files.value(a_file));
+    AditionalFileDialog afd(this, a_file, aditional_files.value(a_file));
+    if( afd.exec() == QDialog::Accepted )
+    {
+        aditional_files[a_file] = afd.get_attr();
+        package_files_changed();
+    }
 }

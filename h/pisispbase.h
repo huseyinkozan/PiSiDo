@@ -44,6 +44,8 @@ public:
     QMap<QString, QMap<VRTFAttr,QString> > get_build_dependencies() const;
     QMap<QString, QMap<AFileAttr,QString> > get_aditional_files() const;
 
+    AFileAttr get_aditional_file_attribute(QString attr_name);
+    QString get_aditional_file_attribute(AFileAttr attr);
 
     void set_name(QString name);
     void set_summary(QString summary);
@@ -75,9 +77,6 @@ protected:
 
     QMap<QString, QMap<AFileAttr,QString> > get_aditional_file(QDomElement elm);
     void set_aditional_file(QDomElement root, QMap<QString, QMap<AFileAttr,QString> > a_files);
-
-    AFileAttr get_aditional_file_attribute(QString attr_name);
-    QString get_aditional_file_attribute(AFileAttr attr);
 
 private:
     QMap<VRTFAttr,QString> get_dependency_attr_list(QString attr_string);
