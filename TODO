@@ -41,6 +41,8 @@ First:
         (*) __workspace__/__package_name__/files/
         (*) /var/pisi/__package_name__/install/
 
+    (*) Restrict repeated command execution on bash.
+
     (*) Make build process.
         (*) __package_name__ will convert at the aditional_files
 

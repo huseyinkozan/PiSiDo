@@ -58,6 +58,17 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QToolButton" name="tb_open_package_dir">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../resource/pisido.qrc">
+              <normaloff>:/images/open-folder.png</normaloff>:/images/open-folder.png</iconset>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item row="13" column="0">
@@ -814,7 +825,7 @@ Categories=Application;</string>
    <widget class="QWidget" name="dw_files_contents">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="lbl_install_files">
        <property name="font">
         <font>
          <weight>75</weight>
@@ -829,11 +840,11 @@ Categories=Application;</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="3">
+     <item row="1" column="0" colspan="4">
       <widget class="QTreeView" name="treeV_files"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="lbl_labels">
        <property name="font">
         <font>
          <weight>75</weight>
@@ -848,7 +859,7 @@ Categories=Application;</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0" colspan="3">
+     <item row="4" column="0" colspan="4">
       <widget class="QTableWidget" name="tableW_files">
        <property name="alternatingRowColors">
         <bool>true</bool>
@@ -864,8 +875,8 @@ Categories=Application;</string>
        </attribute>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QToolButton" name="toolButton">
+     <item row="2" column="2">
+      <widget class="QToolButton" name="tb_add_label">
        <property name="text">
         <string/>
        </property>
@@ -875,14 +886,25 @@ Categories=Application;</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QToolButton" name="toolButton_2">
+     <item row="2" column="3">
+      <widget class="QToolButton" name="tb_delete_label">
        <property name="text">
         <string/>
        </property>
        <property name="icon">
         <iconset resource="../resource/pisido.qrc">
          <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QToolButton" name="tb_open_install_dir">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resource/pisido.qrc">
+         <normaloff>:/images/open-folder.png</normaloff>:/images/open-folder.png</iconset>
        </property>
       </widget>
      </item>
@@ -898,7 +920,7 @@ Categories=Application;</string>
    </attribute>
    <widget class="QWidget" name="dw_patches_contents">
     <layout class="QGridLayout" name="gridLayout_8">
-     <item row="0" column="0" rowspan="3">
+     <item row="0" column="0" rowspan="4">
       <widget class="QTableWidget" name="tableW_patches">
        <property name="alternatingRowColors">
         <bool>true</bool>
@@ -958,6 +980,30 @@ Categories=Application;</string>
        </property>
       </widget>
      </item>
+     <item row="3" column="2">
+      <widget class="QToolButton" name="tb_open_patches_dir">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resource/pisido.qrc">
+         <normaloff>:/images/open-folder.png</normaloff>:/images/open-folder.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -970,7 +1016,7 @@ Categories=Application;</string>
    </attribute>
    <widget class="QWidget" name="dw_aditional_files_content">
     <layout class="QGridLayout" name="gridLayout_9">
-     <item row="0" column="0" rowspan="2">
+     <item row="0" column="0" rowspan="3">
       <widget class="QTableWidget" name="tableW_aditional_files">
        <property name="alternatingRowColors">
         <bool>true</bool>
@@ -1033,6 +1079,30 @@ Categories=Application;</string>
          <normaloff>:/images/edit.png</normaloff>:/images/edit.png</iconset>
        </property>
       </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QToolButton" name="tb_open_aditional_files_dir">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resource/pisido.qrc">
+         <normaloff>:/images/open-folder.png</normaloff>:/images/open-folder.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>

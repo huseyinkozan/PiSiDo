@@ -91,6 +91,14 @@ private slots:
 
     void on_tb_edit_aditional_files_clicked();
 
+    void on_tb_open_patches_clicked();
+
+    void on_tb_open_aditional_files_clicked();
+
+    void on_tb_open_install_dir_clicked();
+
+    void on_tb_open_package_dir_clicked();
+
 protected:
     virtual void closeEvent(QCloseEvent * event);
 

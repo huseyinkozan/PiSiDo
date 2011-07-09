@@ -12,6 +12,7 @@
         <file alias="edit.png">images/edit.png</file>
         <file alias="zoom-in.png">images/zoom-in.png</file>
         <file alias="zoom-out.png">images/zoom-out.png</file>
+        <file alias="open-folder.png">images/open-folder.png</file>
     </qresource>
     <qresource prefix="/files">
         <file alias="help.html">files/help.html</file>

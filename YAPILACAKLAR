@@ -41,6 +41,8 @@
         (*) __workspace__/__package_name__/files/
         (*) /var/pisi/__package_name__/install/
 
+    (*) Bash'e arka arkaya komut göndermeyi engelle.
+
     (*) İnşa işlemleri yapılacak.
         (*) aditional_files daki __package_name__ dönüştürülecek
 

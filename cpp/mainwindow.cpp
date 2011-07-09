@@ -1209,8 +1209,13 @@ void MainWindow::package_files_changed()
 {
     if(package_dir.exists())
     {
+        ui->tb_open_package_dir->setEnabled(true);
+
         if(package_files_dir.exists())
         {
+            ui->tb_open_aditional_files_dir->setEnabled(true);
+            ui->tb_open_patches_dir->setEnabled(true);
+
             clear_tableW_patches();
             temp_patches.clear();
             clear_tableW_aditional_files();
@@ -1261,12 +1266,15 @@ void MainWindow::package_files_changed()
 
     if( ! package_dir.exists())
     {
+        ui->tb_open_package_dir->setEnabled(false);
     }
 
     if( ! package_files_dir.exists())
     {
         clear_tableW_patches();
         clear_tableW_aditional_files();
+        ui->tb_open_aditional_files_dir->setEnabled(false);
+        ui->tb_open_patches_dir->setEnabled(false);
     }
 
     if(QFile::exists(package_dir.absoluteFilePath("pspec.xml"))
@@ -1403,4 +1411,24 @@ void MainWindow::on_tb_edit_aditional_files_clicked()
         aditional_files[a_file] = afd.get_attr();
         package_files_changed();
     }
+}
+
+void MainWindow::on_tb_open_patches_clicked()
+{
+    on_tb_open_aditional_files_clicked();
+}
+
+void MainWindow::on_tb_open_aditional_files_clicked()
+{
+
+}
+
+void MainWindow::on_tb_open_install_dir_clicked()
+{
+
+}
+
+void MainWindow::on_tb_open_package_dir_clicked()
+{
+
 }
