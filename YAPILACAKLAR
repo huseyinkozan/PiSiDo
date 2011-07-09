@@ -31,14 +31,14 @@
     (X) Konsol için satır limiti konacak.
 
 
-    (*) Şunlar için arayüze ve arayüzden doldurma yapılacak.
+    (->) Şunlar için arayüze ve arayüzden doldurma yapılacak.
         (*) Package::Files,
         (*) Souce::Patches,
         (*) SPBase::AdditionalFiles
 
-    (*) QFileSystemWatcher (veya QFileSystemModel) kullanılacak dizinler:
-        (*) __workspace__/__package_name__/
-        (*) __workspace__/__package_name__/files/
+    (->) QFileSystemWatcher (veya QFileSystemModel) kullanılacak dizinler:
+        (X) __workspace__/__package_name__/
+        (X) __workspace__/__package_name__/files/
         (*) /var/pisi/__package_name__/install/
 
     (*) Bash'e arka arkaya komut göndermeyi engelle.

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1041</width>
-    <height>785</height>
+    <width>869</width>
+    <height>659</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>677</width>
+         <width>309</width>
          <height>530</height>
         </rect>
        </property>
@@ -49,12 +49,16 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pb_import_package">
+           <widget class="QToolButton" name="tb_import_package">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <property name="text">
-             <string>İmport</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../resource/pisido.qrc">
+              <normaloff>:/images/import.png</normaloff>:/images/import.png</iconset>
             </property>
            </widget>
           </item>
@@ -311,7 +315,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1041</width>
+     <width>869</width>
      <height>25</height>
     </rect>
    </property>
@@ -367,6 +371,10 @@ p, li { white-space: pre-wrap; }
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dw_history">
+   <property name="windowIcon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/history.png</normaloff>:/images/history.png</iconset>
+   </property>
    <property name="windowTitle">
     <string>History</string>
    </property>
@@ -375,7 +383,7 @@ p, li { white-space: pre-wrap; }
    </attribute>
    <widget class="QWidget" name="dw_history_contents">
     <layout class="QGridLayout" name="gridLayout_4">
-     <item row="0" column="0" colspan="3">
+     <item row="0" column="0" rowspan="3" colspan="2">
       <widget class="QTableWidget" name="tw_history">
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
@@ -436,32 +444,27 @@ p, li { white-space: pre-wrap; }
        </column>
       </widget>
      </item>
+     <item row="0" column="2">
+      <widget class="QToolButton" name="tb_add_update">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resource/pisido.qrc">
+         <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="2">
-      <widget class="QPushButton" name="pb_delete_last_update">
+      <widget class="QToolButton" name="tb_delete_last_update">
        <property name="text">
-        <string>Delete Last Update</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resource/pisido.qrc">
+         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
        </property>
       </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="pb_add_update">
-       <property name="text">
-        <string>Add Update</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </widget>
@@ -575,7 +578,7 @@ p, li { white-space: pre-wrap; }
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dw_desktop">
+  <widget class="QDockWidget" name="dw_menu">
    <property name="windowTitle">
     <string>Menu Icon</string>
    </property>
@@ -585,7 +588,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QWidget" name="dw_desktop_contents">
     <layout class="QGridLayout" name="gridLayout_7">
      <item row="0" column="0">
-      <widget class="QGroupBox" name="gb_create_desktop">
+      <widget class="QGroupBox" name="gb_create_menu">
        <property name="title">
         <string>Create Menu Icon</string>
        </property>
@@ -596,7 +599,7 @@ p, li { white-space: pre-wrap; }
         <bool>false</bool>
        </property>
        <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0" colspan="2">
+        <item row="0" column="0" rowspan="2" colspan="2">
          <widget class="QPlainTextEdit" name="pte_desktop">
           <property name="toolTip">
            <string>Underscored words will replace with proper values.</string>
@@ -627,22 +630,26 @@ Categories=Application;</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QToolButton" name="tb_desktop_reset">
+        <item row="0" column="2">
+         <widget class="QToolButton" name="tb_reset_menu">
           <property name="text">
-           <string>Reset</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../resource/pisido.qrc">
+            <normaloff>:/images/undo.png</normaloff>:/images/undo.png</iconset>
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <spacer name="horizontalSpacer">
+        <item row="1" column="2">
+         <spacer name="verticalSpacer_4">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
-            <height>20</height>
+            <width>20</width>
+            <height>40</height>
            </size>
           </property>
          </spacer>
@@ -665,6 +672,10 @@ Categories=Application;</string>
    </attribute>
   </widget>
   <widget class="QDockWidget" name="dw_build">
+   <property name="windowIcon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/build.png</normaloff>:/images/build.png</iconset>
+   </property>
    <property name="windowTitle">
     <string>Build</string>
    </property>
@@ -815,7 +826,7 @@ Categories=Application;</string>
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dw_files">
+  <widget class="QDockWidget" name="dw_install_files">
    <property name="windowTitle">
     <string>Files</string>
    </property>
@@ -824,7 +835,7 @@ Categories=Application;</string>
    </attribute>
    <widget class="QWidget" name="dw_files_contents">
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
+     <item row="0" column="0" colspan="2">
       <widget class="QLabel" name="lbl_install_files">
        <property name="font">
         <font>
@@ -833,17 +844,14 @@ Categories=Application;</string>
         </font>
        </property>
        <property name="text">
-        <string>Install Files And Directories</string>
+        <string>Install</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="4">
-      <widget class="QTreeView" name="treeV_files"/>
-     </item>
-     <item row="2" column="0">
+     <item row="0" column="3" colspan="2">
       <widget class="QLabel" name="lbl_labels">
        <property name="font">
         <font>
@@ -852,14 +860,17 @@ Categories=Application;</string>
         </font>
        </property>
        <property name="text">
-        <string>Labeled Files And Directories</string>
+        <string>Labels</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
-     <item row="4" column="0" colspan="4">
+     <item row="1" column="0" rowspan="3" colspan="2">
+      <widget class="QTreeView" name="treeV_files"/>
+     </item>
+     <item row="1" column="3" rowspan="3" colspan="2">
       <widget class="QTableWidget" name="tableW_files">
        <property name="alternatingRowColors">
         <bool>true</bool>
@@ -875,29 +886,7 @@ Categories=Application;</string>
        </attribute>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QToolButton" name="tb_add_label">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../resource/pisido.qrc">
-         <normaloff>:/images/down.png</normaloff>:/images/down.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="3">
-      <widget class="QToolButton" name="tb_delete_label">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../resource/pisido.qrc">
-         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
+     <item row="3" column="5">
       <widget class="QToolButton" name="tb_open_install_dir">
        <property name="text">
         <string/>
@@ -908,10 +897,49 @@ Categories=Application;</string>
        </property>
       </widget>
      </item>
+     <item row="1" column="5">
+      <widget class="QToolButton" name="tb_delete_label">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resource/pisido.qrc">
+         <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QToolButton" name="tb_add_label">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../resource/pisido.qrc">
+         <normaloff>:/images/right.png</normaloff>:/images/right.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="5">
+      <spacer name="verticalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
     </layout>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dw_patches">
+   <property name="windowIcon">
+    <iconset>
+     <normaloff>:/images/patch.png</normaloff>:/images/patch.png</iconset>
+   </property>
    <property name="windowTitle">
     <string>Patches</string>
    </property>
@@ -1108,6 +1136,10 @@ Categories=Application;</string>
    </widget>
   </widget>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
+   </property>
    <property name="text">
     <string>E&amp;xit</string>
    </property>
@@ -1116,21 +1148,37 @@ Categories=Application;</string>
    </property>
   </action>
   <action name="action_Configure_Application">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/configure.png</normaloff>:/images/configure.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Configure Application...</string>
    </property>
   </action>
   <action name="action_About">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/about.png</normaloff>:/images/about.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;About...</string>
    </property>
   </action>
   <action name="action_About_Qt">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/qt-logo.png</normaloff>:/images/qt-logo.png</iconset>
+   </property>
    <property name="text">
     <string>About &amp;Qt...</string>
    </property>
   </action>
   <action name="action_Help">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/help.png</normaloff>:/images/help.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Help...</string>
    </property>
@@ -1139,41 +1187,73 @@ Categories=Application;</string>
    </property>
   </action>
   <action name="action_Open_Actions_API_Page">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/bookmarks.png</normaloff>:/images/bookmarks.png</iconset>
+   </property>
    <property name="text">
     <string>Actions API</string>
    </property>
   </action>
   <action name="action_Open_PISI_Spec_File">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/bookmarks.png</normaloff>:/images/bookmarks.png</iconset>
+   </property>
    <property name="text">
     <string>PISI Spec</string>
    </property>
   </action>
   <action name="action_Open_PISI_Archive_Dir">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/open-folder.png</normaloff>:/images/open-folder.png</iconset>
+   </property>
    <property name="text">
     <string>Open PISI Archive Dir</string>
    </property>
   </action>
   <action name="action_Open_PISI_Archive_Dir_As_Root">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/open-folder-red.png</normaloff>:/images/open-folder-red.png</iconset>
+   </property>
    <property name="text">
     <string>Open PISI Archive Dir As Root</string>
    </property>
   </action>
   <action name="action_Application_Language">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/language.png</normaloff>:/images/language.png</iconset>
+   </property>
    <property name="text">
     <string>Application Language...</string>
    </property>
   </action>
   <action name="action_Change_Workspace">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/change-workspace.png</normaloff>:/images/change-workspace.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Change Workspace</string>
    </property>
   </action>
   <action name="action_Open_Workspace">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/open-folder.png</normaloff>:/images/open-folder.png</iconset>
+   </property>
    <property name="text">
     <string>Open Workspace</string>
    </property>
   </action>
   <action name="action_Reset_Fields">
+   <property name="icon">
+    <iconset resource="../resource/pisido.qrc">
+     <normaloff>:/images/reset.png</normaloff>:/images/reset.png</iconset>
+   </property>
    <property name="text">
     <string>Reset Fields</string>
    </property>

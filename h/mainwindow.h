@@ -54,9 +54,9 @@ private slots:
     void on_action_About_triggered();
     void on_action_About_Qt_triggered();
 
-    void on_tb_desktop_reset_clicked();
-    void on_pb_delete_last_update_clicked();
-    void on_pb_add_update_clicked();
+    void on_tb_reset_menu_clicked();
+    void on_tb_delete_last_update_clicked();
+    void on_tb_add_update_clicked();
 
     void on_action_Application_Language_triggered();
 
@@ -65,7 +65,7 @@ private slots:
 
     void on_le_package_name_textChanged(const QString &text);
     void on_le_package_name_returnPressed();
-    void on_pb_import_package_clicked();
+    void on_tb_import_package_clicked();
 
     void on_le_source_textChanged(const QString & text);
     void on_le_source_sha1_editingFinished();

@@ -39,30 +39,46 @@ MainWindow::MainWindow(QWidget *parent) :
 
     addDockWidget(Qt::RightDockWidgetArea, ui->dw_history);
     // tabify for first run
-    tabifyDockWidget(ui->dw_actions, ui->dw_desktop);
-    tabifyDockWidget(ui->dw_desktop, ui->dw_files);
-    tabifyDockWidget(ui->dw_files, ui->dw_aditional_files);
+    tabifyDockWidget(ui->dw_actions, ui->dw_menu);
+    tabifyDockWidget(ui->dw_menu, ui->dw_install_files);
+    tabifyDockWidget(ui->dw_install_files, ui->dw_aditional_files);
     tabifyDockWidget(ui->dw_aditional_files, ui->dw_patches);
     tabifyDockWidget(ui->dw_patches, ui->dw_history);
     ui->dw_actions->raise();
     // fill view menu
-    ui->menu_View->addAction(ui->dw_actions->toggleViewAction());
-    ui->menu_View->addAction(ui->dw_desktop->toggleViewAction());
-    ui->menu_View->addAction(ui->dw_files->toggleViewAction());
-    ui->menu_View->addAction(ui->dw_aditional_files->toggleViewAction());
-    ui->menu_View->addAction(ui->dw_patches->toggleViewAction());
-    ui->menu_View->addAction(ui->dw_history->toggleViewAction());
-    ui->menu_View->addAction(ui->dw_build->toggleViewAction());
+    QAction * a_dw_actions = ui->dw_actions->toggleViewAction();
+    QAction * a_dw_menu = ui->dw_menu->toggleViewAction();
+    QAction * a_dw_install_files = ui->dw_install_files->toggleViewAction();
+    QAction * a_dw_aditional_files = ui->dw_aditional_files->toggleViewAction();
+    QAction * a_dw_patches = ui->dw_patches->toggleViewAction();
+    QAction * a_dw_history = ui->dw_history->toggleViewAction();
+    QAction * a_dw_build = ui->dw_build->toggleViewAction();
+    QAction * a_tBar_view = ui->tBar_view->toggleViewAction();
+    a_dw_actions->setIcon(QIcon(":/images/actions.png"));
+    a_dw_menu->setIcon(QIcon(":/images/menu.png"));
+    a_dw_install_files->setIcon(QIcon(":/images/install-files.png"));
+    a_dw_aditional_files->setIcon(QIcon(":/images/aditional-files.png"));
+    a_dw_patches->setIcon(QIcon(":/images/patches.png"));
+    a_dw_history->setIcon(QIcon(":/images/history.png"));
+    a_dw_build->setIcon(QIcon(":/images/build.png"));
+    a_tBar_view->setIcon(QIcon(":/images/toolbar.png"));
+    ui->menu_View->addAction(a_dw_actions);
+    ui->menu_View->addAction(a_dw_menu);
+    ui->menu_View->addAction(a_dw_install_files);
+    ui->menu_View->addAction(a_dw_aditional_files);
+    ui->menu_View->addAction(a_dw_patches);
+    ui->menu_View->addAction(a_dw_history);
+    ui->menu_View->addAction(a_dw_build);
     ui->menu_View->addSeparator();
-    ui->menu_View->addAction(ui->tBar_view->toggleViewAction());
+    ui->menu_View->addAction(a_tBar_view);
     // fill view tool bar
-    ui->tBar_view->addAction(ui->dw_actions->toggleViewAction());
-    ui->tBar_view->addAction(ui->dw_desktop->toggleViewAction());
-    ui->tBar_view->addAction(ui->dw_files->toggleViewAction());
-    ui->tBar_view->addAction(ui->dw_aditional_files->toggleViewAction());
-    ui->tBar_view->addAction(ui->dw_patches->toggleViewAction());
-    ui->tBar_view->addAction(ui->dw_history->toggleViewAction());
-    ui->tBar_view->addAction(ui->dw_build->toggleViewAction());
+    ui->tBar_view->addAction(a_dw_actions);
+    ui->tBar_view->addAction(a_dw_menu);
+    ui->tBar_view->addAction(a_dw_install_files);
+    ui->tBar_view->addAction(a_dw_aditional_files);
+    ui->tBar_view->addAction(a_dw_patches);
+    ui->tBar_view->addAction(a_dw_history);
+    ui->tBar_view->addAction(a_dw_build);
 
     // initialize scintilla
     actions_editor = new QsciScintilla(ui->dw_actions_contents);
@@ -370,7 +386,7 @@ void MainWindow::write_settings()
 
     settings.beginGroup("compilation");
     settings.setValue("actions_template_index", ui->combo_actions_template->currentIndex());
-    settings.setValue("create_desktop", ui->gb_create_desktop->isChecked());
+    settings.setValue("create_desktop", ui->gb_create_menu->isChecked());
     settings.setValue("desktop_file", ui->pte_desktop->toPlainText());
     settings.setValue("actions_template_auto", actions_templates[0]);
     settings.setValue("actions_template_cmake", actions_templates[1]);
@@ -407,7 +423,7 @@ void MainWindow::read_settings()
     settings.endGroup();
 
     settings.beginGroup("compilation");
-    ui->gb_create_desktop->setChecked(settings.value("create_desktop", false).toBool());
+    ui->gb_create_menu->setChecked(settings.value("create_desktop", false).toBool());
     ui->pte_desktop->setPlainText(settings.value("desktop_file", desktop_file_default).toString());
     int last_index = settings.value("actions_template_index",0).toInt();
     ui->combo_actions_template->setCurrentIndex(last_index);
@@ -457,8 +473,8 @@ void MainWindow::on_action_Reset_Fields_triggered()
     actions_templates = actions_templates_defaults;
     actions_editor->setText(actions_templates[ui->combo_actions_template->currentIndex()]);
 
-    on_tb_desktop_reset_clicked();
-    ui->gb_create_desktop->setChecked(false);
+    on_tb_reset_menu_clicked();
+    ui->gb_create_menu->setChecked(false);
 
     int row_count = ui->tw_history->rowCount();
     for(int i=0; i<row_count; ++i)
@@ -467,7 +483,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
     }
 }
 
-void MainWindow::on_tb_desktop_reset_clicked()
+void MainWindow::on_tb_reset_menu_clicked()
 {
     ui->pte_desktop->setPlainText(desktop_file_default);
 }
@@ -572,13 +588,13 @@ PisiUpdate MainWindow::get_history_update(int row)
     return update;
 }
 
-void MainWindow::on_pb_delete_last_update_clicked()
+void MainWindow::on_tb_delete_last_update_clicked()
 {
     if(ui->tw_history->rowCount()>0)
         ui->tw_history->removeRow(0);
 }
 
-void MainWindow::on_pb_add_update_clicked()
+void MainWindow::on_tb_add_update_clicked()
 {
     AddUpdateDialog ud(this);
     if(ud.exec() == QDialog::Accepted)
@@ -854,10 +870,10 @@ void MainWindow::on_te_description_textChanged()
 
 void MainWindow::on_le_package_name_returnPressed()
 {
-    on_pb_import_package_clicked();
+    on_tb_import_package_clicked();
 }
 
-void MainWindow::on_pb_import_package_clicked()
+void MainWindow::on_tb_import_package_clicked()
 {
     QString pspec_file = package_dir.absoluteFilePath("pspec.xml");
 
@@ -997,7 +1013,7 @@ void MainWindow::fill_fields_from_pisi()
         }
         else
         {
-            ui->gb_create_desktop->setChecked(true);
+            ui->gb_create_menu->setChecked(true);
             QTextStream desktop_file_stream(&desktop_file);
             ui->pte_desktop->setPlainText(desktop_file_stream.readAll());
         }
@@ -1005,7 +1021,7 @@ void MainWindow::fill_fields_from_pisi()
     }
     else
     {
-        ui->gb_create_desktop->setChecked(false);
+        ui->gb_create_menu->setChecked(false);
     }
 
     // history section
@@ -1280,11 +1296,11 @@ void MainWindow::package_files_changed()
     if(QFile::exists(package_dir.absoluteFilePath("pspec.xml"))
             && QFile::exists(package_dir.absoluteFilePath("actions.py")))
     {
-        ui->pb_import_package->setEnabled(true);
+        ui->tb_import_package->setEnabled(true);
     }
     else
     {
-        ui->pb_import_package->setEnabled(false);
+        ui->tb_import_package->setEnabled(false);
     }
 }
 
@@ -1420,15 +1436,15 @@ void MainWindow::on_tb_open_patches_clicked()
 
 void MainWindow::on_tb_open_aditional_files_clicked()
 {
-
+    // TODO : fill
 }
 
 void MainWindow::on_tb_open_install_dir_clicked()
 {
-
+    // TODO : fill
 }
 
 void MainWindow::on_tb_open_package_dir_clicked()
 {
-
+    // TODO : fill
 }

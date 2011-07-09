@@ -13,6 +13,26 @@
         <file alias="zoom-in.png">images/zoom-in.png</file>
         <file alias="zoom-out.png">images/zoom-out.png</file>
         <file alias="open-folder.png">images/open-folder.png</file>
+        <file alias="undo.png">images/undo.png</file>
+        <file alias="redo.png">images/redo.png</file>
+        <file alias="import.png">images/import.png</file>
+        <file alias="history.png">images/history.png</file>
+        <file alias="actions.png">images/actions.png</file>
+        <file alias="install-files.png">images/install-files.png</file>
+        <file alias="aditional-files.png">images/aditional-files.png</file>
+        <file alias="menu.png">images/menu.png</file>
+        <file alias="patches.png">images/patches.png</file>
+        <file alias="toolbar.png">images/toolbar.png</file>
+        <file alias="exit.png">images/exit.png</file>
+        <file alias="reset.png">images/reset.png</file>
+        <file alias="change-workspace.png">images/change-workspace.png</file>
+        <file alias="open-folder-red.png">images/open-folder-red.png</file>
+        <file alias="bookmarks.png">images/bookmarks.png</file>
+        <file alias="configure.png">images/configure.png</file>
+        <file alias="language.png">images/language.png</file>
+        <file alias="qt-logo.png">images/qt-logo.png</file>
+        <file alias="about.png">images/about.png</file>
+        <file alias="help.png">images/help.png</file>
     </qresource>
     <qresource prefix="/files">
         <file alias="help.html">files/help.html</file>

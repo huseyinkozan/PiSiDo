@@ -31,14 +31,14 @@ First:
     (X) Add line limit to console.
 
 
-    (*) load from gui and save to gui for these:
+    (->) load from gui and save to gui for these:
         (*) Package::Files,
         (*) Souce::Patches,
         (*) SPBase::AdditionalFiles
 
-    (*) QFileSystemWatcher (or QFileSystemModel) will be used here :
-        (*) __workspace__/__package_name__/
-        (*) __workspace__/__package_name__/files/
+    (->) QFileSystemWatcher (or QFileSystemModel) will be used here :
+        (X) __workspace__/__package_name__/
+        (X) __workspace__/__package_name__/files/
         (*) /var/pisi/__package_name__/install/
 
     (*) Restrict repeated command execution on bash.
