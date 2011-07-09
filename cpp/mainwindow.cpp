@@ -196,6 +196,7 @@ void MainWindow::on_action_Change_Workspace_triggered()
     {
         workspace = QDir(wd.get_workspace());
         not_ask_workspace = wd.get_not_ask_workspace();
+        ui->w_console->execute(QString("cd %1").arg(workspace.absolutePath()));
     }
 
     // TODO : revise after other actions !

@@ -22,6 +22,8 @@ public:
 
 private slots:
     void write_output();
+    void start_bash();
+    void handle_bash_exit(int exitCode);
 
 private:
     Ui::ConsoleWidget *ui;
