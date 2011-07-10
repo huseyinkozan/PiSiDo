@@ -22,6 +22,7 @@ DEFINES += PISIDO_LANG_DIR=\\\"/home/huseyinkozan/calismalar/pisido/resource/tra
 #
 
 SOURCES += cpp/main.cpp\
+    cpp/application.cpp \
     cpp/mainwindow.cpp \
     cpp/configurationdialog.cpp \
     cpp/helpdialog.cpp \
@@ -34,9 +35,11 @@ SOURCES += cpp/main.cpp\
     cpp/languagedialog.cpp \
     cpp/workspacedialog.cpp \
     cpp/consolewidget.cpp \
-    cpp/aditionalfiledialog.cpp
+    cpp/aditionalfiledialog.cpp \
+    addinstallfilelabeldialog.cpp
 
 HEADERS  += h/mainwindow.h \
+    h/application.h \
     h/configurationdialog.h \
     h/helpdialog.h \
     h/pisispbase.h \
@@ -48,7 +51,8 @@ HEADERS  += h/mainwindow.h \
     h/languagedialog.h \
     h/workspacedialog.h \
     h/consolewidget.h \
-    h/aditionalfiledialog.h
+    h/aditionalfiledialog.h \
+    addinstallfilelabeldialog.h
 
 FORMS    += ui/mainwindow.ui \
     ui/configurationdialog.ui \
@@ -57,7 +61,8 @@ FORMS    += ui/mainwindow.ui \
     ui/languagedialog.ui \
     ui/workspacedialog.ui \
     ui/consolewidget.ui \
-    ui/aditionalfiledialog.ui
+    ui/aditionalfiledialog.ui \
+    addinstallfilelabeldialog.ui
 
 OTHER_FILES += \
     README \

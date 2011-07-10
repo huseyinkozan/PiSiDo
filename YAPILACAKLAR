@@ -36,10 +36,10 @@
         (*) Souce::Patches,
         (*) SPBase::AdditionalFiles
 
-    (->) QFileSystemWatcher (veya QFileSystemModel) kullanılacak dizinler:
+    (X) QFileSystemWatcher (veya QFileSystemModel) kullanılacak dizinler:
         (X) __workspace__/__package_name__/
         (X) __workspace__/__package_name__/files/
-        (*) /var/pisi/__package_name__/install/
+        (X) /var/pisi/__package_name__/install/
 
     (*) Bash'e arka arkaya komut göndermeyi engelle.
 
@@ -48,6 +48,7 @@
 
     (*) gui tab sırası kontrol edilecek.
     (*) gui tooltip leri kontrol edilecek.
+    (*) pisi sınıflarındaki QString("") ler QObject::tr("") yapılacak.
 
     (*) Program yardımı hazırlanacak.
 

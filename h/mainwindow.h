@@ -40,8 +40,7 @@ private slots:
 
     void on_action_Change_Workspace_triggered();
 
-    void on_action_Open_PISI_Archive_Dir_triggered();
-    void on_action_Open_PISI_Archive_Dir_As_Root_triggered();
+    void on_action_Open_PISI_Packaging_Dir_triggered();
 
     void on_action_Configure_Application_triggered();
 
@@ -91,13 +90,19 @@ private slots:
 
     void on_tb_edit_aditional_files_clicked();
 
-    void on_tb_open_patches_clicked();
+    void on_tb_open_patches_dir_clicked();
 
-    void on_tb_open_aditional_files_clicked();
+    void on_tb_open_aditional_files_dir_clicked();
 
     void on_tb_open_install_dir_clicked();
 
     void on_tb_open_package_dir_clicked();
+
+    void on_tb_add_label_clicked();
+
+    void on_tb_delete_label_clicked();
+
+    void on_tableW_files_itemSelectionChanged();
 
 protected:
     virtual void closeEvent(QCloseEvent * event);
@@ -118,13 +123,13 @@ private:
 
     int selected_source;
 
-    QDir workspace;
+    QDir workspace_dir;
     QDir package_dir;
     QDir package_files_dir;
     QDir package_install_dir;
 
     QFileSystemWatcher * package_files_watcher;
-    QFileSystemWatcher * package_install_watcher;
+//    QFileSystemWatcher * package_install_watcher;
 
     QString package_name;
     QString source;
@@ -141,6 +146,7 @@ private:
     QMultiMap<int, QString> temp_patches;
     QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > aditional_files;
     QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > temp_aditional_files;
+    QMap<QString, QMap<PisiPackage::FileType, bool> > files;
 
     void appy_default_settings();
     void write_settings();

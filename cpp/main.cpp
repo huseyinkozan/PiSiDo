@@ -1,4 +1,4 @@
-#include <QtGui/QApplication>
+#include "application.h"
 #include <QDir>
 #include <QLocale>
 #include <QTranslator>
@@ -12,7 +12,7 @@ void load_translation(const QApplication & a);
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    Application a(argc, argv);
 
     // set Application information
     a.setOrganizationName(QString("pisido"));

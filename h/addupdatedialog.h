@@ -21,6 +21,9 @@ public:
     QString get_packager_name();
     QString get_packager_email();
 
+private slots:
+    void buttonBox_accepted();
+
 private:
     Ui::AddUpdateDialog *ui;
 };

@@ -14,11 +14,14 @@
 #include <QTimer>
 #include <QShortcut>
 #include <QFileSystemWatcher>
+#include <QFileSystemModel>
+#include <QStandardItemModel>
 #include <QDirIterator>
 
 #include <Qsci/qsciscintilla.h>
 #include <Qsci/qscilexerpython.h>
 
+#include "addinstallfilelabeldialog.h"
 #include "addupdatedialog.h"
 #include "aditionalfiledialog.h"
 #include "configurationdialog.h"
@@ -33,7 +36,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     help_dialog(NULL),
     not_ask_workspace(false),
-    selected_source(0)
+    selected_source(0),
+    workspace_dir(QDir::root()),
+    package_dir(QDir::root()),
+    package_files_dir(QDir::root()),
+    package_install_dir(QDir::root())
 {
     ui->setupUi(this);
 
@@ -53,7 +60,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QAction * a_dw_patches = ui->dw_patches->toggleViewAction();
     QAction * a_dw_history = ui->dw_history->toggleViewAction();
     QAction * a_dw_build = ui->dw_build->toggleViewAction();
+    QAction * a_tBar_operations = ui->tBar_operations->toggleViewAction();
     QAction * a_tBar_view = ui->tBar_view->toggleViewAction();
+    QAction * a_tBar_help = ui->tBar_help->toggleViewAction();
     a_dw_actions->setIcon(QIcon(":/images/actions.png"));
     a_dw_menu->setIcon(QIcon(":/images/menu.png"));
     a_dw_install_files->setIcon(QIcon(":/images/install-files.png"));
@@ -61,7 +70,9 @@ MainWindow::MainWindow(QWidget *parent) :
     a_dw_patches->setIcon(QIcon(":/images/patches.png"));
     a_dw_history->setIcon(QIcon(":/images/history.png"));
     a_dw_build->setIcon(QIcon(":/images/build.png"));
+    a_tBar_operations->setIcon(QIcon(":/images/operations.png"));
     a_tBar_view->setIcon(QIcon(":/images/toolbar.png"));
+    a_tBar_help->setIcon(QIcon(":/images/help.png"));
     ui->menu_View->addAction(a_dw_actions);
     ui->menu_View->addAction(a_dw_menu);
     ui->menu_View->addAction(a_dw_install_files);
@@ -70,7 +81,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->menu_View->addAction(a_dw_history);
     ui->menu_View->addAction(a_dw_build);
     ui->menu_View->addSeparator();
+    ui->menu_View->addAction(a_tBar_operations);
     ui->menu_View->addAction(a_tBar_view);
+    ui->menu_View->addAction(a_tBar_help);
     // fill view tool bar
     ui->tBar_view->addAction(a_dw_actions);
     ui->tBar_view->addAction(a_dw_menu);
@@ -129,9 +142,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // checks build dir and install dir for file changes
 
     package_files_watcher = new QFileSystemWatcher(this);
-    package_install_watcher = new QFileSystemWatcher(this);
+//    package_install_watcher = new QFileSystemWatcher(this);
     connect(package_files_watcher, SIGNAL(directoryChanged(QString)), this, SLOT(package_files_changed()));
-    connect(package_install_watcher, SIGNAL(directoryChanged(QString)), this, SLOT(package_install_changed()));
+//    connect(package_install_watcher, SIGNAL(directoryChanged(QString)), this, SLOT(package_install_changed()));
 
 
     read_settings();
@@ -141,7 +154,7 @@ MainWindow::MainWindow(QWidget *parent) :
         WorkspaceDialog wd(this);
         if(wd.exec() == QDialog::Accepted)
         {
-            workspace = QDir(wd.get_workspace());
+            workspace_dir = QDir(wd.get_workspace());
             not_ask_workspace = wd.get_not_ask_workspace();
         }
         else
@@ -152,7 +165,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->w_console->execute("unalias ls ll dir");
     ui->w_console->execute("alias ll=\"ls -l\"");
     // now, there is a workspace
-    ui->w_console->execute(QString("cd %1").arg(workspace.absolutePath()));
+    ui->w_console->execute(QString("cd %1").arg(workspace_dir.absolutePath()));
 }
 
 MainWindow::~MainWindow()
@@ -210,9 +223,9 @@ void MainWindow::on_action_Change_Workspace_triggered()
     WorkspaceDialog wd(this);
     if(wd.exec() == QDialog::Accepted)
     {
-        workspace = QDir(wd.get_workspace());
+        workspace_dir = QDir(wd.get_workspace());
         not_ask_workspace = wd.get_not_ask_workspace();
-        ui->w_console->execute(QString("cd %1").arg(workspace.absolutePath()));
+        ui->w_console->execute(QString("cd %1").arg(workspace_dir.absolutePath()));
     }
 
     // TODO : revise after other actions !
@@ -298,35 +311,23 @@ void MainWindow::on_action_Open_PISI_Spec_File_triggered()
     settings.endGroup();
 }
 
-void MainWindow::on_action_Open_PISI_Archive_Dir_triggered()
+void MainWindow::on_action_Open_PISI_Packaging_Dir_triggered()
 {
     settings.beginGroup("configuration");
-    QString pisi_archive_dir = settings.value("pisi_archive_dir").toString();
-    if( ! pisi_archive_dir.isEmpty())
+    QString pisi_packaging_dir = settings.value("pisi_packaging_dir").toString();
+    if( ! pisi_packaging_dir.isEmpty())
     {
-        QDir dir(pisi_archive_dir);
+        QDir dir(pisi_packaging_dir);
         if(dir.exists())
-            QDesktopServices::openUrl(QUrl(pisi_archive_dir));
-    }
-    settings.endGroup();
-}
-
-void MainWindow::on_action_Open_PISI_Archive_Dir_As_Root_triggered()
-{
-    settings.beginGroup("configuration");
-    QString pisi_archive_dir = settings.value("pisi_archive_dir").toString();
-    QString cmd = QString("/usr/bin/xdg-su -u root -c \"dolphin %1\"").arg(pisi_archive_dir);
-    if(system(qPrintable(cmd)))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Can not open pisi archive directory !"));
+            QDesktopServices::openUrl(QUrl(pisi_packaging_dir));
     }
     settings.endGroup();
 }
 
 void MainWindow::on_action_Open_Workspace_triggered()
 {
-    if(workspace.exists())
-        QDesktopServices::openUrl(QUrl("file:///" + workspace.absolutePath()));
+    if( ! workspace_dir.isRoot() && workspace_dir.exists())
+        QDesktopServices::openUrl(QUrl("file:///" + workspace_dir.absolutePath()));
 }
 
 void MainWindow::on_action_Help_triggered()
@@ -347,14 +348,14 @@ void MainWindow::appy_default_settings()
     settings.beginGroup( "configuration" );
     QString action_api_page = settings.value("action_api_page", QString("http://tr.pardus-wiki.org/Pardus:ActionsAPI")).toString();
     QString pisi_spec = settings.value("pisi_spec", QString("http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng")).toString();
-    QString pisi_archive_dir = settings.value("pisi_archive_dir", QString("/var/cache/pisi/archives/")).toString();
+    QString pisi_packaging_dir = settings.value("pisi_packaging_dir", QString("/var/pisi/")).toString();
     bool ok = false;
     int folder_comp_time_limit = settings.value("folder_comp_time_limit", 2).toInt(&ok);
     if(!ok) folder_comp_time_limit = 2;
     int console_max_line = settings.value("console_max_line", 100).toInt();
     settings.setValue("action_api_page", action_api_page);
     settings.setValue("pisi_spec", pisi_spec);
-    settings.setValue("pisi_archive_dir", pisi_archive_dir);
+    settings.setValue("pisi_packaging_dir", pisi_packaging_dir);
     settings.setValue("folder_comp_time_limit", folder_comp_time_limit);
     settings.setValue("console_max_line", console_max_line);
     settings.endGroup();
@@ -365,7 +366,7 @@ void MainWindow::write_settings()
     settings.beginGroup("main");
     settings.setValue("window_state", saveState());
     settings.setValue("window_geometry", saveGeometry());
-    settings.setValue("workspace", workspace.absolutePath());
+    settings.setValue("workspace", workspace_dir.absolutePath());
     settings.setValue("not_ask_workspace", not_ask_workspace);
     settings.endGroup();
 
@@ -403,7 +404,7 @@ void MainWindow::read_settings()
     settings.beginGroup("main");
     restoreState(settings.value("window_state").toByteArray());
     restoreGeometry(settings.value("window_geometry").toByteArray());
-    workspace = settings.value("workspace").toString();
+    workspace_dir = settings.value("workspace").toString();
     not_ask_workspace = settings.value("not_ask_workspace", false).toBool();
     settings.endGroup();
 
@@ -560,7 +561,7 @@ PisiUpdate MainWindow::get_last_history_update()
             throw QString("Error at conversion release string to integer !");
         }
     }
-    if(last_release_row != 0)
+    if(last_release != 0)
     {
         return get_history_update(last_release_row);
     }
@@ -618,6 +619,7 @@ void MainWindow::on_tb_add_update_clicked()
         ui->tw_history->setItem(row, 3, item_comment);
         ui->tw_history->setItem(row, 4, item_name);
         ui->tw_history->setItem(row, 5, item_email);
+        package_install_changed();
     }
 }
 
@@ -752,7 +754,7 @@ bool MainWindow::create_desktop(QDir package_dir)
 
 bool MainWindow::build_package(QDir package_dir, QDir out_dir)
 {
-    if(package_dir == QDir() || out_dir == QDir())
+    if(package_dir.isRoot() || out_dir.isRoot())
         return false;
 
 
@@ -778,25 +780,25 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
     if(text.isEmpty())
     {
         package_name.clear();
-        package_dir = QDir();
-        package_files_dir = QDir();
-        package_install_dir = QDir();
+        package_dir = QDir::root();
+        package_files_dir = QDir::root();
 
         QStringList p_f_w_dirs = package_files_watcher->directories();
         if( ! p_f_w_dirs.isEmpty())
             package_files_watcher->removePaths(p_f_w_dirs);
-        QStringList p_i_w_dirs = package_install_watcher->directories();
-        if( ! p_i_w_dirs.isEmpty())
-            package_install_watcher->removePaths(p_i_w_dirs);
+//        QStringList p_i_w_dirs = package_install_watcher->directories();
+//        if( ! p_i_w_dirs.isEmpty())
+//            package_install_watcher->removePaths(p_i_w_dirs);
     }
     else
     {
-        package_name = text;
-        package_dir = QDir(workspace.absoluteFilePath(package_name));
-        package_files_dir = QDir(package_dir.absoluteFilePath("files"));
-        package_install_dir= QDir(QString("/var/pisi/%1/install/").arg(package_name));
 
-        if(package_files_dir.exists()){
+
+        package_name = text;
+        package_dir = QDir(workspace_dir.absoluteFilePath(package_name));
+        package_files_dir = QDir(package_dir.absoluteFilePath("files"));
+
+        if( ! package_files_dir.isRoot() && package_files_dir.exists()){
             package_files_watcher->addPath(package_files_dir.absolutePath());
         }
         else{
@@ -804,14 +806,15 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
             if( ! p_f_w_dirs.isEmpty())
                 package_files_watcher->removePaths(p_f_w_dirs);
         }
-        if(package_install_dir.exists()){
-            package_install_watcher->addPath(package_install_dir.absolutePath());
-        }
-        else{
-            QStringList p_i_w_dirs = package_install_watcher->directories();
-            if( ! p_i_w_dirs.isEmpty())
-                package_install_watcher->removePaths(p_i_w_dirs);
-        }
+
+//        if( ! package_install_dir.isRoot() && package_install_dir.exists()){
+//            package_install_watcher->addPath(package_install_dir.absolutePath());
+//        }
+//        else{
+//            QStringList p_i_w_dirs = package_install_watcher->directories();
+//            if( ! p_i_w_dirs.isEmpty())
+//                package_install_watcher->removePaths(p_i_w_dirs);
+//        }
     }
     // to handle text change event
     package_files_changed();
@@ -1223,11 +1226,11 @@ void MainWindow::complete_word()
 
 void MainWindow::package_files_changed()
 {
-    if(package_dir.exists())
+    if( ! package_dir.isRoot() && package_dir.exists())
     {
         ui->tb_open_package_dir->setEnabled(true);
 
-        if(package_files_dir.exists())
+        if( ! package_files_dir.isRoot() && package_files_dir.exists())
         {
             ui->tb_open_aditional_files_dir->setEnabled(true);
             ui->tb_open_patches_dir->setEnabled(true);
@@ -1280,12 +1283,12 @@ void MainWindow::package_files_changed()
         }
     }
 
-    if( ! package_dir.exists())
+    if( package_dir.isRoot() || ! package_dir.exists())
     {
         ui->tb_open_package_dir->setEnabled(false);
     }
 
-    if( ! package_files_dir.exists())
+    if(package_files_dir.isRoot() || ! package_files_dir.exists())
     {
         clear_tableW_patches();
         clear_tableW_aditional_files();
@@ -1341,21 +1344,48 @@ void MainWindow::package_files_process(const QString & dir)
     }
 }
 
-
 void MainWindow::package_install_changed()
 {
-    // TODO :
-    if(package_install_dir.exists()){
-        // ckeck files
-        // fill widgets
-        // enable package only
+    package_install_dir = QDir::root();
+
+    if( ! package_name.isEmpty()){
+        PisiUpdate last_update;
+        try{
+             last_update = get_last_history_update();
+        }
+        catch (QString e){
+            QMessageBox::critical(this, tr("Error"), tr("Cannot get last history update : %1").arg(e));
+            return;
+        }
+        catch(...){
+            QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
+            return;
+        }
+        package_install_dir= QDir(QString("/var/pisi/%1-%2-%3/install/")
+                                  .arg(package_name)
+                                  .arg(last_update.get_version())
+                                  .arg(last_update.get_release()));
+    }
+
+    if( ! package_install_dir.isRoot() && package_install_dir.exists()){
+        QFileSystemModel * model = new QFileSystemModel(this);
+        model->setReadOnly(true);
+        model->setRootPath(package_install_dir.absolutePath());
+        ui->treeV_files->setModel(model);
+        ui->treeV_files->setRootIndex(model->index(package_install_dir.absolutePath()));
+        ui->treeV_files->expandAll();
+        QTimer::singleShot(500, ui->treeV_files, SLOT(expandAll()));
     }
     else{
-        // clear widgets
-        // disable package only
+        QAbstractItemModel * old_model = ui->treeV_files->model();
+        QFileSystemModel * old_fs_model = qobject_cast<QFileSystemModel *>(old_model);
+        if(old_fs_model){
+            QStandardItemModel * model = new QStandardItemModel(this);
+            ui->treeV_files->setModel(model);
+            delete old_model;
+        }
     }
 }
-
 
 void MainWindow::on_tb_patch_down_clicked()
 {
@@ -1413,14 +1443,12 @@ void MainWindow::clear_tableW_aditional_files()
     }
 }
 
-
 void MainWindow::on_tb_edit_aditional_files_clicked()
 {
     QModelIndexList list = ui->tableW_aditional_files->selectionModel()->selectedRows(0);
     if(list.count() != 1 )
         return;
     QString a_file = ui->tableW_aditional_files->item(list.first().row(), 0)->data(Qt::DisplayRole).toString();
-    // TODO : call dialog(this, a_file,aditional_files.value(a_file));
     AditionalFileDialog afd(this, a_file, aditional_files.value(a_file));
     if( afd.exec() == QDialog::Accepted )
     {
@@ -1429,22 +1457,64 @@ void MainWindow::on_tb_edit_aditional_files_clicked()
     }
 }
 
-void MainWindow::on_tb_open_patches_clicked()
+void MainWindow::on_tb_add_label_clicked()
 {
-    on_tb_open_aditional_files_clicked();
+    QModelIndexList list = ui->treeV_files->selectionModel()->selectedRows(0);
+    if(list.count() != 1)
+        return;
+    QAbstractItemModel * a_model = ui->treeV_files->model();
+    QFileSystemModel * model = qobject_cast<QFileSystemModel *>(a_model);
+    if(model){
+        bool is_dir = model->isDir(list.first());
+        QString path = model->filePath(list.first()).remove(package_install_dir.absolutePath());
+        if(is_dir)
+            path.append("/*");
+        AddInstallFileLabelDialog aifld(this, path);
+        if(aifld.exec() == QDialog::Accepted){
+            bool permanent = aifld.get_permanent();
+            ui->tableW_files->insertRow(0);
+            ui->tableW_files->setItem(0, 0, new QTableWidgetItem(path));
+            ui->tableW_files->setItem(0, 1, new QTableWidgetItem(aifld.get_file_type()));
+            ui->tableW_files->setItem(0, 2, new QTableWidgetItem(permanent ? tr("True"):tr("False")));
+            ui->tableW_files->sortItems(0);
+        }
+    }
 }
 
-void MainWindow::on_tb_open_aditional_files_clicked()
+void MainWindow::on_tb_delete_label_clicked()
 {
-    // TODO : fill
+    QModelIndexList list = ui->tableW_files->selectionModel()->selectedRows(0);
+    if(list.count() == 1)
+        ui->tableW_files->removeRow(list.first().row());
+}
+
+void MainWindow::on_tableW_files_itemSelectionChanged()
+{
+    QModelIndexList list = ui->tableW_files->selectionModel()->selectedRows(0);
+    ui->tb_delete_label->setEnabled(list.count() == 1);
+}
+
+void MainWindow::on_tb_open_patches_dir_clicked()
+{
+    on_tb_open_aditional_files_dir_clicked();
+}
+
+void MainWindow::on_tb_open_aditional_files_dir_clicked()
+{
+    if( ! package_files_dir.isRoot() && package_files_dir.exists())
+        QDesktopServices::openUrl(QUrl(package_files_dir.absolutePath()));
 }
 
 void MainWindow::on_tb_open_install_dir_clicked()
 {
-    // TODO : fill
+    if( ! package_install_dir.isRoot() && package_install_dir.exists())
+        QDesktopServices::openUrl(QUrl(package_install_dir.absolutePath()));
 }
 
 void MainWindow::on_tb_open_package_dir_clicked()
 {
-    // TODO : fill
+    if( ! package_dir.isRoot() && package_dir.exists())
+        QDesktopServices::openUrl(QUrl(package_dir.absolutePath()));
 }
+
+

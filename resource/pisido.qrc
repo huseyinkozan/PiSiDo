@@ -33,6 +33,7 @@
         <file alias="qt-logo.png">images/qt-logo.png</file>
         <file alias="about.png">images/about.png</file>
         <file alias="help.png">images/help.png</file>
+        <file alias="operations.png">images/operations.png</file>
     </qresource>
     <qresource prefix="/files">
         <file alias="help.html">files/help.html</file>

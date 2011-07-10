@@ -125,10 +125,10 @@ QString PisiUpdate::get_packager_email() const
 
 void PisiUpdate::set_release(int r)
 {
-    if(r<=0)
+    if(r<1)
         throw QString("Release number error : %1").arg(r);
 
-    if(r>0) release = r;
+    if(r>=1) release = r;
 }
 
 void PisiUpdate::set_date(QDate d)

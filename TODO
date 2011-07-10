@@ -36,10 +36,10 @@ First:
         (*) Souce::Patches,
         (*) SPBase::AdditionalFiles
 
-    (->) QFileSystemWatcher (or QFileSystemModel) will be used here :
+    (X) QFileSystemWatcher (or QFileSystemModel) will be used here :
         (X) __workspace__/__package_name__/
         (X) __workspace__/__package_name__/files/
-        (*) /var/pisi/__package_name__/install/
+        (X) /var/pisi/__package_name__/install/
 
     (*) Restrict repeated command execution on bash.
 
@@ -48,6 +48,7 @@ First:
 
     (*) check gui tab order.
     (*) check gui tooltips.
+    (*) convert QString("") to QObject::tr("") in the pisi classes.
 
     (*) Prepare program help.
 
