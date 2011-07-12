@@ -218,6 +218,19 @@ QString MainWindow::get_file_contents(const QString & file_name)
     return contents;
 }
 
+bool MainWindow::save_text_file(const QString &file_name, const QString &data)
+{
+    QFile file(file_name);
+    if( ! file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(file_name));
+        return false;
+    }
+    QTextStream writer(&file);
+    writer << data;
+    return true;
+}
+
 void MainWindow::on_action_Change_Workspace_triggered()
 {
     WorkspaceDialog wd(this);
@@ -226,9 +239,8 @@ void MainWindow::on_action_Change_Workspace_triggered()
         workspace_dir = QDir(wd.get_workspace());
         not_ask_workspace = wd.get_not_ask_workspace();
         ui->w_console->execute(QString("cd %1").arg(workspace_dir.absolutePath()));
+        on_le_package_name_textChanged(ui->le_package_name->text());
     }
-
-    // TODO : revise after other actions !
 }
 
 void MainWindow::on_action_About_triggered()
@@ -453,7 +465,15 @@ void MainWindow::on_action_Reset_Fields_triggered()
     ui->le_build_dependency->clear();
     ui->le_runtime_dependency->clear();
 
-    // TODO : clear archive widget
+//    These will be cleared after gui change :
+//      package_name, homepage, license, is_a, part_of, summary, description, build_dependency, runtime_dependency
+//    These will be cleared after le_package_name clear :
+//      package_files_watcher, aditional_files, patches
+
+    archives.clear();
+    foreach (ArchiveWidget * a_w, archive_widgets) {
+        delete_archive(a_w);
+    }
 
     actions_templates.clear();
     actions_templates = actions_templates_defaults;
@@ -471,46 +491,13 @@ void MainWindow::on_action_Reset_Fields_triggered()
     clear_tableW_files();
     files.clear();
 
-    // aditional_files and patches will be cleared by le_package_name change
+    pisi.clear();
+    dom_pspec.clear();
 }
 
 void MainWindow::on_tb_reset_menu_clicked()
 {
     ui->pte_desktop->setPlainText(desktop_file_default);
-}
-
-PisiUpdate MainWindow::get_last_history_update()
-{
-    int row_count = ui->tableW_history->rowCount();
-    if(row_count < 1)
-        return PisiUpdate();
-    int last_release = 0;
-    int last_release_row = 0;
-    for(int row=0; row<row_count; ++row)
-    {
-        bool ok = false;
-        int current_release = ui->tableW_history->item(row,0)->text().toInt(&ok);
-        if(ok)
-        {
-            if(current_release > last_release)
-            {
-                last_release = current_release;
-                last_release_row = row;
-            }
-        }
-        else
-        {
-            throw QString("Error at conversion release string to integer !");
-        }
-    }
-    if(last_release != 0)
-    {
-        return get_history_update(last_release_row);
-    }
-    else
-    {
-        throw QString("Release error at history update !");
-    }
 }
 
 PisiUpdate MainWindow::get_history_update(int row)
@@ -565,103 +552,9 @@ void MainWindow::on_tb_add_update_clicked()
     }
 }
 
-bool MainWindow::create_action_py(QDir package_dir)
+void MainWindow::on_le_package_name_returnPressed()
 {
-    QString file_name = package_dir.absoluteFilePath("actions.py");
-    QFile file(file_name);
-    if( ! file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(file_name));
-        return false;
-    }
-
-    QTextStream writer(&file);
-    QString action_py = actions_editor->text();
-    action_py.replace(QString("___package_name___"), ui->le_package_name->text());
-    action_py.replace(QString("___version___"), get_last_history_update().get_version());
-    action_py.replace(QString("___summary___"), ui->le_summary->text());
-    writer << action_py;
-    return true;
-}
-
-bool MainWindow::create_desktop(QDir package_dir)
-{
-    QString files = "files";
-    if( ! package_dir.cd(files) )
-    {
-        if( ! package_dir.mkdir(files) )
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Can not create files dir."));
-            return false;
-        }
-        package_dir.cd(files);
-    }
-
-    QString package_name = ui->le_package_name->text();
-    QString file_name = package_dir.absoluteFilePath(package_name + ".desktop");
-    QFile file(file_name);
-    if( ! file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(file_name));
-        return false;
-    }
-
-    QTextStream writer(&file);
-
-    QString desktop_str = ui->pte_desktop->toPlainText();
-    desktop_str.replace(QString("___package_name___"), package_name);
-    desktop_str.replace(QString("___version___"), pisi.get_last_update().get_version());
-    desktop_str.replace(QString("___summary___"), ui->le_summary->text());
-
-    writer << desktop_str;
-
-    // write image file
-
-    QString image_path = package_dir.absoluteFilePath(package_name + ".png");
-
-    if( ! QFile::exists(image_path))
-    {
-        // do not remove file; user may changed the file !
-        QFile image_file(image_path);
-        if( ! image_file.open(QIODevice::WriteOnly))
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(package_name + ".png"));
-            return false;
-        }
-
-        QImage image(":/images/pardus-logo.png");
-        image.save(&image_file);
-    }
-
-    return true;
-}
-
-
-/**
-  Helper function to call "pisi build" from command line.
-  */
-
-bool MainWindow::build_package(QDir package_dir, QDir out_dir)
-{
-    if(package_dir.isRoot() || out_dir.isRoot())
-        return false;
-
-
-
-    QString cmd = QString("/usr/bin/xdg-su -u root -c \"konsole --noclose --workdir %1 -e pisi bi ./pspec.xml --debug --output-dir %2\"")
-            .arg(package_dir.absolutePath())
-            .arg(out_dir.absolutePath());
-
-    if(system(qPrintable(cmd)))
-    {
-        QMessageBox::critical(this, tr("Error"), tr("Can not build pisi files !"
-                                                    "\nPlease check pisi console output."));
-        return false;
-    }
-    else
-    {
-        return true;
-    }
+    on_tb_import_package_clicked();
 }
 
 void MainWindow::on_le_package_name_textChanged(const QString &text)
@@ -681,9 +574,7 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
     }
     else
     {
-
-
-        package_name = text;
+        package_name = text.trimmed();
         package_dir = QDir(workspace_dir.absoluteFilePath(package_name));
         package_files_dir = QDir(package_dir.absoluteFilePath("files"));
 
@@ -714,368 +605,45 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
 
 void MainWindow::on_le_homepage_textChanged(const QString & text)
 {
-    homepage = text;
+    homepage = text.trimmed();
 }
 
 void MainWindow::on_le_summary_textChanged(const QString & text)
 {
-    summary = text;
+    summary = text.trimmed();
 }
 
 void MainWindow::on_le_build_dependency_textChanged(const QString & text)
 {
-    build_dependency = text;
+    build_dependency = text.trimmed();
 }
 
 void MainWindow::on_le_runtime_dependency_textChanged(const QString & text)
 {
-    runtime_dependency = text;
+    runtime_dependency = text.trimmed();
 }
 
 void MainWindow::on_combo_license_currentIndexChanged(const QString & text)
 {
-    license = text;
+    license = text.trimmed();
 }
 
 void MainWindow::on_combo_is_a_currentIndexChanged(const QString & text)
 {
-    is_a = text;
+    is_a = text.trimmed();
 }
 
 void MainWindow::on_combo_part_of_currentIndexChanged(const QString & text)
 {
-    part_of = text;
+    part_of = text.trimmed();
 }
 
 void MainWindow::on_te_description_textChanged()
 {
-    description = ui->te_description->toPlainText();
+    description = ui->te_description->toPlainText().trimmed();
 }
 
-void MainWindow::on_le_package_name_returnPressed()
-{
-    on_tb_import_package_clicked();
-}
 
-void MainWindow::on_tb_import_package_clicked()
-{
-    QString pspec_file = package_dir.absoluteFilePath("pspec.xml");
-
-    if(QFile::exists(pspec_file))
-    {
-        QFile file(pspec_file);
-        if( ! file.open(QFile::ReadOnly))
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Can not open file for reading !"));
-            return;
-        }
-        dom_pspec.clear();
-        QString errorMsg;
-        int errorLine, errorColumn;
-        if( ! dom_pspec.setContent(&file, &errorMsg, &errorLine, &errorColumn))
-        {
-            file.close();
-            dom_pspec.clear();
-            QMessageBox::critical(this, tr("Parse Error"),
-                                  tr("XML Parse Error : \n%1\nLine:%2, Column:%3")
-                                    .arg(errorMsg).arg(errorLine).arg(errorColumn)
-                                  );
-            return;
-        }
-        file.close();
-        pisi.clear();
-
-        try
-        {
-            pisi.load_from_dom(dom_pspec);
-        }
-        catch (QString e)
-        {
-            QMessageBox::critical(this, tr("Error"), tr("An error occured while parsing xml file : %1").arg(e));
-            return;
-        }
-        catch(...)
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
-            return;
-        }
-
-        try
-        {
-            fill_fields_from_pisi();
-        }
-        catch (QString e)
-        {
-            QMessageBox::critical(this, tr("Error"), tr("An error occured while filling fields: %1").arg(e));
-            return;
-        }
-        catch (...)
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
-            return;
-        }
-    }
-}
-
-/**
-  Helper function to fill program fields from Pisi class.
-  */
-
-void MainWindow::fill_fields_from_pisi()
-{
-    if(pisi.is_empty())
-        throw QString("Try to load fileds from pisi, but pisi not loaded !");
-
-    // source section
-    PisiSource source = pisi.get_source();
-
-    QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives = source.get_archives();
-    // TODO : revise filling comma seperated archives
-    if(archives.count() > 1)
-    {
-        throw QString("More than one archive tag.");
-    }
-    QMap<QString, QMap<PisiSource::ArchiveAttr,QString> >::const_iterator archives_it = archives.constBegin();
-    if(archives_it != archives.constEnd())
-    {
-        QString archive = archives_it.key();
-        if(archive.startsWith("http:") || archive.startsWith("ftp:"))
-        {
-//            ui->rb_src_url->setChecked(true);
-//            ui->le_src_url->setText(archive);
-            QMap<PisiSource::ArchiveAttr,QString> archive_att = archives.constBegin().value();
-//            ui->le_source_sha1->setText(archive_att.value(PisiSource::SHA1SUM));
-        }
-        else
-        {
-//            ui->rb_src_compressed->setChecked(true);
-//            ui->le_src_compressed->setText(archive);
-        }
-    }
-//    ui->le_src_home_page->setText(source.get_home_page());
-
-    // package section
-    PisiPackage package = pisi.get_package();
-
-    // do not edit work_dir and packge_name, only warn
-    if(ui->le_package_name->text() != package.get_name())
-    {
-        qDebug() << ui->le_package_name->text() << "!=" << package.get_name();
-        QMessageBox::warning(this, tr("Warning"), tr("Package name is not same as in the pspec.xml file !"));
-    }
-    ui->le_summary->setText(source.get_summary());
-    ui->te_description->setPlainText(source.get_description());
-    int license_index = ui->combo_license->findText(source.get_license());
-    if(license_index > 0) ui->combo_license->setCurrentIndex(license_index);
-    int is_a_index = ui->combo_is_a->findText(source.get_is_a());
-    if(is_a_index > 0) ui->combo_is_a->setCurrentIndex(is_a_index);
-    int part_of_index = ui->combo_part_of->findText(source.get_part_of());
-    if(part_of_index > 0) ui->combo_part_of->setCurrentIndex(part_of_index);
-
-    QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > build_dep = source.get_build_dependencies();
-    ui->le_build_dependency->setText(source.get_dependency_list(build_dep).join(", "));
-
-    QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > runtime_dep = package.get_runtime_dependencies();
-    ui->le_runtime_dependency->setText(package.get_dependency_list(runtime_dep).join(", "));
-
-    QString actions_py = package_dir.absoluteFilePath("actions.py");
-
-    if(QFile::exists(actions_py))
-    {
-        actions_templates[6] = get_file_contents(actions_py);
-    }
-    ui->combo_actions_template->setCurrentIndex(6);
-
-    QString desktop_file_name = package_files_dir.absoluteFilePath(QString("%1.desktop").arg(package_name));
-
-    if(QFile::exists(desktop_file_name))
-    {
-        QFile desktop_file(desktop_file_name);
-        if( ! desktop_file.open(QFile::ReadOnly | QFile::Text))
-        {
-            QMessageBox::warning(this, tr("Error"), tr("Can not open desktop file for reading !"));
-        }
-        else
-        {
-            ui->gb_create_menu->setChecked(true);
-            QTextStream desktop_file_stream(&desktop_file);
-            ui->pte_desktop->setPlainText(desktop_file_stream.readAll());
-        }
-        desktop_file.close();
-    }
-    else
-    {
-        ui->gb_create_menu->setChecked(false);
-    }
-
-    // history section
-    int row_count = ui->tableW_history->rowCount();
-    for(int i=0; i<row_count; ++i)
-    {
-        ui->tableW_history->removeRow(0);
-    }
-
-    QMap<int, PisiUpdate> updates = pisi.get_updates();
-    QList<int> releases = updates.keys();   // keys are asc ordered
-    foreach (int r, releases)
-    {
-        QTableWidgetItem * item_release = new QTableWidgetItem(QString::number(updates[r].get_release()));
-        QTableWidgetItem * item_date = new QTableWidgetItem(updates[r].get_date().toString("dd.MM.yyyy"));
-        QTableWidgetItem * item_version = new QTableWidgetItem(updates[r].get_version());
-        QTableWidgetItem * item_comment = new QTableWidgetItem(updates[r].get_comment());
-        QTableWidgetItem * item_name = new QTableWidgetItem(updates[r].get_packager_name());
-        QTableWidgetItem * item_email = new QTableWidgetItem(updates[r].get_packager_email());
-        int row = 0;
-        ui->tableW_history->insertRow(row);
-        ui->tableW_history->setItem(row, 0, item_release);
-        ui->tableW_history->setItem(row, 1, item_date);
-        ui->tableW_history->setItem(row, 2, item_version);
-        ui->tableW_history->setItem(row, 3, item_comment);
-        ui->tableW_history->setItem(row, 4, item_name);
-        ui->tableW_history->setItem(row, 5, item_email);
-    }
-
-    // packager section
-    // packager will not import
-
-    statusBar()->showMessage(tr("Package build information successfully imported."));
-}
-
-void MainWindow::fill_pisi_from_fields()
-{
-    if(pisi.is_empty())
-        throw QString("Try to load pisi from fileds, but pisi not loaded !");
-
-    // source section
-    PisiSource source;
-
-    QString package_name = ui->le_package_name->text().trimmed();
-    if(package_name.isEmpty())
-        throw QString("Please select a package name !");
-    source.set_name(package_name);
-
-    if(homepage.isEmpty())
-        throw QString("Please enter homepage !");
-    source.set_name(homepage);
-
-    PisiUpdate last_update = get_last_history_update();
-    if(last_update == PisiUpdate())
-        throw QString("Please define an update in history !");
-    QMap<QString,QString> packager;
-    packager[last_update.get_packager_name()] = last_update.get_packager_email();
-    source.set_packager(packager);
-
-    QString license = ui->combo_license->currentText().trimmed();
-    if(license.isEmpty())
-        throw QString("Please select a license !");
-    source.set_license(license);
-
-    QString is_a = ui->combo_is_a->currentText().trimmed();
-    if( ! is_a.isEmpty())
-        source.set_is_a(is_a);
-
-    QString part_of = ui->combo_part_of->currentText().trimmed();
-    if( ! part_of.isEmpty())
-        source.set_part_of(part_of);
-
-    QString summary = ui->le_summary->text().trimmed();
-    if(summary.isEmpty())
-        throw QString("Please enter summary !");
-    source.set_summary(summary);
-
-    QString description = ui->te_description->toPlainText().trimmed();
-    if( ! description.isEmpty())
-        source.set_description(description);
-
-    QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives = source.get_archives();
-    // TODO : revise filling comma seperated archives
-    if(archives.count() > 1)
-    {
-        throw QString("More than one archive tag.");
-    }
-    archives.clear();
-//    if(ui->rb_src_compressed->isChecked())
-//    {
-//        QString a = ui->le_src_compressed->text();
-//        if(a.isEmpty() || ! QFile::exists(a))
-//            throw QString("Please select a compressed source !");
-//        QMap<PisiSource::ArchiveAttr,QString> attr;
-//        attr[PisiSource::SHA1SUM] = PisiSource::get_sha1sum(a);
-//        attr[PisiSource::TYPE] = PisiSource::get_archive_type(a);
-//        archives[a] = attr;
-//    }
-//    else if(ui->rb_src_folder->isChecked())
-//    {
-//        QString f = ui->le_src_folder->text();
-//        if(f.isEmpty() || ! QDir(f).exists())
-//            throw QString("Please select a source folder !");
-//        QString w = ui->le_work_dir->text();
-//        if(w.isEmpty() || ! QDir(w).exists())
-//            throw QString("Please select a work dir !");
-//        QString a = get_compressed_archive(f, w);
-//        QMap<PisiSource::ArchiveAttr,QString> attr;
-//        attr[PisiSource::SHA1SUM] = PisiSource::get_sha1sum(a);
-//        attr[PisiSource::TYPE] = PisiSource::get_archive_type(a);
-//        archives[a] = attr;
-//    }
-//    else if(ui->rb_src_url->isChecked())
-//    {
-//        QString u = ui->le_src_url->text();
-//        if(u.isEmpty() || ! (u.startsWith("http:") || u.startsWith("ftp:")))
-//            throw QString("Please enter a proper url (starts with http: or ftp:) !");
-//        QString s1 = ui->le_source_sha1->text();
-//        if(s1.isEmpty() || s1.length() < 40)
-//            throw QString("Please enter a proper sha1sum value !");
-//        QMap<PisiSource::ArchiveAttr,QString> attr;
-//        attr[PisiSource::SHA1SUM] = s1;
-//        attr[PisiSource::TYPE] = PisiSource::get_archive_type(u);
-//        archives[u] = attr;
-//    }
-//    source.set_archives(archives);
-
-    QString b_dep_str = ui->le_build_dependency->text().trimmed();
-    if( ! b_dep_str.isEmpty())
-        source.set_build_dependencies(b_dep_str);
-
-    // package section
-    PisiPackage package;
-    package.set_name(package_name);
-    package.set_license(license);
-    if( ! is_a.isEmpty())
-        package.set_is_a(is_a);
-    if( ! part_of.isEmpty())
-        package.set_part_of(part_of);
-    package.set_summary(summary);
-    if( ! description.isEmpty())
-        package.set_description(description);
-    QString r_dep_str = ui->le_runtime_dependency->text().trimmed();
-    if( ! r_dep_str.isEmpty())
-        package.set_runtime_dependencies(r_dep_str);
-
-    QMap<QString, QMap<PisiPackage::FileType, bool> > files;
-    QMap<PisiPackage::FileType, bool> files_attribute;
-    files_attribute.insert(PisiPackage::ALL, false);
-    files.insert("/", files_attribute);
-    package.set_files(files);
-
-    // history section
-    QMap<int, PisiUpdate> updates;
-    int history_row_count = ui->tableW_history->rowCount();
-    for(int i=0; i<history_row_count; ++i)
-    {
-        bool ok = false;
-        int release = ui->tableW_history->item(i,0)->text().toInt(&ok);
-        if(ok)
-            updates[release] = get_history_update(i);
-        else
-            throw QString("Error at conversion release string to integer !");
-    }
-
-    // if not exception threw
-    pisi.set_source(source);
-    pisi.set_package(package);
-    pisi.set_updates(updates);
-}
 
 
 void MainWindow::on_combo_actions_template_currentIndexChanged(int index)
@@ -1230,22 +798,10 @@ void MainWindow::package_install_changed()
     package_install_dir = QDir::root();
 
     if( ! package_name.isEmpty()){
-        PisiUpdate last_update;
-        try{
-             last_update = get_last_history_update();
-        }
-        catch (QString e){
-            QMessageBox::critical(this, tr("Error"), tr("Cannot get last history update : %1").arg(e));
-            return;
-        }
-        catch(...){
-            QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
-            return;
-        }
         package_install_dir= QDir(QString("/var/pisi/%1-%2-%3/install/")
                                   .arg(package_name)
-                                  .arg(last_update.get_version())
-                                  .arg(last_update.get_release()));
+                                  .arg(pisi.get_last_update().get_version())
+                                  .arg(pisi.get_last_update().get_release()));
     }
 
     if( ! package_install_dir.isRoot() && package_install_dir.exists()){
@@ -1412,8 +968,6 @@ void MainWindow::on_tb_open_package_dir_clicked()
         QDesktopServices::openUrl(QUrl(package_dir.absolutePath()));
 }
 
-
-
 void MainWindow::on_tb_add_archive_clicked()
 {
     ArchiveSelectionDialog::ArchiveType type;
@@ -1426,21 +980,361 @@ void MainWindow::on_tb_add_archive_clicked()
 
     ArchiveSelectionDialog asd(this, type);
     if(asd.exec() == QDialog::Accepted){
-        // append archive widget
-        QVBoxLayout * w_layout = qobject_cast<QVBoxLayout *>(ui->w_archive_base->layout());
-        if( ! w_layout){
-            w_layout = new QVBoxLayout;
-            ui->w_archive_base->setLayout(w_layout);
-        }
-        ArchiveWidget * a_w = new ArchiveWidget(ui->w_archive_base, asd.get_archive(), asd.get_sha1());
-        connect(a_w, SIGNAL(delete_me(ArchiveWidget*)), SLOT(delete_archive(ArchiveWidget*)));
-        archives.append(a_w);
-        w_layout->addWidget(a_w);
+        append_archive(asd.get_archive(), asd.get_sha1());
+        QMap<PisiSource::ArchiveAttr,QString> attr;
+        attr[PisiSource::SHA1SUM] = asd.get_sha1();
+        attr[PisiSource::TYPE] = PisiSource::get_archive_type(asd.get_archive());
+        archives[asd.get_archive()] = attr;
     }
+}
+
+void MainWindow::append_archive(const QString &archive, const QString &sha1)
+{
+    QVBoxLayout * w_layout = qobject_cast<QVBoxLayout *>(ui->w_archive_base->layout());
+    if( ! w_layout){
+        w_layout = new QVBoxLayout;
+        w_layout->setMargin(1);
+        w_layout->setSpacing(1);
+        ui->w_archive_base->setLayout(w_layout);
+    }
+    ArchiveWidget * a_w = new ArchiveWidget(ui->w_archive_base, archive, sha1);
+    connect(a_w, SIGNAL(delete_me(ArchiveWidget*)), SLOT(delete_archive(ArchiveWidget*)));
+    archive_widgets.append(a_w);
+    w_layout->addWidget(a_w);
+
 }
 
 void MainWindow::delete_archive(ArchiveWidget * a_w)
 {
-    archives.removeAt(archives.indexOf(a_w));
+    archives.remove(a_w->get_archive());
+    disconnect(a_w, SIGNAL(delete_me(ArchiveWidget*)), SLOT(delete_archive(ArchiveWidget*)));
+    archive_widgets.removeAt(archive_widgets.indexOf(a_w));
     delete a_w;
+}
+
+
+void MainWindow::on_tb_import_package_clicked()
+{
+    QString pspec_file = package_dir.absoluteFilePath("pspec.xml");
+
+    if(QFile::exists(pspec_file))
+    {
+        QFile file(pspec_file);
+        if( ! file.open(QFile::ReadOnly))
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Can not open file for reading !"));
+            return;
+        }
+        dom_pspec.clear();
+        QString errorMsg;
+        int errorLine, errorColumn;
+        if( ! dom_pspec.setContent(&file, &errorMsg, &errorLine, &errorColumn))
+        {
+            file.close();
+            dom_pspec.clear();
+            QMessageBox::critical(this, tr("Parse Error"),
+                                  tr("XML Parse Error : \n%1\nLine:%2, Column:%3")
+                                    .arg(errorMsg).arg(errorLine).arg(errorColumn)
+                                  );
+            return;
+        }
+        file.close();
+        pisi.clear();
+
+        try
+        {
+            pisi.load_from_dom(dom_pspec);
+        }
+        catch (QString e)
+        {
+            QMessageBox::critical(this, tr("Error"), tr("An error occured while parsing xml file : %1").arg(e));
+            return;
+        }
+        catch(...)
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
+            return;
+        }
+
+        try
+        {
+            fill_fields_from_pisi();
+        }
+        catch (QString e)
+        {
+            QMessageBox::critical(this, tr("Error"), tr("An error occured while filling fields: %1").arg(e));
+            return;
+        }
+        catch (...)
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
+            return;
+        }
+    }
+}
+
+/**
+  Helper function to fill program fields from Pisi class.
+  */
+
+void MainWindow::fill_fields_from_pisi()
+{
+    if(pisi.is_empty())
+        throw QString("Empty pisi file, import pspec.xml before use !");
+
+
+    // source section
+    PisiSource source = pisi.get_source();
+    archives = source.get_archives();
+    QList<QString> archive_list = archives.keys();
+    foreach (QString a, archive_list) {
+        append_archive(a, archives[a][PisiSource::SHA1SUM]);
+    }
+    ui->le_homepage->setText(source.get_home_page());
+
+    // TODO : do patches, ....
+
+
+    // package section
+    PisiPackage package = pisi.get_package();
+
+    // do not edit work_dir and packge_name, only warn
+    if(package_name != package.get_name())
+    {
+        qDebug() << package_name << "!=" << package.get_name();
+        QMessageBox::warning(this, tr("Warning"), tr("Package name is not same as in the pspec.xml file !"));
+    }
+    ui->le_summary->setText(source.get_summary());
+    ui->te_description->setPlainText(source.get_description());
+    int license_index = ui->combo_license->findText(source.get_license());
+    if(license_index > 0) ui->combo_license->setCurrentIndex(license_index);
+    int is_a_index = ui->combo_is_a->findText(source.get_is_a());
+    if(is_a_index > 0) ui->combo_is_a->setCurrentIndex(is_a_index);
+    int part_of_index = ui->combo_part_of->findText(source.get_part_of());
+    if(part_of_index > 0) ui->combo_part_of->setCurrentIndex(part_of_index);
+
+    QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > build_dep = source.get_build_dependencies();
+    ui->le_build_dependency->setText(source.get_dependency_list(build_dep).join(", "));
+
+    QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > runtime_dep = package.get_runtime_dependencies();
+    ui->le_runtime_dependency->setText(package.get_dependency_list(runtime_dep).join(", "));
+
+    QString actions_py = package_dir.absoluteFilePath("actions.py");
+
+    if(QFile::exists(actions_py))
+    {
+        actions_templates[6] = get_file_contents(actions_py);
+    }
+    ui->combo_actions_template->setCurrentIndex(6);
+
+    QString desktop_file_name = package_files_dir.absoluteFilePath(QString("%1.desktop").arg(package_name));
+
+    if(QFile::exists(desktop_file_name))
+    {
+        QFile desktop_file(desktop_file_name);
+        if( ! desktop_file.open(QFile::ReadOnly | QFile::Text))
+        {
+            QMessageBox::warning(this, tr("Error"), tr("Can not open desktop file for reading !"));
+        }
+        else
+        {
+            ui->gb_create_menu->setChecked(true);
+            QTextStream desktop_file_stream(&desktop_file);
+            ui->pte_desktop->setPlainText(desktop_file_stream.readAll());
+        }
+        desktop_file.close();
+    }
+    else
+    {
+        ui->gb_create_menu->setChecked(false);
+    }
+
+    // history section
+    int row_count = ui->tableW_history->rowCount();
+    for(int i=0; i<row_count; ++i)
+    {
+        ui->tableW_history->removeRow(0);
+    }
+
+    QMap<int, PisiUpdate> updates = pisi.get_updates();
+    QList<int> releases = updates.keys();   // keys are asc ordered
+    foreach (int r, releases)
+    {
+        QTableWidgetItem * item_release = new QTableWidgetItem(QString::number(updates[r].get_release()));
+        QTableWidgetItem * item_date = new QTableWidgetItem(updates[r].get_date().toString("dd.MM.yyyy"));
+        QTableWidgetItem * item_version = new QTableWidgetItem(updates[r].get_version());
+        QTableWidgetItem * item_comment = new QTableWidgetItem(updates[r].get_comment());
+        QTableWidgetItem * item_name = new QTableWidgetItem(updates[r].get_packager_name());
+        QTableWidgetItem * item_email = new QTableWidgetItem(updates[r].get_packager_email());
+        int row = 0;
+        ui->tableW_history->insertRow(row);
+        ui->tableW_history->setItem(row, 0, item_release);
+        ui->tableW_history->setItem(row, 1, item_date);
+        ui->tableW_history->setItem(row, 2, item_version);
+        ui->tableW_history->setItem(row, 3, item_comment);
+        ui->tableW_history->setItem(row, 4, item_name);
+        ui->tableW_history->setItem(row, 5, item_email);
+
+    statusBar()->showMessage(tr("Package build information successfully imported."));
+}
+}
+
+void MainWindow::fill_pisi_from_fields()
+{
+    // history section
+    QMap<int, PisiUpdate> updates;
+    int history_row_count = ui->tableW_history->rowCount();
+    if(history_row_count == 0)
+        throw QString("Please define an update in history !");
+    for(int i=0; i<history_row_count; ++i)
+    {
+        bool ok = false;
+        int release = ui->tableW_history->item(i,0)->text().toInt(&ok);
+        if(ok)
+            updates[release] = get_history_update(i);
+        else
+            throw QString("Error at conversion release string to integer !");
+    }
+    pisi.set_updates(updates);
+
+
+    // source section
+    PisiSource source;
+    source.set_name(package_name);
+    source.set_home_page(homepage);
+    source.set_packager(pisi.get_last_update().get_packager_name(), pisi.get_last_update().get_packager_email());
+    source.set_license(license);
+    source.set_is_a(is_a);
+    source.set_part_of(part_of);
+    source.set_summary(summary);
+    source.set_description(description);
+    source.set_build_dependencies(build_dependency);
+    source.set_archives(archives);
+    source.set_patches(patches);
+    pisi.set_source(source);
+
+
+
+    // package section
+    PisiPackage package;
+    package.set_name(package_name);
+    package.set_license(license);
+    package.set_is_a(is_a);
+    package.set_part_of(part_of);
+    package.set_summary(summary);
+    package.set_description(description);
+    package.set_runtime_dependencies(runtime_dependency);
+    package.set_files(files);
+
+    temp_aditional_files.clear();
+    QList<QString> a_f_list = aditional_files.keys();
+    foreach (QString a_f, a_f_list) {
+        QMap<PisiSPBase::AFileAttr,QString> a_f_attr = aditional_files.value(a_f);
+        a_f.replace("__package_name__", package_name);
+        temp_aditional_files[a_f] = a_f_attr;
+    }
+    package.set_aditional_file(temp_aditional_files);
+    temp_aditional_files.clear();
+
+    pisi.set_package(package);
+}
+
+
+void MainWindow::create_build_files()
+{
+//    fill pisi
+    dom_pspec.clear();
+    try
+    {
+        fill_pisi_from_fields();
+        pisi.save_to_dom(dom_pspec);
+    }
+    catch (QString e)
+    {
+        QMessageBox::critical(this, tr("Error"), tr("An error occured while filling pisi from fields : %1").arg(e));
+        return;
+    }
+    catch (...)
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Unknownt exception while filling pisi from fields !"));
+        return;
+    }
+    QString pspec_file_name = package_dir.absoluteFilePath("actions.py");
+    save_text_file( pspec_file_name, dom_pspec.toString(4) );
+
+
+//    create actions
+    QString actions_file_name = package_dir.absoluteFilePath("actions.py");
+    QString action_py = actions_editor->text();
+    action_py.replace(QString("___package_name___"), package_name);
+    action_py.replace(QString("___version___"), pisi.get_last_update().get_version());
+    action_py.replace(QString("___summary___"), summary);
+    save_text_file( actions_file_name, action_py );
+
+
+//    create desktop
+    QString desktop_file_name = package_dir.absoluteFilePath(package_name + ".desktop");
+    QString desktop_str = ui->pte_desktop->toPlainText();
+    desktop_str.replace(QString("___package_name___"), package_name);
+    desktop_str.replace(QString("___version___"), pisi.get_last_update().get_version());
+    desktop_str.replace(QString("___summary___"), summary);
+    save_text_file( desktop_file_name, desktop_str );
+
+    // write image file
+    QString image_name = package_dir.absoluteFilePath(package_name + ".png");
+    if( ! QFile::exists(image_name))
+    {
+        // do not remove file; user may changed the file !
+        QFile image_file(image_name);
+        if( ! image_file.open(QIODevice::WriteOnly))
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(package_name + ".png"));
+            return;
+        }
+        QImage image(":/images/pardus-logo.png");
+        image.save(&image_file);
+    }
+}
+
+void MainWindow::on_tb_build_up_to_clicked()
+{
+    QStringList build_steps;
+    build_steps.append("--fetch");
+    build_steps.append("--unpack");
+    build_steps.append("--setup");
+    build_steps.append("--build");
+    build_steps.append("--install");
+    build_steps.append("--check");
+    call_pisi_build_command(build_steps.at(ui->combo_build_up_to->currentIndex()));
+}
+
+void MainWindow::on_tb_build_only_clicked()
+{
+    if(ui->combo_build_only->currentIndex() == 0){
+        create_build_files();
+    }
+    else if(ui->combo_build_only->currentIndex() == 1){
+        call_pisi_build_command("--package");
+    }
+}
+
+void MainWindow::on_tb_build_all_clicked()
+{
+    create_build_files();
+    call_pisi_build_command();
+}
+
+void MainWindow::call_pisi_build_command(const QString &build_step)
+{
+    QString pspec_file = package_dir.absoluteFilePath("pspec.xml");
+    if(QFile::exists(pspec_file)){
+        QMessageBox::critical(this, tr("Error"), tr("There is no PSPEC file : %1 ").arg(pspec_file));
+        return;
+    }
+    QString command = QString("pkexec --user root pisi build %1 %2 --output-dir %3")
+            .arg(pspec_file)
+            .arg(build_step)
+            .arg(workspace_dir.absolutePath())
+            ;
+    ui->w_console->execute(command);
 }

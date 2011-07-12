@@ -37,16 +37,16 @@
 
     (X) pspec.xml de birden fazla arşivi destekle.
 
+    (X) bash için root hakları alınacak
+        pkexec --user root pisi bi pspec.xml --output-dir workspace
+
     (->) Şunlar için arayüze ve arayüzden doldurma yapılacak.
         (*) Package::Files,
         (*) Souce::Patches,
         (*) SPBase::AdditionalFiles
 
 
-    (*) Bash'e arka arkaya komut göndermeyi engelle.
-    (*) bash için root hakları alınacak
-
-    (*) İnşa işlemleri yapılacak.
+    (->) İnşa işlemleri yapılacak.
         (*) aditional_files daki __package_name__ dönüştürülecek
 
     (*) gui tab sırası kontrol edilecek.

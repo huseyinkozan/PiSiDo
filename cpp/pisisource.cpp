@@ -184,13 +184,11 @@ void PisiSource::set_home_page(QString home_page)
     this->home_page = home_page;
 }
 
-void PisiSource::set_packager(QMap<QString, QString> packager)
+void PisiSource::set_packager(QString name, QString email)
 {
-    if(packager.isEmpty())
-        throw QString("Empty packager map !");
-    if(packager.keys().first().isEmpty())
+    if(name.isEmpty())
         throw QString("Empty packager name !");
-    if(packager.values().first().isEmpty())
+    if(email.isEmpty())
         throw QString("Empty packager email !");
 
     this->packager = packager;

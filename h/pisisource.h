@@ -38,7 +38,7 @@ public:
     static QString get_archive_type(const QString & file_name);
 
     void set_home_page(QString home_page);
-    void set_packager(QMap<QString,QString> packager);
+    void set_packager(QString name, QString email);
     void set_archives(QMap<QString, QMap<ArchiveAttr,QString> > archives);
     void set_patches(QMap<QString, QMap<PatchAttr,QString> > patches);
 

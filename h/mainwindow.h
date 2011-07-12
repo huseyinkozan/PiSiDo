@@ -32,6 +32,7 @@ private slots:
     void save_actions_editor_change();
     void complete_word();
 
+    void append_archive(const QString & archive, const QString & sha1);
     void delete_archive(ArchiveWidget *);
 
     void package_files_changed();
@@ -104,6 +105,12 @@ private slots:
 
     void on_tb_add_archive_clicked();
 
+    void on_tb_build_up_to_clicked();
+
+    void on_tb_build_only_clicked();
+
+    void on_tb_build_all_clicked();
+
 protected:
     virtual void closeEvent(QCloseEvent * event);
 
@@ -128,9 +135,9 @@ private:
 
     QFileSystemWatcher * package_files_watcher;
 //    QFileSystemWatcher * package_install_watcher;
+    QList<ArchiveWidget *> archive_widgets;
 
     QString package_name;
-    QList<ArchiveWidget *> archives;
     QString homepage;
     QString license;
     QString is_a;
@@ -144,6 +151,7 @@ private:
     QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > aditional_files;
     QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > temp_aditional_files;
     QMap<QString, QMap<QString, bool> > files;
+    QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives;
 
     void appy_default_settings();
     void write_settings();
@@ -151,14 +159,12 @@ private:
 
     QStringList get_file_strings(const QString & file_name);
     QString get_file_contents(const QString & file_name);
+    bool save_text_file(const QString & file_name, const QString & data);
 
-    PisiUpdate get_last_history_update();
     PisiUpdate get_history_update(int row);
 
-    bool create_action_py(QDir package_dir);
-    bool create_desktop(QDir package_dir);
-
-    bool build_package(QDir package_dir, QDir out_dir);
+    void create_build_files();
+    void call_pisi_build_command(const QString & build_step = QString());
 
     void fill_fields_from_pisi();
     void fill_pisi_from_fields();

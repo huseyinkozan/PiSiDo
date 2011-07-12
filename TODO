@@ -37,16 +37,16 @@ First:
 
     (X) Support for multiple archives in pspec.xml
 
+    (X) Take root privilages for bash.
+        pkexec --user root pisi bi pspec.xml --output-dir workspace
+
     (->) load from gui and save to gui for these:
         (*) Package::Files,
         (*) Souce::Patches,
         (*) SPBase::AdditionalFiles
 
 
-    (*) Restrict repeated command execution on bash.
-    (*) Take root privilages for bash.
-
-    (*) Make build process.
+    (->) Make build process.
         (*) __package_name__ will convert at the aditional_files
 
     (*) check gui tab order.
