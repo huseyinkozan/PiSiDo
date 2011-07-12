@@ -33,6 +33,7 @@ public:
     void set_runtime_dependencies(QMap<QString, QMap<VRTFAttr,QString> > runtime_dependencies);
     void set_runtime_dependencies(QString runtime_dependency_string);
     void set_files(QMap<QString, QMap<FileType, bool> > files);
+    void set_files(QMap<QString, QMap<QString, bool> > files);
 
     bool operator ==(const PisiPackage & other);
     bool operator !=(const PisiPackage & other);

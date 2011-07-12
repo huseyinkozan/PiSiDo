@@ -21,7 +21,6 @@ void ConfigurationDialog::read_settings()
     QSettings settings;
 
     settings.beginGroup( "configuration" );
-    ui->sb_folder_comp_time_limit->setValue(settings.value("folder_comp_time_limit").toInt());
     ui->sb_console_max_line->setValue(settings.value("console_max_line").toInt());
     ui->le_pisi_packaging_dir->setText(settings.value("pisi_packaging_dir").toString());
     ui->le_action_api_page->setText(settings.value("action_api_page").toString());
@@ -39,7 +38,6 @@ void ConfigurationDialog::write_settings()
     QSettings settings;
 
     settings.beginGroup( "configuration" );
-    settings.setValue("folder_comp_time_limit", ui->sb_folder_comp_time_limit->value());
     settings.setValue("console_max_line", ui->sb_console_max_line->value());
     settings.setValue("pisi_packaging_dir", ui->le_pisi_packaging_dir->text());
     settings.setValue("action_api_page", ui->le_action_api_page->text());

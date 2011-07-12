@@ -9,6 +9,7 @@
 #include <QDir>
 
 #include "pisi.h"
+#include "archivewidget.h"
 
 namespace Ui {
     class MainWindow;
@@ -31,10 +32,13 @@ private slots:
     void save_actions_editor_change();
     void complete_word();
 
+    void delete_archive(ArchiveWidget *);
+
     void package_files_changed();
     void package_files_process(const QString & dir);
     void package_install_changed();
 
+    void clear_tableW_files();
     void clear_tableW_patches();
     void clear_tableW_aditional_files();
 
@@ -59,15 +63,9 @@ private slots:
 
     void on_action_Application_Language_triggered();
 
-    void on_combo_source_currentIndexChanged(int index);
-    void on_tb_source_clicked();
-
     void on_le_package_name_textChanged(const QString &text);
     void on_le_package_name_returnPressed();
     void on_tb_import_package_clicked();
-
-    void on_le_source_textChanged(const QString & text);
-    void on_le_source_sha1_editingFinished();
 
     void on_combo_license_currentIndexChanged(const QString & text);
     void on_combo_is_a_currentIndexChanged(const QString & text);
@@ -104,6 +102,8 @@ private slots:
 
     void on_tableW_files_itemSelectionChanged();
 
+    void on_tb_add_archive_clicked();
+
 protected:
     virtual void closeEvent(QCloseEvent * event);
 
@@ -121,8 +121,6 @@ private:
 
     bool not_ask_workspace;
 
-    int selected_source;
-
     QDir workspace_dir;
     QDir package_dir;
     QDir package_files_dir;
@@ -132,8 +130,7 @@ private:
 //    QFileSystemWatcher * package_install_watcher;
 
     QString package_name;
-    QString source;
-    QString source_sha1;
+    QList<ArchiveWidget *> archives;
     QString homepage;
     QString license;
     QString is_a;
@@ -146,7 +143,7 @@ private:
     QMultiMap<int, QString> temp_patches;
     QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > aditional_files;
     QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > temp_aditional_files;
-    QMap<QString, QMap<PisiPackage::FileType, bool> > files;
+    QMap<QString, QMap<QString, bool> > files;
 
     void appy_default_settings();
     void write_settings();
@@ -154,8 +151,6 @@ private:
 
     QStringList get_file_strings(const QString & file_name);
     QString get_file_contents(const QString & file_name);
-    QString get_sha1sum(const QString & file_name);
-    QString get_compressed_archive(QDir dir_to_compress, QDir out_dir);
 
     PisiUpdate get_last_history_update();
     PisiUpdate get_history_update(int row);

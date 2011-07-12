@@ -36,7 +36,9 @@ SOURCES += cpp/main.cpp\
     cpp/workspacedialog.cpp \
     cpp/consolewidget.cpp \
     cpp/aditionalfiledialog.cpp \
-    addinstallfilelabeldialog.cpp
+    cpp/addinstallfilelabeldialog.cpp \
+    cpp/archiveselectiondialog.cpp \
+    cpp/archivewidget.cpp
 
 HEADERS  += h/mainwindow.h \
     h/application.h \
@@ -52,7 +54,9 @@ HEADERS  += h/mainwindow.h \
     h/workspacedialog.h \
     h/consolewidget.h \
     h/aditionalfiledialog.h \
-    addinstallfilelabeldialog.h
+    h/addinstallfilelabeldialog.h \
+    h/archiveselectiondialog.h \
+    h/archivewidget.h
 
 FORMS    += ui/mainwindow.ui \
     ui/configurationdialog.ui \
@@ -62,7 +66,9 @@ FORMS    += ui/mainwindow.ui \
     ui/workspacedialog.ui \
     ui/consolewidget.ui \
     ui/aditionalfiledialog.ui \
-    addinstallfilelabeldialog.ui
+    ui/addinstallfilelabeldialog.ui \
+    ui/archiveselectiondialog.ui \
+    ui/archivewidget.ui
 
 OTHER_FILES += \
     README \

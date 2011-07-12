@@ -24,6 +24,7 @@
 #include "addinstallfilelabeldialog.h"
 #include "addupdatedialog.h"
 #include "aditionalfiledialog.h"
+#include "archiveselectiondialog.h"
 #include "configurationdialog.h"
 #include "helpdialog.h"
 #include "languagedialog.h"
@@ -36,7 +37,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     help_dialog(NULL),
     not_ask_workspace(false),
-    selected_source(0),
     workspace_dir(QDir::root()),
     package_dir(QDir::root()),
     package_files_dir(QDir::root()),
@@ -349,14 +349,12 @@ void MainWindow::appy_default_settings()
     QString action_api_page = settings.value("action_api_page", QString("http://tr.pardus-wiki.org/Pardus:ActionsAPI")).toString();
     QString pisi_spec = settings.value("pisi_spec", QString("http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng")).toString();
     QString pisi_packaging_dir = settings.value("pisi_packaging_dir", QString("/var/pisi/")).toString();
-    bool ok = false;
-    int folder_comp_time_limit = settings.value("folder_comp_time_limit", 2).toInt(&ok);
-    if(!ok) folder_comp_time_limit = 2;
     int console_max_line = settings.value("console_max_line", 100).toInt();
+
     settings.setValue("action_api_page", action_api_page);
     settings.setValue("pisi_spec", pisi_spec);
     settings.setValue("pisi_packaging_dir", pisi_packaging_dir);
-    settings.setValue("folder_comp_time_limit", folder_comp_time_limit);
+
     settings.setValue("console_max_line", console_max_line);
     settings.endGroup();
 }
@@ -372,9 +370,6 @@ void MainWindow::write_settings()
 
     settings.beginGroup("central_widget_contents");
     settings.setValue("package_name", package_name);
-    settings.setValue("selected_source", selected_source);
-    settings.setValue("source", source);
-    settings.setValue("source_sha1", source_sha1);
     settings.setValue("homepage", homepage);
     settings.setValue("summary", summary);
     settings.setValue("description", description);
@@ -410,9 +405,6 @@ void MainWindow::read_settings()
 
     settings.beginGroup("central_widget_contents");
     package_name = settings.value("package_name").toString();
-    selected_source = settings.value("selected_source", 0).toInt();
-    source = settings.value("source").toString();
-    source_sha1 = settings.value("source_sha1").toString();
     homepage = settings.value("homepage").toString();
     summary = settings.value("summary").toString();
     description = settings.value("description").toString();
@@ -438,9 +430,6 @@ void MainWindow::read_settings()
     actions_editor->setText(actions_templates[last_index]);
     settings.endGroup();
 
-    on_combo_source_currentIndexChanged(selected_source);
-    ui->le_source->setText(source);
-    ui->le_source_sha1->setText(source_sha1);
     ui->le_homepage->setText(homepage);
     ui->le_package_name->setText(package_name);
     ui->le_summary->setText(summary);
@@ -455,9 +444,6 @@ void MainWindow::read_settings()
 void MainWindow::on_action_Reset_Fields_triggered()
 {
     ui->le_package_name->clear();
-    ui->combo_source->setCurrentIndex(0);
-    ui->le_source->clear();
-    ui->le_source_sha1->clear();
     ui->le_homepage->clear();
     ui->combo_license->setCurrentIndex(0);
     ui->combo_is_a->setCurrentIndex(0);
@@ -467,8 +453,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
     ui->le_build_dependency->clear();
     ui->le_runtime_dependency->clear();
 
-    // other values clears after widget changes
-    source_sha1.clear();
+    // TODO : clear archive widget
 
     actions_templates.clear();
     actions_templates = actions_templates_defaults;
@@ -477,11 +462,16 @@ void MainWindow::on_action_Reset_Fields_triggered()
     on_tb_reset_menu_clicked();
     ui->gb_create_menu->setChecked(false);
 
-    int row_count = ui->tw_history->rowCount();
+    int row_count = ui->tableW_history->rowCount();
     for(int i=0; i<row_count; ++i)
     {
-        ui->tw_history->removeRow(0);
+        ui->tableW_history->removeRow(0);
     }
+
+    clear_tableW_files();
+    files.clear();
+
+    // aditional_files and patches will be cleared by le_package_name change
 }
 
 void MainWindow::on_tb_reset_menu_clicked()
@@ -489,57 +479,9 @@ void MainWindow::on_tb_reset_menu_clicked()
     ui->pte_desktop->setPlainText(desktop_file_default);
 }
 
-QString MainWindow::get_sha1sum(const QString & file_name)
-{
-    QProcess system;
-    system.start("sha1sum", QStringList() << file_name);
-    if( ! system.waitForFinished())
-    {
-        throw QString("sha1sum process timeout within 30 seconds.");
-    }
-    QString sha1(system.readAll());
-    return sha1.split(' ').first();
-}
-
-QString MainWindow::get_compressed_archive(QDir dir_to_compress, QDir out_dir)
-{
-    // TODO : add a messagebox to be able to stop compression, and clean the code
-
-    if( ! dir_to_compress.exists())
-        throw QString("Archive directory does not exists !");
-    if( ! out_dir.exists())
-        throw QString("Working directory does not exists !");
-
-    bool ok = false;
-    settings.beginGroup( "configuration" );
-    int time_limit = settings.value("folder_comp_time_limit").toInt(&ok);
-    settings.endGroup();
-    if(!ok || time_limit < 1) time_limit = 1;
-    time_limit = time_limit * 60 * 1000;      // x minutes in miliseconds
-
-    QString dir_name = dir_to_compress.dirName();
-    dir_to_compress.cdUp();
-    QString archive_name = out_dir.absoluteFilePath(QString("%1.tar.gz").arg(dir_name));
-
-    QProcess proc_tar;
-    QStringList parameters;
-    parameters << "-zcf" << archive_name;                       // save in to this archive file
-    parameters << "--directory" << dir_to_compress.absolutePath();  // change tar working dir to this
-    parameters << dir_name;                                     // compress this dir
-    proc_tar.start("tar", parameters);
-
-    statusBar()->showMessage(tr("Compressing directory ......"));
-
-    if (!proc_tar.waitForFinished(time_limit))
-        throw QString("Source folder could not compress.");
-
-    statusBar()->showMessage(tr("Directory compression finished."));
-    return archive_name;
-}
-
 PisiUpdate MainWindow::get_last_history_update()
 {
-    int row_count = ui->tw_history->rowCount();
+    int row_count = ui->tableW_history->rowCount();
     if(row_count < 1)
         return PisiUpdate();
     int last_release = 0;
@@ -547,7 +489,7 @@ PisiUpdate MainWindow::get_last_history_update()
     for(int row=0; row<row_count; ++row)
     {
         bool ok = false;
-        int current_release = ui->tw_history->item(row,0)->text().toInt(&ok);
+        int current_release = ui->tableW_history->item(row,0)->text().toInt(&ok);
         if(ok)
         {
             if(current_release > last_release)
@@ -574,25 +516,25 @@ PisiUpdate MainWindow::get_last_history_update()
 PisiUpdate MainWindow::get_history_update(int row)
 {
     PisiUpdate update;
-    if(ui->tw_history->itemAt(row, 0) == 0)
+    if(ui->tableW_history->itemAt(row, 0) == 0)
         return update;
     bool ok = false;
-    int release = ui->tw_history->item(row,0)->text().toInt(&ok);
+    int release = ui->tableW_history->item(row,0)->text().toInt(&ok);
     if( ! ok)
         throw QString("Error at conversion release string to integer !");
     update.set_release(release);
-    update.set_date(QDate::fromString(ui->tw_history->item(row, 1)->text(),"dd.MM.yyyy"));
-    update.set_version(ui->tw_history->item(row, 2)->text());
-    update.set_comment(ui->tw_history->item(row, 3)->text());
-    update.set_packager_name(ui->tw_history->item(row, 4)->text());
-    update.set_packager_email(ui->tw_history->item(row, 5)->text());
+    update.set_date(QDate::fromString(ui->tableW_history->item(row, 1)->text(),"dd.MM.yyyy"));
+    update.set_version(ui->tableW_history->item(row, 2)->text());
+    update.set_comment(ui->tableW_history->item(row, 3)->text());
+    update.set_packager_name(ui->tableW_history->item(row, 4)->text());
+    update.set_packager_email(ui->tableW_history->item(row, 5)->text());
     return update;
 }
 
 void MainWindow::on_tb_delete_last_update_clicked()
 {
-    if(ui->tw_history->rowCount()>0)
-        ui->tw_history->removeRow(0);
+    if(ui->tableW_history->rowCount()>0)
+        ui->tableW_history->removeRow(0);
 }
 
 void MainWindow::on_tb_add_update_clicked()
@@ -601,8 +543,8 @@ void MainWindow::on_tb_add_update_clicked()
     if(ud.exec() == QDialog::Accepted)
     {
         QString release;
-        if(ui->tw_history->rowCount() > 0)
-            release = QString::number(ui->tw_history->item(0,0)->text().toInt()+1);
+        if(ui->tableW_history->rowCount() > 0)
+            release = QString::number(ui->tableW_history->item(0,0)->text().toInt()+1);
         else
             release = "1";
         QTableWidgetItem * item_release = new QTableWidgetItem(release);
@@ -612,68 +554,15 @@ void MainWindow::on_tb_add_update_clicked()
         QTableWidgetItem * item_name = new QTableWidgetItem(ud.get_packager_name());
         QTableWidgetItem * item_email = new QTableWidgetItem(ud.get_packager_email());
         int row = 0;
-        ui->tw_history->insertRow(row);
-        ui->tw_history->setItem(row, 0, item_release);
-        ui->tw_history->setItem(row, 1, item_date);
-        ui->tw_history->setItem(row, 2, item_version);
-        ui->tw_history->setItem(row, 3, item_comment);
-        ui->tw_history->setItem(row, 4, item_name);
-        ui->tw_history->setItem(row, 5, item_email);
+        ui->tableW_history->insertRow(row);
+        ui->tableW_history->setItem(row, 0, item_release);
+        ui->tableW_history->setItem(row, 1, item_date);
+        ui->tableW_history->setItem(row, 2, item_version);
+        ui->tableW_history->setItem(row, 3, item_comment);
+        ui->tableW_history->setItem(row, 4, item_name);
+        ui->tableW_history->setItem(row, 5, item_email);
         package_install_changed();
     }
-}
-
-void MainWindow::on_combo_source_currentIndexChanged(int index)
-{
-    selected_source = index;
-    ui->le_source->clear();
-    ui->le_source_sha1->clear();
-    if(index == 0)
-    {
-        ui->le_source_sha1->setVisible(false);
-        ui->lbl_source_sha1->setVisible(false);
-        ui->tb_source->setVisible(true);
-    }
-    else if(index == 1)
-    {
-        ui->le_source_sha1->setVisible(false);
-        ui->lbl_source_sha1->setVisible(false);
-        ui->tb_source->setVisible(true);
-    }
-    else if(index == 2)
-    {
-        ui->le_source_sha1->setVisible(true);
-        ui->lbl_source_sha1->setVisible(true);
-        ui->tb_source->setVisible(false);
-    }
-    else
-        Q_ASSERT(false);
-}
-
-void MainWindow::on_tb_source_clicked()
-{
-    QString selection;
-    int current_index = ui->combo_source->currentIndex();
-    if(current_index == 0)
-    {
-        QString filter = tr("Compressed Files (*.targz *.tarbz2 *.tarlzma *.tarxz *.tarZ *.tar *.zip *.gz *.gzip *.bz2 *.bzip2 *.lzma *.xz *.binary)");
-        selection = QFileDialog::getOpenFileName(this, tr("Select Compressed File"), filter);
-    }
-    else if(current_index == 1)
-    {
-        QString home_dir = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-        selection = QFileDialog::getExistingDirectory(this, tr("Select Directory"), home_dir);
-    }
-    else if(current_index == 2)
-    {
-        ; // url
-    }
-    else
-        Q_ASSERT(false);
-
-    if(selection.isEmpty())
-        return;
-    ui->le_source->setText(selection);
 }
 
 bool MainWindow::create_action_py(QDir package_dir)
@@ -821,15 +710,7 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
     package_install_changed();
 }
 
-void MainWindow::on_le_source_textChanged(const QString & text)
-{
-    source = text;
-}
 
-void MainWindow::on_le_source_sha1_editingFinished()
-{
-    source_sha1 = ui->le_source_sha1->text();
-}
 
 void MainWindow::on_le_homepage_textChanged(const QString & text)
 {
@@ -963,7 +844,7 @@ void MainWindow::fill_fields_from_pisi()
 //            ui->rb_src_url->setChecked(true);
 //            ui->le_src_url->setText(archive);
             QMap<PisiSource::ArchiveAttr,QString> archive_att = archives.constBegin().value();
-            ui->le_source_sha1->setText(archive_att.value(PisiSource::SHA1SUM));
+//            ui->le_source_sha1->setText(archive_att.value(PisiSource::SHA1SUM));
         }
         else
         {
@@ -1028,10 +909,10 @@ void MainWindow::fill_fields_from_pisi()
     }
 
     // history section
-    int row_count = ui->tw_history->rowCount();
+    int row_count = ui->tableW_history->rowCount();
     for(int i=0; i<row_count; ++i)
     {
-        ui->tw_history->removeRow(0);
+        ui->tableW_history->removeRow(0);
     }
 
     QMap<int, PisiUpdate> updates = pisi.get_updates();
@@ -1045,13 +926,13 @@ void MainWindow::fill_fields_from_pisi()
         QTableWidgetItem * item_name = new QTableWidgetItem(updates[r].get_packager_name());
         QTableWidgetItem * item_email = new QTableWidgetItem(updates[r].get_packager_email());
         int row = 0;
-        ui->tw_history->insertRow(row);
-        ui->tw_history->setItem(row, 0, item_release);
-        ui->tw_history->setItem(row, 1, item_date);
-        ui->tw_history->setItem(row, 2, item_version);
-        ui->tw_history->setItem(row, 3, item_comment);
-        ui->tw_history->setItem(row, 4, item_name);
-        ui->tw_history->setItem(row, 5, item_email);
+        ui->tableW_history->insertRow(row);
+        ui->tableW_history->setItem(row, 0, item_release);
+        ui->tableW_history->setItem(row, 1, item_date);
+        ui->tableW_history->setItem(row, 2, item_version);
+        ui->tableW_history->setItem(row, 3, item_comment);
+        ui->tableW_history->setItem(row, 4, item_name);
+        ui->tableW_history->setItem(row, 5, item_email);
     }
 
     // packager section
@@ -1179,11 +1060,11 @@ void MainWindow::fill_pisi_from_fields()
 
     // history section
     QMap<int, PisiUpdate> updates;
-    int history_row_count = ui->tw_history->rowCount();
+    int history_row_count = ui->tableW_history->rowCount();
     for(int i=0; i<history_row_count; ++i)
     {
         bool ok = false;
-        int release = ui->tw_history->item(i,0)->text().toInt(&ok);
+        int release = ui->tableW_history->item(i,0)->text().toInt(&ok);
         if(ok)
             updates[release] = get_history_update(i);
         else
@@ -1457,6 +1338,14 @@ void MainWindow::on_tb_edit_aditional_files_clicked()
     }
 }
 
+void MainWindow::clear_tableW_files()
+{
+    int row_count = ui->tableW_files->rowCount();
+    for (int i = 0; i < row_count; ++i) {
+        ui->tableW_files->removeRow(0);
+    }
+}
+
 void MainWindow::on_tb_add_label_clicked()
 {
     QModelIndexList list = ui->treeV_files->selectionModel()->selectedRows(0);
@@ -1477,6 +1366,9 @@ void MainWindow::on_tb_add_label_clicked()
             ui->tableW_files->setItem(0, 1, new QTableWidgetItem(aifld.get_file_type()));
             ui->tableW_files->setItem(0, 2, new QTableWidgetItem(permanent ? tr("True"):tr("False")));
             ui->tableW_files->sortItems(0);
+            QMap<QString, bool> attr;
+            attr[aifld.get_file_type()] = aifld.get_permanent();
+            files[path] = attr;
         }
     }
 }
@@ -1484,8 +1376,11 @@ void MainWindow::on_tb_add_label_clicked()
 void MainWindow::on_tb_delete_label_clicked()
 {
     QModelIndexList list = ui->tableW_files->selectionModel()->selectedRows(0);
-    if(list.count() == 1)
+    if(list.count() == 1){
+        QString path = ui->tableW_files->item(list.first().row(), 0)->data(Qt::DisplayRole).toString();
+        files.remove(path);
         ui->tableW_files->removeRow(list.first().row());
+    }
 }
 
 void MainWindow::on_tableW_files_itemSelectionChanged()
@@ -1518,3 +1413,34 @@ void MainWindow::on_tb_open_package_dir_clicked()
 }
 
 
+
+void MainWindow::on_tb_add_archive_clicked()
+{
+    ArchiveSelectionDialog::ArchiveType type;
+    if(ui->combo_archive_type->currentIndex() == 0)
+        type = ArchiveSelectionDialog::COMPRESSED;
+    else if(ui->combo_archive_type->currentIndex() == 1)
+        type = ArchiveSelectionDialog::URL;
+    else
+        Q_ASSERT(false);
+
+    ArchiveSelectionDialog asd(this, type);
+    if(asd.exec() == QDialog::Accepted){
+        // append archive widget
+        QVBoxLayout * w_layout = qobject_cast<QVBoxLayout *>(ui->w_archive_base->layout());
+        if( ! w_layout){
+            w_layout = new QVBoxLayout;
+            ui->w_archive_base->setLayout(w_layout);
+        }
+        ArchiveWidget * a_w = new ArchiveWidget(ui->w_archive_base, asd.get_archive(), asd.get_sha1());
+        connect(a_w, SIGNAL(delete_me(ArchiveWidget*)), SLOT(delete_archive(ArchiveWidget*)));
+        archives.append(a_w);
+        w_layout->addWidget(a_w);
+    }
+}
+
+void MainWindow::delete_archive(ArchiveWidget * a_w)
+{
+    archives.removeAt(archives.indexOf(a_w));
+    delete a_w;
+}

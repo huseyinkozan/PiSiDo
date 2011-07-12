@@ -1,0 +1,41 @@
+#ifndef ARCHIVESELECTIONDIALOG_H
+#define ARCHIVESELECTIONDIALOG_H
+
+#include <QDialog>
+
+namespace Ui {
+    class ArchiveSelectionDialog;
+}
+
+class ArchiveSelectionDialog : public QDialog
+{
+    Q_OBJECT
+
+public:
+    enum ArchiveType {
+        COMPRESSED,
+        URL
+    };
+
+    explicit ArchiveSelectionDialog(QWidget * parent, ArchiveType type);
+    ~ArchiveSelectionDialog();
+
+    QString get_archive();
+    QString get_sha1();
+
+private slots:
+    void on_pb_browse_clicked();
+    void on_le_sha1_editingFinished();
+
+    void on_buttonBox_accepted();
+
+private:
+    ArchiveType archive_type;
+    Ui::ArchiveSelectionDialog *ui;
+
+    QString sha1;
+
+    QString get_sha1sum(const QString & file_name);
+};
+
+#endif // ARCHIVESELECTIONDIALOG_H

@@ -30,18 +30,21 @@ First:
 
     (X) Add line limit to console.
 
+    (X) QFileSystemWatcher (or QFileSystemModel) will be used here :
+        (X) __workspace__/__package_name__/
+        (X) __workspace__/__package_name__/files/
+        (X) /var/pisi/__package_name__/install/
+
+    (X) Support for multiple archives in pspec.xml
 
     (->) load from gui and save to gui for these:
         (*) Package::Files,
         (*) Souce::Patches,
         (*) SPBase::AdditionalFiles
 
-    (X) QFileSystemWatcher (or QFileSystemModel) will be used here :
-        (X) __workspace__/__package_name__/
-        (X) __workspace__/__package_name__/files/
-        (X) /var/pisi/__package_name__/install/
 
     (*) Restrict repeated command execution on bash.
+    (*) Take root privilages for bash.
 
     (*) Make build process.
         (*) __package_name__ will convert at the aditional_files

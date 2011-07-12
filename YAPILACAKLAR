@@ -30,18 +30,21 @@
 
     (X) Konsol için satır limiti konacak.
 
+    (X) QFileSystemWatcher (veya QFileSystemModel) kullanılacak dizinler:
+        (X) __workspace__/__package_name__/
+        (X) __workspace__/__package_name__/files/
+        (X) /var/pisi/__package_name__/install/
+
+    (X) pspec.xml de birden fazla arşivi destekle.
 
     (->) Şunlar için arayüze ve arayüzden doldurma yapılacak.
         (*) Package::Files,
         (*) Souce::Patches,
         (*) SPBase::AdditionalFiles
 
-    (X) QFileSystemWatcher (veya QFileSystemModel) kullanılacak dizinler:
-        (X) __workspace__/__package_name__/
-        (X) __workspace__/__package_name__/files/
-        (X) /var/pisi/__package_name__/install/
 
     (*) Bash'e arka arkaya komut göndermeyi engelle.
+    (*) bash için root hakları alınacak
 
     (*) İnşa işlemleri yapılacak.
         (*) aditional_files daki __package_name__ dönüştürülecek

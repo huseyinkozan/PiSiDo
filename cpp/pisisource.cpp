@@ -113,28 +113,25 @@ void PisiSource::save_to_dom(QDomElement & root)
     }
 
     elm = root.firstChildElement("Archive");
-    QDomElement second_archive = elm.nextSiblingElement("Archive");
-    if( ! second_archive.isNull())
-        throw QString("More than one archive tag. Multiple archives not supported !");
+
     if( ! elm.isNull())
         root.removeChild(elm);
     QList<QString> archive_names = archives.keys();
-    if(archive_names.count() > 1)
-    {
-        throw QString("More than one archive !");
-    }
-    else if(archive_names.count() < 1)
+    if(archive_names.count() < 1)
     {
         throw QString("There is no archive !");
     }
     else
     {
-        QString archive = archive_names.first();
-        elm = set_element_value(root, "Archive", archive);
-        QList<ArchiveAttr> attributes = archives[archive].keys();
-        foreach (ArchiveAttr attr, attributes)
+        for (int i = 0; i < archive_names.count(); ++i)
         {
-            elm.setAttribute(get_archive_attribute(attr), archives[archive][attr]);
+            QString archive = archive_names.at(i);
+            elm = set_element_value(root, "Archive", archive);
+            QList<ArchiveAttr> attributes = archives[archive].keys();
+            foreach (ArchiveAttr attr, attributes)
+            {
+                elm.setAttribute(get_archive_attribute(attr), archives[archive][attr]);
+            }
         }
     }
 
@@ -289,6 +286,10 @@ bool PisiSource::is_mandatory(QDomElement root, QString tag)
             return true;
         else
             throw QString("Undefined tag name in is_mandatory() for packager tag !");
+    }
+    else if(tag.toLower() == "archive")
+    {
+        return true;
     }
     else
     {
