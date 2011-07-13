@@ -126,7 +126,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->combo_part_of->addItem("");
     ui->combo_part_of->addItems(get_file_strings(":/files/part_of"));
 
-    appy_default_settings();
+    apply_default_settings();
 
     actions_templates_defaults.clear();
     actions_templates_defaults[0] = get_file_contents(":/files/actions_template_auto.py");
@@ -354,7 +354,7 @@ void MainWindow::on_action_Help_triggered()
     help_dialog->activateWindow();
 }
 
-void MainWindow::appy_default_settings()
+void MainWindow::apply_default_settings()
 {
     // set default settings, needed for first run
     settings.beginGroup( "configuration" );
@@ -482,11 +482,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
     on_tb_reset_menu_clicked();
     ui->gb_create_menu->setChecked(false);
 
-    int row_count = ui->tableW_history->rowCount();
-    for(int i=0; i<row_count; ++i)
-    {
-        ui->tableW_history->removeRow(0);
-    }
+    clear_tableW_history();
 
     clear_tableW_files();
     files.clear();
@@ -549,6 +545,14 @@ void MainWindow::on_tb_add_update_clicked()
         ui->tableW_history->setItem(row, 4, item_name);
         ui->tableW_history->setItem(row, 5, item_email);
         package_install_changed();
+    }
+}
+
+void MainWindow::clear_tableW_history()
+{
+    int row_count = ui->tableW_history->rowCount();
+    for(int i=0; i<row_count; ++i){
+        ui->tableW_history->removeRow(0);
     }
 }
 
@@ -703,17 +707,7 @@ void MainWindow::package_files_changed()
 
             patches = temp_patches;
             temp_patches.clear();
-            QMultiMap<int, QString>::iterator patch_it = patches.begin();
-            int patch_index = 0;
-            while(patch_it != patches.end())
-            {
-                ui->tableW_patches->insertRow(patch_index);
-                ui->tableW_patches->setItem(patch_index, 0, new QTableWidgetItem(QString::number(patch_it.key())));
-                ui->tableW_patches->setItem(patch_index, 1, new QTableWidgetItem(patch_it.value()));
-                patch_index++;
-                patch_it++;
-            }
-            ui->tableW_patches->sortByColumn(0, Qt::AscendingOrder);
+            fill_tableW_patches();
 
             aditional_files = temp_aditional_files;
             temp_aditional_files.clear();
@@ -754,6 +748,24 @@ void MainWindow::package_files_changed()
     {
         ui->tb_import_package->setEnabled(false);
     }
+}
+
+/**
+  patches must filled before call !
+  */
+void MainWindow::fill_tableW_patches()
+{
+    QMultiMap<int, QString>::iterator patch_it = patches.begin();
+    int patch_index = 0;
+    while(patch_it != patches.end())
+    {
+        ui->tableW_patches->insertRow(patch_index);
+        ui->tableW_patches->setItem(patch_index, 0, new QTableWidgetItem(QString::number(patch_it.key())));
+        ui->tableW_patches->setItem(patch_index, 1, new QTableWidgetItem(patch_it.value()));
+        patch_index++;
+        patch_it++;
+    }
+    ui->tableW_patches->sortByColumn(0, Qt::AscendingOrder);
 }
 
 void MainWindow::package_files_process(const QString & dir)
@@ -998,7 +1010,7 @@ void MainWindow::append_archive(const QString &archive, const QString &sha1)
         ui->w_archive_base->setLayout(w_layout);
     }
     ArchiveWidget * a_w = new ArchiveWidget(ui->w_archive_base, archive, sha1);
-    connect(a_w, SIGNAL(delete_me(ArchiveWidget*)), SLOT(delete_archive(ArchiveWidget*)));
+    connect(a_w, SIGNAL(delete_me(ArchiveWidget*)), this, SLOT(delete_archive(ArchiveWidget*)));
     archive_widgets.append(a_w);
     w_layout->addWidget(a_w);
 
@@ -1007,7 +1019,7 @@ void MainWindow::append_archive(const QString &archive, const QString &sha1)
 void MainWindow::delete_archive(ArchiveWidget * a_w)
 {
     archives.remove(a_w->get_archive());
-    disconnect(a_w, SIGNAL(delete_me(ArchiveWidget*)), SLOT(delete_archive(ArchiveWidget*)));
+    disconnect(a_w, SIGNAL(delete_me(ArchiveWidget*)), this, SLOT(delete_archive(ArchiveWidget*)));
     archive_widgets.removeAt(archive_widgets.indexOf(a_w));
     delete a_w;
 }
@@ -1058,7 +1070,7 @@ void MainWindow::on_tb_import_package_clicked()
 
         try
         {
-            fill_fields_from_pisi();
+            pisi_to_gui();
         }
         catch (QString e)
         {
@@ -1077,7 +1089,7 @@ void MainWindow::on_tb_import_package_clicked()
   Helper function to fill program fields from Pisi class.
   */
 
-void MainWindow::fill_fields_from_pisi()
+void MainWindow::pisi_to_gui() throw (QString)
 {
     if(pisi.is_empty())
         throw QString("Empty pisi file, import pspec.xml before use !");
@@ -1086,11 +1098,15 @@ void MainWindow::fill_fields_from_pisi()
     // source section
     PisiSource source = pisi.get_source();
     archives = source.get_archives();
+    patches = source.get_patches();
+    homepage = source.get_home_page();
+
     QList<QString> archive_list = archives.keys();
     foreach (QString a, archive_list) {
         append_archive(a, archives[a][PisiSource::SHA1SUM]);
     }
-    ui->le_homepage->setText(source.get_home_page());
+    fill_tableW_patches();
+    ui->le_homepage->setText(homepage);
 
     // TODO : do patches, ....
 
@@ -1120,46 +1136,27 @@ void MainWindow::fill_fields_from_pisi()
     ui->le_runtime_dependency->setText(package.get_dependency_list(runtime_dep).join(", "));
 
     QString actions_py = package_dir.absoluteFilePath("actions.py");
-
-    if(QFile::exists(actions_py))
-    {
+    if(QFile::exists(actions_py)){
         actions_templates[6] = get_file_contents(actions_py);
     }
     ui->combo_actions_template->setCurrentIndex(6);
 
     QString desktop_file_name = package_files_dir.absoluteFilePath(QString("%1.desktop").arg(package_name));
-
-    if(QFile::exists(desktop_file_name))
-    {
-        QFile desktop_file(desktop_file_name);
-        if( ! desktop_file.open(QFile::ReadOnly | QFile::Text))
-        {
-            QMessageBox::warning(this, tr("Error"), tr("Can not open desktop file for reading !"));
-        }
-        else
-        {
-            ui->gb_create_menu->setChecked(true);
-            QTextStream desktop_file_stream(&desktop_file);
-            ui->pte_desktop->setPlainText(desktop_file_stream.readAll());
-        }
-        desktop_file.close();
-    }
-    else
-    {
+    QString desktop_file_contents = get_file_contents(desktop_file_name);
+    if(desktop_file_contents.isEmpty()){
         ui->gb_create_menu->setChecked(false);
     }
-
-    // history section
-    int row_count = ui->tableW_history->rowCount();
-    for(int i=0; i<row_count; ++i)
-    {
-        ui->tableW_history->removeRow(0);
+    else{
+        ui->gb_create_menu->setChecked(true);
+        ui->pte_desktop->setPlainText(desktop_file_contents);
     }
 
+
+    // history section
+    clear_tableW_history();
     QMap<int, PisiUpdate> updates = pisi.get_updates();
     QList<int> releases = updates.keys();   // keys are asc ordered
-    foreach (int r, releases)
-    {
+    foreach (int r, releases){
         QTableWidgetItem * item_release = new QTableWidgetItem(QString::number(updates[r].get_release()));
         QTableWidgetItem * item_date = new QTableWidgetItem(updates[r].get_date().toString("dd.MM.yyyy"));
         QTableWidgetItem * item_version = new QTableWidgetItem(updates[r].get_version());
@@ -1174,12 +1171,11 @@ void MainWindow::fill_fields_from_pisi()
         ui->tableW_history->setItem(row, 3, item_comment);
         ui->tableW_history->setItem(row, 4, item_name);
         ui->tableW_history->setItem(row, 5, item_email);
-
+    }
     statusBar()->showMessage(tr("Package build information successfully imported."));
 }
-}
 
-void MainWindow::fill_pisi_from_fields()
+void MainWindow::pisi_from_gui() throw (QString)
 {
     // history section
     QMap<int, PisiUpdate> updates;
@@ -1210,7 +1206,15 @@ void MainWindow::fill_pisi_from_fields()
     source.set_description(description);
     source.set_build_dependencies(build_dependency);
     source.set_archives(archives);
-    source.set_patches(patches);
+    QMap<QString, QMap<PisiSource::PatchAttr, QString> > s_p;
+    QMultiMap<int, QString>::const_iterator s_p_it = patches.constBegin();
+    while (s_p_it != patches.end()) {
+        QMap<PisiSource::PatchAttr, QString> s_p_attr;
+        s_p_attr[PisiSource::LEVEL] = s_p_it.key();
+        s_p[s_p_it.value()] = s_p_attr;
+        ++s_p_it;
+    }
+    source.set_patches(s_p);
     pisi.set_source(source);
 
 
@@ -1233,7 +1237,7 @@ void MainWindow::fill_pisi_from_fields()
         a_f.replace("__package_name__", package_name);
         temp_aditional_files[a_f] = a_f_attr;
     }
-    package.set_aditional_file(temp_aditional_files);
+    package.set_aditional_files(temp_aditional_files);
     temp_aditional_files.clear();
 
     pisi.set_package(package);
@@ -1246,7 +1250,7 @@ void MainWindow::create_build_files()
     dom_pspec.clear();
     try
     {
-        fill_pisi_from_fields();
+        pisi_from_gui();
         pisi.save_to_dom(dom_pspec);
     }
     catch (QString e)

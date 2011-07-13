@@ -42,6 +42,7 @@ private slots:
     void clear_tableW_files();
     void clear_tableW_patches();
     void clear_tableW_aditional_files();
+    void clear_tableW_history();
 
     void on_action_Change_Workspace_triggered();
 
@@ -153,7 +154,7 @@ private:
     QMap<QString, QMap<QString, bool> > files;
     QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives;
 
-    void appy_default_settings();
+    void apply_default_settings();
     void write_settings();
     void read_settings();
 
@@ -162,12 +163,13 @@ private:
     bool save_text_file(const QString & file_name, const QString & data);
 
     PisiUpdate get_history_update(int row);
+    void fill_tableW_patches();
 
     void create_build_files();
     void call_pisi_build_command(const QString & build_step = QString());
 
-    void fill_fields_from_pisi();
-    void fill_pisi_from_fields();
+    void pisi_to_gui() throw (QString);
+    void pisi_from_gui() throw (QString);
 
 };
 
