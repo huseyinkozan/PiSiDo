@@ -35,6 +35,8 @@ private slots:
     void append_archive(const QString & archive, const QString & sha1);
     void delete_archive(ArchiveWidget *);
 
+    void append_file(const QString & path, const QString & file_type, bool permanent);
+
     void package_files_changed();
     void package_files_process(const QString & dir);
     void package_install_changed();

@@ -67,6 +67,19 @@ QMap<QString, QMap<PisiPackage::FileType, bool> > PisiPackage::get_files() const
     return files;
 }
 
+QMap<QString, QMap<QString, bool> > PisiPackage::get_files_as_string_type()
+{
+    QMap<QString, QMap<QString, bool> > result;
+    QList<QString> files_keys = files.keys();
+    foreach (QString file, files_keys) {
+        QMap<FileType, bool> files_attr = files.value(file);
+        QMap<QString, bool> result_attr;
+        result_attr[get_files_file_type(files_attr.keys().first())] = files_attr.value(files_attr.keys().first());
+        result[file] = result_attr;
+    }
+    return result;
+}
+
 void PisiPackage::set_runtime_dependencies(QMap<QString, QMap<PisiSPBase::VRTFAttr, QString> > runtime_dependencies)
 {
     // optional, no check
@@ -81,10 +94,15 @@ void PisiPackage::set_runtime_dependencies(QString runtime_dependency_string)
 
 void PisiPackage::set_files(QMap<QString, QMap<FileType, bool> > files)
 {
-    if(files.isEmpty())
-        throw QString("Empty files !");
+    if(files.isEmpty()){
+        QMap<FileType, bool> attr;
+        attr[ALL] = false;
+        this->files[QString("/")] = attr;
+    }
+    else{
+        this->files = files;
+    }
 
-    this->files = files;
 }
 
 void PisiPackage::set_files(QMap<QString, QMap<QString, bool> > files)

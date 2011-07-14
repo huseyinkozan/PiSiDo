@@ -30,6 +30,7 @@ public:
     QStringList get_runtime_dependencies_as_stringlist();
     QMap<QString, QMap<VRTFAttr,QString> > get_runtime_dependencies() const;
     QMap<QString, QMap<FileType, bool> > get_files() const;
+    QMap<QString, QMap<QString, bool> > get_files_as_string_type();
 
     void set_runtime_dependencies(QMap<QString, QMap<VRTFAttr,QString> > runtime_dependencies);
     void set_runtime_dependencies(QString runtime_dependency_string);

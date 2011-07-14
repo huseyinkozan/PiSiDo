@@ -919,16 +919,22 @@ void MainWindow::on_tb_add_label_clicked()
         AddInstallFileLabelDialog aifld(this, path);
         if(aifld.exec() == QDialog::Accepted){
             bool permanent = aifld.get_permanent();
-            ui->tableW_files->insertRow(0);
-            ui->tableW_files->setItem(0, 0, new QTableWidgetItem(path));
-            ui->tableW_files->setItem(0, 1, new QTableWidgetItem(aifld.get_file_type()));
-            ui->tableW_files->setItem(0, 2, new QTableWidgetItem(permanent ? tr("True"):tr("False")));
-            ui->tableW_files->sortItems(0);
+            QString file_type = aifld.get_file_type();
+            append_file(path, file_type, permanent);
             QMap<QString, bool> attr;
-            attr[aifld.get_file_type()] = aifld.get_permanent();
+            attr[file_type] = permanent;
             files[path] = attr;
         }
     }
+}
+
+void MainWindow::append_file(const QString &path, const QString &file_type, bool permanent)
+{
+    ui->tableW_files->insertRow(0);
+    ui->tableW_files->setItem(0, 0, new QTableWidgetItem(path));
+    ui->tableW_files->setItem(0, 1, new QTableWidgetItem(file_type));
+    ui->tableW_files->setItem(0, 2, new QTableWidgetItem(permanent ? tr("True"):tr("False")));
+    ui->tableW_files->sortItems(0);
 }
 
 void MainWindow::on_tb_delete_label_clicked()
@@ -1128,9 +1134,12 @@ void MainWindow::pisi_to_gui() throw (QString)
     }
     runtime_dependency = package.get_runtime_dependencies_as_stringlist().join(", ");
     ui->le_runtime_dependency->setText(runtime_dependency);
-
-    // TODO : files
-        // if files empty : / = ALL, false
+    files = package.get_files_as_string_type();
+    QList<QString> files_keys = files.keys();
+    foreach (QString path, files_keys) {
+        QMap<QString, bool> attr = files.value(path);
+        append_file(path, attr.keys().first(), attr.value(attr.keys().first()));
+    }
     // TODO : aditional_files
 
     QString actions_py = package_dir.absoluteFilePath("actions.py");
