@@ -89,15 +89,20 @@ void PisiPackage::set_files(QMap<QString, QMap<FileType, bool> > files)
 
 void PisiPackage::set_files(QMap<QString, QMap<QString, bool> > files)
 {
-    if(files.isEmpty())
-        return;
     this->files.clear();
-    QList<QString> keys = files.keys();
-    foreach (QString path, keys) {
-        QMap<QString, bool> value = files.value(path);
+    if(files.isEmpty()){
         QMap<FileType, bool> attr;
-        attr[get_files_file_type(value.keys().first())] = value.value(value.keys().first());
-        this->files[path] = attr;
+        attr[ALL] = false;
+        this->files[QString("/")] = attr;
+    }
+    else{
+        QList<QString> keys = files.keys();
+        foreach (QString path, keys) {
+            QMap<QString, bool> value = files.value(path);
+            QMap<FileType, bool> attr;
+            attr[get_files_file_type(value.keys().first())] = value.value(value.keys().first());
+            this->files[path] = attr;
+        }
     }
 }
 

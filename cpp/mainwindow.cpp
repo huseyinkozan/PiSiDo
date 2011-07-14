@@ -1130,6 +1130,7 @@ void MainWindow::pisi_to_gui() throw (QString)
     ui->le_runtime_dependency->setText(runtime_dependency);
 
     // TODO : files
+        // if files empty : / = ALL, false
     // TODO : aditional_files
 
     QString actions_py = package_dir.absoluteFilePath("actions.py");
