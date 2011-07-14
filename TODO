@@ -47,7 +47,7 @@ First:
 
 
     (->) Make build process.
-        (*) __package_name__ will convert at the aditional_files
+        (X) __package_name__ will convert at the aditional_files
 
     (*) check gui tab order.
     (*) check gui tooltips.
@@ -61,20 +61,14 @@ First:
 
 Later:
 ------
-    (*) Compressing the source folder process can be able to cancel. Now, qprocess runs and we are waiting to finish its job.
 
     (*) create translation.xml
-
-    (*) multiple archive source support.
 
     (*) make autocomplete for actions api.
 
     (*) pspec.xml view will add.
-        (*) Newly created or imported pspec.xml file will shown to the user. GUI changes
-            will reflect to user.
 
     (*) Source::Patch properties will reflect to gui. For now, only level is working.
-
 
 
 

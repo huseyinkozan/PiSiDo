@@ -27,6 +27,7 @@ public:
     virtual void load_from_dom(const QDomElement & dom_element);
     virtual void save_to_dom(QDomElement & dom_element);
 
+    QStringList get_runtime_dependencies_as_stringlist();
     QMap<QString, QMap<VRTFAttr,QString> > get_runtime_dependencies() const;
     QMap<QString, QMap<FileType, bool> > get_files() const;
 

@@ -33,7 +33,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
+         <y>-104</y>
          <width>270</width>
          <height>489</height>
         </rect>
@@ -101,29 +101,6 @@
           </property>
           <property name="statusTip">
            <string>Shows a brief description on the installer list.</string>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="0">
-         <widget class="QLabel" name="lbl_detailed">
-          <property name="text">
-           <string>Description</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="1">
-         <widget class="QTextEdit" name="te_description">
-          <property name="toolTip">
-           <string>Shows after open detailed description. Should be continuous of the brief.</string>
-          </property>
-          <property name="statusTip">
-           <string>Shows after open detailed description. Should be continuous of the brief.</string>
           </property>
          </widget>
         </item>
@@ -269,6 +246,22 @@ p, li { white-space: pre-wrap; }
         </item>
         <item row="5" column="1">
          <widget class="QWidget" name="w_archive_base" native="true"/>
+        </item>
+        <item row="13" column="1">
+         <widget class="QPlainTextEdit" name="pte_description"/>
+        </item>
+        <item row="13" column="0">
+         <widget class="QLabel" name="lbl_detailed">
+          <property name="text">
+           <string>Description</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -1296,7 +1289,6 @@ Categories=Application;</string>
  </customwidgets>
  <tabstops>
   <tabstop>le_summary</tabstop>
-  <tabstop>te_description</tabstop>
  </tabstops>
  <resources>
   <include location="../resource/pisido.qrc"/>

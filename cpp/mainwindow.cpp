@@ -149,11 +149,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     read_settings();
 
-    if( ! not_ask_workspace)
-    {
+    if( ! not_ask_workspace){
         WorkspaceDialog wd(this);
-        if(wd.exec() == QDialog::Accepted)
-        {
+        if(wd.exec() == QDialog::Accepted){
             workspace_dir = QDir(wd.get_workspace());
             not_ask_workspace = wd.get_not_ask_workspace();
         }
@@ -179,22 +177,18 @@ void MainWindow::closeEvent(QCloseEvent *event)
      event->accept();
  }
 
-/**
-  Helper function to load each line from file to QStringList.
-  */
+/** Helper function to load each line from file to QStringList. */
 
 QStringList MainWindow::get_file_strings(const QString & file_name)
 {
     QFile file(file_name);
-    if( ! file.open(QFile::ReadOnly | QFile::Text))
-    {
+    if( ! file.open(QFile::ReadOnly | QFile::Text)){
         QMessageBox::critical(this, tr("Error"), tr("Can not open \"%1\" resource !").arg(file_name));
         return QStringList();
     }
     QStringList list;
     QTextStream stream(&file);
-    while( ! stream.atEnd())
-    {
+    while( ! stream.atEnd()){
         QString line = stream.readLine().trimmed();
         if( ! line.isEmpty())
             list.append(line);
@@ -207,12 +201,10 @@ QString MainWindow::get_file_contents(const QString & file_name)
 {
     QFile file(file_name);
     QString contents;
-    if(file.open(QFile::ReadOnly | QFile::Text))
-    {
+    if(file.open(QFile::ReadOnly | QFile::Text)){
         contents = file.readAll();
     }
-    else
-    {
+    else{
         qDebug() << "Can not load contents of file: " << file_name;
     }
     return contents;
@@ -221,8 +213,7 @@ QString MainWindow::get_file_contents(const QString & file_name)
 bool MainWindow::save_text_file(const QString &file_name, const QString &data)
 {
     QFile file(file_name);
-    if( ! file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
+    if( ! file.open(QIODevice::WriteOnly | QIODevice::Text)){
         QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(file_name));
         return false;
     }
@@ -234,8 +225,7 @@ bool MainWindow::save_text_file(const QString &file_name, const QString &data)
 void MainWindow::on_action_Change_Workspace_triggered()
 {
     WorkspaceDialog wd(this);
-    if(wd.exec() == QDialog::Accepted)
-    {
+    if(wd.exec() == QDialog::Accepted){
         workspace_dir = QDir(wd.get_workspace());
         not_ask_workspace = wd.get_not_ask_workspace();
         ui->w_console->execute(QString("cd %1").arg(workspace_dir.absolutePath()));
@@ -259,8 +249,7 @@ void MainWindow::on_action_About_Qt_triggered()
 void MainWindow::on_action_Configure_Application_triggered()
 {
     ConfigurationDialog cd(this);
-    if(cd.exec() == QDialog::Accepted)
-    {
+    if(cd.exec() == QDialog::Accepted){
         // apply settings if needed.
     }
 }
@@ -273,14 +262,12 @@ void MainWindow::on_action_Application_Language_triggered()
                             QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot | QDir::Readable,
                             QDir::Name
                             );
-    if(file_list.isEmpty())
-    {
+    if(file_list.isEmpty()){
         QMessageBox::critical(this, tr("Error"), tr("There are no translation files !"));
         return;
     }
     QMap<QString, QString> lang_map;
-    foreach (QString file, file_list)
-    {
+    foreach (QString file, file_list){
         file.remove(".qm");
         QStringList f = file.split('_');
         f.removeFirst();
@@ -291,8 +278,7 @@ void MainWindow::on_action_Application_Language_triggered()
 
     LanguageDialog ld(lang_map.keys(), this);
     int ret = ld.exec();
-    if(ret == QDialog::Accepted)
-    {
+    if(ret == QDialog::Accepted){
         QString lang = ld.selectedLanguage();
         QString lang_code = lang_map[lang];
         settings.beginGroup("configuration");
@@ -305,8 +291,7 @@ void MainWindow::on_action_Open_Actions_API_Page_triggered()
 {
     settings.beginGroup("configuration");
     QString action_api_page = settings.value("action_api_page").toString();
-    if( ! action_api_page.isEmpty())
-    {
+    if( ! action_api_page.isEmpty()){
         QDesktopServices::openUrl(QUrl(action_api_page));
     }
     settings.endGroup();
@@ -316,8 +301,7 @@ void MainWindow::on_action_Open_PISI_Spec_File_triggered()
 {
     settings.beginGroup("configuration");
     QString pisi_spec = settings.value("pisi_spec").toString();
-    if( ! pisi_spec.isEmpty())
-    {
+    if( ! pisi_spec.isEmpty()){
         QDesktopServices::openUrl(QUrl(pisi_spec));
     }
     settings.endGroup();
@@ -327,8 +311,7 @@ void MainWindow::on_action_Open_PISI_Packaging_Dir_triggered()
 {
     settings.beginGroup("configuration");
     QString pisi_packaging_dir = settings.value("pisi_packaging_dir").toString();
-    if( ! pisi_packaging_dir.isEmpty())
-    {
+    if( ! pisi_packaging_dir.isEmpty()){
         QDir dir(pisi_packaging_dir);
         if(dir.exists())
             QDesktopServices::openUrl(QUrl(pisi_packaging_dir));
@@ -344,8 +327,7 @@ void MainWindow::on_action_Open_Workspace_triggered()
 
 void MainWindow::on_action_Help_triggered()
 {
-    if(help_dialog == NULL)
-    {
+    if(help_dialog == NULL){
         help_dialog = new HelpDialog(this);
         help_dialog->show();
     }
@@ -445,7 +427,7 @@ void MainWindow::read_settings()
     ui->le_homepage->setText(homepage);
     ui->le_package_name->setText(package_name);
     ui->le_summary->setText(summary);
-    ui->te_description->setPlainText(description);
+    ui->pte_description->setPlainText(description);
     ui->combo_license->setCurrentIndex(ui->combo_license->findText(license));
     ui->combo_is_a->setCurrentIndex(ui->combo_is_a->findText(is_a));
     ui->combo_part_of->setCurrentIndex(ui->combo_part_of->findText(part_of));
@@ -461,7 +443,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
     ui->combo_is_a->setCurrentIndex(0);
     ui->combo_part_of->setCurrentIndex(0);
     ui->le_summary->clear();
-    ui->te_description->clear();
+    ui->pte_description->clear();
     ui->le_build_dependency->clear();
     ui->le_runtime_dependency->clear();
 
@@ -514,6 +496,24 @@ PisiUpdate MainWindow::get_history_update(int row)
     return update;
 }
 
+void MainWindow::set_history_update(const PisiUpdate &update)
+{
+    QTableWidgetItem * item_release = new QTableWidgetItem(QString::number(update.get_release()));
+    QTableWidgetItem * item_date = new QTableWidgetItem(update.get_date().toString("dd.MM.yyyy"));
+    QTableWidgetItem * item_version = new QTableWidgetItem(update.get_version());
+    QTableWidgetItem * item_comment = new QTableWidgetItem(update.get_comment());
+    QTableWidgetItem * item_name = new QTableWidgetItem(update.get_packager_name());
+    QTableWidgetItem * item_email = new QTableWidgetItem(update.get_packager_email());
+    int row = 0;
+    ui->tableW_history->insertRow(row);
+    ui->tableW_history->setItem(row, 0, item_release);
+    ui->tableW_history->setItem(row, 1, item_date);
+    ui->tableW_history->setItem(row, 2, item_version);
+    ui->tableW_history->setItem(row, 3, item_comment);
+    ui->tableW_history->setItem(row, 4, item_name);
+    ui->tableW_history->setItem(row, 5, item_email);
+}
+
 void MainWindow::on_tb_delete_last_update_clicked()
 {
     if(ui->tableW_history->rowCount()>0)
@@ -523,8 +523,7 @@ void MainWindow::on_tb_delete_last_update_clicked()
 void MainWindow::on_tb_add_update_clicked()
 {
     AddUpdateDialog ud(this);
-    if(ud.exec() == QDialog::Accepted)
-    {
+    if(ud.exec() == QDialog::Accepted){
         QString release;
         if(ui->tableW_history->rowCount() > 0)
             release = QString::number(ui->tableW_history->item(0,0)->text().toInt()+1);
@@ -642,9 +641,9 @@ void MainWindow::on_combo_part_of_currentIndexChanged(const QString & text)
     part_of = text.trimmed();
 }
 
-void MainWindow::on_te_description_textChanged()
+void MainWindow::on_pte_description_textChanged()
 {
-    description = ui->te_description->toPlainText().trimmed();
+    description = ui->pte_description->toPlainText().trimmed();
 }
 
 
@@ -696,8 +695,7 @@ void MainWindow::package_files_changed()
             package_files_process(package_files_dir.absolutePath());
 
             QDirIterator it(package_files_dir.absolutePath(), QDir::Dirs|QDir::NoDotAndDotDot|QDir::NoSymLinks|QDir::Readable, QDirIterator::Subdirectories);
-            while(it.hasNext())
-            {
+            while(it.hasNext()){
                 QString sub = it.next();
                 if( ! package_files_watcher->directories().contains(sub))
                     package_files_watcher->addPath(sub);
@@ -726,13 +724,11 @@ void MainWindow::package_files_changed()
         }
     }
 
-    if( package_dir.isRoot() || ! package_dir.exists())
-    {
+    if( package_dir.isRoot() || ! package_dir.exists()){
         ui->tb_open_package_dir->setEnabled(false);
     }
 
-    if(package_files_dir.isRoot() || ! package_files_dir.exists())
-    {
+    if(package_files_dir.isRoot() || ! package_files_dir.exists()){
         clear_tableW_patches();
         clear_tableW_aditional_files();
         ui->tb_open_aditional_files_dir->setEnabled(false);
@@ -740,19 +736,16 @@ void MainWindow::package_files_changed()
     }
 
     if(QFile::exists(package_dir.absoluteFilePath("pspec.xml"))
-            && QFile::exists(package_dir.absoluteFilePath("actions.py")))
-    {
+            && QFile::exists(package_dir.absoluteFilePath("actions.py"))){
         ui->tb_import_package->setEnabled(true);
     }
-    else
-    {
+    else{
         ui->tb_import_package->setEnabled(false);
     }
 }
 
-/**
-  patches must filled before call !
-  */
+/** patches must filled before call ! */
+
 void MainWindow::fill_tableW_patches()
 {
     QMultiMap<int, QString>::iterator patch_it = patches.begin();
@@ -846,8 +839,7 @@ void MainWindow::on_tb_patch_down_clicked()
     if( ! ok) key = 1;
     QString value = ui->tableW_patches->item(list.first().row(), 1)->data(Qt::DisplayRole).toString();
     QMultiMap<int, QString>::iterator it = patches.find(key, value);
-    if(it != patches.end())
-    {
+    if(it != patches.end()){
         patches.remove(it.key(), it.value());
         key++;
         patches.insert(key, value);
@@ -867,8 +859,7 @@ void MainWindow::on_tb_patch_up_clicked()
         return;
     QString value = ui->tableW_patches->item(list.first().row(), 1)->data(Qt::DisplayRole).toString();
     QMultiMap<int, QString>::iterator it = patches.find(key, value);
-    if(it != patches.end())
-    {
+    if(it != patches.end()){
         patches.remove(it.key(), it.value());
         key--;
         patches.insert(key, value);
@@ -899,8 +890,7 @@ void MainWindow::on_tb_edit_aditional_files_clicked()
         return;
     QString a_file = ui->tableW_aditional_files->item(list.first().row(), 0)->data(Qt::DisplayRole).toString();
     AditionalFileDialog afd(this, a_file, aditional_files.value(a_file));
-    if( afd.exec() == QDialog::Accepted )
-    {
+    if( afd.exec() == QDialog::Accepted ){
         aditional_files[a_file] = afd.get_attr();
         package_files_changed();
     }
@@ -1029,19 +1019,16 @@ void MainWindow::on_tb_import_package_clicked()
 {
     QString pspec_file = package_dir.absoluteFilePath("pspec.xml");
 
-    if(QFile::exists(pspec_file))
-    {
+    if(QFile::exists(pspec_file)){
         QFile file(pspec_file);
-        if( ! file.open(QFile::ReadOnly))
-        {
+        if( ! file.open(QFile::ReadOnly)){
             QMessageBox::critical(this, tr("Error"), tr("Can not open file for reading !"));
             return;
         }
         dom_pspec.clear();
         QString errorMsg;
         int errorLine, errorColumn;
-        if( ! dom_pspec.setContent(&file, &errorMsg, &errorLine, &errorColumn))
-        {
+        if( ! dom_pspec.setContent(&file, &errorMsg, &errorLine, &errorColumn)){
             file.close();
             dom_pspec.clear();
             QMessageBox::critical(this, tr("Parse Error"),
@@ -1053,41 +1040,31 @@ void MainWindow::on_tb_import_package_clicked()
         file.close();
         pisi.clear();
 
-        try
-        {
+        try{
             pisi.load_from_dom(dom_pspec);
         }
-        catch (QString e)
-        {
+        catch (QString e){
             QMessageBox::critical(this, tr("Error"), tr("An error occured while parsing xml file : %1").arg(e));
             return;
         }
-        catch(...)
-        {
+        catch(...){
             QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
             return;
         }
 
-        try
-        {
+        try{
             pisi_to_gui();
         }
-        catch (QString e)
-        {
+        catch (QString e){
             QMessageBox::critical(this, tr("Error"), tr("An error occured while filling fields: %1").arg(e));
             return;
         }
-        catch (...)
-        {
+        catch (...){
             QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
             return;
         }
     }
 }
-
-/**
-  Helper function to fill program fields from Pisi class.
-  */
 
 void MainWindow::pisi_to_gui() throw (QString)
 {
@@ -1095,52 +1072,71 @@ void MainWindow::pisi_to_gui() throw (QString)
         throw QString("Empty pisi file, import pspec.xml before use !");
 
 
+    // history section
+    clear_tableW_history();
+    QMap<int, PisiUpdate> updates = pisi.get_updates();
+    QList<int> releases = updates.keys();   // keys are asc ordered
+    foreach (int r, releases){
+        set_history_update(updates[r]);
+    }
+
+
     // source section
     PisiSource source = pisi.get_source();
-    archives = source.get_archives();
-    patches = source.get_patches();
+    package_name = source.get_name();
     homepage = source.get_home_page();
-
+    license = source.get_license();
+    is_a = source.get_is_a();
+    part_of = source.get_part_of();
+    summary = source.get_summary();
+    description = source.get_description();
+    build_dependency = source.get_build_dependencies_as_stringlist().join(", ");
+    archives = source.get_archives();
+    QMap<QString, QMap<PisiSource::PatchAttr,QString> > patches = source.get_patches();
+    // assign to gui
+    ui->le_homepage->setText(homepage);
+    ui->combo_license->setCurrentIndex(ui->combo_license->findText(license));
+    ui->combo_is_a->setCurrentIndex(ui->combo_is_a->findText(is_a));
+    ui->combo_part_of->setCurrentIndex(ui->combo_part_of->findText(part_of));
+    ui->le_summary->setText(summary);
+    ui->pte_description->setPlainText(description);
+    ui->le_build_dependency->setText(build_dependency);
     QList<QString> archive_list = archives.keys();
     foreach (QString a, archive_list) {
         append_archive(a, archives[a][PisiSource::SHA1SUM]);
     }
+    this->patches.clear();
+    QList<QString> patch_list = patches.keys();
+    foreach (QString patch, patch_list) {
+        QMap<PisiSource::PatchAttr,QString> attr = patches.value(patch);
+        this->patches.insert(attr.value(PisiSource::LEVEL).toInt(), patch);
+    }
     fill_tableW_patches();
-    ui->le_homepage->setText(homepage);
 
-    // TODO : do patches, ....
 
 
     // package section
     PisiPackage package = pisi.get_package();
-
-    // do not edit work_dir and packge_name, only warn
-    if(package_name != package.get_name())
-    {
+    if(package_name != package.get_name()){
         qDebug() << package_name << "!=" << package.get_name();
-        QMessageBox::warning(this, tr("Warning"), tr("Package name is not same as in the pspec.xml file !"));
+        QMessageBox::warning(this,
+                             tr("Warning"),
+                             tr("Package name is not same with source name in the pspec.xml file !\n"
+                                "Application does not support multiple packages !\n"
+                                "Process will stop."));
+        return;
     }
-    ui->le_summary->setText(source.get_summary());
-    ui->te_description->setPlainText(source.get_description());
-    int license_index = ui->combo_license->findText(source.get_license());
-    if(license_index > 0) ui->combo_license->setCurrentIndex(license_index);
-    int is_a_index = ui->combo_is_a->findText(source.get_is_a());
-    if(is_a_index > 0) ui->combo_is_a->setCurrentIndex(is_a_index);
-    int part_of_index = ui->combo_part_of->findText(source.get_part_of());
-    if(part_of_index > 0) ui->combo_part_of->setCurrentIndex(part_of_index);
+    runtime_dependency = package.get_runtime_dependencies_as_stringlist().join(", ");
+    ui->le_runtime_dependency->setText(runtime_dependency);
 
-    QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > build_dep = source.get_build_dependencies();
-    ui->le_build_dependency->setText(source.get_dependency_list(build_dep).join(", "));
-
-    QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > runtime_dep = package.get_runtime_dependencies();
-    ui->le_runtime_dependency->setText(package.get_dependency_list(runtime_dep).join(", "));
+    // TODO : files
+    // TODO : aditional_files
 
     QString actions_py = package_dir.absoluteFilePath("actions.py");
     if(QFile::exists(actions_py)){
         actions_templates[6] = get_file_contents(actions_py);
+        ui->combo_actions_template->setCurrentIndex(6);
     }
-    ui->combo_actions_template->setCurrentIndex(6);
-
     QString desktop_file_name = package_files_dir.absoluteFilePath(QString("%1.desktop").arg(package_name));
     QString desktop_file_contents = get_file_contents(desktop_file_name);
     if(desktop_file_contents.isEmpty()){
@@ -1152,31 +1148,12 @@ void MainWindow::pisi_to_gui() throw (QString)
     }
 
 
-    // history section
-    clear_tableW_history();
-    QMap<int, PisiUpdate> updates = pisi.get_updates();
-    QList<int> releases = updates.keys();   // keys are asc ordered
-    foreach (int r, releases){
-        QTableWidgetItem * item_release = new QTableWidgetItem(QString::number(updates[r].get_release()));
-        QTableWidgetItem * item_date = new QTableWidgetItem(updates[r].get_date().toString("dd.MM.yyyy"));
-        QTableWidgetItem * item_version = new QTableWidgetItem(updates[r].get_version());
-        QTableWidgetItem * item_comment = new QTableWidgetItem(updates[r].get_comment());
-        QTableWidgetItem * item_name = new QTableWidgetItem(updates[r].get_packager_name());
-        QTableWidgetItem * item_email = new QTableWidgetItem(updates[r].get_packager_email());
-        int row = 0;
-        ui->tableW_history->insertRow(row);
-        ui->tableW_history->setItem(row, 0, item_release);
-        ui->tableW_history->setItem(row, 1, item_date);
-        ui->tableW_history->setItem(row, 2, item_version);
-        ui->tableW_history->setItem(row, 3, item_comment);
-        ui->tableW_history->setItem(row, 4, item_name);
-        ui->tableW_history->setItem(row, 5, item_email);
-    }
     statusBar()->showMessage(tr("Package build information successfully imported."));
 }
 
 void MainWindow::pisi_from_gui() throw (QString)
 {
+
     // history section
     QMap<int, PisiUpdate> updates;
     int history_row_count = ui->tableW_history->rowCount();
@@ -1218,18 +1195,11 @@ void MainWindow::pisi_from_gui() throw (QString)
     pisi.set_source(source);
 
 
-
     // package section
     PisiPackage package;
     package.set_name(package_name);
-    package.set_license(license);
-    package.set_is_a(is_a);
-    package.set_part_of(part_of);
-    package.set_summary(summary);
-    package.set_description(description);
     package.set_runtime_dependencies(runtime_dependency);
     package.set_files(files);
-
     temp_aditional_files.clear();
     QList<QString> a_f_list = aditional_files.keys();
     foreach (QString a_f, a_f_list) {
@@ -1239,7 +1209,6 @@ void MainWindow::pisi_from_gui() throw (QString)
     }
     package.set_aditional_files(temp_aditional_files);
     temp_aditional_files.clear();
-
     pisi.set_package(package);
 }
 
@@ -1248,18 +1217,15 @@ void MainWindow::create_build_files()
 {
 //    fill pisi
     dom_pspec.clear();
-    try
-    {
+    try{
         pisi_from_gui();
         pisi.save_to_dom(dom_pspec);
     }
-    catch (QString e)
-    {
+    catch (QString e){
         QMessageBox::critical(this, tr("Error"), tr("An error occured while filling pisi from fields : %1").arg(e));
         return;
     }
-    catch (...)
-    {
+    catch (...){
         QMessageBox::critical(this, tr("Error"), tr("Unknownt exception while filling pisi from fields !"));
         return;
     }
@@ -1286,12 +1252,10 @@ void MainWindow::create_build_files()
 
     // write image file
     QString image_name = package_dir.absoluteFilePath(package_name + ".png");
-    if( ! QFile::exists(image_name))
-    {
+    if( ! QFile::exists(image_name)){
         // do not remove file; user may changed the file !
         QFile image_file(image_name);
-        if( ! image_file.open(QIODevice::WriteOnly))
-        {
+        if( ! image_file.open(QIODevice::WriteOnly)){
             QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(package_name + ".png"));
             return;
         }

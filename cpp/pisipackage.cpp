@@ -52,6 +52,11 @@ void PisiPackage::save_to_dom(QDomElement & root)
     set_files(elm, files);
 }
 
+QStringList PisiPackage::get_runtime_dependencies_as_stringlist()
+{
+    return get_dependency_list(runtime_dependencies);
+}
+
 QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiPackage::get_runtime_dependencies() const
 {
     return runtime_dependencies;

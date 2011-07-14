@@ -32,8 +32,7 @@ public:
     virtual void load_from_dom(const QDomElement & root);
     virtual void save_to_dom(QDomElement & root);
 
-    virtual QStringList get_dependency_list(QMap<QString, QMap<VRTFAttr,QString> > dependencies);
-    virtual QMap<QString, QMap<VRTFAttr,QString> > get_dependency_list(QString dependency);
+
 
     QString get_name() const;
     QString get_summary() const;
@@ -41,6 +40,7 @@ public:
     QString get_part_of() const;
     QString get_license() const;
     QString get_is_a() const;
+    QStringList get_build_dependencies_as_stringlist();
     QMap<QString, QMap<VRTFAttr,QString> > get_build_dependencies() const;
     QMap<QString, QMap<AFileAttr,QString> > get_aditional_files() const;
 
@@ -77,6 +77,9 @@ protected:
 
     AFileAttr get_aditional_file_attribute(QString attr_name);
     QString get_aditional_file_attribute(AFileAttr attr);
+
+    virtual QStringList get_dependency_list(QMap<QString, QMap<VRTFAttr,QString> > dependencies);
+    virtual QMap<QString, QMap<VRTFAttr,QString> > get_dependency_list(QString dependency);
 
 private:
     QMap<VRTFAttr,QString> get_dependency_attr_list(QString attr_string);

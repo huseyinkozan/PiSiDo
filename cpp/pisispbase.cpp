@@ -104,6 +104,11 @@ QString PisiSPBase::get_is_a() const
     return is_a;
 }
 
+QStringList PisiSPBase::get_build_dependencies_as_stringlist()
+{
+    return get_dependency_list(build_dependencies);
+}
+
 QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_build_dependencies() const
 {
     return build_dependencies;

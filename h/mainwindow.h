@@ -75,7 +75,7 @@ private slots:
 
     void on_le_homepage_textChanged(const QString & text);
     void on_le_summary_textChanged(const QString & text);
-    void on_te_description_textChanged();
+    void on_pte_description_textChanged();
     void on_le_build_dependency_textChanged(const QString & text);
     void on_le_runtime_dependency_textChanged(const QString & text);
 
@@ -163,6 +163,7 @@ private:
     bool save_text_file(const QString & file_name, const QString & data);
 
     PisiUpdate get_history_update(int row);
+    void set_history_update(const PisiUpdate & update);
     void fill_tableW_patches();
 
     void create_build_files();
