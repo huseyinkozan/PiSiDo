@@ -181,7 +181,7 @@ void PisiSPBase::set_aditional_files(QMap<QString, QMap<PisiSPBase::AFileAttr,QS
 
 QString PisiSPBase::get_element_value(QDomElement root, QString tag)
 {
-    QDomElement elm = root.firstChildElement("Name");
+    QDomElement elm = root.firstChildElement(tag);
     if(elm.isNull())
     {
         if(is_mandatory(root, tag))
@@ -378,12 +378,14 @@ QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > PisiSPBase::get_aditional_fi
     {
         return QMap<QString, QMap<AFileAttr,QString> >();
     }
+    elm = elm.firstChildElement("AditionalFile");
+
+    if(elm.isNull())
+    {
+        return QMap<QString, QMap<AFileAttr,QString> >();
+    }
 
     QMap<QString, QMap<AFileAttr,QString> > aditional_files;
-
-    elm = elm.firstChildElement("AditionalFile");
-    if(elm.isNull())
-        throw QString("No AditionalFile in AditionalFiles");
 
     for( ; ! elm.isNull(); elm = elm.nextSiblingElement("AditionalFile"))
     {

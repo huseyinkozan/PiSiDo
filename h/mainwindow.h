@@ -167,8 +167,9 @@ private:
     PisiUpdate get_history_update(int row);
     void set_history_update(const PisiUpdate & update);
     void fill_tableW_patches();
+    void fill_tableW_aditional_files();
 
-    void create_build_files();
+    bool create_build_files();
     void call_pisi_build_command(const QString & build_step = QString());
 
     void pisi_to_gui() throw (QString);

@@ -76,6 +76,10 @@ void Pisi::set_updates(QMap<int, PisiUpdate> updates)
 
     this->updates = updates;
     empty = false;
+    QList<int> release_list = updates.keys();
+    if(release_list.count() > 0){
+        last_update = updates.value(release_list.last());
+    }
 }
 
 void Pisi::load_from_dom(const QDomDocument & dom)
@@ -147,8 +151,6 @@ void Pisi::load_from_dom(const QDomDocument & dom)
 
 bool Pisi::save_to_dom(QDomDocument &dom)
 {
-    if(dom.isNull())
-        throw QString("Empty dom while saving pisi class values to dom !");
     if(is_empty())
         throw QString("Empty pisi class while saving pisi class values to dom !");
 

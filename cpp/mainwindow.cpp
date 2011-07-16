@@ -398,15 +398,15 @@ void MainWindow::read_settings()
     settings.endGroup();
 
     settings.beginGroup("central_widget_contents");
-    package_name = settings.value("package_name").toString();
-    homepage = settings.value("homepage").toString();
-    summary = settings.value("summary").toString();
-    description = settings.value("description").toString();
-    license = settings.value("license", "").toString();
-    is_a = settings.value("is_a", "").toString();
-    part_of = settings.value("part_of", "").toString();
-    build_dependency = settings.value("build_dependency").toString();
-    runtime_dependency = settings.value("runtime_dependency").toString();
+    QString package_name = settings.value("package_name").toString();
+    QString homepage = settings.value("homepage").toString();
+    QString summary = settings.value("summary").toString();
+    QString description = settings.value("description").toString();
+    QString license = settings.value("license", "").toString();
+    QString is_a = settings.value("is_a", "").toString();
+    QString part_of = settings.value("part_of", "").toString();
+    QString build_dependency = settings.value("build_dependency").toString();
+    QString runtime_dependency = settings.value("runtime_dependency").toString();
     settings.endGroup();
 
     settings.beginGroup("compilation");
@@ -709,18 +709,7 @@ void MainWindow::package_files_changed()
 
             aditional_files = temp_aditional_files;
             temp_aditional_files.clear();
-            QStringList a_files_keys = aditional_files.keys();
-            int a_file_index = 0;
-            foreach (QString a_file, a_files_keys) {
-                QMap<PisiSPBase::AFileAttr,QString> attr = aditional_files.value(a_file);
-                ui->tableW_aditional_files->insertRow(a_file_index);
-                ui->tableW_aditional_files->setItem(a_file_index, 0, new QTableWidgetItem(a_file));
-                ui->tableW_aditional_files->setItem(a_file_index, 1, new QTableWidgetItem(attr.value(PisiSPBase::TARGET)));
-                ui->tableW_aditional_files->setItem(a_file_index, 2, new QTableWidgetItem(attr.value(PisiSPBase::PERMISSION)));
-                ui->tableW_aditional_files->setItem(a_file_index, 3, new QTableWidgetItem(attr.value(PisiSPBase::OWNER)));
-                ui->tableW_aditional_files->setItem(a_file_index, 4, new QTableWidgetItem(attr.value(PisiSPBase::GROUP)));
-                a_file_index++;
-            }
+            fill_tableW_aditional_files();
         }
     }
 
@@ -759,6 +748,23 @@ void MainWindow::fill_tableW_patches()
         patch_it++;
     }
     ui->tableW_patches->sortByColumn(0, Qt::AscendingOrder);
+}
+
+/** aditional_files must filled before call ! */
+void MainWindow::fill_tableW_aditional_files()
+{
+    QStringList a_files_keys = aditional_files.keys();
+    int a_file_index = 0;
+    foreach (QString a_file, a_files_keys) {
+        QMap<PisiSPBase::AFileAttr,QString> attr = aditional_files.value(a_file);
+        ui->tableW_aditional_files->insertRow(a_file_index);
+        ui->tableW_aditional_files->setItem(a_file_index, 0, new QTableWidgetItem(a_file));
+        ui->tableW_aditional_files->setItem(a_file_index, 1, new QTableWidgetItem(attr.value(PisiSPBase::TARGET)));
+        ui->tableW_aditional_files->setItem(a_file_index, 2, new QTableWidgetItem(attr.value(PisiSPBase::PERMISSION)));
+        ui->tableW_aditional_files->setItem(a_file_index, 3, new QTableWidgetItem(attr.value(PisiSPBase::OWNER)));
+        ui->tableW_aditional_files->setItem(a_file_index, 4, new QTableWidgetItem(attr.value(PisiSPBase::GROUP)));
+        a_file_index++;
+    }
 }
 
 void MainWindow::package_files_process(const QString & dir)
@@ -1091,7 +1097,8 @@ void MainWindow::pisi_to_gui() throw (QString)
     PisiSource source = pisi.get_source();
     package_name = source.get_name();
     homepage = source.get_home_page();
-    license = source.get_license();
+    QString license = source.get_license();
+    qDebug() << "license:" << license;
     is_a = source.get_is_a();
     part_of = source.get_part_of();
     summary = source.get_summary();
@@ -1140,13 +1147,17 @@ void MainWindow::pisi_to_gui() throw (QString)
         QMap<QString, bool> attr = files.value(path);
         append_file(path, attr.keys().first(), attr.value(attr.keys().first()));
     }
-    // TODO : aditional_files
+    aditional_files = package.get_aditional_files();
+    fill_tableW_aditional_files();
+
 
     QString actions_py = package_dir.absoluteFilePath("actions.py");
     if(QFile::exists(actions_py)){
         actions_templates[6] = get_file_contents(actions_py);
         ui->combo_actions_template->setCurrentIndex(6);
     }
+
+
     QString desktop_file_name = package_files_dir.absoluteFilePath(QString("%1.desktop").arg(package_name));
     QString desktop_file_contents = get_file_contents(desktop_file_name);
     if(desktop_file_contents.isEmpty()){
@@ -1195,7 +1206,7 @@ void MainWindow::pisi_from_gui() throw (QString)
     source.set_archives(archives);
     QMap<QString, QMap<PisiSource::PatchAttr, QString> > s_p;
     QMultiMap<int, QString>::const_iterator s_p_it = patches.constBegin();
-    while (s_p_it != patches.end()) {
+    while (s_p_it != patches.constEnd()) {
         QMap<PisiSource::PatchAttr, QString> s_p_attr;
         s_p_attr[PisiSource::LEVEL] = s_p_it.key();
         s_p[s_p_it.value()] = s_p_attr;
@@ -1223,7 +1234,7 @@ void MainWindow::pisi_from_gui() throw (QString)
 }
 
 
-void MainWindow::create_build_files()
+bool MainWindow::create_build_files()
 {
 //    fill pisi
     dom_pspec.clear();
@@ -1233,11 +1244,11 @@ void MainWindow::create_build_files()
     }
     catch (QString e){
         QMessageBox::critical(this, tr("Error"), tr("An error occured while filling pisi from fields : %1").arg(e));
-        return;
+        return false;
     }
     catch (...){
         QMessageBox::critical(this, tr("Error"), tr("Unknownt exception while filling pisi from fields !"));
-        return;
+        return false;
     }
     QString pspec_file_name = package_dir.absoluteFilePath("actions.py");
     save_text_file( pspec_file_name, dom_pspec.toString(4) );
@@ -1267,11 +1278,13 @@ void MainWindow::create_build_files()
         QFile image_file(image_name);
         if( ! image_file.open(QIODevice::WriteOnly)){
             QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(package_name + ".png"));
-            return;
+            return false;
         }
         QImage image(":/images/pardus-logo.png");
         image.save(&image_file);
     }
+
+    return true;
 }
 
 void MainWindow::on_tb_build_up_to_clicked()
@@ -1298,14 +1311,14 @@ void MainWindow::on_tb_build_only_clicked()
 
 void MainWindow::on_tb_build_all_clicked()
 {
-    create_build_files();
-    call_pisi_build_command();
+    if(create_build_files())
+        call_pisi_build_command();
 }
 
 void MainWindow::call_pisi_build_command(const QString &build_step)
 {
     QString pspec_file = package_dir.absoluteFilePath("pspec.xml");
-    if(QFile::exists(pspec_file)){
+    if( ! QFile::exists(pspec_file)){
         QMessageBox::critical(this, tr("Error"), tr("There is no PSPEC file : %1 ").arg(pspec_file));
         return;
     }

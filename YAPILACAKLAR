@@ -40,14 +40,16 @@
     (X) bash için root hakları alınacak
         pkexec --user root pisi bi pspec.xml --output-dir workspace
 
-    (->) Şunlar için arayüze ve arayüzden doldurma yapılacak.
-        (*) Package::Files,
-        (*) Souce::Patches,
-        (*) SPBase::AdditionalFiles
+    (X) Şunlar için arayüze ve arayüzden doldurma yapılacak.
+        (X) Package::Files,
+        (X) Souce::Patches,
+        (X) SPBase::AdditionalFiles
 
-
-    (->) İnşa işlemleri yapılacak.
+    (X) İnşa işlemleri yapılacak.
         (X) aditional_files daki __package_name__ dönüştürülecek
+
+
+    (*) Pisi::save_to_dom() da dom varsa ve yoksa durumlarına göre dom üretilecek.
 
     (*) gui tab sırası kontrol edilecek.
     (*) gui tooltip leri kontrol edilecek.
