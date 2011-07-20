@@ -1280,7 +1280,7 @@ bool MainWindow::create_build_files()
             QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(package_name + ".png"));
             return false;
         }
-        QImage image(":/images/pardus-logo.png");
+        QImage image(":/images/operations.png");
         image.save(&image_file);
     }
 
