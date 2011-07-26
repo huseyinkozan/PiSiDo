@@ -33,7 +33,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-104</y>
+         <y>0</y>
          <width>270</width>
          <height>489</height>
         </rect>
@@ -464,12 +464,12 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <property name="text">
-           <string notr="true">Qt4</string>
+           <string notr="true">Python</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string notr="true">Python</string>
+           <string notr="true">Qt4</string>
           </property>
          </item>
          <item>

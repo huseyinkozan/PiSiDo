@@ -155,55 +155,59 @@ bool Pisi::save_to_dom(QDomDocument &dom)
         throw QString("Empty pisi class while saving pisi class values to dom !");
 
     QDomElement root = dom.documentElement();
-    if( ! root.isNull() && root.tagName().toLower() == "pisi")
-    {
-        QDomElement elm_src = root.namedItem("Source").toElement();
-        if(elm_src.isNull() || ! elm_src.isElement())
-        {
-            elm_src = root.ownerDocument().createElement("Source");
-            root.appendChild(elm_src);
-        }
-        try {
-            source.save_to_dom(elm_src);
-        } catch (QString e) {
-            throw QString("From Source saver : %1").arg(e);
-        }
 
-        QDomElement elm_pkg = root.namedItem("Package").toElement();
-        if(elm_pkg.isNull() || ! elm_pkg.isElement())
-        {
-            elm_pkg = root.ownerDocument().createElement("Package");
-            root.appendChild(elm_pkg);
-        }
-        try {
-            package.save_to_dom(elm_pkg);
-        } catch (QString e) {
-            throw QString("From Package saver : %1").arg(e);
-        }
-
-        QDomElement elm_hist = root.namedItem("History").toElement();
-        if( ! elm_hist.isNull() && elm_hist.isElement())
-        {
-            root.removeChild(elm_hist);
-        }
-        elm_hist = root.ownerDocument().createElement("History");
-        root.appendChild(elm_hist);
-
-        QList<int> releases = updates.keys();
-        for(int i=releases.count()-1; i>=0; --i)
-        {
-            QDomElement elm_upd = root.ownerDocument().createElement("Update");
-            elm_hist.appendChild(elm_upd);
-            try {
-                updates[releases.at(i)].save_to_dom(elm_upd);
-            } catch (QString e) {
-                throw QString("From Update saver : %1").arg(e);
-            }
-        }
+    if(root.isNull()){
+        dom.clear();
+        root = dom.createElement("PISI");
+        dom.appendChild(root);
     }
-    else
+    else{
+        if(root.tagName().toLower() != "pisi")
+            throw QString("Loaded xml file does not start with PISI !");
+    }
+
+    QDomElement elm_src = root.namedItem("Source").toElement();
+    if(elm_src.isNull() || ! elm_src.isElement())
     {
-        throw QString("Can not find PISI tag !");
+        elm_src = root.ownerDocument().createElement("Source");
+        root.appendChild(elm_src);
+    }
+    try {
+        source.save_to_dom(elm_src);
+    } catch (QString e) {
+        throw QString("From Source saver : %1").arg(e);
+    }
+
+    QDomElement elm_pkg = root.namedItem("Package").toElement();
+    if(elm_pkg.isNull() || ! elm_pkg.isElement())
+    {
+        elm_pkg = root.ownerDocument().createElement("Package");
+        root.appendChild(elm_pkg);
+    }
+    try {
+        package.save_to_dom(elm_pkg);
+    } catch (QString e) {
+        throw QString("From Package saver : %1").arg(e);
+    }
+
+    QDomElement elm_hist = root.namedItem("History").toElement();
+    if( ! elm_hist.isNull() && elm_hist.isElement())
+    {
+        root.removeChild(elm_hist);
+    }
+    elm_hist = root.ownerDocument().createElement("History");
+    root.appendChild(elm_hist);
+
+    QList<int> releases = updates.keys();
+    for(int i=releases.count()-1; i>=0; --i)
+    {
+        QDomElement elm_upd = root.ownerDocument().createElement("Update");
+        elm_hist.appendChild(elm_upd);
+        try {
+            updates[releases.at(i)].save_to_dom(elm_upd);
+        } catch (QString e) {
+            throw QString("From Update saver : %1").arg(e);
+        }
     }
 
     return true;

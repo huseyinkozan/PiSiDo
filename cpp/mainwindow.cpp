@@ -984,6 +984,8 @@ void MainWindow::on_tb_open_package_dir_clicked()
 
 void MainWindow::on_tb_add_archive_clicked()
 {
+    static QString previous_directory;
+
     ArchiveSelectionDialog::ArchiveType type;
     if(ui->combo_archive_type->currentIndex() == 0)
         type = ArchiveSelectionDialog::COMPRESSED;
@@ -993,7 +995,10 @@ void MainWindow::on_tb_add_archive_clicked()
         Q_ASSERT(false);
 
     ArchiveSelectionDialog asd(this, type);
+    asd.set_previous_directory(previous_directory);
+
     if(asd.exec() == QDialog::Accepted){
+        previous_directory = asd.get_previous_directory();
         append_archive(asd.get_archive(), asd.get_sha1());
         QMap<PisiSource::ArchiveAttr,QString> attr;
         attr[PisiSource::SHA1SUM] = asd.get_sha1();
@@ -1243,20 +1248,39 @@ bool MainWindow::create_build_files()
         pisi.save_to_dom(dom_pspec);
     }
     catch (QString e){
-        QMessageBox::critical(this, tr("Error"), tr("An error occured while filling pisi from fields : %1").arg(e));
+        QMessageBox::critical(this, tr("Error"), tr("An error occured while filling pisi from fields :\n %1").arg(e));
         return false;
     }
     catch (...){
         QMessageBox::critical(this, tr("Error"), tr("Unknownt exception while filling pisi from fields !"));
         return false;
     }
-    QString pspec_file_name = package_dir.absoluteFilePath("actions.py");
+
+    if( ! package_dir.exists()){
+        QString package_dir_name = package_dir.dirName();
+        if(package_dir_name.isEmpty()){
+            QMessageBox::critical(this, tr("Error"), tr("Empty package name !"));
+            return false;
+        }
+        if( ! workspace_dir.mkdir(package_dir_name)){
+            QMessageBox::critical(this, tr("Error"), tr("Can not create package directory in workspace !"));
+            return false;
+        }
+        if( ! package_dir.mkdir("files")){
+            QMessageBox::critical(this, tr("Error"), tr("Can not create files directory in package directory !"));
+            return false;
+        }
+    }
+
+    QString pspec_file_name = package_dir.absoluteFilePath("pspec.xml");
     save_text_file( pspec_file_name, dom_pspec.toString(4) );
 
 
 //    create actions
     QString actions_file_name = package_dir.absoluteFilePath("actions.py");
     QString action_py = actions_editor->text();
+    if(action_py.isEmpty())
+        QMessageBox::information(this, tr("Actions API File"), tr("Actions.py is empty !"));
     action_py.replace(QString("___package_name___"), package_name);
     action_py.replace(QString("___version___"), pisi.get_last_update().get_version());
     action_py.replace(QString("___summary___"), summary);

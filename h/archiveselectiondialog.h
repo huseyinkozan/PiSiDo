@@ -23,6 +23,9 @@ public:
     QString get_archive();
     QString get_sha1();
 
+    QString get_previous_directory();
+    void set_previous_directory(QString p);
+
 private slots:
     void on_pb_browse_clicked();
     void on_le_sha1_editingFinished();
@@ -32,6 +35,7 @@ private slots:
 private:
     ArchiveType archive_type;
     Ui::ArchiveSelectionDialog *ui;
+    QString previous_directory;
 
     QString sha1;
 

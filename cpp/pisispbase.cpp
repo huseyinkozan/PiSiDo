@@ -197,14 +197,16 @@ QString PisiSPBase::get_element_value(QDomElement root, QString tag)
 
 QDomElement PisiSPBase::set_element_value(QDomElement root, QString tag, QString value)
 {
+    if( ! is_mandatory(root, tag))
+        return QDomElement();
+
+    if(value.isEmpty())
+        throw QString("%1 tag is mandatory but empty !").arg(tag);
+
     QDomElement elm = root.firstChildElement(tag);
     if(elm.isNull())
         elm = append_element(root, tag);
-
-    if(is_mandatory(root, tag) && value.isEmpty())
-        throw QString("%1 tag is mandatory but empty !");
     append_text_element(elm, value);
-
     return elm;
 }
 
@@ -222,32 +224,6 @@ QDomText PisiSPBase::append_text_element(QDomElement root, QString value)
     if(text.isNull() || root.appendChild(text).isNull())
         throw QString("Error creating text element with %2 in to the %2").arg(value).arg(root.tagName());
     return text;
-}
-
-bool PisiSPBase::is_mandatory(QDomElement root, QString tag)
-{
-    bool is_src;
-    if(root.tagName().toLower() == "source")
-        is_src = true;
-    else if(root.tagName().toLower() == "package")
-        is_src = false;
-    else
-        throw QString("Wrong root dom passed to is_mandatory() !");
-
-    if(tag == "Name")
-        return true;
-    else if(tag == "License")
-        return is_src;
-    else if(tag == "Summary")
-        return is_src;
-    else if(tag == "Description")
-        return false;
-    else if(tag == "PartOf")
-        return false;
-    else if(tag == "IsA")
-        return false;
-    else
-        throw QString("Undefined tag name in is_mandatory() !");
 }
 
 QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency(QDomElement elm)

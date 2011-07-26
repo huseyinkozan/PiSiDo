@@ -34,12 +34,18 @@ void ArchiveSelectionDialog::on_pb_browse_clicked()
     if(archive_type == COMPRESSED)
     {
         QString filter = tr("Compressed Files (*.targz *.tarbz2 *.tarlzma *.tarxz *.tarZ *.tar *.zip *.gz *.gzip *.bz2 *.bzip2 *.lzma *.xz *.binary)");
-        QString dir = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+        QString dir;
+        if(previous_directory.isEmpty())
+            dir = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+        else
+            dir = previous_directory;
         selection = QFileDialog::getOpenFileName(this, tr("Select Compressed File"), dir,filter);
     }
 
     if(selection.isEmpty())
         return;
+
+    previous_directory = QDir(selection).absolutePath();
 
     ui->le_archive->setText(selection);
     sha1 = get_sha1sum(selection);
@@ -84,4 +90,14 @@ void ArchiveSelectionDialog::on_buttonBox_accepted()
         return;
     }
     accept();
+}
+
+QString ArchiveSelectionDialog::get_previous_directory()
+{
+    return previous_directory;
+}
+
+void ArchiveSelectionDialog::set_previous_directory(QString p)
+{
+    previous_directory = p;
 }

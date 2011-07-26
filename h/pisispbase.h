@@ -64,7 +64,7 @@ protected:
     QString get_element_value(QDomElement root, QString tag);
     QDomElement set_element_value(QDomElement root, QString tag, QString value);
 
-    virtual bool is_mandatory(QDomElement root, QString tag);
+    virtual bool is_mandatory(QDomElement root, QString tag) = 0;
 
     QMap<QString, QMap<VRTFAttr,QString> > get_dependency(QDomElement elm);
     void set_dependency(QDomElement root, QMap<QString, QMap<VRTFAttr,QString> > dep);

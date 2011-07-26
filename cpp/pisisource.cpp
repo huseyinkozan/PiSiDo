@@ -98,16 +98,13 @@ void PisiSource::save_to_dom(QDomElement & root)
     elm = append_element(root, "Packager");
 
     QList<QString> packager_names = packager.keys();
-    if(packager_names.count() > 1)
-    {
+    if(packager_names.count() > 1){
         throw QString("More than one packager info !");
     }
-    else if(packager_names.count() < 1)
-    {
+    else if(packager_names.count() < 1){
         throw QString("There is no packager info !");
     }
-    else
-    {
+    else{
         set_element_value(elm, "Name", packager_names.first());
         set_element_value(elm, "Email", packager[packager_names.first()]);
     }
@@ -117,20 +114,18 @@ void PisiSource::save_to_dom(QDomElement & root)
     if( ! elm.isNull())
         root.removeChild(elm);
     QList<QString> archive_names = archives.keys();
-    if(archive_names.count() < 1)
-    {
+    if(archive_names.count() < 1){
         throw QString("There is no archive !");
     }
-    else
-    {
-        for (int i = 0; i < archive_names.count(); ++i)
-        {
+    else{
+        for (int i = 0; i < archive_names.count(); ++i){
             QString archive = archive_names.at(i);
             elm = set_element_value(root, "Archive", archive);
-            QList<ArchiveAttr> attributes = archives[archive].keys();
-            foreach (ArchiveAttr attr, attributes)
-            {
-                elm.setAttribute(get_archive_attribute(attr), archives[archive][attr]);
+            if( ! elm.isNull()){
+                QList<ArchiveAttr> attributes = archives[archive].keys();
+                foreach (ArchiveAttr attr, attributes){
+                    elm.setAttribute(get_archive_attribute(attr), archives[archive][attr]);
+                }
             }
         }
     }
@@ -191,6 +186,8 @@ void PisiSource::set_packager(QString name, QString email)
     if(email.isEmpty())
         throw QString("Empty packager email !");
 
+    QMap<QString,QString> packager;
+    packager[name] = email;
     this->packager = packager;
 }
 
@@ -274,25 +271,41 @@ bool PisiSource::operator !=(const PisiSource & other)
     return ! (*this == other);
 }
 
-bool PisiSource::is_mandatory(QDomElement root, QString tag)
+bool PisiSource::is_mandatory(QDomElement root, QString tag_)
 {
-    if(root.tagName().toLower() == "packager")
-    {
-        if(tag == "Name")
+    QString tag = tag_.toLower();
+    QString root_tag = root.tagName().toLower();
+
+    if(root_tag == "source"){
+        if(tag == "name")
             return true;
-        else if(tag == "Email")
+        else if(tag == "license")
+            return true;
+        else if(tag == "summary")
+            return true;
+        else if(tag == "description")
+            return true;
+        else if(tag == "partof")
+            return false;
+        else if(tag == "isa")
+            return false;
+        else if(tag == "homepage")
+            return true;
+        else if(tag == "archive")
             return true;
         else
-            throw QString("Undefined tag name in is_mandatory() for packager tag !");
+            throw QString("Undefined tag name \"%1\" in PisiSource::is_mandatory() !").arg(tag);
     }
-    else if(tag.toLower() == "archive")
-    {
-        return true;
+    else if(root_tag == "packager"){
+        if(tag == "name")
+            return true;
+        else if(tag == "email")
+            return true;
+        else
+            throw QString("Undefined tag name \"%1\"for packager tag in PisiSource::is_mandatory() !").arg(tag);
     }
     else
-    {
-        return PisiSPBase::is_mandatory(root, tag);
-    }
+        throw QString("Undefined root_tag name \"%1\" in PisiSource::is_mandatory() !").arg(root_tag);
 }
 
 QString PisiSource::get_archive_type(const QString & file_name)

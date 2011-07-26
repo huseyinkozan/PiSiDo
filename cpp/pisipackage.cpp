@@ -43,7 +43,7 @@ void PisiPackage::save_to_dom(QDomElement & root)
     elm = append_element(root, "RuntimeDependencies");
     set_dependency(elm, runtime_dependencies);
 
-    if( ! files.isEmpty())
+    if(files.isEmpty())
         throw QString("%1 tag is mandatory but empty !").arg("Files");
     elm = root.firstChildElement("Files");
     if( ! elm.isNull())
@@ -138,18 +138,33 @@ bool PisiPackage::operator !=(const PisiPackage & other)
     return ! (*this == other);
 }
 
-bool PisiPackage::is_mandatory(QDomElement root, QString tag)
+bool PisiPackage::is_mandatory(QDomElement root, QString tag_)
 {
-    if(tag == "RuntimeDependencies")
-    {
-        return false;
-    }
-    else if(tag == "Files")
-    {
-        return true;
+    QString tag = tag_.toLower();
+    QString root_tag = root.tagName().toLower();
+
+    if(root_tag == "package"){
+        if(tag == "name")
+            return true;
+        else if(tag == "license")
+            return false;
+        else if(tag == "summary")
+            return false;
+        else if(tag == "description")
+            return false;
+        else if(tag == "partof")
+            return false;
+        else if(tag == "isa")
+            return false;
+        else if(tag == "runtimedependencies")
+            return false;
+        else if(tag == "files")
+            return true;
+        else
+            throw QString("Undefined tag name \"%1\" in PisiPackage::is_mandatory() !").arg(tag);
     }
     else
-        return PisiSPBase::is_mandatory(root, tag);
+        throw QString("Undefined root_tag name \"%1\" in PisiPackage::is_mandatory() !").arg(root_tag);
 }
 
 QMap<QString, QMap<PisiPackage::FileType, bool> > PisiPackage::get_files(QDomElement elm)
