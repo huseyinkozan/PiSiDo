@@ -169,6 +169,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>sb_console_max_line</tabstop>
+  <tabstop>le_packager_name</tabstop>
+  <tabstop>le_packager_email</tabstop>
+  <tabstop>le_pisi_packaging_dir</tabstop>
+  <tabstop>le_action_api_page</tabstop>
+  <tabstop>le_pisi_spec</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

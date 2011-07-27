@@ -164,7 +164,7 @@ private:
     QString get_file_contents(const QString & file_name);
     bool save_text_file(const QString & file_name, const QString & data);
 
-    PisiUpdate get_history_update(int row);
+    PisiUpdate get_history_update(int row) throw(QString);
     void set_history_update(const PisiUpdate & update);
     void fill_tableW_patches();
     void fill_tableW_aditional_files();

@@ -12,8 +12,8 @@ public:
     PisiUpdate();
 
     void clear();
-    void load_from_dom(const QDomElement & dom_element);
-    void save_to_dom(QDomElement & dom_element);
+    void load_from_dom(const QDomElement & dom_element) throw(QString);
+    void save_to_dom(QDomElement & dom_element) throw(QString);
 
     int get_release() const;
     QDate get_date() const;
@@ -22,12 +22,12 @@ public:
     QString get_packager_name() const;
     QString get_packager_email() const;
 
-    void set_release(int r);
-    void set_date(QDate d);
-    void set_version(QString v);
-    void set_comment(QString c);
-    void set_packager_name(QString p_n);
-    void set_packager_email(QString p_e);
+    void set_release(int r) throw(QString);
+    void set_date(QDate d) throw(QString);
+    void set_version(QString v) throw(QString);
+    void set_comment(QString c) throw(QString);
+    void set_packager_name(QString p_n) throw(QString);
+    void set_packager_email(QString p_e) throw(QString);
 
     bool operator ==(const PisiUpdate & other);
     bool operator !=(const PisiUpdate & other);
@@ -35,8 +35,8 @@ public:
     bool operator >(const PisiUpdate & other);
 
 private:
-    QString get_element_value(QDomElement elm, QString tag, bool mandatory);
-    QDomElement append_text_element(QDomElement root, QString tag, QString value);
+    QString get_element_value(QDomElement elm, QString tag, bool mandatory) throw(QString);
+    QDomElement append_text_element(QDomElement root, QString tag, QString value) throw(QString);
 
 private:
     int release;

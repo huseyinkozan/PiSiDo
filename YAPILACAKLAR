@@ -48,16 +48,18 @@
     (X) İnşa işlemleri yapılacak.
         (X) aditional_files daki __package_name__ dönüştürülecek
 
+    (X) Pisi::save_to_dom() da dom varsa ve yoksa durumlarına göre dom üretilecek.
 
-    (*) Pisi::save_to_dom() da dom varsa ve yoksa durumlarına göre dom üretilecek.
+    (X) gui tab sırası kontrol edilecek.
+    (X) pisi sınıflarındaki QString("") ler QObject::tr("") yapılacak.
+    (X) istisna fırlatan fonksiyonlara throw eklenecek.
 
-    (*) gui tab sırası kontrol edilecek.
+
     (*) gui tooltip leri kontrol edilecek.
-    (*) pisi sınıflarındaki QString("") ler QObject::tr("") yapılacak.
 
     (*) Program yardımı hazırlanacak.
 
-    (*) Program test edilecek.
+    (->) Program test edilecek.
 
     (*) Pisi paketinde çeviri dosyaları dizini verilecek.
 

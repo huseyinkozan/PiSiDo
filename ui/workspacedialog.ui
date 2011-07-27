@@ -105,6 +105,13 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>le_workspace</tabstop>
+  <tabstop>pb_browse</tabstop>
+  <tabstop>check_not_ask</tabstop>
+  <tabstop>pb_ok</tabstop>
+  <tabstop>pb_exit</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

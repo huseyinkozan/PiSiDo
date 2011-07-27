@@ -29,8 +29,8 @@ public:
     };
 
     virtual void clear();
-    virtual void load_from_dom(const QDomElement & root);
-    virtual void save_to_dom(QDomElement & root);
+    virtual void load_from_dom(const QDomElement & root) throw(QString);
+    virtual void save_to_dom(QDomElement & root) throw(QString);
 
 
 
@@ -44,11 +44,11 @@ public:
     QMap<QString, QMap<VRTFAttr,QString> > get_build_dependencies() const;
     QMap<QString, QMap<AFileAttr,QString> > get_aditional_files() const;
 
-    void set_name(QString name);
-    void set_summary(QString summary);
+    void set_name(QString name) throw(QString);
+    void set_summary(QString summary) throw(QString);
     void set_description(QString description);
     void set_part_of(QString part_of);
-    void set_license(QString license);
+    void set_license(QString license) throw(QString);
     void set_is_a(QString is_a);
     void set_build_dependencies(QMap<QString, QMap<VRTFAttr,QString> > build_dependencies);
     void set_build_dependencies(QString build_dependency_string);
@@ -58,24 +58,24 @@ public:
     bool operator !=(const PisiSPBase & other) const;
 
 protected:
-    QDomElement append_element(QDomElement & root, QString tag);
-    QDomText append_text_element(QDomElement root, QString value);
+    QDomElement append_element(QDomElement & root, QString tag) throw(QString);
+    QDomText append_text_element(QDomElement root, QString value) throw(QString);
 
-    QString get_element_value(QDomElement root, QString tag);
-    QDomElement set_element_value(QDomElement root, QString tag, QString value);
+    QString get_element_value(QDomElement root, QString tag) throw(QString);
+    QDomElement set_element_value(QDomElement root, QString tag, QString value) throw(QString);
 
     virtual bool is_mandatory(QDomElement root, QString tag) = 0;
 
-    QMap<QString, QMap<VRTFAttr,QString> > get_dependency(QDomElement elm);
+    QMap<QString, QMap<VRTFAttr,QString> > get_dependency(QDomElement elm) throw(QString);
     void set_dependency(QDomElement root, QMap<QString, QMap<VRTFAttr,QString> > dep);
 
-    VRTFAttr get_dependency_attribute(QString attr_name, bool abbreviation = false);
+    VRTFAttr get_dependency_attribute(QString attr_name, bool abbreviation = false) throw(QString);
     QString get_dependency_attribute(VRTFAttr attr, bool abbreviation = false);
 
-    QMap<QString, QMap<AFileAttr,QString> > get_aditional_file(QDomElement elm);
+    QMap<QString, QMap<AFileAttr,QString> > get_aditional_file(QDomElement elm) throw(QString);
     void set_aditional_file(QDomElement root, QMap<QString, QMap<AFileAttr,QString> > a_files);
 
-    AFileAttr get_aditional_file_attribute(QString attr_name);
+    AFileAttr get_aditional_file_attribute(QString attr_name) throw(QString);
     QString get_aditional_file_attribute(AFileAttr attr);
 
     virtual QStringList get_dependency_list(QMap<QString, QMap<VRTFAttr,QString> > dependencies);

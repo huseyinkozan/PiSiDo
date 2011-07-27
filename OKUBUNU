@@ -1,8 +1,11 @@
+
+
 Lisans
 ------
 Bu program açık kaynak kodlu bir yazılımdır. En son sürüm GNU Genel Kamu Lisansı (GPL) altında
 değiştirebilir ve/veya dağıtabilirsiniz.
 Lisans için lütfen LISANS dosyasını okuyun.
+
 
 PiSiDo
 ------
@@ -20,7 +23,6 @@ bilgisini toplayarak basit paketlerin yapılmasını sağlar.
     * Paketin uygulamasının menüde görünmesi için .desktop dosyası ve simge oluşturur.
     * Kaynak kod arşivi olarak şunlar tanımlanabilir:
         * Yereldeki bir arşiv dosyası (pisi arşiv dizinine kopyalanabilir)
-        * Yereldeki bir klasör (sıkıştırılıp pisi arşiv dizinine kopyalanabilir)
         * Web sitesi üstündeki herhangi arşiv dosyası
 
 Kullanım
@@ -38,7 +40,7 @@ Gerekli araçları Pardus'a basitçe şu şekilde kurulabilir:
 
 Programı derleyip çalıştırmak için şu komutlar kullanılabilir:
 
-    cd pisido_klasoru
+    cd pisido_kaynak_kod_klasoru
     qmake pisido.pro
     make
     ./pisido

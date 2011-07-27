@@ -121,6 +121,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>le_path</tabstop>
+  <tabstop>combo_file_type</tabstop>
+  <tabstop>check_permanent</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

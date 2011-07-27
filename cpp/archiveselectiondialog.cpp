@@ -63,7 +63,8 @@ QString ArchiveSelectionDialog::get_sha1sum(const QString & file_name)
     system.start("sha1sum", QStringList() << file_name);
     if( ! system.waitForFinished())
     {
-        throw QString("sha1sum process timeout within 30 seconds.");
+        QMessageBox::critical(this, tr("Error"), tr("sha1sum process timeout within 30 seconds. Please set sha1 value yourself !"));
+        return QString();
     }
     QString sha1(system.readAll());
     return sha1.split(' ').first();

@@ -17,30 +17,30 @@ void PisiSource::clear()
     archives.clear();
 }
 
-void PisiSource::load_from_dom(const QDomElement & dom_element)
+void PisiSource::load_from_dom(const QDomElement & dom_element) throw(QString)
 {
     PisiSPBase::load_from_dom(dom_element);
 
     if(dom_element.isNull())
-        throw QString("Dom Element is null while loading to PisiSource !");
+        throw QObject::tr("Dom Element is null while loading to PisiSource !");
 
     QDomElement elm = dom_element.firstChildElement("Homepage");
-    if(elm.isNull()) throw QString("No Homepage tag !");
+    if(elm.isNull()) throw QObject::tr("No Homepage tag !");
     home_page = elm.text();
 
     elm = dom_element.firstChildElement("Packager");
-    if(elm.isNull()) throw QString("No Packager tag !");
+    if(elm.isNull()) throw QObject::tr("No Packager tag !");
 
     elm = elm.firstChildElement("Name");
-    if(elm.isNull()) throw QString("No Packager::Name tag !");
+    if(elm.isNull()) throw QObject::tr("No Packager::Name tag !");
     QString packager_name = elm.text();
 
     elm = elm.nextSiblingElement("Email");
-    if(elm.isNull()) throw QString("No Packager::Email tag !");
+    if(elm.isNull()) throw QObject::tr("No Packager::Email tag !");
     packager[packager_name] = elm.text();
 
     elm = dom_element.firstChildElement("Archive");
-    if(elm.isNull()) throw QString("No Archive tag !");
+    if(elm.isNull()) throw QObject::tr("No Archive tag !");
 
     for( ; ! elm.isNull(); elm = elm.nextSiblingElement("Archive"))
     {
@@ -51,7 +51,7 @@ void PisiSource::load_from_dom(const QDomElement & dom_element)
         {
             QDomNode n = elm_node_map.item(i);
             QDomAttr a = n.toAttr();
-            if(a.isNull()) throw QString("Can not convert to attribute !");
+            if(a.isNull()) throw QObject::tr("Can not convert to attribute !");
             attributes[get_archive_attribute(a.name())] = a.value();
 //                qDebug() << "ArchiveAttr = " << a.name() << " : " << a.value();
         }
@@ -73,7 +73,7 @@ void PisiSource::load_from_dom(const QDomElement & dom_element)
                 {
                     QDomNode n = elm_node_map.item(i);
                     QDomAttr a = n.toAttr();
-                    if(a.isNull()) throw QString("Can not convert to attribute !");
+                    if(a.isNull()) throw QObject::tr("Can not convert to attribute !");
                     attributes[get_patch_attribute(a.name())] = a.value();
                     //                qDebug() << "ArchiveAttr = " << a.name() << " : " << a.value();
                 }
@@ -83,12 +83,12 @@ void PisiSource::load_from_dom(const QDomElement & dom_element)
     }
 }
 
-void PisiSource::save_to_dom(QDomElement & root)
+void PisiSource::save_to_dom(QDomElement & root) throw(QString)
 {
     PisiSPBase::save_to_dom(root);
 
     if(root.isNull())
-        throw QString("Dom Element is null while saving from PisiSource to dom !");
+        throw QObject::tr("Dom Element is null while saving from PisiSource to dom !");
 
     set_element_value(root, "Homepage", home_page);
 
@@ -99,10 +99,10 @@ void PisiSource::save_to_dom(QDomElement & root)
 
     QList<QString> packager_names = packager.keys();
     if(packager_names.count() > 1){
-        throw QString("More than one packager info !");
+        throw QObject::tr("More than one packager info !");
     }
     else if(packager_names.count() < 1){
-        throw QString("There is no packager info !");
+        throw QObject::tr("There is no packager info !");
     }
     else{
         set_element_value(elm, "Name", packager_names.first());
@@ -115,7 +115,7 @@ void PisiSource::save_to_dom(QDomElement & root)
         root.removeChild(elm);
     QList<QString> archive_names = archives.keys();
     if(archive_names.count() < 1){
-        throw QString("There is no archive !");
+        throw QObject::tr("There is no archive !");
     }
     else{
         for (int i = 0; i < archive_names.count(); ++i){
@@ -171,30 +171,30 @@ QMap<QString, QMap<PisiSource::PatchAttr,QString> > PisiSource::get_patches() co
     return patches;
 }
 
-void PisiSource::set_home_page(QString home_page)
+void PisiSource::set_home_page(QString home_page) throw(QString)
 {
     if(home_page.isEmpty())
-        throw QString("Homepage can not be empty !");
+        throw QObject::tr("Homepage can not be empty !");
 
     this->home_page = home_page;
 }
 
-void PisiSource::set_packager(QString name, QString email)
+void PisiSource::set_packager(QString name, QString email) throw(QString)
 {
     if(name.isEmpty())
-        throw QString("Empty packager name !");
+        throw QObject::tr("Empty packager name !");
     if(email.isEmpty())
-        throw QString("Empty packager email !");
+        throw QObject::tr("Empty packager email !");
 
     QMap<QString,QString> packager;
     packager[name] = email;
     this->packager = packager;
 }
 
-void PisiSource::set_archives(QMap<QString, QMap<PisiSource::ArchiveAttr, QString> > archives)
+void PisiSource::set_archives(QMap<QString, QMap<PisiSource::ArchiveAttr, QString> > archives) throw(QString)
 {
     if(archives.count() == 0)
-        throw QString("Empty archive !");
+        throw QObject::tr("Empty archive !");
 
     this->archives = archives;
 }
@@ -205,7 +205,7 @@ void PisiSource::set_patches(QMap<QString, QMap<PatchAttr, QString> > patches)
     this->patches = patches;
 }
 
-PisiSource::ArchiveAttr PisiSource::get_archive_attribute(QString attr_name)
+PisiSource::ArchiveAttr PisiSource::get_archive_attribute(QString attr_name) throw(QString)
 {
     if(attr_name.toLower() == "sha1sum")
         return SHA1SUM;
@@ -213,10 +213,10 @@ PisiSource::ArchiveAttr PisiSource::get_archive_attribute(QString attr_name)
         return TYPE;
     else if(attr_name.toLower() == "target")
         return TARGET_ARCHIVE;
-    else throw QString("Wrong archive atribute name : %1").arg(attr_name);
+    else throw QObject::tr("Wrong archive atribute name : %1").arg(attr_name);
 }
 
-QString PisiSource::get_archive_attribute(ArchiveAttr attr)
+QString PisiSource::get_archive_attribute(ArchiveAttr attr) throw(QString)
 {
     if(attr == SHA1SUM)
         return QString("sha1sum");
@@ -225,10 +225,10 @@ QString PisiSource::get_archive_attribute(ArchiveAttr attr)
     else if(attr == TARGET_ARCHIVE)
         return QString("target");
     else
-        throw QString("Wrong archive atribute index : %1").arg(attr);
+        throw QObject::tr("Wrong archive atribute index : %1").arg(attr);
 }
 
-PisiSource::PatchAttr PisiSource::get_patch_attribute(QString attr_name)
+PisiSource::PatchAttr PisiSource::get_patch_attribute(QString attr_name) throw(QString)
 {
     if(attr_name.toLower() == "compressiontype")
         return COMPRESSIONTYPE;
@@ -238,10 +238,10 @@ PisiSource::PatchAttr PisiSource::get_patch_attribute(QString attr_name)
         return TARGET_PATCH;
     else if(attr_name.toLower() == "reverse")
         return REVERSE;
-    else throw QString("Wrong patch atribute name : %1").arg(attr_name);
+    else throw QObject::tr("Wrong patch atribute name : %1").arg(attr_name);
 }
 
-QString PisiSource::get_patch_attribute(PatchAttr attr)
+QString PisiSource::get_patch_attribute(PatchAttr attr) throw(QString)
 {
     if(attr == COMPRESSIONTYPE)
         return QString("compressionType");
@@ -252,7 +252,7 @@ QString PisiSource::get_patch_attribute(PatchAttr attr)
     else if(attr == REVERSE)
         return QString("reverse");
     else
-        throw QString("Wrong patch atribute index : %1").arg(attr);
+        throw QObject::tr("Wrong patch atribute index : %1").arg(attr);
 }
 
 bool PisiSource::operator ==(const PisiSource & other)
@@ -271,7 +271,7 @@ bool PisiSource::operator !=(const PisiSource & other)
     return ! (*this == other);
 }
 
-bool PisiSource::is_mandatory(QDomElement root, QString tag_)
+bool PisiSource::is_mandatory(QDomElement root, QString tag_) throw(QString)
 {
     QString tag = tag_.toLower();
     QString root_tag = root.tagName().toLower();
@@ -294,7 +294,7 @@ bool PisiSource::is_mandatory(QDomElement root, QString tag_)
         else if(tag == "archive")
             return true;
         else
-            throw QString("Undefined tag name \"%1\" in PisiSource::is_mandatory() !").arg(tag);
+            throw QObject::tr("Undefined tag name \"%1\" in PisiSource::is_mandatory() !").arg(tag);
     }
     else if(root_tag == "packager"){
         if(tag == "name")
@@ -302,10 +302,10 @@ bool PisiSource::is_mandatory(QDomElement root, QString tag_)
         else if(tag == "email")
             return true;
         else
-            throw QString("Undefined tag name \"%1\"for packager tag in PisiSource::is_mandatory() !").arg(tag);
+            throw QObject::tr("Undefined tag name \"%1\"for packager tag in PisiSource::is_mandatory() !").arg(tag);
     }
     else
-        throw QString("Undefined root_tag name \"%1\" in PisiSource::is_mandatory() !").arg(root_tag);
+        throw QObject::tr("Undefined root_tag name \"%1\" in PisiSource::is_mandatory() !").arg(root_tag);
 }
 
 QString PisiSource::get_archive_type(const QString & file_name)

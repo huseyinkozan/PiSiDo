@@ -22,10 +22,10 @@ void PisiSPBase::clear()
     aditional_files.clear();
 }
 
-void PisiSPBase::load_from_dom(const QDomElement & root)
+void PisiSPBase::load_from_dom(const QDomElement & root) throw(QString)
 {
     if(root.isNull())
-        throw QString("Dom Element is null while loading to PisiSPBase !");
+        throw QObject::tr("Dom Element is null while loading to PisiSPBase !");
 
 
     name = get_element_value(root, "Name");
@@ -40,10 +40,10 @@ void PisiSPBase::load_from_dom(const QDomElement & root)
     aditional_files = get_aditional_file(elm);
 }
 
-void PisiSPBase::save_to_dom(QDomElement & root)
+void PisiSPBase::save_to_dom(QDomElement & root) throw(QString)
 {
     if(root.isNull())
-        throw QString("Dom Element is null while saving from PisiSPBase to dom !");
+        throw QObject::tr("Dom Element is null while saving from PisiSPBase to dom !");
 
     set_element_value(root, "Name", name);
     set_element_value(root, "License", license);
@@ -119,18 +119,18 @@ QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > PisiSPBase::get_aditional_fi
     return aditional_files;
 }
 
-void PisiSPBase::set_name(QString name)
+void PisiSPBase::set_name(QString name) throw(QString)
 {
     if(name.isEmpty())
-        throw QString("Empty name !");
+        throw QObject::tr("Empty name !");
 
     this->name = name;
 }
 
-void PisiSPBase::set_summary(QString summary)
+void PisiSPBase::set_summary(QString summary) throw(QString)
 {
     if(summary.isEmpty())
-        throw QString("Empty summary !");
+        throw QObject::tr("Empty summary !");
 
     this->summary = summary;
 }
@@ -147,10 +147,10 @@ void PisiSPBase::set_part_of(QString part_of)
     this->part_of = part_of;
 }
 
-void PisiSPBase::set_license(QString license)
+void PisiSPBase::set_license(QString license) throw(QString)
 {
     if(license.isEmpty())
-        throw QString("Empty license !");
+        throw QObject::tr("Empty license !");
 
     this->license = license;
 }
@@ -179,13 +179,13 @@ void PisiSPBase::set_aditional_files(QMap<QString, QMap<PisiSPBase::AFileAttr,QS
     this->aditional_files = aditional_files;
 }
 
-QString PisiSPBase::get_element_value(QDomElement root, QString tag)
+QString PisiSPBase::get_element_value(QDomElement root, QString tag) throw(QString)
 {
     QDomElement elm = root.firstChildElement(tag);
     if(elm.isNull())
     {
         if(is_mandatory(root, tag))
-            throw QString("No %1 tag !").arg(tag);
+            throw QObject::tr("No %1 tag !").arg(tag);
         else return QString();
     }
     else
@@ -195,13 +195,13 @@ QString PisiSPBase::get_element_value(QDomElement root, QString tag)
     }
 }
 
-QDomElement PisiSPBase::set_element_value(QDomElement root, QString tag, QString value)
+QDomElement PisiSPBase::set_element_value(QDomElement root, QString tag, QString value) throw(QString)
 {
     if( ! is_mandatory(root, tag))
         return QDomElement();
 
     if(value.isEmpty())
-        throw QString("%1 tag is mandatory but empty !").arg(tag);
+        throw QObject::tr("%1 tag is mandatory but empty !").arg(tag);
 
     QDomElement elm = root.firstChildElement(tag);
     if(elm.isNull())
@@ -210,23 +210,23 @@ QDomElement PisiSPBase::set_element_value(QDomElement root, QString tag, QString
     return elm;
 }
 
-QDomElement PisiSPBase::append_element(QDomElement & root, QString tag)
+QDomElement PisiSPBase::append_element(QDomElement & root, QString tag) throw(QString)
 {
     QDomElement elm = root.ownerDocument().createElement(tag);
     if(elm.isNull() || root.appendChild(elm).isNull())
-        throw QString("Error while creating dom element %1 in %2").arg(tag).arg(root.tagName());
+        throw QObject::tr("Error while creating dom element %1 in %2").arg(tag).arg(root.tagName());
     return elm;
 }
 
-QDomText PisiSPBase::append_text_element(QDomElement root, QString value)
+QDomText PisiSPBase::append_text_element(QDomElement root, QString value) throw(QString)
 {
     QDomText text = root.ownerDocument().createTextNode(value);
     if(text.isNull() || root.appendChild(text).isNull())
-        throw QString("Error creating text element with %2 in to the %2").arg(value).arg(root.tagName());
+        throw QObject::tr("Error creating text element with %2 in to the %2").arg(value).arg(root.tagName());
     return text;
 }
 
-QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency(QDomElement elm)
+QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency(QDomElement elm) throw(QString)
 {
     if(elm.isNull())
     {
@@ -237,7 +237,7 @@ QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency(QD
 
     elm = elm.firstChildElement("Dependency");
     if(elm.isNull())
-        throw QString("No Dependency in Dependencies");
+        throw QObject::tr("No Dependency in Dependencies");
 
     for( ; ! elm.isNull(); elm = elm.nextSiblingElement("Dependency"))
     {
@@ -249,7 +249,7 @@ QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency(QD
             QDomNode n = elm_node_map.item(i);
             QDomAttr a = n.toAttr();
             if(a.isNull())
-                throw QString("Can not convert to attribute !");
+                throw QObject::tr("Can not convert to attribute !");
             attributes[get_dependency_attribute(a.name())] = a.value();
 //            qDebug() << "DepAttr = " << a.name() << " : " << a.value();
         }
@@ -284,7 +284,7 @@ void PisiSPBase::set_dependency(QDomElement root, QMap<QString, QMap<VRTFAttr,QS
     }
 }
 
-PisiSPBase::VRTFAttr PisiSPBase::get_dependency_attribute(QString attr_name, bool abbreviation)
+PisiSPBase::VRTFAttr PisiSPBase::get_dependency_attribute(QString attr_name, bool abbreviation) throw(QString)
 {
     if( ! abbreviation)
     {
@@ -300,7 +300,7 @@ PisiSPBase::VRTFAttr PisiSPBase::get_dependency_attribute(QString attr_name, boo
             return RELEASETO;
         else if(attr_name.toLower() == "release")
             return RELEASE;
-        else throw QString("Wrong dependency atribute name : %1").arg(attr_name);
+        else throw QObject::tr("Wrong dependency atribute name : %1").arg(attr_name);
     }
     else
     {
@@ -316,7 +316,7 @@ PisiSPBase::VRTFAttr PisiSPBase::get_dependency_attribute(QString attr_name, boo
             return VERSIONTO;
         else if(attr_name.startsWith(">"))
             return VERSIONFROM;
-        else throw QString("No VersionReleaseToFrom attribute !");
+        else throw QObject::tr("No VersionReleaseToFrom attribute !");
     }
 }
 
@@ -348,7 +348,7 @@ QString PisiSPBase::get_dependency_attribute(PisiSPBase::VRTFAttr attr, bool abb
     }
 }
 
-QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > PisiSPBase::get_aditional_file(QDomElement elm)
+QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > PisiSPBase::get_aditional_file(QDomElement elm) throw(QString)
 {
     if(elm.isNull())
     {
@@ -373,7 +373,7 @@ QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > PisiSPBase::get_aditional_fi
             QDomNode n = elm_node_map.item(i);
             QDomAttr a = n.toAttr();
             if(a.isNull())
-                throw QString("Can not convert to attribute !");
+                throw QObject::tr("Can not convert to attribute !");
             attributes[get_aditional_file_attribute(a.name())] = a.value();
 //            qDebug() << "AFileAttr = " << a.name() << " : " << a.value();
         }
@@ -408,7 +408,7 @@ void PisiSPBase::set_aditional_file(QDomElement root, QMap<QString, QMap<AFileAt
     }
 }
 
-PisiSPBase::AFileAttr PisiSPBase::get_aditional_file_attribute(QString attr_name)
+PisiSPBase::AFileAttr PisiSPBase::get_aditional_file_attribute(QString attr_name) throw(QString)
 {
         if(attr_name.toLower() == "target")
             return TARGET;
@@ -419,7 +419,7 @@ PisiSPBase::AFileAttr PisiSPBase::get_aditional_file_attribute(QString attr_name
         else if(attr_name.toLower() == "group")
             return GROUP;
         else
-            throw QString("Wrong aditional_files atribute name : %1").arg(attr_name);
+            throw QObject::tr("Wrong aditional_files atribute name : %1").arg(attr_name);
 }
 
 QString PisiSPBase::get_aditional_file_attribute(PisiSPBase::AFileAttr attr)

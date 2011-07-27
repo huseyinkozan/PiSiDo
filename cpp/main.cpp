@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     // set Application information
     a.setOrganizationName(QString("pisido"));
     a.setOrganizationDomain(QString("huseyinkozan.com.tr"));
-    a.setApplicationName(QString("pisido"));
+    a.setApplicationName(QString("PiSiDo"));
     a.setApplicationVersion(QString("%1").arg(PISIDO_VERSION));
 
     load_translation(a);

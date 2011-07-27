@@ -21,6 +21,7 @@
 #include <Qsci/qsciscintilla.h>
 #include <Qsci/qscilexerpython.h>
 
+#include "aboutdialog.h"
 #include "addinstallfilelabeldialog.h"
 #include "addupdatedialog.h"
 #include "aditionalfiledialog.h"
@@ -235,10 +236,8 @@ void MainWindow::on_action_Change_Workspace_triggered()
 
 void MainWindow::on_action_About_triggered()
 {
-    QMessageBox::about(this, tr("About"), trUtf8("This program developed by Hüseyin Kozan."
-                                            "\n\nE-Mail : posta@huseyinkozan.com.tr"
-                                            "\nWeb : http://huseyinkozan.com.tr"
-                                            "\n\nApplication Version:%1").arg(qApp->applicationVersion()));
+    AboutDialog ad(this);
+    ad.exec();
 }
 
 void MainWindow::on_action_About_Qt_triggered()
@@ -478,7 +477,7 @@ void MainWindow::on_tb_reset_menu_clicked()
     ui->pte_desktop->setPlainText(desktop_file_default);
 }
 
-PisiUpdate MainWindow::get_history_update(int row)
+PisiUpdate MainWindow::get_history_update(int row) throw(QString)
 {
     PisiUpdate update;
     if(ui->tableW_history->itemAt(row, 0) == 0)

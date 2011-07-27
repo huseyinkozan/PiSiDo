@@ -17,10 +17,10 @@ void PisiUpdate::clear()
     release = 0;
 }
 
-void PisiUpdate::load_from_dom(const QDomElement & dom_element)
+void PisiUpdate::load_from_dom(const QDomElement & dom_element) throw(QString)
 {
     if(dom_element.isNull())
-        throw QString("Dom Element is null while loading to PisiUpdate !");
+        throw QObject::tr("Dom Element is null while loading to PisiUpdate !");
 
     QDomElement elm = dom_element.firstChildElement("Version");
     version = get_element_value(elm, "Version", true);
@@ -43,10 +43,10 @@ void PisiUpdate::load_from_dom(const QDomElement & dom_element)
     else release = 0;
 }
 
-void PisiUpdate::save_to_dom(QDomElement & dom_element)
+void PisiUpdate::save_to_dom(QDomElement & dom_element) throw(QString)
 {
     if(dom_element.isNull())
-        throw QString("Dom Element is null while saving from PisiUpdate to dom !");
+        throw QObject::tr("Dom Element is null while saving from PisiUpdate to dom !");
 
     dom_element.setAttribute("release", release);
     append_text_element(dom_element, "Date", date.toString("yyyy-MM-dd"));
@@ -56,12 +56,12 @@ void PisiUpdate::save_to_dom(QDomElement & dom_element)
     append_text_element(dom_element, "Email", packager_email);
 }
 
-QString PisiUpdate::get_element_value(QDomElement elm, QString tag, bool mandatory)
+QString PisiUpdate::get_element_value(QDomElement elm, QString tag, bool mandatory) throw(QString)
 {
     if(elm.isNull())
     {
         if(mandatory)
-            throw QString("No %1 tag !").arg(tag);
+            throw QObject::tr("No %1 tag !").arg(tag);
         else return QString();
     }
     else
@@ -71,7 +71,7 @@ QString PisiUpdate::get_element_value(QDomElement elm, QString tag, bool mandato
     }
 }
 
-QDomElement PisiUpdate::append_text_element(QDomElement root, QString tag, QString value)
+QDomElement PisiUpdate::append_text_element(QDomElement root, QString tag, QString value) throw(QString)
 {
     QDomElement elm = root.firstChildElement(tag);
     if( ! elm.isNull())
@@ -79,14 +79,14 @@ QDomElement PisiUpdate::append_text_element(QDomElement root, QString tag, QStri
 
     elm = root.ownerDocument().createElement(tag);
     if(elm.isNull() || root.appendChild(elm).isNull())
-        throw QString("Error while creating dom element %1").arg(tag);
+        throw QObject::tr("Error while creating dom element %1").arg(tag);
 
     if(value.isEmpty())
-        throw QString("%1 tag is mandatory but empty !");
+        throw QObject::tr("%1 tag is mandatory but empty !");
 
     QDomText text = root.ownerDocument().createTextNode(value);
     if(text.isNull() || elm.appendChild(text).isNull())
-        throw QString("Error while creating dom text element with value = %2").arg(value);
+        throw QObject::tr("Error while creating dom text element with value = %2").arg(value);
 
     return elm;
 }
@@ -123,50 +123,50 @@ QString PisiUpdate::get_packager_email() const
 }
 
 
-void PisiUpdate::set_release(int r)
+void PisiUpdate::set_release(int r) throw(QString)
 {
     if(r<1)
-        throw QString("Release number error : %1").arg(r);
+        throw QObject::tr("Release number error : %1").arg(r);
 
     if(r>=1) release = r;
 }
 
-void PisiUpdate::set_date(QDate d)
+void PisiUpdate::set_date(QDate d) throw(QString)
 {
     if(d == QDate())
-        throw QString("Empty update date !");
+        throw QObject::tr("Empty update date !");
 
     if(d.isValid()) date = d;
 }
 
-void PisiUpdate::set_version(QString v)
+void PisiUpdate::set_version(QString v) throw(QString)
 {
     if(v.isEmpty())
-        throw QString("Empty update version !");
+        throw QObject::tr("Empty update version !");
 
     version = v;
 }
 
-void PisiUpdate::set_comment(QString c)
+void PisiUpdate::set_comment(QString c) throw(QString)
 {
     if(c.isEmpty())
-        throw QString("Empty update comment !");
+        throw QObject::tr("Empty update comment !");
 
     comment = c;
 }
 
-void PisiUpdate::set_packager_name(QString p_n)
+void PisiUpdate::set_packager_name(QString p_n) throw(QString)
 {
     if(p_n.isEmpty())
-        throw QString("Empty update packager name !");
+        throw QObject::tr("Empty update packager name !");
 
     packager_name = p_n;
 }
 
-void PisiUpdate::set_packager_email(QString p_e)
+void PisiUpdate::set_packager_email(QString p_e) throw(QString)
 {
     if(p_e.isEmpty())
-        throw QString("Empty update packager email !");
+        throw QObject::tr("Empty update packager email !");
 
     packager_email = p_e;
 }

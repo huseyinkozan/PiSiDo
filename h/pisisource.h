@@ -27,8 +27,8 @@ public:
     };
 
     virtual void clear();
-    virtual void load_from_dom(const QDomElement & dom_element);
-    virtual void save_to_dom(QDomElement & root);
+    virtual void load_from_dom(const QDomElement & dom_element) throw(QString);
+    virtual void save_to_dom(QDomElement & root) throw(QString);
 
     QString get_home_page() const;
     QMap<QString,QString> get_packager() const;
@@ -37,23 +37,23 @@ public:
 
     static QString get_archive_type(const QString & file_name);
 
-    void set_home_page(QString home_page);
-    void set_packager(QString name, QString email);
-    void set_archives(QMap<QString, QMap<ArchiveAttr,QString> > archives);
+    void set_home_page(QString home_page) throw(QString);
+    void set_packager(QString name, QString email) throw(QString);
+    void set_archives(QMap<QString, QMap<ArchiveAttr,QString> > archives) throw(QString);
     void set_patches(QMap<QString, QMap<PatchAttr,QString> > patches);
 
     bool operator ==(const PisiSource & other);
     bool operator !=(const PisiSource & other);
 
 protected:
-    virtual bool is_mandatory(QDomElement root, QString tag);
+    virtual bool is_mandatory(QDomElement root, QString tag) throw(QString);
 
 private:
-    ArchiveAttr get_archive_attribute(QString attr_name);
-    QString get_archive_attribute(ArchiveAttr attr);
+    ArchiveAttr get_archive_attribute(QString attr_name) throw(QString);
+    QString get_archive_attribute(ArchiveAttr attr) throw(QString);
 
-    PatchAttr get_patch_attribute(QString attr_name);
-    QString get_patch_attribute(PatchAttr attr);
+    PatchAttr get_patch_attribute(QString attr_name) throw(QString);
+    QString get_patch_attribute(PatchAttr attr) throw(QString);
 
 private:
     QString home_page;

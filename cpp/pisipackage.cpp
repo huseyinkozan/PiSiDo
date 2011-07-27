@@ -16,12 +16,12 @@ void PisiPackage::clear()
     files.clear();
 }
 
-void PisiPackage::load_from_dom(const QDomElement & dom_element)
+void PisiPackage::load_from_dom(const QDomElement & dom_element) throw(QString)
 {
     PisiSPBase::load_from_dom(dom_element);
 
     if(dom_element.isNull())
-        throw QString("Dom Element is null while loading to PisiPackage !");
+        throw QObject::tr("Dom Element is null while loading to PisiPackage !");
 
     QDomElement elm = dom_element.firstChildElement("RuntimeDependencies");
     runtime_dependencies = get_dependency(elm);
@@ -30,12 +30,12 @@ void PisiPackage::load_from_dom(const QDomElement & dom_element)
     files = get_files(elm);
 }
 
-void PisiPackage::save_to_dom(QDomElement & root)
+void PisiPackage::save_to_dom(QDomElement & root) throw(QString)
 {
     PisiSPBase::save_to_dom(root);
 
     if(root.isNull())
-        throw QString("Dom Element is null while saving from PisiPackage to dom !");
+        throw QObject::tr("Dom Element is null while saving from PisiPackage to dom !");
 
     QDomElement elm = root.firstChildElement("RuntimeDependencies");
     if( ! elm.isNull())
@@ -44,7 +44,7 @@ void PisiPackage::save_to_dom(QDomElement & root)
     set_dependency(elm, runtime_dependencies);
 
     if(files.isEmpty())
-        throw QString("%1 tag is mandatory but empty !").arg("Files");
+        throw QObject::tr("%1 tag is mandatory but empty !").arg("Files");
     elm = root.firstChildElement("Files");
     if( ! elm.isNull())
         root.removeChild(elm);
@@ -138,7 +138,7 @@ bool PisiPackage::operator !=(const PisiPackage & other)
     return ! (*this == other);
 }
 
-bool PisiPackage::is_mandatory(QDomElement root, QString tag_)
+bool PisiPackage::is_mandatory(QDomElement root, QString tag_) throw(QString)
 {
     QString tag = tag_.toLower();
     QString root_tag = root.tagName().toLower();
@@ -161,13 +161,13 @@ bool PisiPackage::is_mandatory(QDomElement root, QString tag_)
         else if(tag == "files")
             return true;
         else
-            throw QString("Undefined tag name \"%1\" in PisiPackage::is_mandatory() !").arg(tag);
+            throw QObject::tr("Undefined tag name \"%1\" in PisiPackage::is_mandatory() !").arg(tag);
     }
     else
-        throw QString("Undefined root_tag name \"%1\" in PisiPackage::is_mandatory() !").arg(root_tag);
+        throw QObject::tr("Undefined root_tag name \"%1\" in PisiPackage::is_mandatory() !").arg(root_tag);
 }
 
-QMap<QString, QMap<PisiPackage::FileType, bool> > PisiPackage::get_files(QDomElement elm)
+QMap<QString, QMap<PisiPackage::FileType, bool> > PisiPackage::get_files(QDomElement elm) throw(QString)
 {
     if(elm.isNull())
     {
@@ -178,14 +178,14 @@ QMap<QString, QMap<PisiPackage::FileType, bool> > PisiPackage::get_files(QDomEle
 
     elm = elm.firstChildElement("Path");
     if(elm.isNull())
-        throw QString("No Path in Files");
+        throw QObject::tr("No Path in Files");
 
     for( ; ! elm.isNull(); elm = elm.nextSiblingElement("Path"))
     {
         QMap<FileType, bool> attributes;
         QString file_type = elm.attribute("fileType");
         if(file_type.isNull())
-            throw QString("There is no fileType attribute in Path tag !");
+            throw QObject::tr("There is no fileType attribute in Path tag !");
         bool permanent = false;
         if(elm.attribute("permanent").toLower() == "true")
             permanent = true;
@@ -195,11 +195,11 @@ QMap<QString, QMap<PisiPackage::FileType, bool> > PisiPackage::get_files(QDomEle
     return files;
 }
 
-void PisiPackage::set_files(QDomElement root, QMap<QString, QMap<FileType, bool> > files)
+void PisiPackage::set_files(QDomElement root, QMap<QString, QMap<FileType, bool> > files) throw(QString)
 {
     if(files.isEmpty())
     {
-        throw QString("No %1 tag !").arg("Files");
+        throw QObject::tr("No %1 tag !").arg("Files");
     }
 
     QList<QString> files_keys = files.keys();
@@ -256,7 +256,7 @@ QString PisiPackage::get_files_file_type(PisiPackage::FileType attr)
     }
 }
 
-PisiPackage::FileType PisiPackage::get_files_file_type(QString attr_name)
+PisiPackage::FileType PisiPackage::get_files_file_type(QString attr_name) throw(QString)
 {
         if(attr_name.toLower() == "executable")
             return EXECUTABLE;
@@ -279,5 +279,5 @@ PisiPackage::FileType PisiPackage::get_files_file_type(QString attr_name)
         else if(attr_name.toLower() == "all")
             return ALL;
         else
-            throw QString("Wrong files atribute name : %1").arg(attr_name);
+            throw QObject::tr("Wrong files atribute name : %1").arg(attr_name);
 }

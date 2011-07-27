@@ -1288,7 +1288,46 @@ Categories=Application;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>le_package_name</tabstop>
+  <tabstop>tb_import_package</tabstop>
+  <tabstop>tb_open_package_dir</tabstop>
+  <tabstop>combo_archive_type</tabstop>
+  <tabstop>tb_add_archive</tabstop>
+  <tabstop>le_build_dependency</tabstop>
+  <tabstop>le_runtime_dependency</tabstop>
+  <tabstop>combo_license</tabstop>
+  <tabstop>combo_is_a</tabstop>
+  <tabstop>combo_part_of</tabstop>
+  <tabstop>le_homepage</tabstop>
   <tabstop>le_summary</tabstop>
+  <tabstop>pte_description</tabstop>
+  <tabstop>combo_actions_template</tabstop>
+  <tabstop>tb_zoom_in</tabstop>
+  <tabstop>tb_zoom_out</tabstop>
+  <tabstop>gb_create_menu</tabstop>
+  <tabstop>pte_desktop</tabstop>
+  <tabstop>tb_reset_menu</tabstop>
+  <tabstop>treeV_files</tabstop>
+  <tabstop>tb_add_label</tabstop>
+  <tabstop>tableW_files</tabstop>
+  <tabstop>tb_delete_label</tabstop>
+  <tabstop>tb_open_install_dir</tabstop>
+  <tabstop>tableW_history</tabstop>
+  <tabstop>tb_add_update</tabstop>
+  <tabstop>tb_delete_last_update</tabstop>
+  <tabstop>tableW_patches</tabstop>
+  <tabstop>tb_patch_up</tabstop>
+  <tabstop>tb_patch_down</tabstop>
+  <tabstop>tb_open_patches_dir</tabstop>
+  <tabstop>tableW_aditional_files</tabstop>
+  <tabstop>tb_edit_aditional_files</tabstop>
+  <tabstop>tb_open_aditional_files_dir</tabstop>
+  <tabstop>combo_build_up_to</tabstop>
+  <tabstop>tb_build_up_to</tabstop>
+  <tabstop>combo_build_only</tabstop>
+  <tabstop>tb_build_only</tabstop>
+  <tabstop>tb_build_all</tabstop>
  </tabstops>
  <resources>
   <include location="../resource/pisido.qrc"/>

@@ -79,6 +79,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>le_archive</tabstop>
+  <tabstop>le_sha1</tabstop>
+  <tabstop>tb_delete</tabstop>
+ </tabstops>
  <resources>
   <include location="../resource/pisido.qrc"/>
  </resources>

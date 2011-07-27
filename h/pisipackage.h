@@ -24,8 +24,8 @@ public:
     };
 
     virtual void clear();
-    virtual void load_from_dom(const QDomElement & dom_element);
-    virtual void save_to_dom(QDomElement & dom_element);
+    virtual void load_from_dom(const QDomElement & dom_element) throw(QString);
+    virtual void save_to_dom(QDomElement & dom_element) throw(QString);
 
     QStringList get_runtime_dependencies_as_stringlist();
     QMap<QString, QMap<VRTFAttr,QString> > get_runtime_dependencies() const;
@@ -41,9 +41,9 @@ public:
     bool operator !=(const PisiPackage & other);
 
 protected:
-    virtual bool is_mandatory(QDomElement root, QString tag);
-    QMap<QString, QMap<FileType, bool> > get_files(QDomElement elm);
-    void set_files(QDomElement root, QMap<QString, QMap<FileType, bool> > files);
+    virtual bool is_mandatory(QDomElement root, QString tag) throw(QString);
+    QMap<QString, QMap<FileType, bool> > get_files(QDomElement elm) throw(QString);
+    void set_files(QDomElement root, QMap<QString, QMap<FileType, bool> > files) throw(QString);
 
 private:
     // dependency, {(versionFrom,xxxx),(versionTo,xxxx),...,(release,xxxx)}
@@ -52,7 +52,7 @@ private:
     QMap<QString, QMap<FileType, bool> > files;
 
     QString get_files_file_type(PisiPackage::FileType attr);
-    FileType get_files_file_type(QString attr_name);
+    FileType get_files_file_type(QString attr_name) throw(QString);
 };
 
 #endif // PISIPACKAGE_H

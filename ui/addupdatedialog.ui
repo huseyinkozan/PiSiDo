@@ -111,6 +111,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>le_update_version</tabstop>
+  <tabstop>le_update_comment</tabstop>
+  <tabstop>de_date</tabstop>
+  <tabstop>le_packager_name</tabstop>
+  <tabstop>le_packager_email</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

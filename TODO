@@ -48,16 +48,17 @@ First:
     (X) Make build process.
         (X) __package_name__ will convert at the aditional_files
 
+    (X) Produce dom due to epmty start or importing at Pisi::save_to_dom().
 
-    (*) Produce dom due to epmty start or importing at Pisi::save_to_dom().
+    (X) check gui tab order.
+    (X) convert QString("") to QObject::tr("") in the pisi classes.
+    (X) add throw to functions that throws exception.
 
-    (*) check gui tab order.
     (*) check gui tooltips.
-    (*) convert QString("") to QObject::tr("") in the pisi classes.
 
     (*) Prepare program help.
 
-    (*) Test program.
+    (->) Test program.
 
     (*) Give translation files path at the pisi package.
 

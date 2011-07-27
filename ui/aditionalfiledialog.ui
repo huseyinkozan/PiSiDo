@@ -257,6 +257,25 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>le_file</tabstop>
+  <tabstop>le_target</tabstop>
+  <tabstop>c_u_r</tabstop>
+  <tabstop>c_u_w</tabstop>
+  <tabstop>c_u_x</tabstop>
+  <tabstop>c_uid</tabstop>
+  <tabstop>c_g_r</tabstop>
+  <tabstop>c_g_w</tabstop>
+  <tabstop>c_g_x</tabstop>
+  <tabstop>c_gid</tabstop>
+  <tabstop>c_o_r</tabstop>
+  <tabstop>c_o_w</tabstop>
+  <tabstop>c_o_x</tabstop>
+  <tabstop>c_sticky</tabstop>
+  <tabstop>le_owner</tabstop>
+  <tabstop>le_group</tabstop>
+  <tabstop>buttonBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

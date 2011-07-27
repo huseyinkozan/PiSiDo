@@ -51,28 +51,28 @@ PisiUpdate Pisi::get_last_update() const
     return last_update;
 }
 
-void Pisi::set_source(PisiSource source)
+void Pisi::set_source(PisiSource source) throw(QString)
 {
     if(source == PisiSource())
-        throw QString("Empty source class !");
+        throw QObject::tr("Empty source class !");
 
     this->source = source;
     empty = false;
 }
 
-void Pisi::set_package(PisiPackage package)
+void Pisi::set_package(PisiPackage package) throw(QString)
 {
     if(package == PisiPackage())
-        throw QString("Empty package class !");
+        throw QObject::tr("Empty package class !");
 
     this->package = package;
     empty = false;
 }
 
-void Pisi::set_updates(QMap<int, PisiUpdate> updates)
+void Pisi::set_updates(QMap<int, PisiUpdate> updates) throw(QString)
 {
     if(updates.isEmpty())
-        throw QString("Empty history update !");
+        throw QObject::tr("Empty history update !");
 
     this->updates = updates;
     empty = false;
@@ -82,7 +82,7 @@ void Pisi::set_updates(QMap<int, PisiUpdate> updates)
     }
 }
 
-void Pisi::load_from_dom(const QDomDocument & dom)
+void Pisi::load_from_dom(const QDomDocument & dom) throw(QString)
 {
     QDomElement root = dom.documentElement();
     if( ! root.isNull() && root.tagName().toLower() == "pisi")
@@ -95,12 +95,12 @@ void Pisi::load_from_dom(const QDomDocument & dom)
             try {
                 source.load_from_dom(elm_src);
             } catch (QString e) {
-                throw QString("From Source parser : %1").arg(e);
+                throw QObject::tr("From Source parser : %1").arg(e);
             }
         }
         else
         {
-            throw QString("Can not find Source tag !");
+            throw QObject::tr("Can not find Source tag !");
         }
 
         QDomElement elm_pkg = root.namedItem("Package").toElement();
@@ -109,12 +109,12 @@ void Pisi::load_from_dom(const QDomDocument & dom)
             try{
                 package.load_from_dom(elm_pkg);
             } catch (QString e) {
-                throw QString("From Package parser : %1").arg(e);
+                throw QObject::tr("From Package parser : %1").arg(e);
             }
         }
         else
         {
-            throw QString("Can not find Package tag !");
+            throw QObject::tr("Can not find Package tag !");
         }
 
         QDomElement elm_hist = root.namedItem("History").toElement();
@@ -128,7 +128,7 @@ void Pisi::load_from_dom(const QDomDocument & dom)
                 try {
                     upd.load_from_dom(elm_upd);
                 } catch (QString e) {
-                    throw QString("From Update parser : %1").arg(e);
+                    throw QObject::tr("From Update parser : %1").arg(e);
                 }
                 int release = upd.get_release();
                 if(release > last_release)
@@ -138,21 +138,21 @@ void Pisi::load_from_dom(const QDomDocument & dom)
         }
         else
         {
-            throw QString("Can not find History tag !");
+            throw QObject::tr("Can not find History tag !");
         }
 
         empty = false;
     }
     else
     {
-        throw QString("Can not find PISI tag !");
+        throw QObject::tr("Can not find PISI tag !");
     }
 }
 
-bool Pisi::save_to_dom(QDomDocument &dom)
+bool Pisi::save_to_dom(QDomDocument &dom) throw(QString)
 {
     if(is_empty())
-        throw QString("Empty pisi class while saving pisi class values to dom !");
+        throw QObject::tr("Empty pisi class while saving pisi class values to dom !");
 
     QDomElement root = dom.documentElement();
 
@@ -163,7 +163,7 @@ bool Pisi::save_to_dom(QDomDocument &dom)
     }
     else{
         if(root.tagName().toLower() != "pisi")
-            throw QString("Loaded xml file does not start with PISI !");
+            throw QObject::tr("Loaded xml file does not start with PISI !");
     }
 
     QDomElement elm_src = root.namedItem("Source").toElement();
@@ -175,7 +175,7 @@ bool Pisi::save_to_dom(QDomDocument &dom)
     try {
         source.save_to_dom(elm_src);
     } catch (QString e) {
-        throw QString("From Source saver : %1").arg(e);
+        throw QObject::tr("From Source saver : %1").arg(e);
     }
 
     QDomElement elm_pkg = root.namedItem("Package").toElement();
@@ -187,7 +187,7 @@ bool Pisi::save_to_dom(QDomDocument &dom)
     try {
         package.save_to_dom(elm_pkg);
     } catch (QString e) {
-        throw QString("From Package saver : %1").arg(e);
+        throw QObject::tr("From Package saver : %1").arg(e);
     }
 
     QDomElement elm_hist = root.namedItem("History").toElement();
@@ -206,7 +206,7 @@ bool Pisi::save_to_dom(QDomDocument &dom)
         try {
             updates[releases.at(i)].save_to_dom(elm_upd);
         } catch (QString e) {
-            throw QString("From Update saver : %1").arg(e);
+            throw QObject::tr("From Update saver : %1").arg(e);
         }
     }
 

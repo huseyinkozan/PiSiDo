@@ -16,17 +16,17 @@ public:
     void clear();
     bool is_empty() const;
 
-    void load_from_dom(const QDomDocument & dom);
-    bool save_to_dom(QDomDocument & dom);
+    void load_from_dom(const QDomDocument & dom) throw(QString);
+    bool save_to_dom(QDomDocument & dom) throw(QString);
 
     PisiSource get_source() const;
     PisiPackage get_package() const;
     QMap<int, PisiUpdate> get_updates() const;
     PisiUpdate get_last_update() const;
 
-    void set_source(PisiSource source);
-    void set_package(PisiPackage package);
-    void set_updates(QMap<int, PisiUpdate> updates);
+    void set_source(PisiSource source) throw(QString);
+    void set_package(PisiPackage package) throw(QString);
+    void set_updates(QMap<int, PisiUpdate> updates) throw(QString);
 
 private:
     bool empty;
