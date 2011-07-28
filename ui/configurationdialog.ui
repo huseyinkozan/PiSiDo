@@ -51,7 +51,11 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="le_packager_name"/>
+           <widget class="QLineEdit" name="le_packager_name">
+            <property name="toolTip">
+             <string>This will use while adding an update to the history section</string>
+            </property>
+           </widget>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="lbl_packager_email">
@@ -61,7 +65,11 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="le_packager_email"/>
+           <widget class="QLineEdit" name="le_packager_email">
+            <property name="toolTip">
+             <string>This will use while adding an update to the history section</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -75,6 +83,9 @@
        </item>
        <item row="0" column="1">
         <widget class="QSpinBox" name="sb_console_max_line">
+         <property name="toolTip">
+          <string>Maximum remembered line at console</string>
+         </property>
          <property name="minimum">
           <number>100</number>
          </property>
@@ -98,7 +109,11 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="le_pisi_packaging_dir"/>
+        <widget class="QLineEdit" name="le_pisi_packaging_dir">
+         <property name="toolTip">
+          <string>Used only opening from menu as shortcut</string>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <spacer name="verticalSpacer_2">
@@ -128,7 +143,11 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="le_action_api_page"/>
+        <widget class="QLineEdit" name="le_action_api_page">
+         <property name="toolTip">
+          <string>Used only opening from menu as shortcut</string>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="lbl_pisi_spec">
@@ -138,7 +157,11 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="le_pisi_spec"/>
+        <widget class="QLineEdit" name="le_pisi_spec">
+         <property name="toolTip">
+          <string>Used only opening from menu as shortcut</string>
+         </property>
+        </widget>
        </item>
        <item row="2" column="0">
         <spacer name="verticalSpacer_3">

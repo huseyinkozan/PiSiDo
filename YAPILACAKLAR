@@ -55,7 +55,7 @@
     (X) istisna fırlatan fonksiyonlara throw eklenecek.
 
 
-    (*) gui tooltip leri kontrol edilecek.
+    (->) gui tooltip leri kontrol edilecek.(mainwindow.ui kaldı)
 
     (*) Program yardımı hazırlanacak.
 

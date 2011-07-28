@@ -44,10 +44,10 @@
           <item>
            <widget class="QLineEdit" name="le_package_name">
             <property name="toolTip">
-             <string>Package name.</string>
+             <string>Give directory name for import !</string>
             </property>
             <property name="statusTip">
-             <string>Package name.</string>
+             <string>Give directory name for import !</string>
             </property>
            </widget>
           </item>
@@ -55,6 +55,12 @@
            <widget class="QToolButton" name="tb_import_package">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Import package</string>
+            </property>
+            <property name="statusTip">
+             <string>Import package</string>
             </property>
             <property name="text">
              <string/>
@@ -69,6 +75,12 @@
            <widget class="QToolButton" name="tb_open_package_dir">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Open Package Directory</string>
+            </property>
+            <property name="statusTip">
+             <string>Open Package Directory</string>
             </property>
             <property name="text">
              <string/>
@@ -97,10 +109,10 @@
         <item row="12" column="1">
          <widget class="QLineEdit" name="le_summary">
           <property name="toolTip">
-           <string>Shows a brief description on the installer list.</string>
+           <string>A brief description</string>
           </property>
           <property name="statusTip">
-           <string>Shows a brief description on the installer list.</string>
+           <string>A brief description</string>
           </property>
          </widget>
         </item>
@@ -119,14 +131,7 @@
          </widget>
         </item>
         <item row="11" column="1">
-         <widget class="QLineEdit" name="le_homepage">
-          <property name="toolTip">
-           <string>Package web site.</string>
-          </property>
-          <property name="statusTip">
-           <string>Package web site.</string>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="le_homepage"/>
         </item>
         <item row="6" column="0">
          <widget class="QLabel" name="lbl_build_dependency">
@@ -147,7 +152,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qt Version 4.6.0 : &lt;span style=&quot; font-weight:600;&quot;&gt;qt=4.6.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="statusTip">
-           <string>Comma seperated package names.</string>
+           <string>Comma seperated package names. Ex: qt&gt;4.4, gtk, glibc&gt;2</string>
           </property>
          </widget>
         </item>
@@ -161,10 +166,16 @@ p, li { white-space: pre-wrap; }
         <item row="7" column="1">
          <widget class="QLineEdit" name="le_runtime_dependency">
           <property name="toolTip">
-           <string>Comma seperated package names.</string>
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Comma seperated package names:&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qt Version From 4.6.0 And Gtk Version To 2.4 : &lt;span style=&quot; font-weight:600;&quot;&gt;qt&amp;gt;4.6.0, gtk&amp;lt;2.4&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Qt Version 4.6.0 : &lt;span style=&quot; font-weight:600;&quot;&gt;qt=4.6.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="statusTip">
-           <string>Comma seperated package names.</string>
+           <string>Comma seperated package names. Ex: qt&gt;4.4, gtk, glibc&gt;2</string>
           </property>
          </widget>
         </item>
@@ -176,7 +187,14 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="8" column="1">
-         <widget class="QComboBox" name="combo_license"/>
+         <widget class="QComboBox" name="combo_license">
+          <property name="toolTip">
+           <string>Select License</string>
+          </property>
+          <property name="statusTip">
+           <string>Select License</string>
+          </property>
+         </widget>
         </item>
         <item row="9" column="0">
          <widget class="QLabel" name="lbl_is_a">
@@ -188,10 +206,10 @@ p, li { white-space: pre-wrap; }
         <item row="9" column="1">
          <widget class="QComboBox" name="combo_is_a">
           <property name="toolTip">
-           <string>Package type.</string>
+           <string>Select package type</string>
           </property>
           <property name="statusTip">
-           <string>Package type.</string>
+           <string>Select package type</string>
           </property>
          </widget>
         </item>
@@ -203,7 +221,14 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="10" column="1">
-         <widget class="QComboBox" name="combo_part_of"/>
+         <widget class="QComboBox" name="combo_part_of">
+          <property name="toolTip">
+           <string>Select component</string>
+          </property>
+          <property name="statusTip">
+           <string>Select component</string>
+          </property>
+         </widget>
         </item>
         <item row="4" column="0" rowspan="2">
          <widget class="QLabel" name="label">
@@ -219,6 +244,12 @@ p, li { white-space: pre-wrap; }
          <layout class="QHBoxLayout" name="horizontalLayout_7">
           <item>
            <widget class="QComboBox" name="combo_archive_type">
+            <property name="toolTip">
+             <string>Use compressed type to compute sha1 values of local archive files</string>
+            </property>
+            <property name="statusTip">
+             <string>Use compressed type to compute sha1 values of local archive files</string>
+            </property>
             <item>
              <property name="text">
               <string>Compressed</string>
@@ -233,6 +264,12 @@ p, li { white-space: pre-wrap; }
           </item>
           <item>
            <widget class="QToolButton" name="tb_add_archive">
+            <property name="toolTip">
+             <string>Add archive</string>
+            </property>
+            <property name="statusTip">
+             <string>Add archive</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -248,7 +285,14 @@ p, li { white-space: pre-wrap; }
          <widget class="QWidget" name="w_archive_base" native="true"/>
         </item>
         <item row="13" column="1">
-         <widget class="QPlainTextEdit" name="pte_description"/>
+         <widget class="QPlainTextEdit" name="pte_description">
+          <property name="toolTip">
+           <string>Detailed description</string>
+          </property>
+          <property name="statusTip">
+           <string>Detailed description</string>
+          </property>
+         </widget>
         </item>
         <item row="13" column="0">
          <widget class="QLabel" name="lbl_detailed">
@@ -447,6 +491,12 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <widget class="QComboBox" name="combo_actions_template">
+         <property name="toolTip">
+          <string>Select actions.py template</string>
+         </property>
+         <property name="statusTip">
+          <string>Select actions.py template</string>
+         </property>
          <item>
           <property name="text">
            <string notr="true">Auto</string>
@@ -547,6 +597,12 @@ p, li { white-space: pre-wrap; }
     <layout class="QGridLayout" name="gridLayout_7">
      <item row="0" column="0">
       <widget class="QGroupBox" name="gb_create_menu">
+       <property name="toolTip">
+        <string>Adds an icon (package_name.png) and a package_name.desktop file, which can be a menu icon</string>
+       </property>
+       <property name="statusTip">
+        <string>Adds an icon (package_name.png) and a package_name.desktop file, which can be a menu icon</string>
+       </property>
        <property name="title">
         <string>Create Menu Icon</string>
        </property>
@@ -560,10 +616,10 @@ p, li { white-space: pre-wrap; }
         <item row="0" column="0" rowspan="2" colspan="2">
          <widget class="QPlainTextEdit" name="pte_desktop">
           <property name="toolTip">
-           <string>Underscored words will replace with proper values.</string>
+           <string>Desktop file contents</string>
           </property>
           <property name="statusTip">
-           <string>Underscored words will replace with proper values.</string>
+           <string>Desktop file contents</string>
           </property>
           <property name="lineWrapMode">
            <enum>QPlainTextEdit::NoWrap</enum>
@@ -572,16 +628,16 @@ p, li { white-space: pre-wrap; }
            <string notr="true">#!/usr/bin/env xdg-open
 [Desktop Entry]
 Type=Application
-Version=___version___
+Version=__version__
 Encoding=UTF-8
-Name=___package_name___
-# Name[tr]=___package_name___
-GenericName=___package_name___
-GenericName[tr]=___package_name___
-Comment=___summary___
-# Comment[tr]=___summary___
-Icon=___package_name___.png
-Exec=___package_name___
+Name=__package_name__
+# Name[tr]=__package_name__
+GenericName=__package_name__
+GenericName[tr]=__package_name__
+Comment=__summary__
+# Comment[tr]=__summary__
+Icon=__package_name__.png
+Exec=__package_name__
 Terminal=false
 StartupNotify=false
 Categories=Application;</string>
@@ -590,6 +646,9 @@ Categories=Application;</string>
         </item>
         <item row="0" column="2">
          <widget class="QToolButton" name="tb_reset_menu">
+          <property name="toolTip">
+           <string>Resets desktop file contents</string>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -815,7 +874,14 @@ Categories=Application;</string>
       </widget>
      </item>
      <item row="1" column="0" rowspan="3" colspan="2">
-      <widget class="QTreeView" name="treeV_files"/>
+      <widget class="QTreeView" name="treeV_files">
+       <property name="toolTip">
+        <string>A successful build need for listing</string>
+       </property>
+       <property name="statusTip">
+        <string>A successful build need for listing</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="3" rowspan="3" colspan="2">
       <widget class="QTableWidget" name="tableW_files">
@@ -880,6 +946,12 @@ Categories=Application;</string>
       <widget class="QToolButton" name="tb_add_label">
        <property name="enabled">
         <bool>true</bool>
+       </property>
+       <property name="toolTip">
+        <string>Add label</string>
+       </property>
+       <property name="statusTip">
+        <string>Add label</string>
        </property>
        <property name="text">
         <string/>

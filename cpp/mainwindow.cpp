@@ -1224,11 +1224,14 @@ void MainWindow::pisi_from_gui() throw (QString)
     PisiPackage package;
     package.set_name(package_name);
     package.set_runtime_dependencies(runtime_dependency);
+    // todo : replace __package_name__ in files !
+    // todo : replace __version... vs
     package.set_files(files);
     temp_aditional_files.clear();
     QList<QString> a_f_list = aditional_files.keys();
     foreach (QString a_f, a_f_list) {
         QMap<PisiSPBase::AFileAttr,QString> a_f_attr = aditional_files.value(a_f);
+        // todo : replace __version... vs
         a_f.replace("__package_name__", package_name);
         temp_aditional_files[a_f] = a_f_attr;
     }
@@ -1280,18 +1283,18 @@ bool MainWindow::create_build_files()
     QString action_py = actions_editor->text();
     if(action_py.isEmpty())
         QMessageBox::information(this, tr("Actions API File"), tr("Actions.py is empty !"));
-    action_py.replace(QString("___package_name___"), package_name);
-    action_py.replace(QString("___version___"), pisi.get_last_update().get_version());
-    action_py.replace(QString("___summary___"), summary);
+    action_py.replace(QString("__package_name__"), package_name);
+    action_py.replace(QString("__version__"), pisi.get_last_update().get_version());
+    action_py.replace(QString("__summary__"), summary);
     save_text_file( actions_file_name, action_py );
 
 
 //    create desktop
     QString desktop_file_name = package_dir.absoluteFilePath(package_name + ".desktop");
     QString desktop_str = ui->pte_desktop->toPlainText();
-    desktop_str.replace(QString("___package_name___"), package_name);
-    desktop_str.replace(QString("___version___"), pisi.get_last_update().get_version());
-    desktop_str.replace(QString("___summary___"), summary);
+    desktop_str.replace(QString("__package_name__"), package_name);
+    desktop_str.replace(QString("__version__"), pisi.get_last_update().get_version());
+    desktop_str.replace(QString("__summary__"), summary);
     save_text_file( desktop_file_name, desktop_str );
 
     // write image file

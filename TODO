@@ -54,7 +54,8 @@ First:
     (X) convert QString("") to QObject::tr("") in the pisi classes.
     (X) add throw to functions that throws exception.
 
-    (*) check gui tooltips.
+
+    (->) check gui tooltips. (mainwindow.ui)
 
     (*) Prepare program help.
 

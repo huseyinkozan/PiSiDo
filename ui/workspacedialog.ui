@@ -35,6 +35,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="le_workspace">
+       <property name="toolTip">
+        <string>Produced build files ad pisi packages will save under here</string>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -64,6 +67,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="check_not_ask">
+     <property name="toolTip">
+      <string>You can change workspace form menu</string>
+     </property>
      <property name="text">
       <string>Don't ask workspace again.</string>
      </property>
@@ -96,6 +102,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pb_exit">
+       <property name="toolTip">
+        <string>Exit application</string>
+       </property>
        <property name="text">
         <string>E&amp;xit</string>
        </property>
