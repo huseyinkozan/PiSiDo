@@ -485,7 +485,7 @@ PisiUpdate MainWindow::get_history_update(int row) throw(QString)
     bool ok = false;
     int release = ui->tableW_history->item(row,0)->text().toInt(&ok);
     if( ! ok)
-        throw QString("Error at conversion release string to integer !");
+        throw tr("Error at conversion release string to integer !");
     update.set_release(release);
     update.set_date(QDate::fromString(ui->tableW_history->item(row, 1)->text(),"dd.MM.yyyy"));
     update.set_version(ui->tableW_history->item(row, 2)->text());
@@ -1085,7 +1085,7 @@ void MainWindow::on_tb_import_package_clicked()
 void MainWindow::pisi_to_gui() throw (QString)
 {
     if(pisi.is_empty())
-        throw QString("Empty pisi file, import pspec.xml before use !");
+        throw tr("Empty pisi file, import pspec.xml before use !");
 
 
     // history section
@@ -1183,7 +1183,7 @@ void MainWindow::pisi_from_gui() throw (QString)
     QMap<int, PisiUpdate> updates;
     int history_row_count = ui->tableW_history->rowCount();
     if(history_row_count == 0)
-        throw QString("Please define an update in history !");
+        throw tr("Please define an update in history !");
     for(int i=0; i<history_row_count; ++i)
     {
         bool ok = false;
@@ -1191,7 +1191,7 @@ void MainWindow::pisi_from_gui() throw (QString)
         if(ok)
             updates[release] = get_history_update(i);
         else
-            throw QString("Error at conversion release string to integer !");
+            throw tr("Error at conversion release string to integer !");
     }
     pisi.set_updates(updates);
 
