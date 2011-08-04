@@ -237,7 +237,7 @@ QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency(QD
 
     elm = elm.firstChildElement("Dependency");
     if(elm.isNull())
-        throw QObject::tr("No Dependency in Dependencies");
+        return dependencies;
 
     for( ; ! elm.isNull(); elm = elm.nextSiblingElement("Dependency"))
     {
