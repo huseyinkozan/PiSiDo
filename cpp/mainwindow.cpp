@@ -74,6 +74,16 @@ MainWindow::MainWindow(QWidget *parent) :
     a_tBar_operations->setIcon(QIcon(":/images/operations.png"));
     a_tBar_view->setIcon(QIcon(":/images/toolbar.png"));
     a_tBar_help->setIcon(QIcon(":/images/help.png"));
+    a_dw_actions->setStatusTip(ui->dw_actions->toolTip());
+    a_dw_menu->setStatusTip(ui->dw_menu->toolTip());
+    a_dw_install_files->setStatusTip(ui->dw_install_files->toolTip());
+    a_dw_aditional_files->setStatusTip(ui->dw_aditional_files->toolTip());
+    a_dw_patches->setStatusTip(ui->dw_patches->toolTip());
+    a_dw_history->setStatusTip(ui->dw_history->toolTip());
+    a_dw_build->setStatusTip(ui->dw_build->toolTip());
+    a_tBar_operations->setStatusTip(tr("Show or hide %1").arg(ui->tBar_operations->windowTitle()));
+    a_tBar_view->setStatusTip(tr("Show or hide %1").arg(ui->tBar_view->windowTitle()));
+    a_tBar_help->setStatusTip(tr("Show or hide %1").arg(ui->tBar_help->windowTitle()));
     ui->menu_View->addAction(a_dw_actions);
     ui->menu_View->addAction(a_dw_menu);
     ui->menu_View->addAction(a_dw_install_files);

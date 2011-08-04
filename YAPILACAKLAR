@@ -54,12 +54,16 @@
     (X) pisi sınıflarındaki QString("") ler QObject::tr("") yapılacak.
     (X) istisna fırlatan fonksiyonlara throw eklenecek.
 
+    (X) gui tooltip leri kontrol edilecek.
 
-    (->) gui tooltip leri kontrol edilecek.(mainwindow.ui kaldı)
+    (X) directory, folder kelimelerinden biri seçilecek. (directory seçildi)
 
-    (*) Program yardımı hazırlanacak.
 
     (->) Program test edilecek.
+
+    (*) komut penceresi renklendirilecek
+
+    (*) Program yardımı hazırlanacak.
 
     (*) Pisi paketinde çeviri dosyaları dizini verilecek.
 

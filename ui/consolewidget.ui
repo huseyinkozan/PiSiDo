@@ -44,7 +44,10 @@ color : white;}</string>
       <enum>Qt::WheelFocus</enum>
      </property>
      <property name="toolTip">
-      <string>Use only when required</string>
+      <string>Did not design for a real console. Use only when required !</string>
+     </property>
+     <property name="statusTip">
+      <string>Did not design for a real console. Use only when required !</string>
      </property>
      <property name="placeholderText">
       <string>Write here your command to execute</string>

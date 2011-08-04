@@ -28,7 +28,14 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="le_update_version"/>
+       <widget class="QLineEdit" name="le_update_version">
+        <property name="toolTip">
+         <string>Version of the software</string>
+        </property>
+        <property name="statusTip">
+         <string>Version of the software</string>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="lbl_update_comment">
@@ -38,7 +45,14 @@
        </widget>
       </item>
       <item row="2" column="1" colspan="2">
-       <widget class="QLineEdit" name="le_update_comment"/>
+       <widget class="QLineEdit" name="le_update_comment">
+        <property name="toolTip">
+         <string>A comment for the update</string>
+        </property>
+        <property name="statusTip">
+         <string>A comment for the update</string>
+        </property>
+       </widget>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="lbl_packager_name">
@@ -49,6 +63,12 @@
       </item>
       <item row="3" column="1" colspan="2">
        <widget class="QLineEdit" name="le_packager_name">
+        <property name="toolTip">
+         <string>You can set default name from application settings</string>
+        </property>
+        <property name="statusTip">
+         <string>You can set default name from application settings</string>
+        </property>
         <property name="placeholderText">
          <string>Set from application settings</string>
         </property>
@@ -89,7 +109,14 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QDateEdit" name="de_date"/>
+       <widget class="QDateEdit" name="de_date">
+        <property name="toolTip">
+         <string>The date of the update</string>
+        </property>
+        <property name="statusTip">
+         <string>The date of the update</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

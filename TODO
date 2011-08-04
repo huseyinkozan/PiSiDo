@@ -54,12 +54,16 @@ First:
     (X) convert QString("") to QObject::tr("") in the pisi classes.
     (X) add throw to functions that throws exception.
 
+    (X) check gui tooltips.
 
-    (->) check gui tooltips. (mainwindow.ui)
+    (X) choose one of directory, folder words. (directory choosed)
 
-    (*) Prepare program help.
 
     (->) Test program.
+
+    (*) make command window colored
+
+    (*) Prepare program help.
 
     (*) Give translation files path at the pisi package.
 
