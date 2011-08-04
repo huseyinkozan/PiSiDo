@@ -741,12 +741,15 @@ Categories=Application;</string>
     <number>8</number>
    </attribute>
    <widget class="QWidget" name="dw_build_contents">
-    <layout class="QHBoxLayout" name="horizontalLayout_9">
-     <item>
-      <widget class="ConsoleWidget" name="w_console" native="true"/>
-     </item>
+    <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0">
      <item>
       <widget class="QGroupBox" name="gb_custom_build_steps">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="title">
         <string>Build Commands</string>
        </property>
@@ -1543,14 +1546,6 @@ And than you can edit their properties in here</string>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>ConsoleWidget</class>
-   <extends>QWidget</extends>
-   <header>consolewidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>scrollArea</tabstop>
   <tabstop>le_package_name</tabstop>

@@ -66,6 +66,7 @@
     (*) Program yardımı hazırlanacak.
 
     (*) Pisi paketinde çeviri dosyaları dizini verilecek.
+        (*) qtermwidget bağımlılığı ekle
 
 
 Sonra yapılacaklar:

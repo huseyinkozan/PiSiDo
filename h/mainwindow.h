@@ -19,6 +19,7 @@ class HelpDialog;
 class QsciScintilla;
 class QsciLexerPython;
 class QFileSystemWatcher;
+class QTermWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -126,6 +127,7 @@ private:
     QMap<int, QString> actions_templates;
     QsciScintilla * actions_editor;
     QsciLexerPython * python_lexer;
+    QTermWidget * w_terminal;
     QDomDocument dom_pspec;
     Pisi pisi;
 

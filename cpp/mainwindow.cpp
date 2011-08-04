@@ -21,6 +21,8 @@
 #include <Qsci/qsciscintilla.h>
 #include <Qsci/qscilexerpython.h>
 
+#include <qtermwidget/qtermwidget.h>
+
 #include "aboutdialog.h"
 #include "addinstallfilelabeldialog.h"
 #include "addupdatedialog.h"
@@ -170,11 +172,23 @@ MainWindow::MainWindow(QWidget *parent) :
             QTimer::singleShot(0, qApp, SLOT(quit()));
     }
 
-    // remove color support
-    ui->w_console->execute("unalias ls ll dir");
-    ui->w_console->execute("alias ll=\"ls -l\"");
-    // now, there is a workspace
-    ui->w_console->execute(QString("cd %1").arg(workspace_dir.absolutePath()));
+    w_terminal = new QTermWidget(1, ui->dw_build);
+    QFont terminal_font = QApplication::font();
+    terminal_font.setFamily("Monospace");
+    terminal_font.setPointSize(10);
+    w_terminal->setTerminalFont(terminal_font);
+    w_terminal->setColorScheme(COLOR_SCHEME_GREEN_ON_BLACK);
+    w_terminal->setScrollBarPosition(QTermWidget::ScrollBarRight);
+    QHBoxLayout * build_layout = qobject_cast<QHBoxLayout *>(ui->dw_build_contents->layout());
+    if(build_layout){
+        build_layout->insertWidget(0, w_terminal);
+        w_terminal->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    }
+    else{
+        qDebug() << "Problem with inserting terminal widget !";
+    }
+    w_terminal->setWorkingDirectory(workspace_dir.absolutePath());
+    w_terminal->changeDir(workspace_dir.absolutePath());
 }
 
 MainWindow::~MainWindow()
@@ -239,7 +253,8 @@ void MainWindow::on_action_Change_Workspace_triggered()
     if(wd.exec() == QDialog::Accepted){
         workspace_dir = QDir(wd.get_workspace());
         not_ask_workspace = wd.get_not_ask_workspace();
-        ui->w_console->execute(QString("cd %1").arg(workspace_dir.absolutePath()));
+        w_terminal->setWorkingDirectory(workspace_dir.absolutePath());
+        w_terminal->changeDir(workspace_dir.absolutePath());
         on_le_package_name_textChanged(ui->le_package_name->text());
     }
 }
@@ -353,6 +368,8 @@ void MainWindow::apply_default_settings()
     QString pisi_spec = settings.value("pisi_spec", QString("http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng")).toString();
     QString pisi_packaging_dir = settings.value("pisi_packaging_dir", QString("/var/pisi/")).toString();
     int console_max_line = settings.value("console_max_line", 100).toInt();
+
+    // todo : revise console max line after qtermwidget !!!
 
     settings.setValue("action_api_page", action_api_page);
     settings.setValue("pisi_spec", pisi_spec);
@@ -1363,5 +1380,5 @@ void MainWindow::call_pisi_build_command(const QString &build_step)
             .arg(build_step)
             .arg(workspace_dir.absolutePath())
             ;
-    ui->w_console->execute(command);
+    w_terminal->sendText(command);
 }

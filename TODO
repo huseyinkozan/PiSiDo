@@ -66,6 +66,7 @@ First:
     (*) Prepare program help.
 
     (*) Give translation files path at the pisi package.
+        (*) add qtermwidget dependency
 
 Later:
 ------

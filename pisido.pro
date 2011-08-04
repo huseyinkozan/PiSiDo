@@ -12,6 +12,7 @@ TEMPLATE = app
 VERSION = 2.0.0
 DEFINES += PISIDO_VERSION=\\\"$$VERSION\\\"
 LIBS += -lqscintilla2
+LIBS += -lqtermwidget
 INCLUDEPATH += ./h
 
 # program will scan this dir for *.qm translation files.
@@ -34,7 +35,6 @@ SOURCES += cpp/main.cpp\
     cpp/addupdatedialog.cpp \
     cpp/languagedialog.cpp \
     cpp/workspacedialog.cpp \
-    cpp/consolewidget.cpp \
     cpp/aditionalfiledialog.cpp \
     cpp/addinstallfilelabeldialog.cpp \
     cpp/archiveselectiondialog.cpp \
@@ -53,7 +53,6 @@ HEADERS  += h/mainwindow.h \
     h/addupdatedialog.h \
     h/languagedialog.h \
     h/workspacedialog.h \
-    h/consolewidget.h \
     h/aditionalfiledialog.h \
     h/addinstallfilelabeldialog.h \
     h/archiveselectiondialog.h \
