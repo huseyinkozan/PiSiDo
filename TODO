@@ -63,10 +63,18 @@ First:
 
     (->) Test program.
 
+    (*) fields will not remember anymore which remembered after program exit.
+
+    (*) will make code cleanup and tidying.
+
     (*) Prepare program help.
 
     (*) Give translation files path at the pisi package.
         (*) add qtermwidget dependency
+
+    (*) Will make an alpha version.
+
+
 
 Later:
 ------

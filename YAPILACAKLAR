@@ -63,10 +63,17 @@
 
     (->) Program test edilecek.
 
+    (*) program kapatılmasında hatırlanan alanlar hatırlanmayacak.
+
+    (*) kod temizliği ve düzenleme yapılacak.
+
     (*) Program yardımı hazırlanacak.
 
     (*) Pisi paketinde çeviri dosyaları dizini verilecek.
         (*) qtermwidget bağımlılığı ekle
+
+    (*) Alfa sürümü hazırlanacak.
+
 
 
 Sonra yapılacaklar:
