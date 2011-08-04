@@ -58,10 +58,10 @@ First:
 
     (X) choose one of directory, folder words. (directory choosed)
 
+    (X) Switch from ConsoleWidget to QTermWidget.
+
 
     (->) Test program.
-
-    (*) make command window colored
 
     (*) Prepare program help.
 

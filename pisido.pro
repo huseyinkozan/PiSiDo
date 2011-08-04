@@ -65,7 +65,6 @@ FORMS    += ui/mainwindow.ui \
     ui/addupdatedialog.ui \
     ui/languagedialog.ui \
     ui/workspacedialog.ui \
-    ui/consolewidget.ui \
     ui/aditionalfiledialog.ui \
     ui/addinstallfilelabeldialog.ui \
     ui/archiveselectiondialog.ui \

@@ -21,7 +21,6 @@ void ConfigurationDialog::read_settings()
     QSettings settings;
 
     settings.beginGroup( "configuration" );
-    ui->sb_console_max_line->setValue(settings.value("console_max_line").toInt());
     ui->le_pisi_packaging_dir->setText(settings.value("pisi_packaging_dir").toString());
     ui->le_action_api_page->setText(settings.value("action_api_page").toString());
     ui->le_pisi_spec->setText(settings.value("pisi_spec").toString());
@@ -38,7 +37,6 @@ void ConfigurationDialog::write_settings()
     QSettings settings;
 
     settings.beginGroup( "configuration" );
-    settings.setValue("console_max_line", ui->sb_console_max_line->value());
     settings.setValue("pisi_packaging_dir", ui->le_pisi_packaging_dir->text());
     settings.setValue("action_api_page", ui->le_action_api_page->text());
     settings.setValue("pisi_spec", ui->le_pisi_spec->text());

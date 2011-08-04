@@ -367,15 +367,10 @@ void MainWindow::apply_default_settings()
     QString action_api_page = settings.value("action_api_page", QString("http://tr.pardus-wiki.org/Pardus:ActionsAPI")).toString();
     QString pisi_spec = settings.value("pisi_spec", QString("http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng")).toString();
     QString pisi_packaging_dir = settings.value("pisi_packaging_dir", QString("/var/pisi/")).toString();
-    int console_max_line = settings.value("console_max_line", 100).toInt();
-
-    // todo : revise console max line after qtermwidget !!!
 
     settings.setValue("action_api_page", action_api_page);
     settings.setValue("pisi_spec", pisi_spec);
     settings.setValue("pisi_packaging_dir", pisi_packaging_dir);
-
-    settings.setValue("console_max_line", console_max_line);
     settings.endGroup();
 }
 
@@ -1375,7 +1370,7 @@ void MainWindow::call_pisi_build_command(const QString &build_step)
         QMessageBox::critical(this, tr("Error"), tr("There is no PSPEC file : %1 ").arg(pspec_file));
         return;
     }
-    QString command = QString("pkexec --user root pisi build %1 %2 --output-dir %3")
+    QString command = QString("pkexec --user root pisi build %1 %2 --output-dir %3 \n")
             .arg(pspec_file)
             .arg(build_step)
             .arg(workspace_dir.absolutePath())

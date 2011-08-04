@@ -58,10 +58,10 @@
 
     (X) directory, folder kelimelerinden biri seçilecek. (directory seçildi)
 
+    (X) ConsoleWidget dan QTermWidget a geçilecek.
+
 
     (->) Program test edilecek.
-
-    (*) komut penceresi renklendirilecek
 
     (*) Program yardımı hazırlanacak.
 
