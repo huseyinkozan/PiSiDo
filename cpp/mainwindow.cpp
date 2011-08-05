@@ -149,6 +149,7 @@ MainWindow::MainWindow(QWidget *parent) :
     actions_templates_defaults[4] = get_file_contents(":/files/actions_template_qt4.py");
     actions_templates_defaults[5] = get_file_contents(":/files/actions_template_scons.py");
     actions_templates_defaults[6] = "";
+    actions_editor->setText(actions_templates_defaults[ui->combo_actions_template->currentIndex()]);
 
     desktop_file_default = ui->pte_desktop->toPlainText();
 
@@ -382,31 +383,6 @@ void MainWindow::write_settings()
     settings.setValue("workspace", workspace_dir.absolutePath());
     settings.setValue("not_ask_workspace", not_ask_workspace);
     settings.endGroup();
-
-    settings.beginGroup("central_widget_contents");
-    settings.setValue("package_name", package_name);
-    settings.setValue("homepage", homepage);
-    settings.setValue("summary", summary);
-    settings.setValue("description", description);
-    settings.setValue("license", license);
-    settings.setValue("is_a", is_a);
-    settings.setValue("part_of", part_of);
-    settings.setValue("build_dependency", build_dependency);
-    settings.setValue("runtime_dependency", runtime_dependency);
-    settings.endGroup();
-
-    settings.beginGroup("compilation");
-    settings.setValue("actions_template_index", ui->combo_actions_template->currentIndex());
-    settings.setValue("create_desktop", ui->gb_create_menu->isChecked());
-    settings.setValue("desktop_file", ui->pte_desktop->toPlainText());
-    settings.setValue("actions_template_auto", actions_templates[0]);
-    settings.setValue("actions_template_cmake", actions_templates[1]);
-    settings.setValue("actions_template_kde4", actions_templates[2]);
-    settings.setValue("actions_template_python", actions_templates[3]);
-    settings.setValue("actions_template_qt4", actions_templates[4]);
-    settings.setValue("actions_template_scons", actions_templates[5]);
-    settings.setValue("actions_template_imported", actions_templates[6]);
-    settings.endGroup();
 }
 
 void MainWindow::read_settings()
@@ -417,43 +393,6 @@ void MainWindow::read_settings()
     workspace_dir = settings.value("workspace").toString();
     not_ask_workspace = settings.value("not_ask_workspace", false).toBool();
     settings.endGroup();
-
-    settings.beginGroup("central_widget_contents");
-    QString package_name = settings.value("package_name").toString();
-    QString homepage = settings.value("homepage").toString();
-    QString summary = settings.value("summary").toString();
-    QString description = settings.value("description").toString();
-    QString license = settings.value("license", "").toString();
-    QString is_a = settings.value("is_a", "").toString();
-    QString part_of = settings.value("part_of", "").toString();
-    QString build_dependency = settings.value("build_dependency").toString();
-    QString runtime_dependency = settings.value("runtime_dependency").toString();
-    settings.endGroup();
-
-    settings.beginGroup("compilation");
-    ui->gb_create_menu->setChecked(settings.value("create_desktop", false).toBool());
-    ui->pte_desktop->setPlainText(settings.value("desktop_file", desktop_file_default).toString());
-    int last_index = settings.value("actions_template_index",0).toInt();
-    ui->combo_actions_template->setCurrentIndex(last_index);
-    actions_templates[0] = settings.value("actions_template_auto", actions_templates_defaults[0]).toString();
-    actions_templates[1] = settings.value("actions_template_cmake", actions_templates_defaults[1]).toString();
-    actions_templates[2] = settings.value("actions_template_kde4", actions_templates_defaults[2]).toString();
-    actions_templates[3] = settings.value("actions_template_python", actions_templates_defaults[3]).toString();
-    actions_templates[4] = settings.value("actions_template_qt4", actions_templates_defaults[4]).toString();
-    actions_templates[5] = settings.value("actions_template_scons", actions_templates_defaults[5]).toString();
-    actions_templates[6] = settings.value("actions_template_imported", actions_templates_defaults[6]).toString();
-    actions_editor->setText(actions_templates[last_index]);
-    settings.endGroup();
-
-    ui->le_homepage->setText(homepage);
-    ui->le_package_name->setText(package_name);
-    ui->le_summary->setText(summary);
-    ui->pte_description->setPlainText(description);
-    ui->combo_license->setCurrentIndex(ui->combo_license->findText(license));
-    ui->combo_is_a->setCurrentIndex(ui->combo_is_a->findText(is_a));
-    ui->combo_part_of->setCurrentIndex(ui->combo_part_of->findText(part_of));
-    ui->le_build_dependency->setText(build_dependency);
-    ui->le_runtime_dependency->setText(runtime_dependency);
 }
 
 void MainWindow::on_action_Reset_Fields_triggered()
@@ -480,7 +419,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
 
     actions_templates.clear();
     actions_templates = actions_templates_defaults;
-    actions_editor->setText(actions_templates[ui->combo_actions_template->currentIndex()]);
+    actions_editor->setText(actions_templates_defaults[ui->combo_actions_template->currentIndex()]);
 
     on_tb_reset_menu_clicked();
     ui->gb_create_menu->setChecked(false);

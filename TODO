@@ -87,6 +87,7 @@ Later:
 
     (*) Source::Patch properties will reflect to gui. For now, only level is working.
 
+    (*) Make a template for newly added Java support.
 
 
 

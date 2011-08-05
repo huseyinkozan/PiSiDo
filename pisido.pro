@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui xml network
-CONFIG   += exceptions precompile_header warn_on
+CONFIG   += exceptions warn_on precompile_header
 
 TARGET = pisido
 TEMPLATE = app
