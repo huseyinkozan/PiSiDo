@@ -5,9 +5,11 @@
 #-------------------------------------------------
 
 QT       += core gui xml network
+CONFIG   += precompile_header
 
 TARGET = pisido
 TEMPLATE = app
+LANGUAGE = C++
 
 VERSION = 2.0.0
 DEFINES += PISIDO_VERSION=\\\"$$VERSION\\\"
@@ -21,6 +23,9 @@ INCLUDEPATH += ./h
 # for example : pisido_tr_TR.qm , pisido_fr_FR.qm , ...
 DEFINES += PISIDO_LANG_DIR=\\\"/home/huseyinkozan/calismalar/pisido/resource/translation/\\\"
 #
+
+# Use Precompiled headers (PCHs)
+PRECOMPILED_HEADER = h/pchs.h
 
 SOURCES += cpp/main.cpp\
     cpp/application.cpp \
@@ -41,7 +46,8 @@ SOURCES += cpp/main.cpp\
     cpp/archivewidget.cpp \
     cpp/aboutdialog.cpp
 
-HEADERS  += h/mainwindow.h \
+HEADERS  += h/pchs.h \
+    h/mainwindow.h \
     h/application.h \
     h/configurationdialog.h \
     h/helpdialog.h \
