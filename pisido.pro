@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui xml network
-CONFIG   += precompile_header
+CONFIG   += exceptions precompile_header warn_on
 
 TARGET = pisido
 TEMPLATE = app
@@ -26,6 +26,11 @@ DEFINES += PISIDO_LANG_DIR=\\\"/home/huseyinkozan/calismalar/pisido/resource/tra
 
 # Use Precompiled headers (PCHs)
 PRECOMPILED_HEADER = h/pchs.h
+
+MOC_DIR = generated/moc
+OBJECTS_DIR = generated/objects
+RCC_DIR = generated/resources
+UI_DIR = generated/ui
 
 SOURCES += cpp/main.cpp\
     cpp/application.cpp \
