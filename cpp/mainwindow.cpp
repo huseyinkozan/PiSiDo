@@ -1204,7 +1204,7 @@ void MainWindow::pisi_from_gui() throw (QString)
 
 bool MainWindow::create_build_files()
 {
-//    fill pisi
+    // fill pisi
     dom_pspec.clear();
     try{
         pisi_from_gui();
@@ -1239,7 +1239,7 @@ bool MainWindow::create_build_files()
     save_text_file( pspec_file_name, dom_pspec.toString(4) );
 
 
-//    create actions
+    // create actions
     QString actions_file_name = package_dir.absoluteFilePath("actions.py");
     QString action_py = actions_editor->text();
     if(action_py.isEmpty())
@@ -1248,28 +1248,6 @@ bool MainWindow::create_build_files()
     action_py.replace(QString("__version__"), pisi.get_last_update().get_version());
     action_py.replace(QString("__summary__"), summary);
     save_text_file( actions_file_name, action_py );
-
-
-//    create desktop
-    QString desktop_file_name = package_dir.absoluteFilePath(package_name + ".desktop");
-    QString desktop_str = ui->pte_desktop->toPlainText();
-    desktop_str.replace(QString("__package_name__"), package_name);
-    desktop_str.replace(QString("__version__"), pisi.get_last_update().get_version());
-    desktop_str.replace(QString("__summary__"), summary);
-    save_text_file( desktop_file_name, desktop_str );
-
-    // write image file
-    QString image_name = package_dir.absoluteFilePath(package_name + ".png");
-    if( ! QFile::exists(image_name)){
-        // do not remove file; user may changed the file !
-        QFile image_file(image_name);
-        if( ! image_file.open(QIODevice::WriteOnly)){
-            QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(package_name + ".png"));
-            return false;
-        }
-        QImage image(":/images/operations.png");
-        image.save(&image_file);
-    }
 
     return true;
 }
@@ -1315,4 +1293,36 @@ void MainWindow::call_pisi_build_command(const QString &build_step)
             .arg(workspace_dir.absolutePath())
             ;
     w_terminal->sendText(command);
+}
+
+void MainWindow::on_gb_create_menu_toggled(bool checked)
+{
+    if(checked){
+        // create desktop
+        QString desktop_file_name = package_files_dir.absoluteFilePath(package_name + ".desktop");
+        QString desktop_str = ui->pte_desktop->toPlainText();
+        desktop_str.replace(QString("__package_name__"), package_name);
+        desktop_str.replace(QString("__version__"), pisi.get_last_update().get_version());
+        desktop_str.replace(QString("__summary__"), summary);
+        save_text_file( desktop_file_name, desktop_str );
+
+        // write image file
+        QString image_name = package_files_dir.absoluteFilePath(package_name + ".png");
+        if( ! QFile::exists(image_name)){
+            // do not remove file; user may changed the file !
+            QFile image_file(image_name);
+            if( ! image_file.open(QIODevice::WriteOnly)){
+                QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(package_name + ".png"));
+                return;
+            }
+            QImage image(":/images/operations.png");
+            image.save(&image_file);
+        }
+    }
+    else{
+        if(QFile::exists(package_files_dir.absoluteFilePath(package_name + ".desktop")))
+            QFile::remove(package_files_dir.absoluteFilePath(package_name + ".desktop"));
+        if(QFile::exists(package_files_dir.absoluteFilePath(package_name + ".png")))
+            QFile::remove(package_files_dir.absoluteFilePath(package_name + ".png"));
+    }
 }

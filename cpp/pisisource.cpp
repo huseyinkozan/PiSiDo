@@ -90,12 +90,12 @@ void PisiSource::save_to_dom(QDomElement & root) throw(QString)
     if(root.isNull())
         throw QObject::tr("Dom Element is null while saving from PisiSource to dom !");
 
-    set_element_value(root, "Homepage", home_page);
+    set_element_value(root, "Homepage", home_page, "Name");
 
     QDomElement elm = root.firstChildElement("Packager");
     if( ! elm.isNull())
         root.removeChild(elm);
-    elm = append_element(root, "Packager");
+    elm = insert_element_after(root, "Packager", "Homepage");
 
     QList<QString> packager_names = packager.keys();
     if(packager_names.count() > 1){

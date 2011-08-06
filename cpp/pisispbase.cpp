@@ -46,11 +46,11 @@ void PisiSPBase::save_to_dom(QDomElement & root) throw(QString)
         throw QObject::tr("Dom Element is null while saving from PisiSPBase to dom !");
 
     set_element_value(root, "Name", name);
+    set_element_value(root, "IsA", is_a);
+    set_element_value(root, "PartOf", part_of);
     set_element_value(root, "License", license);
     set_element_value(root, "Summary", summary);
     set_element_value(root, "Description", description);
-    set_element_value(root, "PartOf", part_of);
-    set_element_value(root, "IsA", is_a);
 
     if( ! build_dependencies.isEmpty())
     {
@@ -195,17 +195,24 @@ QString PisiSPBase::get_element_value(QDomElement root, QString tag) throw(QStri
     }
 }
 
-QDomElement PisiSPBase::set_element_value(QDomElement root, QString tag, QString value) throw(QString)
+QDomElement PisiSPBase::set_element_value(QDomElement root, QString tag, QString value, QString insert_after) throw(QString)
 {
-    if( ! is_mandatory(root, tag))
-        return QDomElement();
-
     if(value.isEmpty())
-        throw QObject::tr("%1 tag is mandatory but empty !").arg(tag);
+        if(is_mandatory(root, tag))
+            throw QObject::tr("%1 tag is mandatory but empty !").arg(tag);
+        else
+            return QDomElement();
 
     QDomElement elm = root.firstChildElement(tag);
-    if(elm.isNull())
-        elm = append_element(root, tag);
+    if( ! insert_after.isEmpty()){
+        if( ! elm.isNull())
+            root.removeChild(elm);
+        elm = insert_element_after(root, tag, insert_after);
+    }
+    else{
+        if(elm.isNull())
+            elm = append_element(root, tag);
+    }
     append_text_element(elm, value);
     return elm;
 }
@@ -214,6 +221,28 @@ QDomElement PisiSPBase::append_element(QDomElement & root, QString tag) throw(QS
 {
     QDomElement elm = root.ownerDocument().createElement(tag);
     if(elm.isNull() || root.appendChild(elm).isNull())
+        throw QObject::tr("Error while creating dom element %1 in %2").arg(tag).arg(root.tagName());
+    return elm;
+}
+
+QDomElement PisiSPBase::insert_element_after(QDomElement & root, QString tag, QString after_this_tag) throw(QString)
+{
+    QDomElement pivot_elm = root.firstChildElement(after_this_tag);
+    if(pivot_elm.isNull())
+        throw QObject::tr("Trying to insert %1 after %2 but no %2 tag !").arg(tag).arg(after_this_tag);
+    QDomElement elm = root.ownerDocument().createElement(tag);
+    if(elm.isNull() || root.insertAfter(elm,pivot_elm).isNull())
+        throw QObject::tr("Error while creating dom element %1 in %2").arg(tag).arg(root.tagName());
+    return elm;
+}
+
+QDomElement PisiSPBase::insert_element_before(QDomElement & root, QString tag, QString before_this_tag) throw(QString)
+{
+    QDomElement pivot_elm = root.firstChildElement(before_this_tag);
+    if(pivot_elm.isNull())
+        throw QObject::tr("Trying to insert %1 before %2 but no %2 tag !").arg(tag).arg(before_this_tag);
+    QDomElement elm = root.ownerDocument().createElement(tag);
+    if(elm.isNull() || root.insertBefore(elm,pivot_elm).isNull())
         throw QObject::tr("Error while creating dom element %1 in %2").arg(tag).arg(root.tagName());
     return elm;
 }

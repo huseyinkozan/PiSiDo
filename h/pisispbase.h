@@ -59,10 +59,12 @@ public:
 
 protected:
     QDomElement append_element(QDomElement & root, QString tag) throw(QString);
+    QDomElement insert_element_after(QDomElement & root, QString tag, QString after_this_tag) throw(QString);
+    QDomElement insert_element_before(QDomElement & root, QString tag, QString before_this_tag) throw(QString);
     QDomText append_text_element(QDomElement root, QString value) throw(QString);
 
     QString get_element_value(QDomElement root, QString tag) throw(QString);
-    QDomElement set_element_value(QDomElement root, QString tag, QString value) throw(QString);
+    QDomElement set_element_value(QDomElement root, QString tag, QString value, QString insert_after = QString()) throw(QString);
 
     virtual bool is_mandatory(QDomElement root, QString tag) = 0;
 

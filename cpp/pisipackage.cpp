@@ -37,19 +37,29 @@ void PisiPackage::save_to_dom(QDomElement & root) throw(QString)
     if(root.isNull())
         throw QObject::tr("Dom Element is null while saving from PisiPackage to dom !");
 
-    QDomElement elm = root.firstChildElement("RuntimeDependencies");
-    if( ! elm.isNull())
-        root.removeChild(elm);
-    elm = append_element(root, "RuntimeDependencies");
-    set_dependency(elm, runtime_dependencies);
+    // TODO : revise tag ordering if needs in here
 
-    if(files.isEmpty())
+    if( ! runtime_dependencies.isEmpty()){
+        QDomElement elm = root.firstChildElement("RuntimeDependencies");
+        if( ! elm.isNull())
+            root.removeChild(elm);
+        elm = append_element(root, "RuntimeDependencies");
+        set_dependency(elm, runtime_dependencies);
+    }
+
+    if(files.isEmpty()){
         throw QObject::tr("%1 tag is mandatory but empty !").arg("Files");
-    elm = root.firstChildElement("Files");
-    if( ! elm.isNull())
-        root.removeChild(elm);
-    elm = append_element(root, "Files");
-    set_files(elm, files);
+    }
+    else{
+        QDomElement elm = root.firstChildElement("Files");
+        if( ! elm.isNull())
+            root.removeChild(elm);
+        if(root.firstChildElement("AditionalFiles").isNull())
+            elm = append_element(root, "Files");
+        else
+            elm = insert_element_before(root, "Files", "AditionalFiles");
+        set_files(elm, files);
+    }
 }
 
 QStringList PisiPackage::get_runtime_dependencies_as_stringlist()

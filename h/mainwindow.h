@@ -115,6 +115,8 @@ private slots:
 
     void on_tb_build_all_clicked();
 
+    void on_gb_create_menu_toggled(bool checked);
+
 protected:
     virtual void closeEvent(QCloseEvent * event);
 
