@@ -197,11 +197,12 @@ QString PisiSPBase::get_element_value(QDomElement root, QString tag) throw(QStri
 
 QDomElement PisiSPBase::set_element_value(QDomElement root, QString tag, QString value, QString insert_after) throw(QString)
 {
-    if(value.isEmpty())
+    if(value.isEmpty()){
         if(is_mandatory(root, tag))
             throw QObject::tr("%1 tag is mandatory but empty !").arg(tag);
         else
             return QDomElement();
+    }
 
     QDomElement elm = root.firstChildElement(tag);
     if( ! insert_after.isEmpty()){

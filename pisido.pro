@@ -32,7 +32,8 @@ OBJECTS_DIR = generated/objects
 RCC_DIR = generated/resources
 UI_DIR = generated/ui
 
-SOURCES += cpp/main.cpp\
+SOURCES += \
+    cpp/main.cpp\
     cpp/application.cpp \
     cpp/mainwindow.cpp \
     cpp/configurationdialog.cpp \
@@ -51,7 +52,8 @@ SOURCES += cpp/main.cpp\
     cpp/archivewidget.cpp \
     cpp/aboutdialog.cpp
 
-HEADERS  += h/pchs.h \
+HEADERS += \
+    h/pchs.h \
     h/mainwindow.h \
     h/application.h \
     h/configurationdialog.h \
@@ -70,7 +72,8 @@ HEADERS  += h/pchs.h \
     h/archivewidget.h \
     h/aboutdialog.h
 
-FORMS    += ui/mainwindow.ui \
+FORMS += \
+    ui/mainwindow.ui \
     ui/configurationdialog.ui \
     ui/helpdialog.ui \
     ui/addupdatedialog.ui \

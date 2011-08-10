@@ -149,7 +149,8 @@ MainWindow::MainWindow(QWidget *parent) :
     actions_templates_defaults[4] = get_file_contents(":/files/actions_template_qt4.py");
     actions_templates_defaults[5] = get_file_contents(":/files/actions_template_scons.py");
     actions_templates_defaults[6] = "";
-    actions_editor->setText(actions_templates_defaults[ui->combo_actions_template->currentIndex()]);
+    actions_templates = actions_templates_defaults;
+    actions_editor->setText(actions_templates[ui->combo_actions_template->currentIndex()]);
 
     desktop_file_default = ui->pte_desktop->toPlainText();
 
@@ -199,6 +200,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
  {
+    QString exit_cmd = "exit\n";
+    w_terminal->sendText(exit_cmd);
+
      write_settings();
      event->accept();
  }
@@ -419,7 +423,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
 
     actions_templates.clear();
     actions_templates = actions_templates_defaults;
-    actions_editor->setText(actions_templates_defaults[ui->combo_actions_template->currentIndex()]);
+    actions_editor->setText(actions_templates[ui->combo_actions_template->currentIndex()]);
 
     on_tb_reset_menu_clicked();
     ui->gb_create_menu->setChecked(false);
@@ -946,7 +950,7 @@ void MainWindow::on_tb_add_archive_clicked()
 {
     static QString previous_directory;
 
-    ArchiveSelectionDialog::ArchiveType type;
+    ArchiveSelectionDialog::ArchiveType type = ArchiveSelectionDialog::COMPRESSED;
     if(ui->combo_archive_type->currentIndex() == 0)
         type = ArchiveSelectionDialog::COMPRESSED;
     else if(ui->combo_archive_type->currentIndex() == 1)
