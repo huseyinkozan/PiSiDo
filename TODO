@@ -62,6 +62,7 @@ First:
 
 
     (->) Test program.
+        (*) install directory filewatcher will add.
 
     (*) fields will not remember anymore which remembered after program exit.
 

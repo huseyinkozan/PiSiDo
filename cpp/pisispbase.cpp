@@ -346,7 +346,7 @@ PisiSPBase::VRTFAttr PisiSPBase::get_dependency_attribute(QString attr_name, boo
             return VERSIONTO;
         else if(attr_name.startsWith(">"))
             return VERSIONFROM;
-        else throw QObject::tr("No VersionReleaseToFrom attribute !");
+        else throw QObject::tr("No VersionReleaseToFrom attribute : %1").arg(attr_name);
     }
 }
 
@@ -504,11 +504,9 @@ QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency_li
 {
     QMap<QString, QMap<VRTFAttr,QString> > dependencies;
     QStringList dependency_list = dependency_string.split(',', QString::SkipEmptyParts);
-    if(dependency_list.count() < 1)
-        return dependencies;
-    for(int i=0; i<dependencies.count(); ++i)
-    {
-        QString dep = dependency_list.at(i).trimmed();
+    foreach (QString dep, dependency_list) {
+        dep = dep.trimmed();
+//        qDebug() << "dep:"<< dep;
         if( ! dep.isEmpty())
         {
             QString dep_name;
@@ -519,10 +517,13 @@ QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency_li
             {
                 dep_name = dep.left(start_index);
                 if(end_index > 0)
-                    dep_attr = dep.mid(start_index);
+                    dep_attr = dep.mid(start_index+1);
+                dep_attr = dep_attr.left(dep_attr.size()-1);
+//                qDebug() << "dep_attr:" << dep_attr;
             }
             else
                 dep_name = dep;
+//            qDebug() << "dep:" << dep_name;
             dependencies[dep_name] = get_dependency_attr_list(dep_attr);
         }
     }
@@ -537,17 +538,14 @@ QMap<PisiSPBase::VRTFAttr,QString> PisiSPBase::get_dependency_attr_list(QString 
 {
     QMap<VRTFAttr,QString> attributes;
     QStringList attr_list = attr_string.split(';', QString::SkipEmptyParts);
-    if(attr_list.count() < 1)
-        return attributes;
-    for(int i=0; i<attr_list.count(); ++i)
-    {
-        QString attr = attr_list.at(i).trimmed();
-        if( ! attr.isEmpty())
-        {
+    foreach (QString attr, attr_list) {
+        attr = attr.trimmed();
+        if( ! attr.isEmpty()){
             VRTFAttr a = get_dependency_attribute(attr, true);
             QString t = get_dependency_attribute(a, true);
-            int start_index = attr.indexOf(t) + t.length();
-            attributes[a] = t.mid(start_index);
+            int start_index = attr.indexOf(t, Qt::CaseInsensitive) + t.length();
+            QString v = attr.mid(start_index);
+            attributes[a] = v;
         }
     }
     return attributes;

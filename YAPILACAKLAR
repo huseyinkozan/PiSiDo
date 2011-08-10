@@ -62,6 +62,7 @@
 
 
     (->) Program test edilecek.
+        (*) install directory filewatcher eklenecek
 
     (*) program kapatılmasında hatırlanan alanlar hatırlanmayacak.
 

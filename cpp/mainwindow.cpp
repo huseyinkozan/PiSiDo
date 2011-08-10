@@ -1067,7 +1067,6 @@ void MainWindow::pisi_to_gui() throw (QString)
     package_name = source.get_name();
     homepage = source.get_home_page();
     QString license = source.get_license();
-    qDebug() << "license:" << license;
     is_a = source.get_is_a();
     part_of = source.get_part_of();
     summary = source.get_summary();
@@ -1128,13 +1127,12 @@ void MainWindow::pisi_to_gui() throw (QString)
 
 
     QString desktop_file_name = package_files_dir.absoluteFilePath(QString("%1.desktop").arg(package_name));
-    QString desktop_file_contents = get_file_contents(desktop_file_name);
-    if(desktop_file_contents.isEmpty()){
-        ui->gb_create_menu->setChecked(false);
-    }
-    else{
+    if(QFile::exists(desktop_file_name)){
+        QString desktop_file_contents = get_file_contents(desktop_file_name);
         ui->gb_create_menu->setChecked(true);
         ui->pte_desktop->setPlainText(desktop_file_contents);
+    }else{
+        ui->gb_create_menu->setChecked(false);
     }
 
 
@@ -1258,6 +1256,7 @@ bool MainWindow::create_build_files()
 
 void MainWindow::on_tb_build_up_to_clicked()
 {
+    create_build_files();
     QStringList build_steps;
     build_steps.append("--fetch");
     build_steps.append("--unpack");
@@ -1274,6 +1273,7 @@ void MainWindow::on_tb_build_only_clicked()
         create_build_files();
     }
     else if(ui->combo_build_only->currentIndex() == 1){
+        create_build_files();
         call_pisi_build_command("--package");
     }
 }
