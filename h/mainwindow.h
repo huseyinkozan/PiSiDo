@@ -141,7 +141,7 @@ private:
     QDir package_install_dir;
 
     QFileSystemWatcher * package_files_watcher;
-//    QFileSystemWatcher * package_install_watcher;
+    QFileSystemWatcher * package_install_watcher;
     QList<ArchiveWidget *> archive_widgets;
 
     QString package_name;

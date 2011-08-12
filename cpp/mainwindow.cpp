@@ -157,9 +157,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // checks build dir and install dir for file changes
 
     package_files_watcher = new QFileSystemWatcher(this);
-//    package_install_watcher = new QFileSystemWatcher(this);
+    package_install_watcher = new QFileSystemWatcher(this);
     connect(package_files_watcher, SIGNAL(directoryChanged(QString)), this, SLOT(package_files_changed()));
-//    connect(package_install_watcher, SIGNAL(directoryChanged(QString)), this, SLOT(package_install_changed()));
+    connect(package_install_watcher, SIGNAL(directoryChanged(QString)), this, SLOT(package_install_changed()));
 
 
     read_settings();
@@ -536,18 +536,23 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
         QStringList p_f_w_dirs = package_files_watcher->directories();
         if( ! p_f_w_dirs.isEmpty())
             package_files_watcher->removePaths(p_f_w_dirs);
-//        QStringList p_i_w_dirs = package_install_watcher->directories();
-//        if( ! p_i_w_dirs.isEmpty())
-//            package_install_watcher->removePaths(p_i_w_dirs);
+
+        package_install_dir = QDir::root();
+
+        QStringList p_i_w_dirs = package_install_watcher->directories();
+        if( ! p_i_w_dirs.isEmpty())
+            package_install_watcher->removePaths(p_i_w_dirs);
     }
     else
     {
         package_name = text.trimmed();
         package_dir = QDir(workspace_dir.absoluteFilePath(package_name));
-        package_files_dir = QDir(package_dir.absoluteFilePath("files"));
+        package_files_dir = QDir(package_dir.absoluteFilePath("files/"));
 
         if( ! package_files_dir.isRoot() && package_files_dir.exists()){
-            package_files_watcher->addPath(package_files_dir.absolutePath());
+            QStringList p_f_w_dirs = package_files_watcher->directories();
+            if( ! p_f_w_dirs.contains(package_files_dir.absolutePath()))
+                package_files_watcher->addPath(package_files_dir.absolutePath());
         }
         else{
             QStringList p_f_w_dirs = package_files_watcher->directories();
@@ -555,14 +560,19 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
                 package_files_watcher->removePaths(p_f_w_dirs);
         }
 
-//        if( ! package_install_dir.isRoot() && package_install_dir.exists()){
-//            package_install_watcher->addPath(package_install_dir.absolutePath());
-//        }
-//        else{
-//            QStringList p_i_w_dirs = package_install_watcher->directories();
-//            if( ! p_i_w_dirs.isEmpty())
-//                package_install_watcher->removePaths(p_i_w_dirs);
-//        }
+        QString pisi_work_dir = "/var/pisi/";
+        QStringList p_i_w_dirs = package_install_watcher->directories();
+        if( ! p_i_w_dirs.contains(pisi_work_dir))
+            package_install_watcher->addPath(pisi_work_dir);
+
+        QString v = pisi.get_last_update().get_version();
+        int r = pisi.get_last_update().get_release();
+        if( ! v.isEmpty() && r > 0){
+            package_install_dir = QDir(QString("/var/pisi/%1-%2-%3/install/").arg(package_name).arg(v).arg(r));
+        }
+        else{
+            package_install_dir = QDir::root();
+        }
     }
     // to handle text change event
     package_files_changed();
@@ -646,43 +656,41 @@ void MainWindow::package_files_changed()
     if( ! package_dir.isRoot() && package_dir.exists())
     {
         ui->tb_open_package_dir->setEnabled(true);
-
-        if( ! package_files_dir.isRoot() && package_files_dir.exists())
-        {
-            ui->tb_open_aditional_files_dir->setEnabled(true);
-            ui->tb_open_patches_dir->setEnabled(true);
-
-            clear_tableW_patches();
-            temp_patches.clear();
-            clear_tableW_aditional_files();
-            temp_aditional_files.clear();
-
-            package_files_process(package_files_dir.absolutePath());
-
-            QDirIterator it(package_files_dir.absolutePath(), QDir::Dirs|QDir::NoDotAndDotDot|QDir::NoSymLinks|QDir::Readable, QDirIterator::Subdirectories);
-            while(it.hasNext()){
-                QString sub = it.next();
-                if( ! package_files_watcher->directories().contains(sub))
-                    package_files_watcher->addPath(sub);
-
-                package_files_process(sub);
-            }
-
-            patches = temp_patches;
-            temp_patches.clear();
-            fill_tableW_patches();
-
-            aditional_files = temp_aditional_files;
-            temp_aditional_files.clear();
-            fill_tableW_aditional_files();
-        }
     }
-
-    if( package_dir.isRoot() || ! package_dir.exists()){
+    else{
         ui->tb_open_package_dir->setEnabled(false);
     }
 
-    if(package_files_dir.isRoot() || ! package_files_dir.exists()){
+    if( ! package_files_dir.isRoot() && package_files_dir.exists())
+    {
+        ui->tb_open_aditional_files_dir->setEnabled(true);
+        ui->tb_open_patches_dir->setEnabled(true);
+
+        clear_tableW_patches();
+        temp_patches.clear();
+        clear_tableW_aditional_files();
+        temp_aditional_files.clear();
+
+        package_files_process(package_files_dir.absolutePath());
+
+        QDirIterator it(package_files_dir.absolutePath(), QDir::Dirs|QDir::NoDotAndDotDot|QDir::NoSymLinks|QDir::Readable, QDirIterator::Subdirectories);
+        while(it.hasNext()){
+            QString sub = it.next();
+            if( ! package_files_watcher->directories().contains(sub))
+                package_files_watcher->addPath(sub);
+
+            package_files_process(sub);
+        }
+
+        patches = temp_patches;
+        temp_patches.clear();
+        fill_tableW_patches();
+
+        aditional_files = temp_aditional_files;
+        temp_aditional_files.clear();
+        fill_tableW_aditional_files();
+    }
+    else{
         clear_tableW_patches();
         clear_tableW_aditional_files();
         ui->tb_open_aditional_files_dir->setEnabled(false);
@@ -771,15 +779,6 @@ void MainWindow::package_files_process(const QString & dir)
 
 void MainWindow::package_install_changed()
 {
-    package_install_dir = QDir::root();
-
-    if( ! package_name.isEmpty()){
-        package_install_dir= QDir(QString("/var/pisi/%1-%2-%3/install/")
-                                  .arg(package_name)
-                                  .arg(pisi.get_last_update().get_version())
-                                  .arg(pisi.get_last_update().get_release()));
-    }
-
     if( ! package_install_dir.isRoot() && package_install_dir.exists()){
         QFileSystemModel * model = new QFileSystemModel(this);
         model->setReadOnly(true);
@@ -788,6 +787,7 @@ void MainWindow::package_install_changed()
         ui->treeV_files->setRootIndex(model->index(package_install_dir.absolutePath()));
         ui->treeV_files->expandAll();
         QTimer::singleShot(500, ui->treeV_files, SLOT(expandAll()));
+        ui->tb_open_install_dir->setEnabled(true);
     }
     else{
         QAbstractItemModel * old_model = ui->treeV_files->model();
@@ -797,6 +797,7 @@ void MainWindow::package_install_changed()
             ui->treeV_files->setModel(model);
             delete old_model;
         }
+        ui->tb_open_install_dir->setEnabled(false);
     }
 }
 
@@ -1045,6 +1046,8 @@ void MainWindow::on_tb_import_package_clicked()
             QMessageBox::critical(this, tr("Error"), tr("Unknownt exception !"));
             return;
         }
+
+        on_le_package_name_textChanged(ui->le_package_name->text());
     }
 }
 
@@ -1251,6 +1254,8 @@ bool MainWindow::create_build_files()
     action_py.replace(QString("__version__"), pisi.get_last_update().get_version());
     action_py.replace(QString("__summary__"), summary);
     save_text_file( actions_file_name, action_py );
+
+    on_le_package_name_textChanged(ui->le_package_name->text());
 
     return true;
 }

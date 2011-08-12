@@ -131,8 +131,10 @@ void Pisi::load_from_dom(const QDomDocument & dom) throw(QString)
                     throw QObject::tr("From Update parser : %1").arg(e);
                 }
                 int release = upd.get_release();
-                if(release > last_release)
+                if(release > last_release){
                     last_update = upd;
+                    last_release = release;
+                }
                 updates[release] = upd;
             }
         }

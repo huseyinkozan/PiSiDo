@@ -62,10 +62,10 @@
 
     (X) program kapatılmasında hatırlanan alanlar hatırlanmayacak.
 
+    (X) install directory filewatcher eklenecek
+
 
     (->) Program test edilecek.
-
-    (*) install directory filewatcher eklenecek
 
     (*) kod temizliği ve düzenleme yapılacak.
 
@@ -76,6 +76,8 @@
         (*) qtermwidget bağımlılığı ekle
 
     (*) Alfa sürümü hazırlanacak.
+
+    (*) çeviri yardımı için listeye eposta atılacak
 
 
 
