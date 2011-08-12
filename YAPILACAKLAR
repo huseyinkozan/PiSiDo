@@ -60,17 +60,19 @@
 
     (X) ConsoleWidget dan QTermWidget a geçilecek.
 
+    (X) program kapatılmasında hatırlanan alanlar hatırlanmayacak.
+
 
     (->) Program test edilecek.
-        (*) install directory filewatcher eklenecek
 
-    (*) program kapatılmasında hatırlanan alanlar hatırlanmayacak.
+    (*) install directory filewatcher eklenecek
 
     (*) kod temizliği ve düzenleme yapılacak.
 
     (*) Program yardımı hazırlanacak.
 
-    (*) Pisi paketinde çeviri dosyaları dizini verilecek.
+    (*) Pisi inşa paketinde ;
+        (*) çeviri dosyaları dizini verilecek.
         (*) qtermwidget bağımlılığı ekle
 
     (*) Alfa sürümü hazırlanacak.

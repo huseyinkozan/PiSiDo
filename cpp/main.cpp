@@ -54,6 +54,6 @@ void load_translation(const QApplication & a)
         }
     }
     else{
-        qDebug() << QObject::tr("Translator file does not exists : ") << lang_file;
+//        qDebug() << QObject::tr("Translator file does not exists : ") << lang_file;
     }
 }

@@ -60,17 +60,19 @@ First:
 
     (X) Switch from ConsoleWidget to QTermWidget.
 
+    (X) fields will not remember anymore which remembered after program exit.
+
 
     (->) Test program.
-        (*) install directory filewatcher will add.
 
-    (*) fields will not remember anymore which remembered after program exit.
+    (*) install directory filewatcher will add.
 
     (*) will make code cleanup and tidying.
 
     (*) Prepare program help.
 
-    (*) Give translation files path at the pisi package.
+    (*) At the pisi package.
+        (*) give translation files path
         (*) add qtermwidget dependency
 
     (*) Will make an alpha version.

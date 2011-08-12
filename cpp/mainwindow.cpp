@@ -292,10 +292,11 @@ void MainWindow::on_action_Application_Language_triggered()
                             QDir::Name
                             );
     if(file_list.isEmpty()){
-        QMessageBox::critical(this, tr("Error"), tr("There are no translation files !"));
+        QMessageBox::critical(this, tr("Error"), tr("There are no translation files in : %1").arg(lang_dir.absolutePath()));
         return;
     }
     QMap<QString, QString> lang_map;
+    lang_map[""] = QString("");
     foreach (QString file, file_list){
         file.remove(".qm");
         QStringList f = file.split('_');
