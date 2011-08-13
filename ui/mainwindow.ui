@@ -755,6 +755,48 @@ Categories=Application;</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <widget class="QLabel" name="lbl_build_only">
+            <property name="text">
+             <string>Only</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="combo_build_only">
+            <item>
+             <property name="text">
+              <string>Build Files</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Package</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tb_build_only">
+            <property name="toolTip">
+             <string>Build only selected</string>
+            </property>
+            <property name="statusTip">
+             <string>Build only selected</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../resource/pisido.qrc">
+              <normaloff>:/images/build.png</normaloff>:/images/build.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
            <widget class="QLabel" name="lbl_build_up_to">
@@ -804,48 +846,6 @@ Categories=Application;</string>
             </property>
             <property name="statusTip">
              <string>Build up to selected (see pisi help build)</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../resource/pisido.qrc">
-              <normaloff>:/images/build.png</normaloff>:/images/build.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
-          <item>
-           <widget class="QLabel" name="lbl_build_only">
-            <property name="text">
-             <string>Only</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="combo_build_only">
-            <item>
-             <property name="text">
-              <string>Build Files</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Package</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="tb_build_only">
-            <property name="toolTip">
-             <string>Build only selected</string>
-            </property>
-            <property name="statusTip">
-             <string>Build only selected</string>
             </property>
             <property name="text">
              <string/>

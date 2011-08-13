@@ -69,13 +69,13 @@ First:
 
     (->) Test program.
 
-    (*) will make code cleanup and tidying.
-
     (*) Prepare program help.
+        (*) translatable pdf file
         (*) __package_name__, __version__, __summary__
 
     (*) At the pisi package.
-        (*) give translation files path
+        (*) give translation files' path
+        (*) give help files' path
         (*) add qtermwidget dependency
 
     (*) Will make an alpha version.

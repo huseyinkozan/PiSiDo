@@ -113,8 +113,7 @@ MainWindow::MainWindow(QWidget *parent) :
     actions_editor->setTabWidth(4);
     actions_editor->setMarginLineNumbers(1, true);
     actions_editor->setMarginWidth(1, "12345");
-    QFont f = actions_editor->font();
-    f.setFamily("monospace");
+    QFont f("Droid Sans Mono");
     actions_editor->setFont(f);
     ui->dw_actions_contents->layout()->addWidget(actions_editor);
     // add python highlight support

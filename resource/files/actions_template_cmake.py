@@ -3,17 +3,18 @@
 # Licensed under the GNU General Public License, version 3.
 # See the file http://www.gnu.org/copyleft/gpl.txt
 
-# Use this as variables:
-# Package Name : ___package_name___
-# Version : ___version___
-# Summary : ___summary___
+# Use these as variables:
+# Package Name : __package_name__
+# Version : __version__
+# Summary : __summary__
 
 from pisi.actionsapi import cmaketools
-from pisi.actionsapi import pisitools
 from pisi.actionsapi import get
+#from pisi.actionsapi import pisitools
 
-# if archive have project in a sub directory:
-# WorkDir="___package_name___-"+ get.srcVERSION() +"/sub_project_dir/"
+# If the project that you are tying to compile is in a sub directory in the source archive, than you can define working directory.
+# For example; 
+# WorkDir="__package_name__-"+ get.srcVERSION() +"/sub_project_dir/"
 
 def setup():
     cmaketools.configure("-DCMAKE_BUILD_TYPE=release", installPrefix="/usr")
@@ -24,6 +25,8 @@ def build():
 def install():
     cmaketools.rawInstall("DESTDIR=%s" % get.installDIR())
 
+# Take a look at the source folder for these file as documentation.
 #    pisitools.dodoc("AUTHORS", "BUGS", "ChangeLog", "COPYING", "NEWS", "README")
-#    pisitools.dobin("___package_name___")
+# If there is no install rule for a runnable binary, you can install it to binary directory.
+#    pisitools.dobin("__package_name__")
  

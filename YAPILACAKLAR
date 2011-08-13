@@ -69,13 +69,13 @@
 
     (->) Program test edilecek.
 
-    (*) kod temizliği ve düzenleme yapılacak.
-
     (*) Program yardımı hazırlanacak.
+        (*) çevirilebilir pdf dosyası
         (*) __package_name__, __version__, __summary__
 
     (*) Pisi inşa paketinde ;
         (*) çeviri dosyaları dizini verilecek.
+        (*) yardım dosyaları dizini verilecek.
         (*) qtermwidget bağımlılığı ekle
 
     (*) Alfa sürümü hazırlanacak.

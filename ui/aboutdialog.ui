@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>About PiSiDo</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0">
@@ -106,8 +106,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>370</width>
-        <height>145</height>
+        <width>356</width>
+        <height>38</height>
        </rect>
       </property>
       <attribute name="label">
