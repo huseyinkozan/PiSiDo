@@ -1212,15 +1212,19 @@ void MainWindow::pisi_from_gui() throw (QString)
     PisiPackage package;
     package.set_name(package_name);
     package.set_runtime_dependencies(runtime_dependency);
-    // todo : replace __package_name__ in files !
-    // todo : replace __version... vs
     package.set_files(files);
     temp_aditional_files.clear();
     QList<QString> a_f_list = aditional_files.keys();
     foreach (QString a_f, a_f_list) {
         QMap<PisiSPBase::AFileAttr,QString> a_f_attr = aditional_files.value(a_f);
-        // todo : replace __version... vs
-        a_f.replace("__package_name__", package_name);
+        QList<PisiSPBase::AFileAttr> a_f_attr_keys = a_f_attr.keys();
+        foreach (PisiSPBase::AFileAttr a, a_f_attr_keys) {
+            if(a == PisiSPBase::TARGET){
+                a_f_attr[a] = a_f_attr[a].replace("__package_name__", package_name);
+                a_f_attr[a] = a_f_attr[a].replace("__version__", pisi.get_last_update().get_version());
+                a_f_attr[a] = a_f_attr[a].replace("__summary__", summary);
+            }
+        }
         temp_aditional_files[a_f] = a_f_attr;
     }
     package.set_aditional_files(temp_aditional_files);
@@ -1298,6 +1302,7 @@ void MainWindow::on_tb_build_only_clicked()
 {
     if(ui->combo_build_only->currentIndex() == 0){
         create_build_files();
+        QMessageBox::information(this, tr("Build Successful"), tr("Build files created successfully."));
     }
     else if(ui->combo_build_only->currentIndex() == 1){
         create_build_files();

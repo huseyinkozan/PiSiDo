@@ -72,6 +72,7 @@ First:
     (*) will make code cleanup and tidying.
 
     (*) Prepare program help.
+        (*) __package_name__, __version__, __summary__
 
     (*) At the pisi package.
         (*) give translation files path
