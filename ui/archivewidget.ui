@@ -58,7 +58,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../resource/pisido.qrc">
+         <iconset resource="../resources/pisido.qrc">
           <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
         </property>
        </widget>
@@ -88,7 +88,7 @@
   <tabstop>tb_delete</tabstop>
  </tabstops>
  <resources>
-  <include location="../resource/pisido.qrc"/>
+  <include location="../resources/pisido.qrc"/>
  </resources>
  <connections/>
 </ui>

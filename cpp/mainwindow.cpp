@@ -181,7 +181,7 @@ MainWindow::MainWindow(QWidget *parent) :
     terminal_font.setFamily("Monospace");
     terminal_font.setPointSize(10);
     w_terminal->setTerminalFont(terminal_font);
-    w_terminal->setColorScheme(COLOR_SCHEME_GREEN_ON_BLACK);
+    w_terminal->setColorScheme(COLOR_SCHEME_WHITE_ON_BLACK);
     w_terminal->setScrollBarPosition(QTermWidget::ScrollBarRight);
     QHBoxLayout * build_layout = qobject_cast<QHBoxLayout *>(ui->dw_build_contents->layout());
     if(build_layout){
@@ -943,6 +943,8 @@ void MainWindow::on_tb_delete_label_clicked()
         QString path = ui->tableW_files->item(list.first().row(), 0)->data(Qt::DisplayRole).toString();
         files.remove(path);
         ui->tableW_files->removeRow(list.first().row());
+        if( ! ui->tableW_files->model()->rowCount())
+            append_file("/", "ALL", false);
     }
 }
 
