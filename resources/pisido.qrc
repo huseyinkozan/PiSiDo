@@ -37,8 +37,6 @@
     </qresource>
     <qresource prefix="/files">
         <file alias="pisido.svg">files/pisido.svg</file>
-        <file alias="help.html">files/help.html</file>
-        <file alias="help_tr.html">files/help_tr.html</file>
         <file alias="is_a">files/is_a</file>
         <file alias="license">files/license</file>
         <file alias="part_of">files/part_of</file>

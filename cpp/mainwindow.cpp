@@ -29,7 +29,6 @@
 #include "aditionalfiledialog.h"
 #include "archiveselectiondialog.h"
 #include "configurationdialog.h"
-#include "helpdialog.h"
 #include "languagedialog.h"
 #include "workspacedialog.h"
 
@@ -39,7 +38,6 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    help_dialog(NULL),
     not_ask_workspace(false),
     workspace_dir(QDir::root()),
     package_dir(QDir::root()),
@@ -113,12 +111,12 @@ MainWindow::MainWindow(QWidget *parent) :
     actions_editor->setTabWidth(4);
     actions_editor->setMarginLineNumbers(1, true);
     actions_editor->setMarginWidth(1, "12345");
-    QFont f("Droid Sans Mono");
-    actions_editor->setFont(f);
     ui->dw_actions_contents->layout()->addWidget(actions_editor);
     // add python highlight support
     python_lexer = new QsciLexerPython(this);
     python_lexer->setIndentationWarning(QsciLexerPython::Inconsistent);
+    QFont f("Droid Sans Mono");
+    python_lexer->setFont(f);
     actions_editor->setLexer(python_lexer);
     // autocompletion related bussiness
     actions_editor->setAutoCompletionSource(QsciScintilla::AcsDocument);
@@ -315,6 +313,12 @@ void MainWindow::on_action_Application_Language_triggered()
         QMessageBox::critical(this, tr("Error"), tr("There are no translation files in : %1").arg(lang_dir.absolutePath()));
         return;
     }
+
+    settings.beginGroup("configuration");
+    QString lang_code = settings.value("language", QString()).toString();
+    settings.endGroup();
+    QString current_lang;
+
     QMap<QString, QString> lang_map;
     lang_map[""] = QString("");
     foreach (QString file, file_list){
@@ -324,9 +328,11 @@ void MainWindow::on_action_Application_Language_triggered()
         QString loc_abr = f.join("_");
         QLocale loc(loc_abr);
         lang_map[QLocale::languageToString(loc.language())] = loc_abr;
+        if(loc_abr == lang_code)
+            current_lang = QLocale::languageToString(loc.language());
     }
 
-    LanguageDialog ld(lang_map.keys(), this);
+    LanguageDialog ld(lang_map.keys(), current_lang, this);
     int ret = ld.exec();
     if(ret == QDialog::Accepted){
         QString lang = ld.selectedLanguage();
@@ -377,13 +383,14 @@ void MainWindow::on_action_Open_Workspace_triggered()
 
 void MainWindow::on_action_Help_triggered()
 {
-    if(help_dialog == NULL){
-        help_dialog = new HelpDialog(this);
-        help_dialog->show();
-    }
-    help_dialog->show();
-    help_dialog->raise();
-    help_dialog->activateWindow();
+    QDir help_dir(PISIDO_HELP_DIR);
+    settings.beginGroup("configuration");
+    QString lang_code = settings.value("language", QString()).toString();
+    settings.endGroup();
+    if(lang_code.isEmpty())
+        lang_code = QLocale::system().name();
+    QString help_file = help_dir.absoluteFilePath(QString("help_%1.pdf").arg(lang_code));
+    QDesktopServices::openUrl(QUrl("file:///" + help_file));
 }
 
 void MainWindow::apply_default_settings()

@@ -15,7 +15,6 @@ namespace Ui {
     class MainWindow;
 }
 
-class HelpDialog;
 class QsciScintilla;
 class QsciLexerPython;
 class QFileSystemWatcher;
@@ -123,7 +122,6 @@ protected:
 
 private:
     Ui::MainWindow *ui;
-    HelpDialog * help_dialog;
     QString desktop_file_default;
     QSettings settings;
     QMap<int, QString> actions_templates_defaults;

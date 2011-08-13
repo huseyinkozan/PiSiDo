@@ -21,8 +21,10 @@ INCLUDEPATH += ./h
 # each file name must be like this : pisido_xx_XX.qm
 # xx must be a valid language_COUNTRY pair, see QLocale doc.
 # for example : pisido_tr_TR.qm , pisido_fr_FR.qm , ...
-DEFINES += PISIDO_LANG_DIR=\\\"/usr/share/pisido/translations/\\\"
+DEFINES += PISIDO_LANG_DIR=\\\"/home/huseyinkozan/calismalar/pisido/translations/\\\"
 #
+
+DEFINES += PISIDO_HELP_DIR=\\\"/home/huseyinkozan/calismalar/pisido/help/\\\"
 
 # Use Precompiled headers (PCHs)
 PRECOMPILED_HEADER = h/pchs.h
@@ -37,7 +39,6 @@ SOURCES += \
     cpp/application.cpp \
     cpp/mainwindow.cpp \
     cpp/configurationdialog.cpp \
-    cpp/helpdialog.cpp \
     cpp/pisispbase.cpp \
     cpp/pisi.cpp \
     cpp/pisipackage.cpp \
@@ -57,7 +58,6 @@ HEADERS += \
     h/mainwindow.h \
     h/application.h \
     h/configurationdialog.h \
-    h/helpdialog.h \
     h/pisispbase.h \
     h/pisi.h \
     h/pisipackage.h \
@@ -75,7 +75,6 @@ HEADERS += \
 FORMS += \
     ui/mainwindow.ui \
     ui/configurationdialog.ui \
-    ui/helpdialog.ui \
     ui/addupdatedialog.ui \
     ui/languagedialog.ui \
     ui/workspacedialog.ui \
@@ -85,13 +84,21 @@ FORMS += \
     ui/archivewidget.ui \
     ui/aboutdialog.ui
 
+TRANSLATIONS += \
+    translations/pisido_en_US.ts \
+    translations/pisido_tr_TR.ts
+
 OTHER_FILES += \
     README \
     OKUBUNU \
     LICENSE \
     LISANS \
     TODO \
-    YAPILACAKLAR
+    YAPILACAKLAR \
+    help/help_tr_TR.pdf \
+    help/help_tr_TR.odt \
+    help/help_en_US.pdf \
+    help/help_en_US.odt
 
 RESOURCES += \
-    resource/pisido.qrc
+    resources/pisido.qrc

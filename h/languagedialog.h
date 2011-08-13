@@ -12,7 +12,7 @@ class LanguageDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit LanguageDialog(QStringList list, QWidget *parent = 0);
+    explicit LanguageDialog(QStringList list, QString current_lang, QWidget *parent = 0);
     ~LanguageDialog();
 
     QString selectedLanguage();

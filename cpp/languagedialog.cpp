@@ -1,7 +1,7 @@
 #include "languagedialog.h"
 #include "ui_languagedialog.h"
 
-LanguageDialog::LanguageDialog(QStringList list, QWidget *parent) :
+LanguageDialog::LanguageDialog(QStringList list, QString current_lang, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LanguageDialog)
 {
@@ -9,6 +9,8 @@ LanguageDialog::LanguageDialog(QStringList list, QWidget *parent) :
 
     ui->comboBox->clear();
     ui->comboBox->addItems(list);
+    if( ! current_lang.isEmpty())
+        ui->comboBox->setCurrentIndex(ui->comboBox->findText(current_lang));
 }
 
 LanguageDialog::~LanguageDialog()
