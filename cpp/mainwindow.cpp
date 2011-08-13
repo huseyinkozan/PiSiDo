@@ -34,6 +34,7 @@
 #include "workspacedialog.h"
 
 #define DEFAULT_PATCH_LEVEL 1
+#define PACKAGE_NAME_REFRESH_INTERVAL 2000
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -174,6 +175,10 @@ MainWindow::MainWindow(QWidget *parent) :
             QTimer::singleShot(0, qApp, SLOT(quit()));
     }
 
+    workspace_dir_timer = new QTimer(this);
+    workspace_dir_timer->start(PACKAGE_NAME_REFRESH_INTERVAL);
+    connect(workspace_dir_timer, SIGNAL(timeout()), this, SLOT(init_package_name_completer()));
+
     w_terminal = new QTermWidget(1, ui->dw_build);
     QFont terminal_font = QApplication::font();
     terminal_font.setFamily("Monospace");
@@ -191,6 +196,8 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     w_terminal->setWorkingDirectory(workspace_dir.absolutePath());
     w_terminal->changeDir(workspace_dir.absolutePath());
+
+    ui->le_package_name->setFocus();
 }
 
 MainWindow::~MainWindow()
@@ -252,6 +259,19 @@ bool MainWindow::save_text_file(const QString &file_name, const QString &data)
     return true;
 }
 
+void MainWindow::init_package_name_completer()
+{
+    QStringList list = workspace_dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot|QDir::NoSymLinks, QDir::Name);
+    if(list != workspace_package_names){
+        workspace_package_names = list;
+        QCompleter * completer = new QCompleter(workspace_package_names, this);
+        QCompleter * old_completer = ui->le_package_name->completer();
+        ui->le_package_name->setCompleter(completer);
+        if(old_completer)
+            delete old_completer;
+    }
+}
+
 void MainWindow::on_action_Change_Workspace_triggered()
 {
     WorkspaceDialog wd(this);
@@ -261,6 +281,7 @@ void MainWindow::on_action_Change_Workspace_triggered()
         w_terminal->setWorkingDirectory(workspace_dir.absolutePath());
         w_terminal->changeDir(workspace_dir.absolutePath());
         on_le_package_name_textChanged(ui->le_package_name->text());
+        init_package_name_completer();
     }
 }
 

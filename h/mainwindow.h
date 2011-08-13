@@ -30,6 +30,7 @@ public:
     ~MainWindow();
 
 private slots:
+    void init_package_name_completer();
     void save_actions_editor_change();
     void complete_word();
 
@@ -143,6 +144,8 @@ private:
     QFileSystemWatcher * package_files_watcher;
     QFileSystemWatcher * package_install_watcher;
     QList<ArchiveWidget *> archive_widgets;
+    QTimer * workspace_dir_timer;
+    QStringList workspace_package_names;
 
     QString package_name;
     QString homepage;

@@ -64,6 +64,8 @@ First:
 
     (X) install directory filewatcher will add.
 
+    (X) added a completer to package name line edit
+
 
     (->) Test program.
 
