@@ -34,8 +34,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>270</width>
-         <height>489</height>
+         <width>289</width>
+         <height>468</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
@@ -124,9 +124,9 @@
          </widget>
         </item>
         <item row="11" column="0">
-         <widget class="QLabel" name="lbl_src_home_page">
+         <widget class="QLabel" name="lbl_src_homepage">
           <property name="text">
-           <string>Home Page</string>
+           <string>Homepage</string>
           </property>
          </widget>
         </item>
@@ -326,7 +326,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>909</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
