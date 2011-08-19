@@ -86,7 +86,7 @@ QDomElement PisiUpdate::append_text_element(QDomElement root, QString tag, QStri
 
     QDomText text = root.ownerDocument().createTextNode(value);
     if(text.isNull() || elm.appendChild(text).isNull())
-        throw QObject::tr("Error while creating dom text element with value = %2").arg(value);
+        throw QObject::tr("Error while creating dom text element with value = %1").arg(value);
 
     return elm;
 }

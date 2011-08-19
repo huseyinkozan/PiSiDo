@@ -6,7 +6,7 @@
 
 #include "mainwindow.h"
 
-void load_translation(const QApplication & a);
+void load_translation(QApplication * a, QTranslator * translator);
 
 
 
@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
     a.setApplicationName(QString("PiSiDo"));
     a.setApplicationVersion(QString("%1").arg(PISIDO_VERSION));
 
-    load_translation(a);
+    QTranslator t;
+    load_translation(&a, &t);
 
     MainWindow w;
     w.show();
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
 
 
 
-void load_translation(const QApplication & a)
+void load_translation(QApplication * application, QTranslator * translator)
 {
     // do translation bussiness
     QSettings settings;
@@ -39,15 +40,14 @@ void load_translation(const QApplication & a)
     settings.endGroup();
     if(lang_code.isEmpty())
         lang_code = QLocale::system().name();
-    QTranslator translator;
     QDir lang_dir(PISIDO_LANG_DIR);
     QString lang_file = lang_dir.absoluteFilePath(QString("pisido_%1.qm").arg(lang_code));
     if( ! QFile::exists(lang_file)){
         lang_file.replace(lang_code, QLocale().system().name());
     }
     if(QFile::exists(lang_file)){
-        if(translator.load(lang_file)){
-            a.installTranslator(&translator);
+        if(translator->load(lang_file)){
+            application->installTranslator(translator);
         }
         else{
             qDebug() << QObject::tr("Translator failed to load : ") << lang_file;

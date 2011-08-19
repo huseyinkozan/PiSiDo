@@ -252,7 +252,7 @@ QDomText PisiSPBase::append_text_element(QDomElement root, QString value) throw(
 {
     QDomText text = root.ownerDocument().createTextNode(value);
     if(text.isNull() || root.appendChild(text).isNull())
-        throw QObject::tr("Error creating text element with %2 in to the %2").arg(value).arg(root.tagName());
+        throw QObject::tr("Error creating text element with %1 in to the %2").arg(value).arg(root.tagName());
     return text;
 }
 

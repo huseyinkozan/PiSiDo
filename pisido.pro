@@ -21,10 +21,10 @@ INCLUDEPATH += ./h
 # each file name must be like this : pisido_xx_XX.qm
 # xx must be a valid language_COUNTRY pair, see QLocale doc.
 # for example : pisido_tr_TR.qm , pisido_fr_FR.qm , ...
-DEFINES += PISIDO_LANG_DIR=\\\"/home/huseyinkozan/calismalar/pisido/translations/\\\"
+DEFINES += PISIDO_LANG_DIR=\\\"$$PWD/translations/\\\"
 #
 
-DEFINES += PISIDO_HELP_DIR=\\\"/home/huseyinkozan/calismalar/pisido/help/\\\"
+DEFINES += PISIDO_HELP_DIR=\\\"$$PWD/help/\\\"
 
 # Use Precompiled headers (PCHs)
 PRECOMPILED_HEADER = h/pchs.h
