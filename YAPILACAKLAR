@@ -67,10 +67,11 @@
     (X) paket adı alanına tamamlayıcı eklendi
 
 
-    (->) Program test edilecek.
+    (X) Program test edilecek.
 
-    (*) Program yardımı hazırlanacak.
-        (*) çevirilebilir pdf dosyası
+    (->) Program yardımı hazırlanacak.
+        (X) çevirilebilir pdf dosyası
+        (->) yardım dosyasını çevir
         (*) __package_name__, __version__, __summary__
 
     (*) Pisi inşa paketinde ;

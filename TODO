@@ -67,10 +67,11 @@ First:
     (X) added a completer to package name line edit
 
 
-    (->) Test program.
+    (X) Test program.
 
-    (*) Prepare program help.
-        (*) translatable pdf file
+    (->) Prepare program help.
+        (X) translatable pdf file
+        (->) translate help file
         (*) __package_name__, __version__, __summary__
 
     (*) At the pisi package.
