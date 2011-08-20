@@ -23,8 +23,10 @@ INCLUDEPATH += ./h
 # for example : pisido_tr_TR.qm , pisido_fr_FR.qm , ...
 DEFINES += PISIDO_LANG_DIR=\\\"$$PWD/translations/\\\"
 #
-
+# same as translations; add each help file like this:
+# help_tr_TR.pdf, help_en_US.pdf.
 DEFINES += PISIDO_HELP_DIR=\\\"$$PWD/help/\\\"
+#
 
 # Use Precompiled headers (PCHs)
 PRECOMPILED_HEADER = h/pchs.h

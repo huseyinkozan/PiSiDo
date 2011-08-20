@@ -37,7 +37,7 @@ Lisans için lütfen LISANS dosyasını okuyun.
 
 Kullanım
 --------
-Lütfen resource/files/help_tr.html dosyasını veya programdaki Yardım'ı okuyun.
+Lütfen help/help_tr_TR.pdf dosyasını veya programdaki Yardım'ı okuyun.
 
 
 Kurulum
@@ -64,4 +64,11 @@ Eğer program kurulmak istenirse şu komut kullanılabilir:
     make install
 
 Ya da en iyisi PiSiDo'yu kullanarak bir pisi paketi yapın :)
+
+
+Lisan Dosyaları
+-------------
+Eğer yeni bir lisan eklemek isterseniz; bir pisi paketi yaparak pisido_*.qm dosyasını
+/usr/share/pisido/translations/ dizinine, help_*.pdf dosyasını da /usr/share/pisido/help/
+dinizine kopyalayabilirsiniz. PiSiDo, lisan seçimi için pisido_*.qm dosyalarını tarar.
 

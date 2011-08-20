@@ -37,7 +37,7 @@ Please read the LICENSE file for the license.
 
 Usage
 -----
-Please read resource/files/help.html or Help in the program.
+Please read help/help_en_US.pdf or Help in the program.
 
 
 Install
@@ -64,4 +64,11 @@ If you want to install it:
     make install
 
 Also you can make a pisi package with PiSiDo to install itself :)
+
+
+Language Files
+--------------
+If you want to add a new language file, you can make a pisi package which will install
+pisido_*.qm file to the /usr/share/pisido/translations/ and help_*.pdf file to
+/usr/share/pisido/help/. PiSiDo is searching pisido_*.qm files for the language selection.
 
