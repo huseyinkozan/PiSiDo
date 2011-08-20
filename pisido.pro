@@ -17,16 +17,34 @@ LIBS += -lqscintilla2
 LIBS += -lqtermwidget
 INCLUDEPATH += ./h
 
+PISIDO_INSTALL_ROOT = /usr/share/pisido
+PISIDO_DOC_INSTALL_ROOT = /usr/share/doc/pisido
+
+translation_target.path = $$PISIDO_INSTALL_ROOT
+translation_target.files += translations/pisido_tr_TR.qm
+translation_target.files += translations/pisido_en_US.qm
+INSTALLS += translation_target
+
+help_target.path = $$PISIDO_DOC_INSTALL_ROOT
+help_target.files += help/help_tr_TR.pdf
+help_target.files += help/help_en_US.pdf
+INSTALLS += help_target
+
 # program will scan this dir for *.qm translation files.
 # each file name must be like this : pisido_xx_XX.qm
 # xx must be a valid language_COUNTRY pair, see QLocale doc.
 # for example : pisido_tr_TR.qm , pisido_fr_FR.qm , ...
-DEFINES += PISIDO_LANG_DIR=\\\"$$PWD/translations/\\\"
-#
 # same as translations; add each help file like this:
-# help_tr_TR.pdf, help_en_US.pdf.
-DEFINES += PISIDO_HELP_DIR=\\\"$$PWD/help/\\\"
-#
+# help_tr_TR.pdf, help_en_US.pdf, ...
+
+CONFIG(debug, debug|release){
+    DEFINES += PISIDO_LANG_DIR=\\\"$$PWD/translations/\\\"
+    DEFINES += PISIDO_HELP_DIR=\\\"$$PWD/help/\\\"
+}
+CONFIG(release, debug|release){
+    DEFINES += PISIDO_LANG_DIR=\\\"$$PISIDO_INSTALL_ROOT/\\\"
+    DEFINES += PISIDO_HELP_DIR=\\\"$$PISIDO_DOC_INSTALL_ROOT/\\\"
+}
 
 # Use Precompiled headers (PCHs)
 PRECOMPILED_HEADER = h/pchs.h
@@ -104,3 +122,5 @@ OTHER_FILES += \
 
 RESOURCES += \
     resources/pisido.qrc
+
+
