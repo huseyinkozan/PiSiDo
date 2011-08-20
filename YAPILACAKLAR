@@ -66,15 +66,15 @@
 
     (X) paket adı alanına tamamlayıcı eklendi
 
-
     (X) Program test edilecek.
 
-    (->) Program yardımı hazırlanacak.
+    (X) Program yardımı hazırlanacak.
         (X) çevirilebilir pdf dosyası
-        (->) yardım dosyasını Türkçe ye çevir
+        (X) yardım dosyasını Türkçe ye çevir
         (X) __package_name__, __version__, __summary__
 
-    (*) Pisi inşa paketinde ;
+
+    (->) Pisi inşa paketinde ;
         (*) çeviri dosyaları dizini verilecek.
         (*) yardım dosyaları dizini verilecek.
         (*) qtermwidget bağımlılığı ekle

@@ -66,15 +66,15 @@ First:
 
     (X) added a completer to package name line edit
 
-
     (X) Test program.
 
-    (->) Prepare program help.
+    (X) Prepare program help.
         (X) translatable pdf file
-        (->) translate help file to Turkish
+        (X) translate help file to Turkish
         (X) __package_name__, __version__, __summary__
 
-    (*) At the pisi package.
+
+    (->) At the pisi package.
         (*) give translation files' path
         (*) give help files' path
         (*) add qtermwidget dependency
