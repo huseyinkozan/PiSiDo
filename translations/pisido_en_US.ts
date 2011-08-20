@@ -1596,8 +1596,8 @@ Process will stop.</source>
     </message>
     <message>
         <location filename="../cpp/pisispbase.cpp" line="255"/>
-        <source>Error creating text element with %2 in to the %2</source>
-        <translation></translation>
+        <source>Error creating text element with %1 in to the %2</source>
+        <translation>%2 içine %1 metin elemanı oluştururken hata</translation>
     </message>
     <message>
         <location filename="../cpp/pisispbase.cpp" line="333"/>
@@ -1631,8 +1631,8 @@ Process will stop.</source>
     </message>
     <message>
         <location filename="../cpp/pisiupdate.cpp" line="89"/>
-        <source>Error while creating dom text element with value = %2</source>
-        <translation></translation>
+        <source>Error while creating dom text element with value = %1</source>
+        <translation>Şunu içeren dom metin elemanı oluştururken hata = %1</translation>
     </message>
     <message>
         <location filename="../cpp/pisiupdate.cpp" line="129"/>

@@ -1324,7 +1324,7 @@ Uygulama birden fazla paketi desteklemiyor !
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../cpp/main.cpp" line="55"/>
+        <location filename="../cpp/main.cpp" line="53"/>
         <source>Translator failed to load : </source>
         <translation>Çeviri yüklenemedi :</translation>
     </message>
