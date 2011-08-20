@@ -71,8 +71,8 @@ First:
 
     (->) Prepare program help.
         (X) translatable pdf file
-        (->) translate help file
-        (*) __package_name__, __version__, __summary__
+        (->) translate help file to Turkish
+        (X) __package_name__, __version__, __summary__
 
     (*) At the pisi package.
         (*) give translation files' path

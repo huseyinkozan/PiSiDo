@@ -71,8 +71,8 @@
 
     (->) Program yardımı hazırlanacak.
         (X) çevirilebilir pdf dosyası
-        (->) yardım dosyasını çevir
-        (*) __package_name__, __version__, __summary__
+        (->) yardım dosyasını Türkçe ye çevir
+        (X) __package_name__, __version__, __summary__
 
     (*) Pisi inşa paketinde ;
         (*) çeviri dosyaları dizini verilecek.
