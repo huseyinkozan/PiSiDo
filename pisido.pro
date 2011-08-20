@@ -17,18 +17,36 @@ LIBS += -lqscintilla2
 LIBS += -lqtermwidget
 INCLUDEPATH += ./h
 
-PISIDO_INSTALL_ROOT = /usr/share/pisido
-PISIDO_DOC_INSTALL_ROOT = /usr/share/doc/pisido
 
-translation_target.path = $$PISIDO_INSTALL_ROOT
+PISIDO_BIN_ROOT = /usr/bin
+PISIDO_FILES_ROOT = /usr/share/pisido
+PISIDO_DOC_ROOT = /usr/share/doc/pisido
+PIXMAP_ROOT = /usr/share/pixmaps
+DESKTOP_ROOT = /usr/share/applications
+
+
+bin_target.path = $$PISIDO_BIN_ROOT
+bin_target.files += $$TARGET
+INSTALLS += bin_target
+
+translation_target.path = $$PISIDO_FILES_ROOT
 translation_target.files += translations/pisido_tr_TR.qm
 translation_target.files += translations/pisido_en_US.qm
 INSTALLS += translation_target
 
-help_target.path = $$PISIDO_DOC_INSTALL_ROOT
+help_target.path = $$PISIDO_DOC_ROOT
 help_target.files += help/help_tr_TR.pdf
 help_target.files += help/help_en_US.pdf
 INSTALLS += help_target
+
+pixmap_target.path = $$PIXMAP_ROOT
+pixmap_target.files += resources/images/pisido.png
+INSTALLS += pixmap_target
+
+desktop_target.path = $$DESKTOP_ROOT
+desktop_target.files += resources/files/pisido.desktop
+INSTALLS += desktop_target
+
 
 # program will scan this dir for *.qm translation files.
 # each file name must be like this : pisido_xx_XX.qm
@@ -42,9 +60,10 @@ CONFIG(debug, debug|release){
     DEFINES += PISIDO_HELP_DIR=\\\"$$PWD/help/\\\"
 }
 CONFIG(release, debug|release){
-    DEFINES += PISIDO_LANG_DIR=\\\"$$PISIDO_INSTALL_ROOT/\\\"
-    DEFINES += PISIDO_HELP_DIR=\\\"$$PISIDO_DOC_INSTALL_ROOT/\\\"
+    DEFINES += PISIDO_LANG_DIR=\\\"$$PISIDO_FILES_ROOT/\\\"
+    DEFINES += PISIDO_HELP_DIR=\\\"$$PISIDO_DOC_ROOT/\\\"
 }
+
 
 # Use Precompiled headers (PCHs)
 PRECOMPILED_HEADER = h/pchs.h
