@@ -397,8 +397,8 @@ void MainWindow::apply_default_settings()
 {
     // set default settings, needed for first run
     settings.beginGroup( "configuration" );
-    QString action_api_page = settings.value("action_api_page", QString("http://tr.pardus-wiki.org/Pardus:ActionsAPI")).toString();
-    QString pisi_spec = settings.value("pisi_spec", QString("http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng")).toString();
+    QString action_api_page = settings.value("action_api_page", tr("http://developer.pardus.org.tr/guides/packaging/actionsapi/index.html")).toString();
+    QString pisi_spec = settings.value("pisi_spec", tr("http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng")).toString();
     QString pisi_packaging_dir = settings.value("pisi_packaging_dir", QString("/var/pisi/")).toString();
 
     settings.setValue("action_api_page", action_api_page);
