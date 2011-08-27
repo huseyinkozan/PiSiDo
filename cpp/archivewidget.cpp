@@ -1,7 +1,11 @@
 #include "archivewidget.h"
 #include "ui_archivewidget.h"
 
-ArchiveWidget::ArchiveWidget(QWidget *parent, QString archive, QString sha1) :
+ArchiveWidget::ArchiveWidget(QWidget * parent,
+                             const QString & archive,
+                             const QString & sha1,
+                             const QStringList & types,
+                             const QString & selected_type) :
     QWidget(parent),
     ui(new Ui::ArchiveWidget)
 {
@@ -9,6 +13,10 @@ ArchiveWidget::ArchiveWidget(QWidget *parent, QString archive, QString sha1) :
 
     ui->le_archive->setText(archive);
     ui->le_sha1->setText(sha1);
+
+    ui->combo_type->addItems(types);
+    int type_index = ui->combo_type->findText(selected_type);
+    ui->combo_type->setCurrentIndex(type_index);
 }
 
 ArchiveWidget::~ArchiveWidget()
@@ -29,4 +37,9 @@ QString ArchiveWidget::get_archive()
 QString ArchiveWidget::get_sha1()
 {
     return ui->le_sha1->text();
+}
+
+QString ArchiveWidget::get_type()
+{
+    return ui->combo_type->currentText();
 }

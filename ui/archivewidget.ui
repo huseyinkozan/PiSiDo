@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>96</width>
-    <height>55</height>
+    <width>152</width>
+    <height>60</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,24 +42,13 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="0" column="1" colspan="3">
        <widget class="QLineEdit" name="le_archive">
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QToolButton" name="tb_delete">
         <property name="toolTip">
-         <string>Remove archive from list</string>
+         <string>Archive path</string>
         </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../resources/pisido.qrc">
-          <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
+        <property name="statusTip">
+         <string>Archive path</string>
         </property>
        </widget>
       </item>
@@ -72,8 +61,41 @@
       </item>
       <item row="1" column="1">
        <widget class="QLineEdit" name="le_sha1">
-        <property name="readOnly">
-         <bool>true</bool>
+        <property name="toolTip">
+         <string>Archive SHA1 value</string>
+        </property>
+        <property name="statusTip">
+         <string>Archive SHA1 value</string>
+        </property>
+        <property name="inputMask">
+         <string>HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH;_</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2" colspan="3">
+       <widget class="QComboBox" name="combo_type">
+        <property name="toolTip">
+         <string>Archive type</string>
+        </property>
+        <property name="statusTip">
+         <string>Archive type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QToolButton" name="tb_delete">
+        <property name="toolTip">
+         <string>Remove archive from list</string>
+        </property>
+        <property name="statusTip">
+         <string>Remove archive from list</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/pisido.qrc">
+          <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
         </property>
        </widget>
       </item>
@@ -85,7 +107,6 @@
  <tabstops>
   <tabstop>le_archive</tabstop>
   <tabstop>le_sha1</tabstop>
-  <tabstop>tb_delete</tabstop>
  </tabstops>
  <resources>
   <include location="../resources/pisido.qrc"/>

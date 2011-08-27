@@ -12,11 +12,16 @@ class ArchiveWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ArchiveWidget(QWidget * parent, QString archive, QString sha1);
+    explicit ArchiveWidget(QWidget * parent,
+                           const QString & archive,
+                           const QString & sha1,
+                           const QStringList & types,
+                           const QString & selected_type);
     ~ArchiveWidget();
 
     QString get_archive();
     QString get_sha1();
+    QString get_type();
 
 signals:
     void delete_me(ArchiveWidget *);

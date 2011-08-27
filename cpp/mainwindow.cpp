@@ -444,7 +444,6 @@ void MainWindow::on_action_Reset_Fields_triggered()
 //    These will be cleared after le_package_name clear :
 //      package_files_watcher, aditional_files, patches
 
-    archives.clear();
     foreach (ArchiveWidget * a_w, archive_widgets) {
         delete_archive(a_w);
     }
@@ -995,10 +994,6 @@ void MainWindow::on_tb_add_archive_clicked()
     if(asd.exec() == QDialog::Accepted){
         previous_directory = asd.get_previous_directory();
         append_archive(asd.get_archive(), asd.get_sha1());
-        QMap<PisiSource::ArchiveAttr,QString> attr;
-        attr[PisiSource::SHA1SUM] = asd.get_sha1();
-        attr[PisiSource::TYPE] = PisiSource::get_archive_type(asd.get_archive());
-        archives[asd.get_archive()] = attr;
     }
 }
 
@@ -1011,7 +1006,13 @@ void MainWindow::append_archive(const QString &archive, const QString &sha1)
         w_layout->setSpacing(1);
         ui->w_archive_base->setLayout(w_layout);
     }
-    ArchiveWidget * a_w = new ArchiveWidget(ui->w_archive_base, archive, sha1);
+    ArchiveWidget * a_w = new ArchiveWidget(
+                ui->w_archive_base,
+                archive,
+                sha1,
+                PisiSource::get_archive_type_list(),
+                PisiSource::get_archive_type(archive)
+                );
     connect(a_w, SIGNAL(delete_me(ArchiveWidget*)), this, SLOT(delete_archive(ArchiveWidget*)));
     archive_widgets.append(a_w);
     w_layout->addWidget(a_w);
@@ -1020,7 +1021,6 @@ void MainWindow::append_archive(const QString &archive, const QString &sha1)
 
 void MainWindow::delete_archive(ArchiveWidget * a_w)
 {
-    archives.remove(a_w->get_archive());
     disconnect(a_w, SIGNAL(delete_me(ArchiveWidget*)), this, SLOT(delete_archive(ArchiveWidget*)));
     archive_widgets.removeAt(archive_widgets.indexOf(a_w));
     delete a_w;
@@ -1105,7 +1105,7 @@ void MainWindow::pisi_to_gui() throw (QString)
     summary = source.get_summary();
     description = source.get_description();
     build_dependency = source.get_build_dependencies_as_stringlist().join(", ");
-    archives = source.get_archives();
+    QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives = source.get_archives();
     QMap<QString, QMap<PisiSource::PatchAttr,QString> > patches = source.get_patches();
     // assign to gui
     ui->le_homepage->setText(homepage);
@@ -1203,6 +1203,13 @@ void MainWindow::pisi_from_gui() throw (QString)
     source.set_summary(summary);
     source.set_description(description);
     source.set_build_dependencies(build_dependency);
+    QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives;
+    foreach (ArchiveWidget * a_w, archive_widgets) {
+        QMap<PisiSource::ArchiveAttr,QString> attr;
+        attr[PisiSource::SHA1SUM] = a_w->get_sha1();
+        attr[PisiSource::TYPE] = a_w->get_type();
+        archives[a_w->get_archive()] = attr;
+    }
     source.set_archives(archives);
     QMap<QString, QMap<PisiSource::PatchAttr, QString> > s_p;
     QMultiMap<int, QString>::const_iterator s_p_it = patches.constBegin();

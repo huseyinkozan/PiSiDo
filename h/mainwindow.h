@@ -159,7 +159,6 @@ private:
     QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > aditional_files;
     QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > temp_aditional_files;
     QMap<QString, QMap<QString, bool> > files;
-    QMap<QString, QMap<PisiSource::ArchiveAttr,QString> > archives;
 
     void apply_default_settings();
     void write_settings();

@@ -73,15 +73,21 @@ First:
         (X) translate help file to Turkish
         (X) __package_name__, __version__, __summary__
 
+    (X) At the pisi package.
+        (X) give translation files' path
+        (X) give help files' path
+        (X) add qtermwidget dependency
 
-    (->) At the pisi package.
-        (*) give translation files' path
-        (*) give help files' path
-        (*) add qtermwidget dependency
+    (X) Will make an alpha version.
 
-    (*) Will make an alpha version.
+    (X) post an email to list for translation help
 
-    (*) post an email to list for translation help
+    (X) fixed patch bug
+
+    (X) archive interface is more flexible now
+
+
+    (*) help file will be updated before beta
 
 
 Later:

@@ -343,4 +343,24 @@ QString PisiSource::get_archive_type(const QString & file_name)
     return file_type;
 }
 
+QStringList PisiSource::get_archive_type_list(){
+    QStringList list;
+    list << "targz";
+    list << "tarbz2";
+    list << "tarlzma";
+    list << "tarxz";
+    list << "tarZ";
+    list << "tar";
+    list << "zip";
+    list << "gz";
+    list << "gzip";
+    list << "bz2";
+    list << "bzip2";
+    list << "lzma";
+    list << "xz";
+    list << "7z";
+    list << "binary";
+    return list;
+}
+
 

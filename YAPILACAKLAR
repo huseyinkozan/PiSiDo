@@ -73,16 +73,21 @@
         (X) yardım dosyasını Türkçe ye çevir
         (X) __package_name__, __version__, __summary__
 
+    (X) Pisi inşa paketinde ;
+        (X) çeviri dosyaları dizini verilecek.
+        (X) yardım dosyaları dizini verilecek.
+        (X) qtermwidget bağımlılığı ekle
 
-    (->) Pisi inşa paketinde ;
-        (*) çeviri dosyaları dizini verilecek.
-        (*) yardım dosyaları dizini verilecek.
-        (*) qtermwidget bağımlılığı ekle
+    (X) Alfa sürümü hazırlanacak.
 
-    (*) Alfa sürümü hazırlanacak.
+    (X) çeviri yardımı için listeye eposta atılacak
 
-    (*) çeviri yardımı için listeye eposta atılacak
+    (X) patch hatası giderildi
 
+    (X) arşiv arayüzü daha esnek hale getirildi
+
+
+    (*) betadan önce yardım güncellenecek
 
 
 Sonra yapılacaklar:
