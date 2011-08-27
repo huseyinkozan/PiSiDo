@@ -133,6 +133,7 @@ void PisiSource::save_to_dom(QDomElement & root) throw(QString)
     elm = root.firstChildElement("Patches");
     if( ! elm.isNull())
         root.removeChild(elm);
+    elm = append_element(root, "Patches");
     QList<QString> patch_list = patches.keys();
     for(int i=0; i<patch_list.count(); ++i)
     {

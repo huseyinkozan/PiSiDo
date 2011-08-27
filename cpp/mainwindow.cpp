@@ -1208,7 +1208,7 @@ void MainWindow::pisi_from_gui() throw (QString)
     QMultiMap<int, QString>::const_iterator s_p_it = patches.constBegin();
     while (s_p_it != patches.constEnd()) {
         QMap<PisiSource::PatchAttr, QString> s_p_attr;
-        s_p_attr[PisiSource::LEVEL] = s_p_it.key();
+        s_p_attr[PisiSource::LEVEL] = QString::number(s_p_it.key());
         s_p[s_p_it.value()] = s_p_attr;
         ++s_p_it;
     }
