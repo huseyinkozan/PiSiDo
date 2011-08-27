@@ -366,12 +366,36 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/archivewidget.ui" line="55"/>
+        <location filename="../ui/archivewidget.ui" line="48"/>
+        <location filename="../ui/archivewidget.ui" line="51"/>
+        <source>Archive path</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/archivewidget.ui" line="65"/>
+        <location filename="../ui/archivewidget.ui" line="68"/>
+        <source>Archive SHA1 value</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/archivewidget.ui" line="71"/>
+        <source>HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH;_</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/archivewidget.ui" line="78"/>
+        <location filename="../ui/archivewidget.ui" line="81"/>
+        <source>Archive type</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/archivewidget.ui" line="88"/>
+        <location filename="../ui/archivewidget.ui" line="91"/>
         <source>Remove archive from list</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/archivewidget.ui" line="69"/>
+        <location filename="../ui/archivewidget.ui" line="58"/>
         <source>SHA1</source>
         <translation></translation>
     </message>
@@ -1154,13 +1178,13 @@ And than you can edit their properties in here</source>
         <location filename="../cpp/mainwindow.cpp" line="1063"/>
         <location filename="../cpp/mainwindow.cpp" line="1071"/>
         <location filename="../cpp/mainwindow.cpp" line="1075"/>
-        <location filename="../cpp/mainwindow.cpp" line="1253"/>
-        <location filename="../cpp/mainwindow.cpp" line="1257"/>
+        <location filename="../cpp/mainwindow.cpp" line="1260"/>
         <location filename="../cpp/mainwindow.cpp" line="1264"/>
-        <location filename="../cpp/mainwindow.cpp" line="1268"/>
-        <location filename="../cpp/mainwindow.cpp" line="1272"/>
-        <location filename="../cpp/mainwindow.cpp" line="1331"/>
-        <location filename="../cpp/mainwindow.cpp" line="1359"/>
+        <location filename="../cpp/mainwindow.cpp" line="1271"/>
+        <location filename="../cpp/mainwindow.cpp" line="1275"/>
+        <location filename="../cpp/mainwindow.cpp" line="1279"/>
+        <location filename="../cpp/mainwindow.cpp" line="1338"/>
+        <location filename="../cpp/mainwindow.cpp" line="1366"/>
         <source>Error</source>
         <translation></translation>
     </message>
@@ -1171,7 +1195,7 @@ And than you can edit their properties in here</source>
     </message>
     <message>
         <location filename="../cpp/mainwindow.cpp" line="251"/>
-        <location filename="../cpp/mainwindow.cpp" line="1359"/>
+        <location filename="../cpp/mainwindow.cpp" line="1366"/>
         <source>Can not open %1 file to write.</source>
         <translation></translation>
     </message>
@@ -1181,18 +1205,28 @@ And than you can edit their properties in here</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="481"/>
+        <location filename="../cpp/mainwindow.cpp" line="400"/>
+        <source>http://developer.pardus.org.tr/guides/packaging/actionsapi/index.html</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../cpp/mainwindow.cpp" line="401"/>
+        <source>http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../cpp/mainwindow.cpp" line="480"/>
         <location filename="../cpp/mainwindow.cpp" line="1190"/>
         <source>Error at conversion release string to integer !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="935"/>
+        <location filename="../cpp/mainwindow.cpp" line="934"/>
         <source>True</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="935"/>
+        <location filename="../cpp/mainwindow.cpp" line="934"/>
         <source>False</source>
         <translation></translation>
     </message>
@@ -1257,53 +1291,53 @@ Process will stop.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1253"/>
+        <location filename="../cpp/mainwindow.cpp" line="1260"/>
         <source>An error occured while filling pisi from fields :
  %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1257"/>
+        <location filename="../cpp/mainwindow.cpp" line="1264"/>
         <source>Unknownt exception while filling pisi from fields !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1264"/>
+        <location filename="../cpp/mainwindow.cpp" line="1271"/>
         <source>Empty package name !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1268"/>
+        <location filename="../cpp/mainwindow.cpp" line="1275"/>
         <source>Can not create package directory in workspace !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1272"/>
+        <location filename="../cpp/mainwindow.cpp" line="1279"/>
         <source>Can not create files directory in package directory !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1285"/>
+        <location filename="../cpp/mainwindow.cpp" line="1292"/>
         <source>Actions API File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1285"/>
+        <location filename="../cpp/mainwindow.cpp" line="1292"/>
         <source>Actions.py is empty !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1313"/>
+        <location filename="../cpp/mainwindow.cpp" line="1320"/>
         <source>Build Successful</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1313"/>
+        <location filename="../cpp/mainwindow.cpp" line="1320"/>
         <source>Build files created successfully.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1331"/>
+        <location filename="../cpp/mainwindow.cpp" line="1338"/>
         <source>There is no PSPEC file : %1 </source>
         <translation></translation>
     </message>
@@ -1498,57 +1532,57 @@ Process will stop.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="177"/>
+        <location filename="../cpp/pisisource.cpp" line="178"/>
         <source>Homepage can not be empty !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="185"/>
+        <location filename="../cpp/pisisource.cpp" line="186"/>
         <source>Empty packager name !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="187"/>
+        <location filename="../cpp/pisisource.cpp" line="188"/>
         <source>Empty packager email !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="197"/>
+        <location filename="../cpp/pisisource.cpp" line="198"/>
         <source>Empty archive !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="216"/>
+        <location filename="../cpp/pisisource.cpp" line="217"/>
         <source>Wrong archive atribute name : %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="228"/>
+        <location filename="../cpp/pisisource.cpp" line="229"/>
         <source>Wrong archive atribute index : %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="241"/>
+        <location filename="../cpp/pisisource.cpp" line="242"/>
         <source>Wrong patch atribute name : %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="255"/>
+        <location filename="../cpp/pisisource.cpp" line="256"/>
         <source>Wrong patch atribute index : %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="297"/>
+        <location filename="../cpp/pisisource.cpp" line="298"/>
         <source>Undefined tag name &quot;%1&quot; in PisiSource::is_mandatory() !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="305"/>
+        <location filename="../cpp/pisisource.cpp" line="306"/>
         <source>Undefined tag name &quot;%1&quot;for packager tag in PisiSource::is_mandatory() !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="308"/>
+        <location filename="../cpp/pisisource.cpp" line="309"/>
         <source>Undefined root_tag name &quot;%1&quot; in PisiSource::is_mandatory() !</source>
         <translation></translation>
     </message>
