@@ -206,7 +206,7 @@ p, li { white-space: pre-wrap; }
         <item row="9" column="0">
          <widget class="QLabel" name="lbl_is_a">
           <property name="text">
-           <string>IsA</string>
+           <string>Type</string>
           </property>
          </widget>
         </item>
@@ -223,7 +223,7 @@ p, li { white-space: pre-wrap; }
         <item row="10" column="0">
          <widget class="QLabel" name="lbl_part_of">
           <property name="text">
-           <string>PartOf</string>
+           <string>Component</string>
           </property>
          </widget>
         </item>

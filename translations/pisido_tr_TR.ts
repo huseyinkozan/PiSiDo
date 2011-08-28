@@ -560,19 +560,9 @@
         <translation>Açıklama</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="209"/>
-        <source>IsA</source>
-        <translation>IsA</translation>
-    </message>
-    <message>
         <location filename="../ui/mainwindow.ui" line="99"/>
         <source>Summary</source>
         <translation>Özet</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="226"/>
-        <source>PartOf</source>
-        <translation>PartOf</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="365"/>
@@ -1035,10 +1025,20 @@ p, li { white-space: pre-wrap; }
         <translation>Lisans seçin</translation>
     </message>
     <message>
+        <location filename="../ui/mainwindow.ui" line="209"/>
+        <source>Type</source>
+        <translation>Tür</translation>
+    </message>
+    <message>
         <location filename="../ui/mainwindow.ui" line="216"/>
         <location filename="../ui/mainwindow.ui" line="219"/>
         <source>Select package type</source>
         <translation>Paket türü seçin</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="226"/>
+        <source>Component</source>
+        <translation>Bileşen</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="233"/>

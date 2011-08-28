@@ -576,19 +576,19 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="209"/>
-        <source>IsA</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../ui/mainwindow.ui" line="216"/>
         <location filename="../ui/mainwindow.ui" line="219"/>
         <source>Select package type</source>
         <translation></translation>
     </message>
     <message>
+        <location filename="../ui/mainwindow.ui" line="209"/>
+        <source>Type</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../ui/mainwindow.ui" line="226"/>
-        <source>PartOf</source>
+        <source>Component</source>
         <translation></translation>
     </message>
     <message>
