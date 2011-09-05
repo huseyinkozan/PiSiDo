@@ -1038,7 +1038,11 @@ void MainWindow::on_tb_import_package_clicked()
             QMessageBox::critical(this, tr("Error"), tr("Can not open file for reading !"));
             return;
         }
-        dom_pspec.clear();
+
+        QString package_name = this->package_name;
+        on_action_Reset_Fields_triggered();
+        ui->le_package_name->setText(package_name);
+
         QString errorMsg;
         int errorLine, errorColumn;
         if( ! dom_pspec.setContent(&file, &errorMsg, &errorLine, &errorColumn)){
