@@ -72,8 +72,8 @@ private slots:
     void on_le_package_name_returnPressed();
     void on_tb_import_package_clicked();
 
-    void on_combo_license_currentIndexChanged(const QString & text);
-    void on_combo_is_a_currentIndexChanged(const QString & text);
+    void on_le_license_textChanged(const QString & text);
+    void on_le_is_a_textChanged(const QString & text);
     void on_combo_part_of_currentIndexChanged(const QString &  text);
 
     void on_le_homepage_textChanged(const QString & text);
@@ -116,6 +116,7 @@ private slots:
     void on_tb_build_all_clicked();
 
     void on_gb_create_menu_toggled(bool checked);
+
 
 protected:
     virtual void closeEvent(QCloseEvent * event);

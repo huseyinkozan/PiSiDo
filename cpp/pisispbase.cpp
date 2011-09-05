@@ -29,13 +29,32 @@ void PisiSPBase::load_from_dom(const QDomElement & root) throw(QString)
 
 
     name = get_element_value(root, "Name");
-    license = get_element_value(root, "License");
+
+    QStringList licenses;
+    QDomElement elm = root.firstChildElement("License");
+    while( ! elm.isNull()){
+        QString text = elm.text().trimmed();
+        if( ! text.isEmpty())
+        licenses << text;
+        elm = elm.nextSiblingElement("License");
+    }
+    license = licenses.join(", ");
+
+    QStringList is_a_s;
+    elm = root.firstChildElement("IsA");
+    while( ! elm.isNull()){
+        QString text = elm.text().trimmed();
+        if( ! text.isEmpty())
+            is_a_s << text;
+        elm = elm.nextSiblingElement("IsA");
+    }
+    is_a = is_a_s.join(", ");
+
     summary = get_element_value(root, "Summary");
     description = get_element_value(root, "Description");
     part_of = get_element_value(root, "PartOf");
-    is_a = get_element_value(root, "IsA");
 
-    QDomElement elm = root.firstChildElement("BuildDependencies");
+    elm = root.firstChildElement("BuildDependencies");
     build_dependencies = get_dependency(elm);
     aditional_files = get_aditional_file(elm);
 }
@@ -46,9 +65,21 @@ void PisiSPBase::save_to_dom(QDomElement & root) throw(QString)
         throw QObject::tr("Dom Element is null while saving from PisiSPBase to dom !");
 
     set_element_value(root, "Name", name);
-    set_element_value(root, "IsA", is_a);
+    QStringList licenses = license.split(",");
+    foreach (QString license, licenses) {
+        if( ! license.isEmpty()){
+            QDomElement elm = append_element(root, "License");
+            append_text_element(elm, license);
+        }
+    }
     set_element_value(root, "PartOf", part_of);
-    set_element_value(root, "License", license);
+    QStringList is_a_s = is_a.split(",");
+    foreach (QString is_a, is_a_s) {
+        if( ! is_a.isEmpty()){
+            QDomElement elm = append_element(root, "IsA");
+            append_text_element(elm, is_a);
+        }
+    }
     set_element_value(root, "Summary", summary);
     set_element_value(root, "Description", description);
 

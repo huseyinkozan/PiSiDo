@@ -109,7 +109,8 @@ HEADERS += \
     h/addinstallfilelabeldialog.h \
     h/archiveselectiondialog.h \
     h/archivewidget.h \
-    h/aboutdialog.h
+    h/aboutdialog.h \
+    h/multicompleter.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -141,5 +142,3 @@ OTHER_FILES += \
 
 RESOURCES += \
     resources/pisido.qrc
-
-

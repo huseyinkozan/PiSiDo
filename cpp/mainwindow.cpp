@@ -31,6 +31,7 @@
 #include "configurationdialog.h"
 #include "languagedialog.h"
 #include "workspacedialog.h"
+#include "multicompleter.h"
 
 #define DEFAULT_PATCH_LEVEL 1
 #define PACKAGE_NAME_REFRESH_INTERVAL 2000
@@ -130,10 +131,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(actions_editor, SIGNAL(textChanged()), SLOT(save_actions_editor_change()));
 
     // fill comboboxes
-    ui->combo_is_a->addItem("");
-    ui->combo_is_a->addItems(get_file_strings(":/files/is_a"));
-    ui->combo_license->addItem("");
-    ui->combo_license->addItems(get_file_strings(":/files/license"));
+    MultiCompleter * license_completer = new MultiCompleter(get_file_strings(":/files/license"), this);
+    ui->le_license->setCompleter(license_completer);
+    MultiCompleter * is_a_completer = new MultiCompleter(get_file_strings(":/files/is_a"), this);
+    ui->le_is_a->setCompleter(is_a_completer);
     ui->combo_part_of->addItem("");
     ui->combo_part_of->addItems(get_file_strings(":/files/part_of"));
 
@@ -431,8 +432,8 @@ void MainWindow::on_action_Reset_Fields_triggered()
 {
     ui->le_package_name->clear();
     ui->le_homepage->clear();
-    ui->combo_license->setCurrentIndex(0);
-    ui->combo_is_a->setCurrentIndex(0);
+    ui->le_license->clear();
+    ui->le_is_a->clear();
     ui->combo_part_of->setCurrentIndex(0);
     ui->le_summary->clear();
     ui->pte_description->clear();
@@ -627,12 +628,12 @@ void MainWindow::on_le_runtime_dependency_textChanged(const QString & text)
     runtime_dependency = text.trimmed();
 }
 
-void MainWindow::on_combo_license_currentIndexChanged(const QString & text)
+void MainWindow::on_le_license_textChanged(const QString & text)
 {
     license = text.trimmed();
 }
 
-void MainWindow::on_combo_is_a_currentIndexChanged(const QString & text)
+void MainWindow::on_le_is_a_textChanged(const QString & text)
 {
     is_a = text.trimmed();
 }
@@ -1100,7 +1101,7 @@ void MainWindow::pisi_to_gui() throw (QString)
     package_name = source.get_name();
     homepage = source.get_home_page();
     QString license = source.get_license();
-    is_a = source.get_is_a();
+    QString is_a = source.get_is_a();
     part_of = source.get_part_of();
     summary = source.get_summary();
     description = source.get_description();
@@ -1109,8 +1110,8 @@ void MainWindow::pisi_to_gui() throw (QString)
     QMap<QString, QMap<PisiSource::PatchAttr,QString> > patches = source.get_patches();
     // assign to gui
     ui->le_homepage->setText(homepage);
-    ui->combo_license->setCurrentIndex(ui->combo_license->findText(license));
-    ui->combo_is_a->setCurrentIndex(ui->combo_is_a->findText(is_a));
+    ui->le_license->setText(license);
+    ui->le_is_a->setText(is_a);
     ui->combo_part_of->setCurrentIndex(ui->combo_part_of->findText(part_of));
     ui->le_summary->setText(summary);
     ui->pte_description->setPlainText(description);
@@ -1377,3 +1378,5 @@ void MainWindow::on_gb_create_menu_toggled(bool checked)
             QFile::remove(package_files_dir.absoluteFilePath(package_name + ".png"));
     }
 }
+
+

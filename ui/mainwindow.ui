@@ -35,7 +35,7 @@
          <x>0</x>
          <y>0</y>
          <width>289</width>
-         <height>468</height>
+         <height>466</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
@@ -193,30 +193,10 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="8" column="1">
-         <widget class="QComboBox" name="combo_license">
-          <property name="toolTip">
-           <string>Select License</string>
-          </property>
-          <property name="statusTip">
-           <string>Select License</string>
-          </property>
-         </widget>
-        </item>
         <item row="9" column="0">
          <widget class="QLabel" name="lbl_is_a">
           <property name="text">
            <string>Type</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="1">
-         <widget class="QComboBox" name="combo_is_a">
-          <property name="toolTip">
-           <string>Select package type</string>
-          </property>
-          <property name="statusTip">
-           <string>Select package type</string>
           </property>
          </widget>
         </item>
@@ -313,6 +293,12 @@ p, li { white-space: pre-wrap; }
            <bool>true</bool>
           </property>
          </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QLineEdit" name="le_license"/>
+        </item>
+        <item row="9" column="1">
+         <widget class="QLineEdit" name="le_is_a"/>
         </item>
        </layout>
       </widget>
@@ -1555,8 +1541,6 @@ And than you can edit their properties in here</string>
   <tabstop>tb_add_archive</tabstop>
   <tabstop>le_build_dependency</tabstop>
   <tabstop>le_runtime_dependency</tabstop>
-  <tabstop>combo_license</tabstop>
-  <tabstop>combo_is_a</tabstop>
   <tabstop>combo_part_of</tabstop>
   <tabstop>le_homepage</tabstop>
   <tabstop>le_summary</tabstop>
