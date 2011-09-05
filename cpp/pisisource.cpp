@@ -110,22 +110,22 @@ void PisiSource::save_to_dom(QDomElement & root) throw(QString)
     }
 
     elm = root.firstChildElement("Archive");
-
-    if( ! elm.isNull())
+    while( ! elm.isNull()){
         root.removeChild(elm);
-    QList<QString> archive_names = archives.keys();
-    if(archive_names.count() < 1){
+        elm = root.firstChildElement("Archive");
+    }
+
+    if(archives.count() < 1){
         throw QObject::tr("There is no archive !");
     }
-    else{
-        for (int i = 0; i < archive_names.count(); ++i){
-            QString archive = archive_names.at(i);
-            elm = set_element_value(root, "Archive", archive);
-            if( ! elm.isNull()){
-                QList<ArchiveAttr> attributes = archives[archive].keys();
-                foreach (ArchiveAttr attr, attributes){
-                    elm.setAttribute(get_archive_attribute(attr), archives[archive][attr]);
-                }
+    QList<QString> archive_keys = archives.keys();
+    foreach (QString archive_path, archive_keys) {
+        elm = append_element(root, "Archive");
+        append_text_element(elm, archive_path);
+        if( ! elm.isNull()){
+            QList<ArchiveAttr> attributes = archives[archive_path].keys();
+            foreach (ArchiveAttr attr, attributes){
+                elm.setAttribute(get_archive_attribute(attr), archives[archive_path][attr]);
             }
         }
     }
