@@ -54,10 +54,10 @@ void PisiPackage::save_to_dom(QDomElement & root) throw(QString)
         QDomElement elm = root.firstChildElement("Files");
         if( ! elm.isNull())
             root.removeChild(elm);
-        if(root.firstChildElement("AditionalFiles").isNull())
+        if(root.firstChildElement("AdditionalFiles").isNull())
             elm = append_element(root, "Files");
         else
-            elm = insert_element_before(root, "Files", "AditionalFiles");
+            elm = insert_element_before(root, "Files", "AdditionalFiles");
         set_files(elm, files);
     }
 }

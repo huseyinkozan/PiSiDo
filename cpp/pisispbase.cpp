@@ -96,10 +96,10 @@ void PisiSPBase::save_to_dom(QDomElement & root) throw(QString)
     if( ! aditional_files.isEmpty())
     {
         // optional
-        QDomElement elm = root.firstChildElement("AditionalFiles");
+        QDomElement elm = root.firstChildElement("AdditionalFiles");
         if( ! elm.isNull())
             root.removeChild(elm);
-        elm = append_element(root, "AditionalFiles");
+        elm = append_element(root, "AdditionalFiles");
         set_aditional_file(elm, aditional_files);
     }
 
@@ -415,7 +415,7 @@ QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > PisiSPBase::get_aditional_fi
     {
         return QMap<QString, QMap<AFileAttr,QString> >();
     }
-    elm = elm.firstChildElement("AditionalFile");
+    elm = elm.firstChildElement("AdditionalFile");
 
     if(elm.isNull())
     {
@@ -424,7 +424,7 @@ QMap<QString, QMap<PisiSPBase::AFileAttr,QString> > PisiSPBase::get_aditional_fi
 
     QMap<QString, QMap<AFileAttr,QString> > aditional_files;
 
-    for( ; ! elm.isNull(); elm = elm.nextSiblingElement("AditionalFile"))
+    for( ; ! elm.isNull(); elm = elm.nextSiblingElement("AdditionalFile"))
     {
         QMap<AFileAttr,QString> attributes;
         QDomNamedNodeMap elm_node_map = elm.attributes();
@@ -455,7 +455,7 @@ void PisiSPBase::set_aditional_file(QDomElement root, QMap<QString, QMap<AFileAt
     for(int i=0; i<aditional_files.count(); ++i)
     {
         QString aditional_file = aditional_files.at(i);
-        QDomElement elm = append_element(root, "AditionalFile");
+        QDomElement elm = append_element(root, "AdditionalFile");
         append_text_element(elm, aditional_file);
 
         QMap<AFileAttr,QString> attr = a_files[aditional_file];
