@@ -35,6 +35,7 @@
 
 #define DEFAULT_PATCH_LEVEL 1
 #define PACKAGE_NAME_REFRESH_INTERVAL 2000
+#define COMBO_ACTIONS_IMPORT_INDEX 6
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -147,7 +148,7 @@ MainWindow::MainWindow(QWidget *parent) :
     actions_templates_defaults[3] = get_file_contents(":/files/actions_template_python.py");
     actions_templates_defaults[4] = get_file_contents(":/files/actions_template_qt4.py");
     actions_templates_defaults[5] = get_file_contents(":/files/actions_template_scons.py");
-    actions_templates_defaults[6] = "";
+    actions_templates_defaults[COMBO_ACTIONS_IMPORT_INDEX] = "";
     actions_templates = actions_templates_defaults;
     actions_editor->setText(actions_templates[ui->combo_actions_template->currentIndex()]);
 
@@ -1159,8 +1160,11 @@ void MainWindow::pisi_to_gui() throw (QString)
 
     QString actions_py = package_dir.absoluteFilePath("actions.py");
     if(QFile::exists(actions_py)){
-        actions_templates[6] = get_file_contents(actions_py);
-        ui->combo_actions_template->setCurrentIndex(6);
+        int current_index = ui->combo_actions_template->currentIndex();
+        actions_templates[COMBO_ACTIONS_IMPORT_INDEX] = get_file_contents(actions_py);
+        ui->combo_actions_template->setCurrentIndex(COMBO_ACTIONS_IMPORT_INDEX);
+        if(current_index == COMBO_ACTIONS_IMPORT_INDEX)
+            on_combo_actions_template_currentIndexChanged(COMBO_ACTIONS_IMPORT_INDEX);
     }
 
 
