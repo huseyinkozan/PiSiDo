@@ -16,8 +16,8 @@ void PisiSPBase::clear()
     summary.clear();
     description.clear();
     part_of.clear();
-    license.clear();
-    is_a.clear();
+    licenses.clear();
+    is_a_s.clear();
     build_dependencies.clear();
     aditional_files.clear();
 }
@@ -30,7 +30,7 @@ void PisiSPBase::load_from_dom(const QDomElement & root) throw(QString)
 
     name = get_element_value(root, "Name");
 
-    QStringList licenses;
+    licenses.clear();
     QDomElement elm = root.firstChildElement("License");
     while( ! elm.isNull()){
         QString text = elm.text().trimmed();
@@ -38,9 +38,8 @@ void PisiSPBase::load_from_dom(const QDomElement & root) throw(QString)
         licenses << text;
         elm = elm.nextSiblingElement("License");
     }
-    license = licenses.join(", ");
 
-    QStringList is_a_s;
+    is_a_s.clear();
     elm = root.firstChildElement("IsA");
     while( ! elm.isNull()){
         QString text = elm.text().trimmed();
@@ -48,7 +47,6 @@ void PisiSPBase::load_from_dom(const QDomElement & root) throw(QString)
             is_a_s << text;
         elm = elm.nextSiblingElement("IsA");
     }
-    is_a = is_a_s.join(", ");
 
     summary = get_element_value(root, "Summary");
     description = get_element_value(root, "Description");
@@ -65,7 +63,6 @@ void PisiSPBase::save_to_dom(QDomElement & root) throw(QString)
         throw QObject::tr("Dom Element is null while saving from PisiSPBase to dom !");
 
     set_element_value(root, "Name", name);
-    QStringList licenses = license.split(",");
     foreach (QString license, licenses) {
         if( ! license.isEmpty()){
             QDomElement elm = append_element(root, "License");
@@ -73,7 +70,6 @@ void PisiSPBase::save_to_dom(QDomElement & root) throw(QString)
         }
     }
     set_element_value(root, "PartOf", part_of);
-    QStringList is_a_s = is_a.split(",");
     foreach (QString is_a, is_a_s) {
         if( ! is_a.isEmpty()){
             QDomElement elm = append_element(root, "IsA");
@@ -125,14 +121,14 @@ QString PisiSPBase::get_part_of() const
     return part_of;
 }
 
-QString PisiSPBase::get_license() const
+QStringList PisiSPBase::get_licenses() const
 {
-    return license;
+    return licenses;
 }
 
-QString PisiSPBase::get_is_a() const
+QStringList PisiSPBase::get_is_a_s() const
 {
-    return is_a;
+    return is_a_s;
 }
 
 QStringList PisiSPBase::get_build_dependencies_as_stringlist()
@@ -178,18 +174,18 @@ void PisiSPBase::set_part_of(QString part_of)
     this->part_of = part_of;
 }
 
-void PisiSPBase::set_license(QString license) throw(QString)
+void PisiSPBase::set_licenses(QStringList licenses) throw(QString)
 {
-    if(license.isEmpty())
+    if(licenses.isEmpty())
         throw QObject::tr("Empty license !");
 
-    this->license = license;
+    this->licenses = licenses;
 }
 
-void PisiSPBase::set_is_a(QString is_a)
+void PisiSPBase::set_is_a_s(QStringList is_a_s)
 {
     // zero or more, no check
-    this->is_a = is_a;
+    this->is_a_s = is_a_s;
 }
 
 void PisiSPBase::set_build_dependencies(QMap<QString, QMap<PisiSPBase::VRTFAttr, QString> > build_dependencies)
@@ -590,8 +586,8 @@ bool PisiSPBase::operator ==(const PisiSPBase & other) const
                 && get_summary()            == other.get_summary()
                 && get_description()        == other.get_description()
                 && get_part_of()            == other.get_part_of()
-                && get_license()            == other.get_license()
-                && get_is_a()               == other.get_is_a()
+                && get_licenses()           == other.get_licenses()
+                && get_is_a_s()             == other.get_is_a_s()
                 && get_build_dependencies() == other.get_build_dependencies()
                 && get_aditional_files()    == other.get_aditional_files()
                 );

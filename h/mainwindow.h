@@ -148,8 +148,8 @@ private:
 
     QString package_name;
     QString homepage;
-    QString license;
-    QString is_a;
+    QString licenses;
+    QString is_a_s;
     QString part_of;
     QString summary;
     QString description;

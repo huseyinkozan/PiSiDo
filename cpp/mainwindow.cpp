@@ -441,7 +441,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
     ui->le_runtime_dependency->clear();
 
 //    These will be cleared after gui change :
-//      package_name, homepage, license, is_a, part_of, summary, description, build_dependency, runtime_dependency
+//      package_name, homepage, licenses, is_a_s, part_of, summary, description, build_dependency, runtime_dependency
 //    These will be cleared after le_package_name clear :
 //      package_files_watcher, aditional_files, patches
 
@@ -630,12 +630,12 @@ void MainWindow::on_le_runtime_dependency_textChanged(const QString & text)
 
 void MainWindow::on_le_license_textChanged(const QString & text)
 {
-    license = text.trimmed();
+    licenses = text.trimmed();
 }
 
 void MainWindow::on_le_is_a_textChanged(const QString & text)
 {
-    is_a = text.trimmed();
+    is_a_s = text.trimmed();
 }
 
 void MainWindow::on_combo_part_of_currentIndexChanged(const QString & text)
@@ -1104,8 +1104,8 @@ void MainWindow::pisi_to_gui() throw (QString)
     PisiSource source = pisi.get_source();
     package_name = source.get_name();
     homepage = source.get_home_page();
-    QString license = source.get_license();
-    QString is_a = source.get_is_a();
+    QString licenses = source.get_licenses().join(", ");
+    QString is_a_s = source.get_is_a_s().join(", ");
     part_of = source.get_part_of();
     summary = source.get_summary();
     description = source.get_description();
@@ -1114,8 +1114,8 @@ void MainWindow::pisi_to_gui() throw (QString)
     QMap<QString, QMap<PisiSource::PatchAttr,QString> > patches = source.get_patches();
     // assign to gui
     ui->le_homepage->setText(homepage);
-    ui->le_license->setText(license);
-    ui->le_is_a->setText(is_a);
+    ui->le_license->setText(licenses);
+    ui->le_is_a->setText(is_a_s);
     ui->combo_part_of->setCurrentIndex(ui->combo_part_of->findText(part_of));
     ui->le_summary->setText(summary);
     ui->pte_description->setPlainText(description);
@@ -1202,8 +1202,16 @@ void MainWindow::pisi_from_gui() throw (QString)
     source.set_name(package_name);
     source.set_home_page(homepage);
     source.set_packager(pisi.get_last_update().get_packager_name(), pisi.get_last_update().get_packager_email());
-    source.set_license(license);
-    source.set_is_a(is_a);
+    QStringList licenses;
+    foreach (QString license, this->licenses.split(",", QString::SkipEmptyParts)) {
+        licenses << license.trimmed();
+    }
+    source.set_licenses(licenses);
+    QStringList is_a_s;
+    foreach (QString is_a, this->is_a_s.split(",", QString::SkipEmptyParts)) {
+        is_a_s << is_a.trimmed();
+    }
+    source.set_is_a_s(is_a_s);
     source.set_part_of(part_of);
     source.set_summary(summary);
     source.set_description(description);

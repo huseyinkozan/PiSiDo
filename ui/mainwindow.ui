@@ -295,10 +295,24 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="8" column="1">
-         <widget class="QLineEdit" name="le_license"/>
+         <widget class="QLineEdit" name="le_license">
+          <property name="toolTip">
+           <string>Comma seperated licenses</string>
+          </property>
+          <property name="statusTip">
+           <string>Comma seperated licenses</string>
+          </property>
+         </widget>
         </item>
         <item row="9" column="1">
-         <widget class="QLineEdit" name="le_is_a"/>
+         <widget class="QLineEdit" name="le_is_a">
+          <property name="toolTip">
+           <string>Comma seperated types</string>
+          </property>
+          <property name="statusTip">
+           <string>Comma seperated types</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

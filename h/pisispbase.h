@@ -38,8 +38,8 @@ public:
     QString get_summary() const;
     QString get_description() const;
     QString get_part_of() const;
-    QString get_license() const;
-    QString get_is_a() const;
+    QStringList get_licenses() const;
+    QStringList get_is_a_s() const;
     QStringList get_build_dependencies_as_stringlist();
     QMap<QString, QMap<VRTFAttr,QString> > get_build_dependencies() const;
     QMap<QString, QMap<AFileAttr,QString> > get_aditional_files() const;
@@ -48,8 +48,8 @@ public:
     void set_summary(QString summary) throw(QString);
     void set_description(QString description);
     void set_part_of(QString part_of);
-    void set_license(QString license) throw(QString);
-    void set_is_a(QString is_a);
+    void set_licenses(QStringList licenses) throw(QString);
+    void set_is_a_s(QStringList is_a_s);
     void set_build_dependencies(QMap<QString, QMap<VRTFAttr,QString> > build_dependencies);
     void set_build_dependencies(QString build_dependency_string);
     void set_aditional_files(QMap<QString, QMap<AFileAttr,QString> > aditional_files);
@@ -91,8 +91,8 @@ private:
     QString summary;                                            // only english !
     QString description;                                        // only english !
     QString part_of;
-    QString license;                                     // one or more, only first !
-    QString is_a;                                      // zero or more, only first !
+    QStringList licenses;                                     // one or more, only first !
+    QStringList is_a_s;                                      // zero or more, only first !
     // dependency, {(versionFrom,xxxx),(versionTo,xxxx),...,(release,xxxx)}
     QMap<QString, QMap<VRTFAttr,QString> > build_dependencies;
     // file, {(target:xxxx),(permission:xxx),(owner:xxx),(group:xxx)}
