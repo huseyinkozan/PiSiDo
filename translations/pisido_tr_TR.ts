@@ -187,12 +187,12 @@
     <name>AditionalFileDialog</name>
     <message>
         <location filename="../ui/aditionalfiledialog.ui" line="14"/>
-        <source>Edit AditionalFile</source>
-        <translation>AditionalFile&apos;ı düzenle</translation>
+        <source>Edit AdditionalFile</source>
+        <translation>Ek Dosyayı Düzenle</translation>
     </message>
     <message>
         <location filename="../ui/aditionalfiledialog.ui" line="20"/>
-        <source>Aditional File</source>
+        <source>Additional File</source>
         <translation>Ek Dosya</translation>
     </message>
     <message>
@@ -554,7 +554,7 @@
         <translation>Lisans</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="307"/>
+        <location filename="../ui/mainwindow.ui" line="287"/>
         <source>Description</source>
         <oldsource>Detailed Description</oldsource>
         <translation>Açıklama</translation>
@@ -563,6 +563,18 @@
         <location filename="../ui/mainwindow.ui" line="99"/>
         <source>Summary</source>
         <translation>Özet</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="300"/>
+        <location filename="../ui/mainwindow.ui" line="303"/>
+        <source>Comma seperated licenses</source>
+        <translation>Virgül ile ayrılmış lisanslar</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="310"/>
+        <location filename="../ui/mainwindow.ui" line="313"/>
+        <source>Comma seperated types</source>
+        <translation>Virgül ile ayrılmış türler</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="365"/>
@@ -1020,62 +1032,50 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="199"/>
-        <location filename="../ui/mainwindow.ui" line="202"/>
-        <source>Select License</source>
-        <translation>Lisans seçin</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="209"/>
         <source>Type</source>
         <translation>Tür</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="216"/>
-        <location filename="../ui/mainwindow.ui" line="219"/>
-        <source>Select package type</source>
-        <translation>Paket türü seçin</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="226"/>
+        <location filename="../ui/mainwindow.ui" line="206"/>
         <source>Component</source>
         <translation>Bileşen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="233"/>
-        <location filename="../ui/mainwindow.ui" line="236"/>
+        <location filename="../ui/mainwindow.ui" line="213"/>
+        <location filename="../ui/mainwindow.ui" line="216"/>
         <source>Select component</source>
         <translation>Bileşen seçin</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="243"/>
+        <location filename="../ui/mainwindow.ui" line="223"/>
         <source>Archive</source>
         <translation>Arşiv</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="255"/>
-        <location filename="../ui/mainwindow.ui" line="258"/>
+        <location filename="../ui/mainwindow.ui" line="235"/>
+        <location filename="../ui/mainwindow.ui" line="238"/>
         <source>Use compressed type to compute sha1 values of local archive files</source>
         <translation>Yerel arşiv dosyalarının sha1 değerlerinin hesaplanması için Sıkıştırılmış türü seçin</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="262"/>
+        <location filename="../ui/mainwindow.ui" line="242"/>
         <source>Compressed</source>
         <translation>Sıkıştırılmış</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="267"/>
+        <location filename="../ui/mainwindow.ui" line="247"/>
         <source>Url</source>
         <translation>Url</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="275"/>
-        <location filename="../ui/mainwindow.ui" line="278"/>
+        <location filename="../ui/mainwindow.ui" line="255"/>
+        <location filename="../ui/mainwindow.ui" line="258"/>
         <source>Add archive</source>
         <translation>Arşiv Ekle</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="297"/>
-        <location filename="../ui/mainwindow.ui" line="300"/>
+        <location filename="../ui/mainwindow.ui" line="277"/>
+        <location filename="../ui/mainwindow.ui" line="280"/>
         <source>Detailed description for software that packaging</source>
         <translation>Paketlenen yazılım için detaylı açıklama</translation>
     </message>
@@ -1172,79 +1172,79 @@ p, li { white-space: pre-wrap; }
         <translation>Hakkında</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="220"/>
-        <location filename="../cpp/mainwindow.cpp" line="251"/>
-        <location filename="../cpp/mainwindow.cpp" line="313"/>
-        <location filename="../cpp/mainwindow.cpp" line="1037"/>
-        <location filename="../cpp/mainwindow.cpp" line="1059"/>
-        <location filename="../cpp/mainwindow.cpp" line="1063"/>
-        <location filename="../cpp/mainwindow.cpp" line="1071"/>
-        <location filename="../cpp/mainwindow.cpp" line="1075"/>
-        <location filename="../cpp/mainwindow.cpp" line="1260"/>
-        <location filename="../cpp/mainwindow.cpp" line="1264"/>
-        <location filename="../cpp/mainwindow.cpp" line="1271"/>
-        <location filename="../cpp/mainwindow.cpp" line="1275"/>
-        <location filename="../cpp/mainwindow.cpp" line="1279"/>
-        <location filename="../cpp/mainwindow.cpp" line="1338"/>
-        <location filename="../cpp/mainwindow.cpp" line="1366"/>
+        <location filename="../cpp/mainwindow.cpp" line="222"/>
+        <location filename="../cpp/mainwindow.cpp" line="253"/>
+        <location filename="../cpp/mainwindow.cpp" line="315"/>
+        <location filename="../cpp/mainwindow.cpp" line="1039"/>
+        <location filename="../cpp/mainwindow.cpp" line="1065"/>
+        <location filename="../cpp/mainwindow.cpp" line="1069"/>
+        <location filename="../cpp/mainwindow.cpp" line="1077"/>
+        <location filename="../cpp/mainwindow.cpp" line="1081"/>
+        <location filename="../cpp/mainwindow.cpp" line="1277"/>
+        <location filename="../cpp/mainwindow.cpp" line="1281"/>
+        <location filename="../cpp/mainwindow.cpp" line="1288"/>
+        <location filename="../cpp/mainwindow.cpp" line="1292"/>
+        <location filename="../cpp/mainwindow.cpp" line="1296"/>
+        <location filename="../cpp/mainwindow.cpp" line="1355"/>
+        <location filename="../cpp/mainwindow.cpp" line="1383"/>
         <source>Error</source>
         <translation>Hata</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="220"/>
+        <location filename="../cpp/mainwindow.cpp" line="222"/>
         <source>Can not open &quot;%1&quot; resource !</source>
         <translation>%1 kaynağı açılamıyor !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1037"/>
+        <location filename="../cpp/mainwindow.cpp" line="1039"/>
         <source>Can not open file for reading !</source>
         <translation>Dosya okuma için açılamıyor !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="85"/>
-        <location filename="../cpp/mainwindow.cpp" line="86"/>
         <location filename="../cpp/mainwindow.cpp" line="87"/>
+        <location filename="../cpp/mainwindow.cpp" line="88"/>
+        <location filename="../cpp/mainwindow.cpp" line="89"/>
         <source>Show or hide %1</source>
         <translation>%1&apos;nu Göster veya Gizle</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="313"/>
+        <location filename="../cpp/mainwindow.cpp" line="315"/>
         <source>There are no translation files in : %1</source>
         <translation>%1 içinde çeviri dosyaları yok</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="400"/>
+        <location filename="../cpp/mainwindow.cpp" line="402"/>
         <source>http://developer.pardus.org.tr/guides/packaging/actionsapi/index.html</source>
         <translation>http://developer.pardus.org.tr/guides/packaging/actionsapi/index.html</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="401"/>
+        <location filename="../cpp/mainwindow.cpp" line="403"/>
         <source>http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng</source>
         <translation>http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="480"/>
-        <location filename="../cpp/mainwindow.cpp" line="1190"/>
+        <location filename="../cpp/mainwindow.cpp" line="482"/>
+        <location filename="../cpp/mainwindow.cpp" line="1199"/>
         <source>Error at conversion release string to integer !</source>
         <translation>Sürüm yazısını tam sayıya çevirmede hata !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="934"/>
+        <location filename="../cpp/mainwindow.cpp" line="936"/>
         <source>True</source>
         <translation>Evet</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="934"/>
+        <location filename="../cpp/mainwindow.cpp" line="936"/>
         <source>False</source>
         <translation>Hayır</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1046"/>
+        <location filename="../cpp/mainwindow.cpp" line="1052"/>
         <source>Parse Error</source>
         <translation>Ayrıştırma Hatası</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1047"/>
+        <location filename="../cpp/mainwindow.cpp" line="1053"/>
         <source>XML Parse Error : 
 %1
 Line:%2, Column:%3</source>
@@ -1253,33 +1253,33 @@ Line:%2, Column:%3</source>
 Satır:%2, Sütun:%3</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1059"/>
+        <location filename="../cpp/mainwindow.cpp" line="1065"/>
         <source>An error occured while parsing xml file : %1</source>
         <translation>%1 XML dosyasını ayrıştırırken hata oluştu</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1063"/>
-        <location filename="../cpp/mainwindow.cpp" line="1075"/>
+        <location filename="../cpp/mainwindow.cpp" line="1069"/>
+        <location filename="../cpp/mainwindow.cpp" line="1081"/>
         <source>Unknownt exception !</source>
         <translation>Bilinmeyen istisna !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1071"/>
+        <location filename="../cpp/mainwindow.cpp" line="1077"/>
         <source>An error occured while filling fields: %1</source>
         <translation>Şu alanları doldururken hata vuku buldu : %1</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1086"/>
+        <location filename="../cpp/mainwindow.cpp" line="1092"/>
         <source>Empty pisi file, import pspec.xml before use !</source>
         <translation>Boş pisi dosyası. kullanmadan önce pspec.xml dosyasını içe aktar !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1137"/>
+        <location filename="../cpp/mainwindow.cpp" line="1143"/>
         <source>Warning</source>
         <translation>Uyarı</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1138"/>
+        <location filename="../cpp/mainwindow.cpp" line="1144"/>
         <source>Package name is not same with source name in the pspec.xml file !
 Application does not support multiple packages !
 Process will stop.</source>
@@ -1288,69 +1288,69 @@ Uygulama birden fazla paketi desteklemiyor !
 İşlem durdurulacak.</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1182"/>
+        <location filename="../cpp/mainwindow.cpp" line="1191"/>
         <source>Please define an update in history !</source>
         <translation>Lütfen Geçmiş&apos;e bir Güncelleme tanımlayın !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1260"/>
+        <location filename="../cpp/mainwindow.cpp" line="1277"/>
         <source>An error occured while filling pisi from fields :
  %1</source>
         <translation>Şu alanlardan pisi&apos;ye doldururken hata vuku buldu : %1</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1264"/>
+        <location filename="../cpp/mainwindow.cpp" line="1281"/>
         <source>Unknownt exception while filling pisi from fields !</source>
         <translation>Alanlardan pisi&apos;ye doldururken bilinmeyen istisna !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1271"/>
+        <location filename="../cpp/mainwindow.cpp" line="1288"/>
         <source>Empty package name !</source>
         <translation>Paket adı girilmemiş !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1275"/>
+        <location filename="../cpp/mainwindow.cpp" line="1292"/>
         <source>Can not create package directory in workspace !</source>
         <translation>Çalışma alanı içine paket dizini oluşturulamadı !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1279"/>
+        <location filename="../cpp/mainwindow.cpp" line="1296"/>
         <source>Can not create files directory in package directory !</source>
         <translation>Paket dizini içine files dizini oluşturulamadı !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1292"/>
+        <location filename="../cpp/mainwindow.cpp" line="1309"/>
         <source>Actions API File</source>
         <translation>Actions API Dosyası</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1292"/>
+        <location filename="../cpp/mainwindow.cpp" line="1309"/>
         <source>Actions.py is empty !</source>
         <translation>Actions.py boş !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1320"/>
+        <location filename="../cpp/mainwindow.cpp" line="1337"/>
         <source>Build Successful</source>
         <translation>İnşa Başarılı</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1320"/>
+        <location filename="../cpp/mainwindow.cpp" line="1337"/>
         <source>Build files created successfully.</source>
         <translation>İnşa dosyaları başarıyla oluşturuldu.</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1338"/>
+        <location filename="../cpp/mainwindow.cpp" line="1355"/>
         <source>There is no PSPEC file : %1 </source>
         <translation>Şu PSPEC dosyası yok : %1</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1172"/>
+        <location filename="../cpp/mainwindow.cpp" line="1181"/>
         <source>Package build information successfully imported.</source>
         <translation>Paket inşa bilgisi başarıyla içe aktarıldı.</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="251"/>
-        <location filename="../cpp/mainwindow.cpp" line="1366"/>
+        <location filename="../cpp/mainwindow.cpp" line="253"/>
+        <location filename="../cpp/mainwindow.cpp" line="1383"/>
         <source>Can not open %1 file to write.</source>
         <translation>%1 dosyası yazmak için açılamadı.</translation>
     </message>
@@ -1449,7 +1449,7 @@ Uygulama birden fazla paketi desteklemiyor !
     </message>
     <message>
         <location filename="../cpp/pisipackage.cpp" line="51"/>
-        <location filename="../cpp/pisispbase.cpp" line="202"/>
+        <location filename="../cpp/pisispbase.cpp" line="229"/>
         <location filename="../cpp/pisiupdate.cpp" line="85"/>
         <source>%1 tag is mandatory but empty !</source>
         <translation>%1 etiketi zorunlu fakat boş !</translation>
@@ -1476,7 +1476,7 @@ Uygulama birden fazla paketi desteklemiyor !
     </message>
     <message>
         <location filename="../cpp/pisipackage.cpp" line="212"/>
-        <location filename="../cpp/pisispbase.cpp" line="188"/>
+        <location filename="../cpp/pisispbase.cpp" line="215"/>
         <location filename="../cpp/pisiupdate.cpp" line="64"/>
         <source>No %1 tag !</source>
         <translation>%1 etiketi yok !</translation>
@@ -1519,8 +1519,8 @@ Uygulama birden fazla paketi desteklemiyor !
     <message>
         <location filename="../cpp/pisisource.cpp" line="54"/>
         <location filename="../cpp/pisisource.cpp" line="76"/>
-        <location filename="../cpp/pisispbase.cpp" line="282"/>
-        <location filename="../cpp/pisispbase.cpp" line="406"/>
+        <location filename="../cpp/pisispbase.cpp" line="309"/>
+        <location filename="../cpp/pisispbase.cpp" line="433"/>
         <source>Can not convert to attribute !</source>
         <translation>Özelliğe çevrilemiyor !</translation>
     </message>
@@ -1540,7 +1540,7 @@ Uygulama birden fazla paketi desteklemiyor !
         <translation>Paketleyici bilgisi yok !</translation>
     </message>
     <message>
-        <location filename="../cpp/pisisource.cpp" line="118"/>
+        <location filename="../cpp/pisisource.cpp" line="119"/>
         <source>There is no archive !</source>
         <translation>Arşiv yok !</translation>
     </message>
@@ -1605,59 +1605,59 @@ Uygulama birden fazla paketi desteklemiyor !
         <translation>PisiSPBase yüklenirken Dom Element null !</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="46"/>
+        <location filename="../cpp/pisispbase.cpp" line="63"/>
         <source>Dom Element is null while saving from PisiSPBase to dom !</source>
         <translation>PisiSPBase&apos;den dom&apos;a kaydedilirken Dom Element null !</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="125"/>
+        <location filename="../cpp/pisispbase.cpp" line="152"/>
         <source>Empty name !</source>
         <translation>Ad boş !</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="133"/>
+        <location filename="../cpp/pisispbase.cpp" line="160"/>
         <source>Empty summary !</source>
         <translation>Özet boş !</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="153"/>
+        <location filename="../cpp/pisispbase.cpp" line="180"/>
         <source>Empty license !</source>
         <translation>Lisans boş !</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="225"/>
-        <location filename="../cpp/pisispbase.cpp" line="236"/>
-        <location filename="../cpp/pisispbase.cpp" line="247"/>
+        <location filename="../cpp/pisispbase.cpp" line="252"/>
+        <location filename="../cpp/pisispbase.cpp" line="263"/>
+        <location filename="../cpp/pisispbase.cpp" line="274"/>
         <source>Error while creating dom element %1 in %2</source>
         <translation>%2 içine %1 dom elemanı oluşturulurken hata</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="233"/>
+        <location filename="../cpp/pisispbase.cpp" line="260"/>
         <source>Trying to insert %1 after %2 but no %2 tag !</source>
         <translation>%2 sonrasına %1 koyulmaya çalışıyor, fakat %2 ortalıkta yok !</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="244"/>
+        <location filename="../cpp/pisispbase.cpp" line="271"/>
         <source>Trying to insert %1 before %2 but no %2 tag !</source>
         <translation>%2 öncesine %1 koyulmaya çalışıyor, fakat %2 ortalıkta yok !</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="255"/>
+        <location filename="../cpp/pisispbase.cpp" line="282"/>
         <source>Error creating text element with %1 in to the %2</source>
         <translation>%2 içine %1 metin elemanı oluşturulurken hata</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="333"/>
+        <location filename="../cpp/pisispbase.cpp" line="360"/>
         <source>Wrong dependency atribute name : %1</source>
         <translation>Dependency özelliğinin adı yanlış : %1</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="349"/>
+        <location filename="../cpp/pisispbase.cpp" line="376"/>
         <source>No VersionReleaseToFrom attribute : %1</source>
         <translation>VersionReleaseToFrom özelliği yok : %1</translation>
     </message>
     <message>
-        <location filename="../cpp/pisispbase.cpp" line="452"/>
+        <location filename="../cpp/pisispbase.cpp" line="479"/>
         <source>Wrong aditional_files atribute name : %1</source>
         <translation>AditionalFiles özelliğinin adı yanlış : %1</translation>
     </message>
