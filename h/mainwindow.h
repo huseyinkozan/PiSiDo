@@ -46,6 +46,7 @@ private slots:
     void clear_tableW_patches();
     void clear_tableW_aditional_files();
     void clear_tableW_history();
+    void clear_archive_widgets();
 
     void on_action_Change_Workspace_triggered();
 

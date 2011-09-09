@@ -54,6 +54,7 @@ void PisiSPBase::load_from_dom(const QDomElement & root) throw(QString)
 
     elm = root.firstChildElement("BuildDependencies");
     build_dependencies = get_dependency(elm);
+    elm = root.firstChildElement("AdditionalFiles");
     aditional_files = get_aditional_file(elm);
 }
 

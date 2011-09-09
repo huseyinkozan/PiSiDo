@@ -350,7 +350,7 @@ void MainWindow::on_action_Open_Actions_API_Page_triggered()
     settings.beginGroup("configuration");
     QString action_api_page = settings.value("action_api_page").toString();
     if( ! action_api_page.isEmpty()){
-        QDesktopServices::openUrl(QUrl(action_api_page));
+        QDesktopServices::openUrl(QUrl::fromUserInput(action_api_page));
     }
     settings.endGroup();
 }
@@ -360,7 +360,7 @@ void MainWindow::on_action_Open_PISI_Spec_File_triggered()
     settings.beginGroup("configuration");
     QString pisi_spec = settings.value("pisi_spec").toString();
     if( ! pisi_spec.isEmpty()){
-        QDesktopServices::openUrl(QUrl(pisi_spec));
+        QDesktopServices::openUrl(QUrl::fromUserInput(pisi_spec));
     }
     settings.endGroup();
 }
@@ -372,7 +372,7 @@ void MainWindow::on_action_Open_PISI_Packaging_Dir_triggered()
     if( ! pisi_packaging_dir.isEmpty()){
         QDir dir(pisi_packaging_dir);
         if(dir.exists())
-            QDesktopServices::openUrl(QUrl(pisi_packaging_dir));
+            QDesktopServices::openUrl(QUrl::fromLocalFile(pisi_packaging_dir));
     }
     settings.endGroup();
 }
@@ -380,7 +380,7 @@ void MainWindow::on_action_Open_PISI_Packaging_Dir_triggered()
 void MainWindow::on_action_Open_Workspace_triggered()
 {
     if( ! workspace_dir.isRoot() && workspace_dir.exists())
-        QDesktopServices::openUrl(QUrl("file:///" + workspace_dir.absolutePath()));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(workspace_dir.absolutePath()));
 }
 
 void MainWindow::on_action_Help_triggered()
@@ -392,7 +392,7 @@ void MainWindow::on_action_Help_triggered()
     if(lang_code.isEmpty())
         lang_code = QLocale::system().name();
     QString help_file = help_dir.absoluteFilePath(QString("help_%1.pdf").arg(lang_code));
-    QDesktopServices::openUrl(QUrl("file:///" + help_file));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(help_file));
 }
 
 void MainWindow::apply_default_settings()
@@ -446,9 +446,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
 //    These will be cleared after le_package_name clear :
 //      package_files_watcher, aditional_files, patches
 
-    foreach (ArchiveWidget * a_w, archive_widgets) {
-        delete_archive(a_w);
-    }
+    clear_archive_widgets();
 
     actions_templates.clear();
     actions_templates = actions_templates_defaults;
@@ -776,7 +774,6 @@ void MainWindow::package_files_process(const QString & dir)
                 QDir::Name);
 
     QStringList patches_values = patches.values();
-    QStringList aditional_files_keys = aditional_files.keys();
 
     foreach (QFileInfo file_info, files_info_list) {
         QString relative_file_path = file_info.absoluteFilePath().remove(package_files_dir.absolutePath() + QDir::separator());
@@ -790,16 +787,16 @@ void MainWindow::package_files_process(const QString & dir)
             }
         }
         else{
-            if(aditional_files_keys.contains(relative_file_path)){
+            if(aditional_files.contains(relative_file_path)){
                 temp_aditional_files.insert(relative_file_path, aditional_files.value(relative_file_path));
             }
             else{
-                QMap<PisiSPBase::AFileAttr,QString> value;
-                value.insert(PisiSPBase::TARGET, QString("/usr/share/%1/%2").arg("__package_name__").arg(file_info.fileName()));
-                value.insert(PisiSPBase::PERMISSION, QString("0644"));
-                value.insert(PisiSPBase::OWNER, QString("root"));
-                value.insert(PisiSPBase::GROUP, QString("root"));
-                temp_aditional_files.insert(relative_file_path, value);
+                QMap<PisiSPBase::AFileAttr,QString> attr;
+                attr.insert(PisiSPBase::TARGET, QString("/usr/share/%1/%2").arg("__package_name__").arg(file_info.fileName()));
+                attr.insert(PisiSPBase::PERMISSION, QString("0644"));
+                attr.insert(PisiSPBase::OWNER, QString("root"));
+                attr.insert(PisiSPBase::GROUP, QString("root"));
+                temp_aditional_files.insert(relative_file_path, attr);
             }
         }
     }
@@ -963,19 +960,19 @@ void MainWindow::on_tb_open_patches_dir_clicked()
 void MainWindow::on_tb_open_aditional_files_dir_clicked()
 {
     if( ! package_files_dir.isRoot() && package_files_dir.exists())
-        QDesktopServices::openUrl(QUrl(package_files_dir.absolutePath()));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(package_files_dir.absolutePath()));
 }
 
 void MainWindow::on_tb_open_install_dir_clicked()
 {
     if( ! package_install_dir.isRoot() && package_install_dir.exists())
-        QDesktopServices::openUrl(QUrl(package_install_dir.absolutePath()));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(package_install_dir.absolutePath()));
 }
 
 void MainWindow::on_tb_open_package_dir_clicked()
 {
     if( ! package_dir.isRoot() && package_dir.exists())
-        QDesktopServices::openUrl(QUrl(package_dir.absolutePath()));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(package_dir.absolutePath()));
 }
 
 void MainWindow::on_tb_add_archive_clicked()
@@ -1028,6 +1025,12 @@ void MainWindow::delete_archive(ArchiveWidget * a_w)
     delete a_w;
 }
 
+void MainWindow::clear_archive_widgets()
+{
+    foreach (ArchiveWidget * a_w, archive_widgets) {
+        delete_archive(a_w);
+    }
+}
 
 void MainWindow::on_tb_import_package_clicked()
 {
@@ -1040,9 +1043,8 @@ void MainWindow::on_tb_import_package_clicked()
             return;
         }
 
-        QString package_name = this->package_name;
-        on_action_Reset_Fields_triggered();
-        ui->le_package_name->setText(package_name);
+        clear_archive_widgets();
+        clear_tableW_files();
 
         QString errorMsg;
         int errorLine, errorColumn;
@@ -1082,7 +1084,7 @@ void MainWindow::on_tb_import_package_clicked()
             return;
         }
 
-        on_le_package_name_textChanged(ui->le_package_name->text());
+        on_le_package_name_textChanged(ui->le_package_name->text());  // to fill package install directory tree
     }
 }
 
@@ -1155,7 +1157,7 @@ void MainWindow::pisi_to_gui() throw (QString)
         append_file(path, attr.keys().first(), attr.value(attr.keys().first()));
     }
     aditional_files = package.get_aditional_files();
-    fill_tableW_aditional_files();
+    package_files_changed();
 
 
     QString actions_py = package_dir.absoluteFilePath("actions.py");
@@ -1388,10 +1390,20 @@ void MainWindow::on_gb_create_menu_toggled(bool checked)
         }
     }
     else{
-        if(QFile::exists(package_files_dir.absoluteFilePath(package_name + ".desktop")))
-            QFile::remove(package_files_dir.absoluteFilePath(package_name + ".desktop"));
-        if(QFile::exists(package_files_dir.absoluteFilePath(package_name + ".png")))
-            QFile::remove(package_files_dir.absoluteFilePath(package_name + ".png"));
+        bool desktop_exists = QFile::exists(package_files_dir.absoluteFilePath(package_name + ".desktop"));
+        bool png_exists = QFile::exists(package_files_dir.absoluteFilePath(package_name + ".png"));
+        if(desktop_exists || png_exists){
+            if(QMessageBox::question(this,
+                                               tr("Delete Menu Files"),
+                                               tr("You disabled menu. Do you want to delete menu files (.desktop and .png file) ?"),
+                                               QMessageBox::Yes, QMessageBox::No
+                                               ) == QMessageBox::Yes){
+                if(desktop_exists)
+                    QFile::remove(package_files_dir.absoluteFilePath(package_name + ".desktop"));
+                if(png_exists)
+                    QFile::remove(package_files_dir.absoluteFilePath(package_name + ".png"));
+            }
+        }
     }
 }
 
