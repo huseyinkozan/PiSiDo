@@ -1,28 +1,17 @@
 
-İlk önce yapılacaklar:
----------------------
-
-    (X) ek dosyaların içe aktarımında xml dikkate alınmıyor
-
-    (X) menü simgesi seçililiği kaldırıldığında dosyaları silme onayı iste
-
-    (X) dizin ve web sayfası açma kodlarını iyileştir
+Yapılacaklar:
+-------------
 
     (*) betadan önce yardım güncellenecek
 
 
-Sonra yapılacaklar:
--------------------
 
-    (*) translation.xml oluşturulacak.
 
-    (*) actions api için otomatik tamamlama yapılacak.
 
-    (*) pspec.xml gösterim arabirimi eklenecek.
 
-    (*) Source::Patch yapısı arayüze aktarılacak. Şimdilik sadece level aktarıldı.
 
-    (*) Yeni eklenen Java desteği için şablon oluşturulacak.
+
+
 
 
 

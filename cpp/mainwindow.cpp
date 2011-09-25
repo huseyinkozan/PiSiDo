@@ -1300,19 +1300,27 @@ bool MainWindow::create_build_files()
         }
     }
 
+    QString brand_string = tr("Created by %1 %2").arg(qApp->applicationName()).arg(qApp->applicationVersion());
+    QString python_branding = QString("\n# %1\n").arg(brand_string);
+    QString xml_branding = QString("\n<!-- %1 -->\n").arg(brand_string);
+
     QString pspec_file_name = package_dir.absoluteFilePath("pspec.xml");
-    save_text_file( pspec_file_name, dom_pspec.toString(4) );
+    QString pspec_content = dom_pspec.toString(4) + xml_branding;
+    save_text_file( pspec_file_name, pspec_content );
 
 
     // create actions
     QString actions_file_name = package_dir.absoluteFilePath("actions.py");
-    QString action_py = actions_editor->text();
-    if(action_py.isEmpty())
+    QString action_py_contents = actions_editor->text();
+    if( ! action_py_contents.contains(python_branding)){
+        action_py_contents += python_branding;
+    }
+    if(action_py_contents.isEmpty())
         QMessageBox::information(this, tr("Actions API File"), tr("Actions.py is empty !"));
-    action_py.replace(QString("__package_name__"), package_name);
-    action_py.replace(QString("__version__"), pisi.get_last_update().get_version());
-    action_py.replace(QString("__summary__"), summary);
-    save_text_file( actions_file_name, action_py );
+    action_py_contents.replace(QString("__package_name__"), package_name);
+    action_py_contents.replace(QString("__version__"), pisi.get_last_update().get_version());
+    action_py_contents.replace(QString("__summary__"), summary);
+    save_text_file( actions_file_name, action_py_contents );
 
     on_le_package_name_textChanged(ui->le_package_name->text());
 

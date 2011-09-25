@@ -1,28 +1,17 @@
 
-First:
-------
-
-    (X) xml does not care while importing additional files.
-
-    (X) ask for deleting menu files
-
-    (X) improve directory and web page opening codes
+Todo:
+-----
 
     (*) help file will be updated before beta
 
 
-Later:
-------
 
-    (*) create translation.xml
 
-    (*) make autocomplete for actions api.
 
-    (*) pspec.xml view will add.
 
-    (*) Source::Patch properties will reflect to gui. For now, only level is working.
 
-    (*) Make a template for newly added Java support.
+
+
 
 
 
