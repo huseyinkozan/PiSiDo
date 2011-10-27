@@ -34,8 +34,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>289</width>
-         <height>466</height>
+         <width>270</width>
+         <height>482</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
@@ -326,7 +326,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>909</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -503,6 +503,10 @@ p, li { white-space: pre-wrap; }
    </widget>
   </widget>
   <widget class="QDockWidget" name="dw_actions">
+   <property name="windowIcon">
+    <iconset resource="../resources/pisido.qrc">
+     <normaloff>:/images/actions.png</normaloff>:/images/actions.png</iconset>
+   </property>
    <property name="toolTip">
     <string>Actions File Window</string>
    </property>
@@ -510,7 +514,7 @@ p, li { white-space: pre-wrap; }
     <string>Actions File Window</string>
    </property>
    <property name="windowTitle">
-    <string>Actions File</string>
+    <string>Actions</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -624,6 +628,10 @@ p, li { white-space: pre-wrap; }
    </widget>
   </widget>
   <widget class="QDockWidget" name="dw_menu">
+   <property name="windowIcon">
+    <iconset resource="../resources/pisido.qrc">
+     <normaloff>:/images/menu.png</normaloff>:/images/menu.png</iconset>
+   </property>
    <property name="toolTip">
     <string>Menu Icon Window</string>
    </property>
@@ -631,7 +639,7 @@ p, li { white-space: pre-wrap; }
     <string>Menu Icon Window</string>
    </property>
    <property name="windowTitle">
-    <string>Menu Icon</string>
+    <string>Menu</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -906,6 +914,10 @@ Categories=Application;</string>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dw_install_files">
+   <property name="windowIcon">
+    <iconset resource="../resources/pisido.qrc">
+     <normaloff>:/images/install-files.png</normaloff>:/images/install-files.png</iconset>
+   </property>
    <property name="toolTip">
     <string>Install Files Window</string>
    </property>
@@ -913,7 +925,7 @@ Categories=Application;</string>
     <string>Install Files Window</string>
    </property>
    <property name="windowTitle">
-    <string>Install Files</string>
+    <string>Installs</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -1077,8 +1089,8 @@ Categories=Application;</string>
   </widget>
   <widget class="QDockWidget" name="dw_patches">
    <property name="windowIcon">
-    <iconset>
-     <normaloff>:/images/patch.png</normaloff>:/images/patch.png</iconset>
+    <iconset resource="../resources/pisido.qrc">
+     <normaloff>:/images/patches.png</normaloff>:/images/patches.png</iconset>
    </property>
    <property name="toolTip">
     <string>Patches Window</string>
@@ -1210,6 +1222,10 @@ And than you can define priority in here.</string>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dw_aditional_files">
+   <property name="windowIcon">
+    <iconset resource="../resources/pisido.qrc">
+     <normaloff>:/images/aditional-files.png</normaloff>:/images/aditional-files.png</iconset>
+   </property>
    <property name="toolTip">
     <string>Aditional Files Window</string>
    </property>
@@ -1217,7 +1233,7 @@ And than you can define priority in here.</string>
     <string>Aditional Files Window</string>
    </property>
    <property name="windowTitle">
-    <string>Aditional Files</string>
+    <string>Aditionals</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>
@@ -1341,6 +1357,9 @@ And than you can edit their properties in here</string>
    <property name="windowTitle">
     <string>Operations Toolbar</string>
    </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -1348,18 +1367,18 @@ And than you can edit their properties in here</string>
     <bool>false</bool>
    </attribute>
    <addaction name="action_Change_Workspace"/>
-   <addaction name="action_Open_Workspace"/>
-   <addaction name="separator"/>
-   <addaction name="action_Open_PISI_Packaging_Dir"/>
    <addaction name="separator"/>
    <addaction name="action_Reset_Fields"/>
    <addaction name="separator"/>
-   <addaction name="action_Application_Language"/>
-   <addaction name="action_Configure_Application"/>
+   <addaction name="action_Open_Workspace"/>
+   <addaction name="action_Open_PISI_Packaging_Dir"/>
   </widget>
   <widget class="QToolBar" name="tBar_view">
    <property name="windowTitle">
     <string>View Toolbar</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -1371,6 +1390,9 @@ And than you can edit their properties in here</string>
   <widget class="QToolBar" name="tBar_help">
    <property name="windowTitle">
     <string>Help Toolbar</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -1406,7 +1428,7 @@ And than you can edit their properties in here</string>
      <normaloff>:/images/configure.png</normaloff>:/images/configure.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Configure Application...</string>
+    <string>&amp;Configure...</string>
    </property>
    <property name="statusTip">
     <string>Configure Application</string>
@@ -1418,7 +1440,7 @@ And than you can edit their properties in here</string>
      <normaloff>:/images/about.png</normaloff>:/images/about.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;About...</string>
+    <string>A&amp;bout...</string>
    </property>
    <property name="statusTip">
     <string>About</string>
@@ -1457,7 +1479,7 @@ And than you can edit their properties in here</string>
      <normaloff>:/images/bookmarks.png</normaloff>:/images/bookmarks.png</iconset>
    </property>
    <property name="text">
-    <string>Actions API</string>
+    <string>&amp;Actions API</string>
    </property>
    <property name="toolTip">
     <string>Opens Actions API web page</string>
@@ -1472,7 +1494,7 @@ And than you can edit their properties in here</string>
      <normaloff>:/images/bookmarks.png</normaloff>:/images/bookmarks.png</iconset>
    </property>
    <property name="text">
-    <string>PISI Spec</string>
+    <string>&amp;PISI Spec</string>
    </property>
    <property name="toolTip">
     <string>Opens PISI Spec web page</string>
@@ -1487,7 +1509,7 @@ And than you can edit their properties in here</string>
      <normaloff>:/images/language.png</normaloff>:/images/language.png</iconset>
    </property>
    <property name="text">
-    <string>Application &amp;Language...</string>
+    <string>&amp;Language...</string>
    </property>
    <property name="toolTip">
     <string>Change Application Language</string>
@@ -1502,7 +1524,10 @@ And than you can edit their properties in here</string>
      <normaloff>:/images/change-workspace.png</normaloff>:/images/change-workspace.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Change Workspace</string>
+    <string>Change &amp;WS</string>
+   </property>
+   <property name="toolTip">
+    <string>Change Workspace</string>
    </property>
    <property name="statusTip">
     <string>Change Workspace</string>
@@ -1514,7 +1539,10 @@ And than you can edit their properties in here</string>
      <normaloff>:/images/open-dir.png</normaloff>:/images/open-dir.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Open Workspace</string>
+    <string>&amp;Open WS</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Workspace</string>
    </property>
    <property name="statusTip">
     <string>Open Workspace</string>
@@ -1526,7 +1554,10 @@ And than you can edit their properties in here</string>
      <normaloff>:/images/reset.png</normaloff>:/images/reset.png</iconset>
    </property>
    <property name="text">
-    <string>&amp;Reset Fields</string>
+    <string>&amp;Reset</string>
+   </property>
+   <property name="toolTip">
+    <string>Reset Fields</string>
    </property>
    <property name="statusTip">
     <string>Reset Fields</string>
@@ -1538,7 +1569,10 @@ And than you can edit their properties in here</string>
      <normaloff>:/images/open-dir.png</normaloff>:/images/open-dir.png</iconset>
    </property>
    <property name="text">
-    <string>Open PISI Packaging Directory</string>
+    <string>Open PP&amp;D</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Pisi Packaging Directory</string>
    </property>
    <property name="statusTip">
     <string>Open PISI Packaging Directory</string>
