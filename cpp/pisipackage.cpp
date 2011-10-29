@@ -222,7 +222,9 @@ void PisiPackage::set_files(QDomElement root, QMap<QString, QMap<FileType, bool>
         QMap<FileType, bool> attr = files[path];
         FileType file_type = attr.keys().first();
         elm.setAttribute("fileType", get_files_file_type(file_type));
-        elm.setAttribute("permanent", attr[file_type]);
+        if(attr[file_type]) // permanent == true
+            elm.setAttribute("permanent", attr[file_type]);
+        // else: default is false, no need to write permanent attribute.
     }
 }
 
