@@ -1274,7 +1274,7 @@ bool MainWindow::create_build_files()
         }
     }
 
-    QString brand_string = tr("Created by %1 %2").arg(qApp->applicationName()).arg(qApp->applicationVersion());
+    QString brand_string = QString("By %1 %2").arg(qApp->applicationName()).arg(qApp->applicationVersion());
     QString python_branding = QString("\n# %1\n").arg(brand_string);
     QString xml_branding = QString("\n<!-- %1 -->\n").arg(brand_string);
 
