@@ -63,7 +63,6 @@ private slots:
     void on_action_About_triggered();
     void on_action_About_Qt_triggered();
 
-    void on_tb_reset_menu_clicked();
     void on_tb_delete_last_update_clicked();
     void on_tb_add_update_clicked();
 
@@ -116,15 +115,12 @@ private slots:
 
     void on_tb_build_all_clicked();
 
-    void on_gb_create_menu_toggled(bool checked);
-
 
 protected:
     virtual void closeEvent(QCloseEvent * event);
 
 private:
     Ui::MainWindow *ui;
-    QString desktop_file_default;
     QSettings settings;
     QMap<int, QString> actions_templates_defaults;
     QMap<int, QString> actions_templates;

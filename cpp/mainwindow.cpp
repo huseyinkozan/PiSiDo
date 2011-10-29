@@ -50,15 +50,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     addDockWidget(Qt::RightDockWidgetArea, ui->dw_history);
     // tabify for first run
-    tabifyDockWidget(ui->dw_actions, ui->dw_menu);
-    tabifyDockWidget(ui->dw_menu, ui->dw_install_files);
+    tabifyDockWidget(ui->dw_actions, ui->dw_install_files);
     tabifyDockWidget(ui->dw_install_files, ui->dw_aditional_files);
     tabifyDockWidget(ui->dw_aditional_files, ui->dw_patches);
     tabifyDockWidget(ui->dw_patches, ui->dw_history);
     ui->dw_actions->raise();
     // fill view menu
     QAction * a_dw_actions = ui->dw_actions->toggleViewAction();
-    QAction * a_dw_menu = ui->dw_menu->toggleViewAction();
     QAction * a_dw_install_files = ui->dw_install_files->toggleViewAction();
     QAction * a_dw_aditional_files = ui->dw_aditional_files->toggleViewAction();
     QAction * a_dw_patches = ui->dw_patches->toggleViewAction();
@@ -68,7 +66,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QAction * a_tBar_view = ui->tBar_view->toggleViewAction();
     QAction * a_tBar_help = ui->tBar_help->toggleViewAction();
     a_dw_actions->setIcon(QIcon(":/images/actions.png"));
-    a_dw_menu->setIcon(QIcon(":/images/menu.png"));
     a_dw_install_files->setIcon(QIcon(":/images/install-files.png"));
     a_dw_aditional_files->setIcon(QIcon(":/images/aditional-files.png"));
     a_dw_patches->setIcon(QIcon(":/images/patches.png"));
@@ -78,7 +75,6 @@ MainWindow::MainWindow(QWidget *parent) :
     a_tBar_view->setIcon(QIcon(":/images/toolbar.png"));
     a_tBar_help->setIcon(QIcon(":/images/help.png"));
     a_dw_actions->setStatusTip(ui->dw_actions->toolTip());
-    a_dw_menu->setStatusTip(ui->dw_menu->toolTip());
     a_dw_install_files->setStatusTip(ui->dw_install_files->toolTip());
     a_dw_aditional_files->setStatusTip(ui->dw_aditional_files->toolTip());
     a_dw_patches->setStatusTip(ui->dw_patches->toolTip());
@@ -88,7 +84,6 @@ MainWindow::MainWindow(QWidget *parent) :
     a_tBar_view->setStatusTip(tr("Show or hide %1").arg(ui->tBar_view->windowTitle()));
     a_tBar_help->setStatusTip(tr("Show or hide %1").arg(ui->tBar_help->windowTitle()));
     ui->menu_View->addAction(a_dw_actions);
-    ui->menu_View->addAction(a_dw_menu);
     ui->menu_View->addAction(a_dw_install_files);
     ui->menu_View->addAction(a_dw_aditional_files);
     ui->menu_View->addAction(a_dw_patches);
@@ -100,7 +95,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->menu_View->addAction(a_tBar_help);
     // fill view tool bar
     ui->tBar_view->addAction(a_dw_actions);
-    ui->tBar_view->addAction(a_dw_menu);
     ui->tBar_view->addAction(a_dw_install_files);
     ui->tBar_view->addAction(a_dw_aditional_files);
     ui->tBar_view->addAction(a_dw_patches);
@@ -151,8 +145,6 @@ MainWindow::MainWindow(QWidget *parent) :
     actions_templates_defaults[COMBO_ACTIONS_IMPORT_INDEX] = "";
     actions_templates = actions_templates_defaults;
     actions_editor->setText(actions_templates[ui->combo_actions_template->currentIndex()]);
-
-    desktop_file_default = ui->pte_desktop->toPlainText();
 
     // checks build dir and install dir for file changes
 
@@ -452,9 +444,6 @@ void MainWindow::on_action_Reset_Fields_triggered()
     actions_templates = actions_templates_defaults;
     actions_editor->setText(actions_templates[ui->combo_actions_template->currentIndex()]);
 
-    on_tb_reset_menu_clicked();
-    ui->gb_create_menu->setChecked(false);
-
     clear_tableW_history();
 
     clear_tableW_files();
@@ -462,11 +451,6 @@ void MainWindow::on_action_Reset_Fields_triggered()
 
     pisi.clear();
     dom_pspec.clear();
-}
-
-void MainWindow::on_tb_reset_menu_clicked()
-{
-    ui->pte_desktop->setPlainText(desktop_file_default);
 }
 
 PisiUpdate MainWindow::get_history_update(int row) throw(QString)
@@ -1170,16 +1154,6 @@ void MainWindow::pisi_to_gui() throw (QString)
     }
 
 
-    QString desktop_file_name = package_files_dir.absoluteFilePath(QString("%1.desktop").arg(package_name));
-    if(QFile::exists(desktop_file_name)){
-        QString desktop_file_contents = get_file_contents(desktop_file_name);
-        ui->gb_create_menu->setChecked(true);
-        ui->pte_desktop->setPlainText(desktop_file_contents);
-    }else{
-        ui->gb_create_menu->setChecked(false);
-    }
-
-
     statusBar()->showMessage(tr("Package build information successfully imported."));
 }
 
@@ -1373,46 +1347,5 @@ void MainWindow::call_pisi_build_command(const QString &build_step)
     w_terminal->sendText(command);
 }
 
-void MainWindow::on_gb_create_menu_toggled(bool checked)
-{
-    if(checked){
-        // create desktop
-        QString desktop_file_name = package_files_dir.absoluteFilePath(package_name + ".desktop");
-        QString desktop_str = ui->pte_desktop->toPlainText();
-        desktop_str.replace(QString("__package_name__"), package_name);
-        desktop_str.replace(QString("__version__"), pisi.get_last_update().get_version());
-        desktop_str.replace(QString("__summary__"), summary);
-        save_text_file( desktop_file_name, desktop_str );
-
-        // write image file
-        QString image_name = package_files_dir.absoluteFilePath(package_name + ".png");
-        if( ! QFile::exists(image_name)){
-            // do not remove file; user may changed the file !
-            QFile image_file(image_name);
-            if( ! image_file.open(QIODevice::WriteOnly)){
-                QMessageBox::critical(this, tr("Error"), tr("Can not open %1 file to write.").arg(package_name + ".png"));
-                return;
-            }
-            QImage image(":/images/operations.png");
-            image.save(&image_file);
-        }
-    }
-    else{
-        bool desktop_exists = QFile::exists(package_files_dir.absoluteFilePath(package_name + ".desktop"));
-        bool png_exists = QFile::exists(package_files_dir.absoluteFilePath(package_name + ".png"));
-        if(desktop_exists || png_exists){
-            if(QMessageBox::question(this,
-                                               tr("Delete Menu Files"),
-                                               tr("You disabled menu. Do you want to delete menu files (.desktop and .png file) ?"),
-                                               QMessageBox::Yes, QMessageBox::No
-                                               ) == QMessageBox::Yes){
-                if(desktop_exists)
-                    QFile::remove(package_files_dir.absoluteFilePath(package_name + ".desktop"));
-                if(png_exists)
-                    QFile::remove(package_files_dir.absoluteFilePath(package_name + ".png"));
-            }
-        }
-    }
-}
 
 

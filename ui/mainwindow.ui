@@ -627,110 +627,6 @@ p, li { white-space: pre-wrap; }
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dw_menu">
-   <property name="windowIcon">
-    <iconset resource="../resources/pisido.qrc">
-     <normaloff>:/images/menu.png</normaloff>:/images/menu.png</iconset>
-   </property>
-   <property name="toolTip">
-    <string>Menu Icon Window</string>
-   </property>
-   <property name="statusTip">
-    <string>Menu Icon Window</string>
-   </property>
-   <property name="windowTitle">
-    <string>Menu</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dw_desktop_contents">
-    <layout class="QGridLayout" name="gridLayout_7">
-     <item row="0" column="0">
-      <widget class="QGroupBox" name="gb_create_menu">
-       <property name="toolTip">
-        <string>Adds an icon (package_name.png) and a package_name.desktop file, which can be a menu icon</string>
-       </property>
-       <property name="statusTip">
-        <string>Adds an icon (package_name.png) and a package_name.desktop file, which can be a menu icon</string>
-       </property>
-       <property name="title">
-        <string>Create Menu Icon</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0" rowspan="2" colspan="2">
-         <widget class="QPlainTextEdit" name="pte_desktop">
-          <property name="toolTip">
-           <string>Desktop file contents</string>
-          </property>
-          <property name="statusTip">
-           <string>Desktop file contents</string>
-          </property>
-          <property name="lineWrapMode">
-           <enum>QPlainTextEdit::NoWrap</enum>
-          </property>
-          <property name="plainText">
-           <string notr="true">#!/usr/bin/env xdg-open
-[Desktop Entry]
-Type=Application
-Version=__version__
-Encoding=UTF-8
-Name=__package_name__
-# Name[tr]=__package_name__
-GenericName=__package_name__
-GenericName[tr]=__package_name__
-Comment=__summary__
-# Comment[tr]=__summary__
-Icon=__package_name__.png
-Exec=__package_name__
-Terminal=false
-StartupNotify=false
-Categories=Application;</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="2">
-         <widget class="QToolButton" name="tb_reset_menu">
-          <property name="toolTip">
-           <string>Resets desktop file contents to the default values</string>
-          </property>
-          <property name="statusTip">
-           <string>Resets desktop file contents to the default values</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="../resources/pisido.qrc">
-            <normaloff>:/images/undo.png</normaloff>:/images/undo.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <spacer name="verticalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="dw_build">
    <property name="windowIcon">
     <iconset resource="../resources/pisido.qrc">
@@ -1596,9 +1492,6 @@ And than you can edit their properties in here</string>
   <tabstop>combo_actions_template</tabstop>
   <tabstop>tb_zoom_in</tabstop>
   <tabstop>tb_zoom_out</tabstop>
-  <tabstop>gb_create_menu</tabstop>
-  <tabstop>pte_desktop</tabstop>
-  <tabstop>tb_reset_menu</tabstop>
   <tabstop>treeV_files</tabstop>
   <tabstop>tb_add_label</tabstop>
   <tabstop>tableW_files</tabstop>

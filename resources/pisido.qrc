@@ -19,7 +19,6 @@
         <file alias="actions.png">images/actions.png</file>
         <file alias="install-files.png">images/install-files.png</file>
         <file alias="aditional-files.png">images/aditional-files.png</file>
-        <file alias="menu.png">images/menu.png</file>
         <file alias="patches.png">images/patches.png</file>
         <file alias="toolbar.png">images/toolbar.png</file>
         <file alias="exit.png">images/exit.png</file>
