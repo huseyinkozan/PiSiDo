@@ -422,7 +422,7 @@ p, li { white-space: pre-wrap; }
         <enum>QAbstractItemView::SelectRows</enum>
        </property>
        <property name="wordWrap">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="cornerButtonEnabled">
         <bool>false</bool>
@@ -877,6 +877,9 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="statusTip">
         <string>If none, a default will be added</string>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
        </property>
        <property name="alternatingRowColors">
         <bool>true</bool>
