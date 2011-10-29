@@ -18,6 +18,7 @@ namespace Ui {
 class QsciScintilla;
 class QsciLexerPython;
 class QFileSystemWatcher;
+class QFileSystemModel;
 class QTermWidget;
 
 class MainWindow : public QMainWindow
@@ -40,7 +41,7 @@ private slots:
 
     void package_files_changed();
     void package_files_process(const QString & dir);
-    void package_install_changed();
+    void package_install_timeout();
 
     void clear_tableW_files();
     void clear_tableW_patches();
@@ -115,7 +116,6 @@ private slots:
 
     void on_tb_build_all_clicked();
 
-
 protected:
     virtual void closeEvent(QCloseEvent * event);
 
@@ -138,7 +138,8 @@ private:
     QDir package_install_dir;
 
     QFileSystemWatcher * package_files_watcher;
-    QFileSystemWatcher * package_install_watcher;
+    QTimer * package_install_timer;
+    QFileSystemModel * package_install_model;
     QList<ArchiveWidget *> archive_widgets;
     QTimer * workspace_dir_timer;
     QStringList workspace_package_names;

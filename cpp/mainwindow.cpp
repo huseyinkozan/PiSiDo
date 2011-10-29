@@ -35,6 +35,7 @@
 
 #define DEFAULT_PATCH_LEVEL 1
 #define PACKAGE_NAME_REFRESH_INTERVAL 2000
+#define PACKAGE_INSTALL_CHECK_INTERVAL 1000
 #define COMBO_ACTIONS_IMPORT_INDEX 6
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -44,7 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
     workspace_dir(QDir::root()),
     package_dir(QDir::root()),
     package_files_dir(QDir::root()),
-    package_install_dir(QDir::root())
+    package_install_dir(QDir::root()),
+    package_install_model(NULL)
 {
     ui->setupUi(this);
 
@@ -149,10 +151,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // checks build dir and install dir for file changes
 
     package_files_watcher = new QFileSystemWatcher(this);
-    package_install_watcher = new QFileSystemWatcher(this);
-    connect(package_files_watcher, SIGNAL(directoryChanged(QString)), this, SLOT(package_files_changed()));
-    connect(package_install_watcher, SIGNAL(directoryChanged(QString)), this, SLOT(package_install_changed()));
+    connect(package_files_watcher, SIGNAL(directoryChanged(QString)), SLOT(package_files_changed()));
 
+    package_install_timer = new QTimer(this);
+    connect(package_install_timer, SIGNAL(timeout()), SLOT(package_install_timeout()));
+    package_install_timer->start(PACKAGE_INSTALL_CHECK_INTERVAL);
 
     read_settings();
 
@@ -434,7 +437,8 @@ void MainWindow::on_action_Reset_Fields_triggered()
     ui->le_runtime_dependency->clear();
 
 //    These will be cleared after gui change :
-//      package_name, homepage, licenses, is_a_s, part_of, summary, description, build_dependency, runtime_dependency
+//      package_name, homepage, licenses, is_a_s, part_of, summary,
+//      description, build_dependency, runtime_dependency
 //    These will be cleared after le_package_name clear :
 //      package_files_watcher, aditional_files, patches
 
@@ -518,7 +522,6 @@ void MainWindow::on_tb_add_update_clicked()
         ui->tableW_history->setItem(row, 3, item_comment);
         ui->tableW_history->setItem(row, 4, item_name);
         ui->tableW_history->setItem(row, 5, item_email);
-        package_install_changed();
     }
 }
 
@@ -548,10 +551,6 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
             package_files_watcher->removePaths(p_f_w_dirs);
 
         package_install_dir = QDir::root();
-
-        QStringList p_i_w_dirs = package_install_watcher->directories();
-        if( ! p_i_w_dirs.isEmpty())
-            package_install_watcher->removePaths(p_i_w_dirs);
     }
     else
     {
@@ -570,15 +569,12 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
                 package_files_watcher->removePaths(p_f_w_dirs);
         }
 
-        QString pisi_work_dir = "/var/pisi/";
-        QStringList p_i_w_dirs = package_install_watcher->directories();
-        if( ! p_i_w_dirs.contains(pisi_work_dir))
-            package_install_watcher->addPath(pisi_work_dir);
-
         QString v = pisi.get_last_update().get_version();
         int r = pisi.get_last_update().get_release();
         if( ! v.isEmpty() && r > 0){
-            package_install_dir = QDir(QString("/var/pisi/%1-%2-%3/install/").arg(package_name).arg(v).arg(r));
+            package_install_dir = QDir(QString("/var/pisi/%1-%2-%3/install/")
+                                       .arg(package_name).arg(v).arg(r)
+                                       );
         }
         else{
             package_install_dir = QDir::root();
@@ -586,7 +582,6 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
     }
     // to handle text change event
     package_files_changed();
-    package_install_changed();
 }
 
 
@@ -786,27 +781,28 @@ void MainWindow::package_files_process(const QString & dir)
     }
 }
 
-void MainWindow::package_install_changed()
+void MainWindow::package_install_timeout()
 {
     if( ! package_install_dir.isRoot() && package_install_dir.exists()){
-        QFileSystemModel * model = new QFileSystemModel(this);
-        model->setReadOnly(true);
-        model->setRootPath(package_install_dir.absolutePath());
-        ui->treeV_files->setModel(model);
-        ui->treeV_files->setRootIndex(model->index(package_install_dir.absolutePath()));
-        ui->treeV_files->expandAll();
-        QTimer::singleShot(500, ui->treeV_files, SLOT(expandAll()));
-        ui->tb_open_install_dir->setEnabled(true);
+        if(package_install_model == NULL){
+            package_install_model = new QFileSystemModel(this);
+            package_install_model->setReadOnly(true);
+            package_install_model->setRootPath(package_install_dir.absolutePath());
+            ui->treeV_files->setModel(package_install_model);
+            ui->treeV_files->setRootIndex(package_install_model->index(package_install_dir.absolutePath()));
+            ui->treeV_files->expandAll();
+            QTimer::singleShot(500, ui->treeV_files, SLOT(expandAll()));
+            ui->tb_open_install_dir->setEnabled(true);
+        }
     }
     else{
-        QAbstractItemModel * old_model = ui->treeV_files->model();
-        QFileSystemModel * old_fs_model = qobject_cast<QFileSystemModel *>(old_model);
-        if(old_fs_model){
+        if(package_install_model){
             QStandardItemModel * model = new QStandardItemModel(this);
             ui->treeV_files->setModel(model);
-            delete old_model;
+            delete package_install_model;
+            package_install_model = NULL;
+            ui->tb_open_install_dir->setEnabled(false);
         }
-        ui->tb_open_install_dir->setEnabled(false);
     }
 }
 
