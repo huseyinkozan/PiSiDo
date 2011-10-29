@@ -6,13 +6,7 @@
 from pisi.actionsapi import kde4
 #from pisi.actionsapi import pisitools
 
-# You can use these as variables, they will replace GUI values before build.
-# Package Name : __package_name__
-# Version : __version__
-# Summary : __summary__
-
-# If the project that you are tying to compile is in a sub directory in the 
-# source archive, than you can define working directory. For example; 
+# if pisi can't find source directory, see /var/pisi/__package_name__/work/ and:
 # WorkDir="__package_name__-"+ get.srcVERSION() +"/sub_project_dir/"
 
 def setup():
@@ -26,6 +20,15 @@ def install():
 
 # Take a look at the source folder for these file as documentation.
 #    pisitools.dodoc("AUTHORS", "BUGS", "ChangeLog", "COPYING", "README")
+
 # If there is no install rule for a runnable binary, you can 
 # install it to binary directory.
 #    pisitools.dobin("__package_name__")
+
+# You can use these as variables, they will replace GUI values before build.
+# Package Name : __package_name__
+# Version : __version__
+# Summary : __summary__
+
+# For more information, you can look at the Actions API
+# from the Help menu and toolbar.
