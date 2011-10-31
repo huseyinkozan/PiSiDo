@@ -175,6 +175,7 @@ MainWindow::MainWindow(QWidget *parent) :
                               tr("No Workspace"),
                               tr("The workspace no exists !"));
         not_ask_workspace = false;
+        write_settings();
         QTimer::singleShot(0, qApp, SLOT(quit()));
     }
 
