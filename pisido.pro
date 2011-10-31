@@ -90,7 +90,8 @@ SOURCES += \
     cpp/addinstallfilelabeldialog.cpp \
     cpp/archiveselectiondialog.cpp \
     cpp/archivewidget.cpp \
-    cpp/aboutdialog.cpp
+    cpp/aboutdialog.cpp \
+    cpp/directorymodel.cpp
 
 HEADERS += \
     h/pchs.h \
@@ -110,7 +111,8 @@ HEADERS += \
     h/archiveselectiondialog.h \
     h/archivewidget.h \
     h/aboutdialog.h \
-    h/multicompleter.h
+    h/multicompleter.h \
+    h/directorymodel.h
 
 FORMS += \
     ui/mainwindow.ui \
