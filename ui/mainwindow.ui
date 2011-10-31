@@ -878,26 +878,6 @@ p, li { white-space: pre-wrap; }
        </column>
       </widget>
      </item>
-     <item row="7" column="5">
-      <widget class="QToolButton" name="tb_open_install_dir">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Opens install directory (/var/pisi/__package_name__/install)</string>
-       </property>
-       <property name="statusTip">
-        <string>Opens install directory (/var/pisi/__package_name__/install)</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../resources/pisido.qrc">
-         <normaloff>:/images/open-dir.png</normaloff>:/images/open-dir.png</iconset>
-       </property>
-      </widget>
-     </item>
      <item row="5" column="5">
       <widget class="QToolButton" name="tb_delete_label">
        <property name="enabled">
@@ -953,6 +933,26 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="3" column="0">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QToolButton" name="tb_open_install_dir">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Opens install directory (/var/pisi/__package_name__/install)</string>
+         </property>
+         <property name="statusTip">
+          <string>Opens install directory (/var/pisi/__package_name__/install)</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/pisido.qrc">
+           <normaloff>:/images/open-dir.png</normaloff>:/images/open-dir.png</iconset>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QLineEdit" name="le_install_files_dir">
          <property name="enabled">
@@ -1517,7 +1517,6 @@ And than you can edit their properties in here</string>
   <tabstop>tb_add_label</tabstop>
   <tabstop>tableW_files</tabstop>
   <tabstop>tb_delete_label</tabstop>
-  <tabstop>tb_open_install_dir</tabstop>
   <tabstop>tableW_history</tabstop>
   <tabstop>tb_add_update</tabstop>
   <tabstop>tb_delete_last_update</tabstop>

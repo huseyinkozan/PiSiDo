@@ -35,7 +35,6 @@
 
 #define DEFAULT_PATCH_LEVEL 1
 #define PACKAGE_NAME_REFRESH_INTERVAL 2000
-#define PACKAGE_INSTALL_CHECK_INTERVAL 1000
 #define COMBO_ACTIONS_IMPORT_INDEX 6
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -152,10 +151,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     package_files_watcher = new QFileSystemWatcher(this);
     connect(package_files_watcher, SIGNAL(directoryChanged(QString)), SLOT(package_files_changed()));
-
-    package_install_timer = new QTimer(this);
-    connect(package_install_timer, SIGNAL(timeout()), SLOT(package_install_timeout()));
-    package_install_timer->start(PACKAGE_INSTALL_CHECK_INTERVAL);
 
     read_settings();
 
@@ -598,10 +593,15 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
             package_install_dir = QDir::root();
         }
     }
-    ui->le_install_files_dir->setText(
-                package_install_dir.isRoot() ?
-                    "" :
-                    package_install_dir.absolutePath());
+
+    if(package_install_dir.isRoot()){
+        ui->le_install_files_dir->setText("");
+        ui->tb_open_install_dir->setEnabled(false);
+    }
+    else{
+        ui->le_install_files_dir->setText(package_install_dir.absolutePath());
+        ui->tb_open_install_dir->setEnabled(true);
+    }
     // to handle text change event
     package_files_changed();
 }
@@ -805,20 +805,11 @@ void MainWindow::package_files_process(const QString & dir)
 
 void MainWindow::on_tb_refresh_install_files_clicked()
 {
+
+    // TODO : fill the tree by hand !!!
+
     release_package_install_model();
-    package_install_timeout();
-}
 
-void MainWindow::release_package_install_model()
-{
-    QStandardItemModel * model = new QStandardItemModel(this);
-    ui->treeV_files->setModel(model);
-    delete package_install_model;
-    package_install_model = NULL;
-}
-
-void MainWindow::package_install_timeout()
-{
     if( ! package_install_dir.isRoot() && package_install_dir.exists()){
         if(package_install_model == NULL){
             package_install_model = new QFileSystemModel(this);
@@ -828,15 +819,21 @@ void MainWindow::package_install_timeout()
             ui->treeV_files->setRootIndex(package_install_model->index(package_install_dir.absolutePath()));
             ui->treeV_files->expandAll();
             QTimer::singleShot(500, ui->treeV_files, SLOT(expandAll()));
-            ui->tb_open_install_dir->setEnabled(true);
         }
     }
     else{
         if(package_install_model){
             release_package_install_model();
-            ui->tb_open_install_dir->setEnabled(false);
         }
     }
+}
+
+void MainWindow::release_package_install_model()
+{
+    QStandardItemModel * model = new QStandardItemModel(this);
+    ui->treeV_files->setModel(model);
+    delete package_install_model;
+    package_install_model = NULL;
 }
 
 void MainWindow::on_tb_patch_down_clicked()

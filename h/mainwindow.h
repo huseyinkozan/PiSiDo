@@ -41,7 +41,6 @@ private slots:
 
     void package_files_changed();
     void package_files_process(const QString & dir);
-    void package_install_timeout();
 
     void clear_tableW_files();
     void clear_tableW_patches();
@@ -142,7 +141,6 @@ private:
     QDir package_install_dir;
 
     QFileSystemWatcher * package_files_watcher;
-    QTimer * package_install_timer;
     QFileSystemModel * package_install_model;
     QList<ArchiveWidget *> archive_widgets;
     QTimer * workspace_dir_timer;
