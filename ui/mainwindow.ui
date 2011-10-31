@@ -954,10 +954,26 @@ p, li { white-space: pre-wrap; }
      <item row="3" column="0">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QLineEdit" name="le_install_files_dir"/>
+        <widget class="QLineEdit" name="le_install_files_dir">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Directory of the installed files</string>
+         </property>
+         <property name="statusTip">
+          <string>Directory of the installed files</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QToolButton" name="tb_refresh_install_files">
+         <property name="toolTip">
+          <string>Please refresh after successful build !</string>
+         </property>
+         <property name="statusTip">
+          <string>Please refresh after successful build !</string>
+         </property>
          <property name="text">
           <string/>
          </property>

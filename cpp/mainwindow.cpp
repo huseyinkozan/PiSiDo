@@ -598,6 +598,10 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
             package_install_dir = QDir::root();
         }
     }
+    ui->le_install_files_dir->setText(
+                package_install_dir.isRoot() ?
+                    "" :
+                    package_install_dir.absolutePath());
     // to handle text change event
     package_files_changed();
 }
