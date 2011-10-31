@@ -165,8 +165,17 @@ MainWindow::MainWindow(QWidget *parent) :
             workspace_dir = QDir(wd.get_workspace());
             not_ask_workspace = wd.get_not_ask_workspace();
         }
-        else
+        else{
             QTimer::singleShot(0, qApp, SLOT(quit()));
+        }
+    }
+
+    if( ! workspace_dir.exists()){
+        QMessageBox::critical(this,
+                              tr("No Workspace"),
+                              tr("The workspace no exists !"));
+        not_ask_workspace = false;
+        QTimer::singleShot(0, qApp, SLOT(quit()));
     }
 
     workspace_dir_timer = new QTimer(this);
@@ -255,6 +264,14 @@ bool MainWindow::save_text_file(const QString &file_name, const QString &data)
 
 void MainWindow::init_package_name_completer()
 {
+    if( ! workspace_dir.exists()){
+        QCompleter * old_completer = ui->le_package_name->completer();
+        ui->le_package_name->setCompleter(0);
+        if(old_completer)
+            delete old_completer;
+        return;
+    }
+
     QStringList list = workspace_dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot|QDir::NoSymLinks, QDir::Name);
     if(list != workspace_package_names){
         workspace_package_names = list;
@@ -781,6 +798,20 @@ void MainWindow::package_files_process(const QString & dir)
     }
 }
 
+void MainWindow::on_tb_refresh_install_files_clicked()
+{
+    release_package_install_model();
+    package_install_timeout();
+}
+
+void MainWindow::release_package_install_model()
+{
+    QStandardItemModel * model = new QStandardItemModel(this);
+    ui->treeV_files->setModel(model);
+    delete package_install_model;
+    package_install_model = NULL;
+}
+
 void MainWindow::package_install_timeout()
 {
     if( ! package_install_dir.isRoot() && package_install_dir.exists()){
@@ -797,10 +828,7 @@ void MainWindow::package_install_timeout()
     }
     else{
         if(package_install_model){
-            QStandardItemModel * model = new QStandardItemModel(this);
-            ui->treeV_files->setModel(model);
-            delete package_install_model;
-            package_install_model = NULL;
+            release_package_install_model();
             ui->tb_open_install_dir->setEnabled(false);
         }
     }
@@ -1299,7 +1327,9 @@ bool MainWindow::create_build_files()
 
 void MainWindow::on_tb_build_up_to_clicked()
 {
-    create_build_files();
+    if( ! create_build_files())
+        return;
+
     QStringList build_steps;
     build_steps.append("--fetch");
     build_steps.append("--unpack");
@@ -1313,12 +1343,16 @@ void MainWindow::on_tb_build_up_to_clicked()
 void MainWindow::on_tb_build_only_clicked()
 {
     if(ui->combo_build_only->currentIndex() == 0){
-        create_build_files();
-        QMessageBox::information(this, tr("Build Successful"), tr("Build files created successfully."));
+        if(create_build_files()){
+            QMessageBox::information(this,
+                                     tr("Build Successful"),
+                                     tr("Build files created successfully."));
+        }
     }
     else if(ui->combo_build_only->currentIndex() == 1){
-        create_build_files();
-        call_pisi_build_command("--package");
+        if(create_build_files()){
+            call_pisi_build_command("--package");
+        }
     }
 }
 
@@ -1342,6 +1376,7 @@ void MainWindow::call_pisi_build_command(const QString &build_step)
             ;
     w_terminal->sendText(command);
 }
+
 
 
 

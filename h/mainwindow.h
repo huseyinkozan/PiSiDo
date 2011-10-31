@@ -49,6 +49,8 @@ private slots:
     void clear_tableW_history();
     void clear_archive_widgets();
 
+    void release_package_install_model();
+
     void on_action_Change_Workspace_triggered();
 
     void on_action_Open_PISI_Packaging_Dir_triggered();
@@ -115,6 +117,8 @@ private slots:
     void on_tb_build_only_clicked();
 
     void on_tb_build_all_clicked();
+
+    void on_tb_refresh_install_files_clicked();
 
 protected:
     virtual void closeEvent(QCloseEvent * event);

@@ -33,6 +33,7 @@
         <file alias="operations.png">images/operations.png</file>
         <file alias="open-dir-red.png">images/open-dir-red.png</file>
         <file alias="open-dir.png">images/open-dir.png</file>
+        <file alias="refresh.png">images/refresh.png</file>
     </qresource>
     <qresource prefix="/files">
         <file alias="pisido.svg">files/pisido.svg</file>

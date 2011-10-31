@@ -828,39 +828,7 @@ p, li { white-space: pre-wrap; }
    </attribute>
    <widget class="QWidget" name="dw_files_contents">
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="lbl_install_files">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Install</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3" colspan="2">
-      <widget class="QLabel" name="lbl_labels">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Labels</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" rowspan="3" colspan="2">
+     <item row="5" column="0" rowspan="3" colspan="2">
       <widget class="QTreeView" name="treeV_files">
        <property name="toolTip">
         <string>A successful build need for listing. Which will fill /var/pisi/__package_name__/install</string>
@@ -870,7 +838,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="1" column="3" rowspan="3" colspan="2">
+     <item row="5" column="3" rowspan="3" colspan="2">
       <widget class="QTableWidget" name="tableW_files">
        <property name="toolTip">
         <string>If none, a default will be added</string>
@@ -910,7 +878,7 @@ p, li { white-space: pre-wrap; }
        </column>
       </widget>
      </item>
-     <item row="3" column="5">
+     <item row="7" column="5">
       <widget class="QToolButton" name="tb_open_install_dir">
        <property name="enabled">
         <bool>false</bool>
@@ -930,7 +898,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="1" column="5">
+     <item row="5" column="5">
       <widget class="QToolButton" name="tb_delete_label">
        <property name="enabled">
         <bool>false</bool>
@@ -950,7 +918,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
+     <item row="6" column="2">
       <widget class="QToolButton" name="tb_add_label">
        <property name="enabled">
         <bool>true</bool>
@@ -970,7 +938,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="2" column="5">
+     <item row="6" column="5">
       <spacer name="verticalSpacer_5">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -982,6 +950,40 @@ p, li { white-space: pre-wrap; }
         </size>
        </property>
       </spacer>
+     </item>
+     <item row="3" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLineEdit" name="le_install_files_dir"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="tb_refresh_install_files">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/pisido.qrc">
+           <normaloff>:/images/refresh.png</normaloff>:/images/refresh.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="3" colspan="2">
+      <widget class="QLabel" name="lbl_labels">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Labels</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
