@@ -1,7 +1,8 @@
 #include "directorymodel.h"
 
-DirectoryModel::DirectoryModel(QObject *parent) :
-    QAbstractItemModel(parent)
+DirectoryModel::DirectoryModel(QDir rootDir, QObject *parent) :
+    QAbstractItemModel(parent),
+    rootDir(rootDir)
 {
 }
 
@@ -44,8 +45,8 @@ QVariant DirectoryModel::headerData(int section, Qt::Orientation orientation, in
 
 int DirectoryModel::rowCount(const QModelIndex &parent) const
 {
-    if(parent){
-        return 0; // file and folder count
+    if(parent.isValid()){
+        return 0; // return file and folder count
     }
     return 0;// invalid parent
 }
@@ -54,3 +55,18 @@ int DirectoryModel::columnCount(const QModelIndex &/*parent*/) const
 {
     return 1;
 }
+
+QModelIndex DirectoryModel::index(int row, int column, const QModelIndex &parent) const
+{
+    return QModelIndex();
+}
+
+QModelIndex DirectoryModel::parent(const QModelIndex &child) const
+{
+    return QModelIndex();
+}
+
+void DirectoryModel::refresh()
+{
+}
+
