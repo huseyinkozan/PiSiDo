@@ -969,10 +969,10 @@ p, li { white-space: pre-wrap; }
        <item>
         <widget class="QToolButton" name="tb_refresh_install_files">
          <property name="toolTip">
-          <string>Please refresh after successful build !</string>
+          <string>Please refresh after a successful build !</string>
          </property>
          <property name="statusTip">
-          <string>Please refresh after successful build !</string>
+          <string>Please refresh after a successful build !</string>
          </property>
          <property name="text">
           <string/>

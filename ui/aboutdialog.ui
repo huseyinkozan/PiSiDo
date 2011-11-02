@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>463</height>
+    <width>459</width>
+    <height>243</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,8 +50,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>555</width>
-        <height>310</height>
+        <width>441</width>
+        <height>90</height>
        </rect>
       </property>
       <attribute name="label">
@@ -106,8 +106,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>555</width>
-        <height>310</height>
+        <width>441</width>
+        <height>90</height>
        </rect>
       </property>
       <attribute name="label">
@@ -133,7 +133,17 @@
         </layout>
        </item>
        <item>
-        <widget class="QTreeView" name="treeView_test"/>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

@@ -39,17 +39,17 @@
         <translation>Çevirenler</translation>
     </message>
     <message>
-        <location filename="../ui/aboutdialog.ui" line="120"/>
+        <location filename="../ui/aboutdialog.ui" line="122"/>
         <source>Turkish</source>
         <translation>Türkçe</translation>
     </message>
     <message utf8="true">
-        <location filename="../ui/aboutdialog.ui" line="127"/>
+        <location filename="../ui/aboutdialog.ui" line="129"/>
         <source>Hüseyin Kozan &lt;posta@huseyinkozan.com.tr&gt;</source>
         <translation>Hüseyin Kozan &lt;posta@huseyinkozan.com.tr&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/aboutdialog.ui" line="166"/>
+        <location filename="../ui/aboutdialog.ui" line="170"/>
         <source>&amp;Close</source>
         <translation>&amp;Kapat</translation>
     </message>
@@ -467,6 +467,29 @@
     </message>
 </context>
 <context>
+    <name>DirectoryModel</name>
+    <message>
+        <location filename="../cpp/directorymodel.cpp" line="243"/>
+        <source>Name</source>
+        <translation>İsim</translation>
+    </message>
+    <message>
+        <location filename="../cpp/directorymodel.cpp" line="246"/>
+        <source>Permission</source>
+        <translation>Yetki</translation>
+    </message>
+    <message>
+        <location filename="../cpp/directorymodel.cpp" line="249"/>
+        <source>Size</source>
+        <translation>Boyut</translation>
+    </message>
+    <message>
+        <location filename="../cpp/directorymodel.cpp" line="252"/>
+        <source>Symlink</source>
+        <translation>Sembolik Bağlantı</translation>
+    </message>
+</context>
+<context>
     <name>LanguageDialog</name>
     <message>
         <location filename="../ui/languagedialog.ui" line="14"/>
@@ -492,7 +515,7 @@
         <translation>PiSiDo</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="783"/>
+        <location filename="../ui/mainwindow.ui" line="679"/>
         <source>Package</source>
         <translation>Paket</translation>
     </message>
@@ -534,7 +557,7 @@
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="458"/>
-        <location filename="../ui/mainwindow.ui" line="1149"/>
+        <location filename="../ui/mainwindow.ui" line="1066"/>
         <source>Name</source>
         <translation>İsim</translation>
     </message>
@@ -625,356 +648,334 @@
     <message>
         <location filename="../ui/mainwindow.ui" line="636"/>
         <location filename="../ui/mainwindow.ui" line="639"/>
-        <source>Menu Icon Window</source>
-        <translation>Menü Simgesi Penceresi</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="652"/>
-        <location filename="../ui/mainwindow.ui" line="655"/>
-        <source>Adds an icon (package_name.png) and a package_name.desktop file, which can be a menu icon</source>
-        <translation>Menü simgesi olabilecek bir simge ve desktop dosyası ekler (paket_adi.png, paket_adi.desktop)</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="658"/>
-        <source>Create Menu Icon</source>
-        <translation>Menü Simgesi Oluştur</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="670"/>
-        <location filename="../ui/mainwindow.ui" line="673"/>
-        <source>Desktop file contents</source>
-        <translation>Desktop dosyası içeriği</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="701"/>
-        <location filename="../ui/mainwindow.ui" line="704"/>
-        <source>Resets desktop file contents to the default values</source>
-        <translation>Desktop dosyası içeriğini önatımlı değere alır</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="740"/>
-        <location filename="../ui/mainwindow.ui" line="743"/>
         <source>Build Window</source>
         <translation>İnşa Penceresi</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="762"/>
+        <location filename="../ui/mainwindow.ui" line="658"/>
         <source>Build Commands</source>
         <translation>İnşa Komutları</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="770"/>
+        <location filename="../ui/mainwindow.ui" line="666"/>
         <source>Only</source>
         <translation>Sadece</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="778"/>
+        <location filename="../ui/mainwindow.ui" line="674"/>
         <source>Build Files</source>
         <translation>İnşa Dosyaları</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="791"/>
-        <location filename="../ui/mainwindow.ui" line="794"/>
+        <location filename="../ui/mainwindow.ui" line="687"/>
+        <location filename="../ui/mainwindow.ui" line="690"/>
         <source>Build only selected</source>
         <translation>Sadece seçileni inşa et</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="812"/>
+        <location filename="../ui/mainwindow.ui" line="708"/>
         <source>Up To</source>
         <translation>-e kadar</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="853"/>
-        <location filename="../ui/mainwindow.ui" line="856"/>
+        <location filename="../ui/mainwindow.ui" line="749"/>
+        <location filename="../ui/mainwindow.ui" line="752"/>
         <source>Build up to selected (see pisi help build)</source>
         <translation>Seçilen-e kadar inşa eder (bakın : pisi help build)</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="874"/>
+        <location filename="../ui/mainwindow.ui" line="770"/>
         <source>Build All</source>
         <translation>Hepsini İnşa Et</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="881"/>
-        <location filename="../ui/mainwindow.ui" line="884"/>
+        <location filename="../ui/mainwindow.ui" line="777"/>
+        <location filename="../ui/mainwindow.ui" line="780"/>
         <source>Create build files in to the package directory and builds package</source>
         <translation>Paket dizinine inşa dosyalarını oluştur ve inşa et</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="922"/>
-        <location filename="../ui/mainwindow.ui" line="925"/>
+        <location filename="../ui/mainwindow.ui" line="818"/>
+        <location filename="../ui/mainwindow.ui" line="821"/>
         <source>Install Files Window</source>
         <translation>Kurulan Dosyalar Penceresi</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="944"/>
-        <source>Install</source>
-        <translation>Kurulanlar</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="960"/>
+        <location filename="../ui/mainwindow.ui" line="997"/>
         <source>Labels</source>
         <translation>Etiketler</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="970"/>
-        <location filename="../ui/mainwindow.ui" line="973"/>
+        <location filename="../ui/mainwindow.ui" line="834"/>
+        <location filename="../ui/mainwindow.ui" line="837"/>
         <source>A successful build need for listing. Which will fill /var/pisi/__package_name__/install</source>
         <translation>Listeleme için (/var/pisi/__package_name__/install dizinini dolduracaktır) başarılı bir inşa gerekir</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="980"/>
-        <location filename="../ui/mainwindow.ui" line="983"/>
+        <location filename="../ui/mainwindow.ui" line="844"/>
+        <location filename="../ui/mainwindow.ui" line="847"/>
         <source>If none, a default will be added</source>
         <translation>Eğer belitrilmezse önatımlı değer kullanılır</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="999"/>
-        <location filename="../ui/mainwindow.ui" line="1278"/>
+        <location filename="../ui/mainwindow.ui" line="866"/>
+        <location filename="../ui/mainwindow.ui" line="1195"/>
         <source>File</source>
         <translation>Dosya</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1004"/>
+        <location filename="../ui/mainwindow.ui" line="871"/>
         <source>File Type</source>
         <translation>Dosya Türü</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1009"/>
+        <location filename="../ui/mainwindow.ui" line="876"/>
         <source>Permanent</source>
         <translation>Kalıcı</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1020"/>
-        <location filename="../ui/mainwindow.ui" line="1023"/>
+        <location filename="../ui/mainwindow.ui" line="942"/>
+        <location filename="../ui/mainwindow.ui" line="945"/>
         <source>Opens install directory (/var/pisi/__package_name__/install)</source>
         <translation>Kurulum dizinini açar (/var/pisi/__package_name__/install)</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1040"/>
-        <location filename="../ui/mainwindow.ui" line="1043"/>
+        <location filename="../ui/mainwindow.ui" line="887"/>
+        <location filename="../ui/mainwindow.ui" line="890"/>
         <source>Delete selected label</source>
         <translation>Seçili etiketi sil</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1060"/>
-        <location filename="../ui/mainwindow.ui" line="1063"/>
+        <location filename="../ui/mainwindow.ui" line="907"/>
+        <location filename="../ui/mainwindow.ui" line="910"/>
         <source>Add label</source>
         <translation>Etiket ekle</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1096"/>
-        <location filename="../ui/mainwindow.ui" line="1099"/>
+        <location filename="../ui/mainwindow.ui" line="962"/>
+        <location filename="../ui/mainwindow.ui" line="965"/>
+        <source>Directory of the installed files</source>
+        <translation>Kurulan dosyaların dizini</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="972"/>
+        <location filename="../ui/mainwindow.ui" line="975"/>
+        <source>Please refresh after a successful build !</source>
+        <translation>Başarılı bir inşa sonrasında tazeleyiniz !</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="1013"/>
+        <location filename="../ui/mainwindow.ui" line="1016"/>
         <source>Patches Window</source>
         <translation>Yama Penceresi</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1102"/>
+        <location filename="../ui/mainwindow.ui" line="1019"/>
         <source>Patches</source>
         <translation>Yamalar</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1112"/>
+        <location filename="../ui/mainwindow.ui" line="1029"/>
         <source>Add your patches to package files directory (workspace/__package_name__/files/).
 And than you can define priority in here.</source>
         <translation>Yamalarınızı paket dosyaları dizinine ekleyin (workspace/__package_name__/files/).
 Daha sonra buradan önceliği belirleyin.</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1116"/>
+        <location filename="../ui/mainwindow.ui" line="1033"/>
         <source>Add your patches to package files directory (workspace/__package_name__/files/). And than you can define priority in here.</source>
         <translation>Yamalarınızı paket dosyaları dizinine ekleyin (workspace/__package_name__/files/).Daha sonra buradan önceliği belirleyin.</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1144"/>
+        <location filename="../ui/mainwindow.ui" line="1061"/>
         <source>Level</source>
         <translation>Seviye</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1157"/>
-        <location filename="../ui/mainwindow.ui" line="1160"/>
+        <location filename="../ui/mainwindow.ui" line="1074"/>
+        <location filename="../ui/mainwindow.ui" line="1077"/>
         <source>Level decrease (will operate earlier)</source>
         <translation>Seviyeyi düşür (daha önce işlenir)</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1174"/>
-        <location filename="../ui/mainwindow.ui" line="1177"/>
+        <location filename="../ui/mainwindow.ui" line="1091"/>
+        <location filename="../ui/mainwindow.ui" line="1094"/>
         <source>Level increase (will operate later)</source>
         <translation>Seviyeyi arttır (daha sonra işlenir)</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1194"/>
-        <location filename="../ui/mainwindow.ui" line="1197"/>
+        <location filename="../ui/mainwindow.ui" line="1111"/>
+        <location filename="../ui/mainwindow.ui" line="1114"/>
         <source>Opens patch directory (workspace/__package_name__/files/)</source>
         <translation>Yama dizinini açar (workspace/__package_name__/files/)</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1230"/>
-        <location filename="../ui/mainwindow.ui" line="1233"/>
+        <location filename="../ui/mainwindow.ui" line="1147"/>
+        <location filename="../ui/mainwindow.ui" line="1150"/>
         <source>Aditional Files Window</source>
         <translation>Ek Dosyalar Penceresi</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1246"/>
+        <location filename="../ui/mainwindow.ui" line="1163"/>
         <source>Add your aditional files to package files directory (workspace/__package_name__/files/).
 And than you can edit their properties in here</source>
         <translation>Ek dosyalarınızı paket dosyaları dizinine ekleyin (workspace/__package_name__/files/).
 Daha sonra buradan önceliği belirleyin</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1250"/>
+        <location filename="../ui/mainwindow.ui" line="1167"/>
         <source>Add your aditional files to package files directory (workspace/__package_name__/files/).\nAnd than you can edit their properties in here</source>
         <translation>Ek dosyalarınızı paket dosyaları dizinine ekleyin (workspace/__package_name__/files/).Daha sonra buradan önceliği belirleyin</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1283"/>
+        <location filename="../ui/mainwindow.ui" line="1200"/>
         <source>Target</source>
         <translation>Hedef</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1288"/>
+        <location filename="../ui/mainwindow.ui" line="1205"/>
         <source>Permission</source>
         <translation>Yetki</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1293"/>
+        <location filename="../ui/mainwindow.ui" line="1210"/>
         <source>Owner</source>
         <translation>Sahibi</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1298"/>
+        <location filename="../ui/mainwindow.ui" line="1215"/>
         <source>Group</source>
         <translation>Grup</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1306"/>
-        <location filename="../ui/mainwindow.ui" line="1309"/>
+        <location filename="../ui/mainwindow.ui" line="1223"/>
+        <location filename="../ui/mainwindow.ui" line="1226"/>
         <source>Edits selected file</source>
         <translation>Seçilen dosyayı düzenle</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1326"/>
-        <location filename="../ui/mainwindow.ui" line="1329"/>
+        <location filename="../ui/mainwindow.ui" line="1243"/>
+        <location filename="../ui/mainwindow.ui" line="1246"/>
         <source>Opens aditional files directory (workspace/__package_name__/files/)</source>
         <translation>Ek dosyalar dizinini açar (workspace/__package_name__/files/)</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1358"/>
+        <location filename="../ui/mainwindow.ui" line="1275"/>
         <source>Operations Toolbar</source>
         <translation>İşlemler Araç Çubuğu</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1392"/>
+        <location filename="../ui/mainwindow.ui" line="1309"/>
         <source>Help Toolbar</source>
         <translation>Yardım Araç Çubuğu</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1419"/>
+        <location filename="../ui/mainwindow.ui" line="1336"/>
         <source>Exit</source>
         <translation>Çıkış</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1431"/>
+        <location filename="../ui/mainwindow.ui" line="1348"/>
         <source>&amp;Configure...</source>
         <translation>&amp;Yapılandır...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1434"/>
+        <location filename="../ui/mainwindow.ui" line="1351"/>
         <source>Configure Application</source>
         <translation>Uygulamayı Yapılandır</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1443"/>
+        <location filename="../ui/mainwindow.ui" line="1360"/>
         <source>A&amp;bout...</source>
         <translation>&amp;Hakkında...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1458"/>
+        <location filename="../ui/mainwindow.ui" line="1375"/>
         <source>About Qt</source>
         <translation>Qt Hakkında</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1467"/>
+        <location filename="../ui/mainwindow.ui" line="1384"/>
         <source>&amp;Help...</source>
         <translation>&amp;Yardım...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1482"/>
+        <location filename="../ui/mainwindow.ui" line="1399"/>
         <source>&amp;Actions API</source>
         <translation>&amp;Actions API</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1497"/>
+        <location filename="../ui/mainwindow.ui" line="1414"/>
         <source>&amp;PISI Spec</source>
         <translation>&amp;PISI Spec</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1500"/>
-        <location filename="../ui/mainwindow.ui" line="1503"/>
+        <location filename="../ui/mainwindow.ui" line="1417"/>
+        <location filename="../ui/mainwindow.ui" line="1420"/>
         <source>Opens PISI Spec web page</source>
         <translation>PISI Spec web sayfasını açar</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1512"/>
+        <location filename="../ui/mainwindow.ui" line="1429"/>
         <source>&amp;Language...</source>
         <translation>&amp;Lisan...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1572"/>
+        <location filename="../ui/mainwindow.ui" line="1489"/>
         <source>Open PP&amp;D</source>
         <translation>PP&amp;D Aç</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1575"/>
+        <location filename="../ui/mainwindow.ui" line="1492"/>
         <source>Open Pisi Packaging Directory</source>
         <translation>Pisi Paketleme Dizinini Aç</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1542"/>
+        <location filename="../ui/mainwindow.ui" line="1459"/>
         <source>&amp;Open WS</source>
         <translation>ÇA &amp;Aç</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1557"/>
+        <location filename="../ui/mainwindow.ui" line="1474"/>
         <source>&amp;Reset</source>
         <translation>&amp;Temizle</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1515"/>
-        <location filename="../ui/mainwindow.ui" line="1518"/>
+        <location filename="../ui/mainwindow.ui" line="1432"/>
+        <location filename="../ui/mainwindow.ui" line="1435"/>
         <source>Change Application Language</source>
         <translation>Uygulama Lisanını Değiştir</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1527"/>
+        <location filename="../ui/mainwindow.ui" line="1444"/>
         <source>Change &amp;WS</source>
         <translation>ÇA &amp;Değiştir</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1530"/>
-        <location filename="../ui/mainwindow.ui" line="1533"/>
+        <location filename="../ui/mainwindow.ui" line="1447"/>
+        <location filename="../ui/mainwindow.ui" line="1450"/>
         <source>Change Workspace</source>
         <translation>Çalışma Alanını Değiştir</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1545"/>
-        <location filename="../ui/mainwindow.ui" line="1548"/>
+        <location filename="../ui/mainwindow.ui" line="1462"/>
+        <location filename="../ui/mainwindow.ui" line="1465"/>
         <source>Open Workspace</source>
         <translation>Çalışma Alanını Aç</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1560"/>
-        <location filename="../ui/mainwindow.ui" line="1563"/>
+        <location filename="../ui/mainwindow.ui" line="1477"/>
+        <location filename="../ui/mainwindow.ui" line="1480"/>
         <source>Reset Fields</source>
-        <translation>Alanları Temizle</translation>
+        <translation>Bilgileri Temizle</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1578"/>
+        <location filename="../ui/mainwindow.ui" line="1495"/>
         <source>Open PISI Packaging Directory</source>
         <translation>PISI Paketleme Dizinini Aç</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="746"/>
+        <location filename="../ui/mainwindow.ui" line="642"/>
         <source>Build</source>
         <translation>İnşa Et</translation>
     </message>
@@ -1128,77 +1129,71 @@ p, li { white-space: pre-wrap; }
         <translation>İçe Aktarılmış</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="642"/>
-        <source>Menu</source>
-        <translation>Menü</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="928"/>
+        <location filename="../ui/mainwindow.ui" line="824"/>
         <source>Installs</source>
         <translation>Kurulanlar</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1236"/>
+        <location filename="../ui/mainwindow.ui" line="1153"/>
         <source>Aditionals</source>
         <translation>Ekler</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1378"/>
+        <location filename="../ui/mainwindow.ui" line="1295"/>
         <source>View Toolbar</source>
         <translation>Görünüm Araç Çubuğu</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1416"/>
+        <location filename="../ui/mainwindow.ui" line="1333"/>
         <source>E&amp;xit</source>
         <translation>&amp;Çıkış</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1422"/>
+        <location filename="../ui/mainwindow.ui" line="1339"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1470"/>
+        <location filename="../ui/mainwindow.ui" line="1387"/>
         <source>Help</source>
         <translation>Yardım</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1473"/>
+        <location filename="../ui/mainwindow.ui" line="1390"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1485"/>
-        <location filename="../ui/mainwindow.ui" line="1488"/>
+        <location filename="../ui/mainwindow.ui" line="1402"/>
+        <location filename="../ui/mainwindow.ui" line="1405"/>
         <source>Opens Actions API web page</source>
         <translation>Actions API web sayfasını açar</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1455"/>
+        <location filename="../ui/mainwindow.ui" line="1372"/>
         <source>About &amp;Qt...</source>
         <translation>&amp;Qt Hakkında...</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1446"/>
+        <location filename="../ui/mainwindow.ui" line="1363"/>
         <source>About</source>
         <translation>Hakkında</translation>
     </message>
     <message>
         <location filename="../cpp/mainwindow.cpp" line="222"/>
         <location filename="../cpp/mainwindow.cpp" line="253"/>
-        <location filename="../cpp/mainwindow.cpp" line="315"/>
-        <location filename="../cpp/mainwindow.cpp" line="1042"/>
-        <location filename="../cpp/mainwindow.cpp" line="1067"/>
-        <location filename="../cpp/mainwindow.cpp" line="1071"/>
-        <location filename="../cpp/mainwindow.cpp" line="1079"/>
-        <location filename="../cpp/mainwindow.cpp" line="1083"/>
+        <location filename="../cpp/mainwindow.cpp" line="323"/>
+        <location filename="../cpp/mainwindow.cpp" line="1052"/>
+        <location filename="../cpp/mainwindow.cpp" line="1077"/>
+        <location filename="../cpp/mainwindow.cpp" line="1081"/>
+        <location filename="../cpp/mainwindow.cpp" line="1089"/>
+        <location filename="../cpp/mainwindow.cpp" line="1093"/>
         <location filename="../cpp/mainwindow.cpp" line="1279"/>
         <location filename="../cpp/mainwindow.cpp" line="1283"/>
         <location filename="../cpp/mainwindow.cpp" line="1290"/>
         <location filename="../cpp/mainwindow.cpp" line="1294"/>
         <location filename="../cpp/mainwindow.cpp" line="1298"/>
-        <location filename="../cpp/mainwindow.cpp" line="1365"/>
-        <location filename="../cpp/mainwindow.cpp" line="1393"/>
+        <location filename="../cpp/mainwindow.cpp" line="1371"/>
         <source>Error</source>
         <translation>Hata</translation>
     </message>
@@ -1208,55 +1203,65 @@ p, li { white-space: pre-wrap; }
         <translation>%1 kaynağı açılamıyor !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1042"/>
+        <location filename="../cpp/mainwindow.cpp" line="1052"/>
         <source>Can not open file for reading !</source>
         <translation>Dosya okuma için açılamıyor !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="87"/>
-        <location filename="../cpp/mainwindow.cpp" line="88"/>
-        <location filename="../cpp/mainwindow.cpp" line="89"/>
+        <location filename="../cpp/mainwindow.cpp" line="84"/>
+        <location filename="../cpp/mainwindow.cpp" line="85"/>
+        <location filename="../cpp/mainwindow.cpp" line="86"/>
         <source>Show or hide %1</source>
         <translation>%1&apos;nu Göster veya Gizle</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="315"/>
+        <location filename="../cpp/mainwindow.cpp" line="170"/>
+        <source>No Workspace</source>
+        <translation>Çalışma Alanı Yok</translation>
+    </message>
+    <message>
+        <location filename="../cpp/mainwindow.cpp" line="171"/>
+        <source>Workspace does not exists !</source>
+        <translation>Çalışma Alanı mevcut değil !</translation>
+    </message>
+    <message>
+        <location filename="../cpp/mainwindow.cpp" line="323"/>
         <source>There are no translation files in : %1</source>
         <translation>%1 içinde çeviri dosyaları yok</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="402"/>
+        <location filename="../cpp/mainwindow.cpp" line="410"/>
         <source>http://developer.pardus.org.tr/guides/packaging/actionsapi/index.html</source>
         <translation>http://developer.pardus.org.tr/guides/packaging/actionsapi/index.html</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="403"/>
+        <location filename="../cpp/mainwindow.cpp" line="411"/>
         <source>http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng</source>
         <translation>http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="480"/>
+        <location filename="../cpp/mainwindow.cpp" line="481"/>
         <location filename="../cpp/mainwindow.cpp" line="1201"/>
         <source>Error at conversion release string to integer !</source>
         <translation>Sürüm yazısını tam sayıya çevirmede hata !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="933"/>
+        <location filename="../cpp/mainwindow.cpp" line="943"/>
         <source>True</source>
         <translation>Evet</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="933"/>
+        <location filename="../cpp/mainwindow.cpp" line="943"/>
         <source>False</source>
         <translation>Hayır</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1054"/>
+        <location filename="../cpp/mainwindow.cpp" line="1064"/>
         <source>Parse Error</source>
         <translation>Ayrıştırma Hatası</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1055"/>
+        <location filename="../cpp/mainwindow.cpp" line="1065"/>
         <source>XML Parse Error : 
 %1
 Line:%2, Column:%3</source>
@@ -1265,33 +1270,33 @@ Line:%2, Column:%3</source>
 Satır:%2, Sütun:%3</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1067"/>
+        <location filename="../cpp/mainwindow.cpp" line="1077"/>
         <source>An error occured while parsing xml file : %1</source>
         <translation>%1 XML dosyasını ayrıştırırken hata oluştu</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1071"/>
-        <location filename="../cpp/mainwindow.cpp" line="1083"/>
+        <location filename="../cpp/mainwindow.cpp" line="1081"/>
+        <location filename="../cpp/mainwindow.cpp" line="1093"/>
         <source>Unknownt exception !</source>
         <translation>Bilinmeyen istisna !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1079"/>
+        <location filename="../cpp/mainwindow.cpp" line="1089"/>
         <source>An error occured while filling fields: %1</source>
         <translation>Şu alanları doldururken hata vuku buldu : %1</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1094"/>
+        <location filename="../cpp/mainwindow.cpp" line="1104"/>
         <source>Empty pisi file, import pspec.xml before use !</source>
         <translation>Boş pisi dosyası. kullanmadan önce pspec.xml dosyasını içe aktar !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1145"/>
+        <location filename="../cpp/mainwindow.cpp" line="1155"/>
         <source>Warning</source>
         <translation>Uyarı</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1146"/>
+        <location filename="../cpp/mainwindow.cpp" line="1156"/>
         <source>Package name is not same with source name in the pspec.xml file !
 Application does not support multiple packages !
 Process will stop.</source>
@@ -1331,11 +1336,6 @@ Uygulama birden fazla paketi desteklemiyor !
         <translation>Paket dizini içine files dizini oluşturulamadı !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1303"/>
-        <source>Created by %1 %2</source>
-        <translation>%1 %2 ile oluşturuldu</translation>
-    </message>
-    <message>
         <location filename="../cpp/mainwindow.cpp" line="1319"/>
         <source>Actions API File</source>
         <translation>Actions API Dosyası</translation>
@@ -1346,29 +1346,19 @@ Uygulama birden fazla paketi desteklemiyor !
         <translation>Actions.py boş !</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1347"/>
+        <location filename="../cpp/mainwindow.cpp" line="1350"/>
         <source>Build Successful</source>
         <translation>İnşa Başarılı</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1347"/>
+        <location filename="../cpp/mainwindow.cpp" line="1351"/>
         <source>Build files created successfully.</source>
         <translation>İnşa dosyaları başarıyla oluşturuldu.</translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1365"/>
+        <location filename="../cpp/mainwindow.cpp" line="1371"/>
         <source>There is no PSPEC file : %1 </source>
         <translation>Şu PSPEC dosyası yok : %1</translation>
-    </message>
-    <message>
-        <location filename="../cpp/mainwindow.cpp" line="1405"/>
-        <source>Delete Menu Files</source>
-        <translation>Menü Dosyalarını Sil</translation>
-    </message>
-    <message>
-        <location filename="../cpp/mainwindow.cpp" line="1406"/>
-        <source>You disabled menu. Do you want to delete menu files (.desktop and .png file) ?</source>
-        <translation>Menü simgesini iptal ettiniz. Menü dosyalarını (.desktop ve .png dosyasını) silmek istiyor musunuz ?</translation>
     </message>
     <message>
         <location filename="../cpp/mainwindow.cpp" line="1183"/>
@@ -1377,7 +1367,6 @@ Uygulama birden fazla paketi desteklemiyor !
     </message>
     <message>
         <location filename="../cpp/mainwindow.cpp" line="253"/>
-        <location filename="../cpp/mainwindow.cpp" line="1393"/>
         <source>Can not open %1 file to write.</source>
         <translation>%1 dosyası yazmak için açılamadı.</translation>
     </message>
@@ -1509,7 +1498,7 @@ Uygulama birden fazla paketi desteklemiyor !
         <translation>%1 etiketi yok !</translation>
     </message>
     <message>
-        <location filename="../cpp/pisipackage.cpp" line="292"/>
+        <location filename="../cpp/pisipackage.cpp" line="294"/>
         <source>Wrong files atribute name : %1</source>
         <translation>Yanlış Files özellik adı : %1</translation>
     </message>

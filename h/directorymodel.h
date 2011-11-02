@@ -40,6 +40,7 @@ private:
     void setupModelData(const QDir & dir, FileSystemItem * parentItem);
     QList<QVariant> generateData(const QDir & dir);
     QList<QVariant> generateData(const QFile & dir);
+    FileSystemItem * getItem(const QModelIndex & index) const;
 };
 
 #endif // DIRECTORYMODEL_H

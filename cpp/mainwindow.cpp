@@ -168,7 +168,7 @@ MainWindow::MainWindow(QWidget *parent) :
     if( ! workspace_dir.exists()){
         QMessageBox::critical(this,
                               tr("No Workspace"),
-                              tr("The workspace no exists !"));
+                              tr("Workspace does not exists !"));
         not_ask_workspace = false;
         write_settings();
         QTimer::singleShot(0, qApp, SLOT(quit()));

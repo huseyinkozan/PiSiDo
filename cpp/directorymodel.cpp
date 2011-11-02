@@ -94,12 +94,16 @@ void DirectoryModel::setRootDirectory(const QDir &dir)
 
 void DirectoryModel::refresh()
 {
-    if(rootItem)
-        delete rootItem;
+    FileSystemItem * oldRootItem = rootItem;
 
-    rootItem = new FileSystemItem(
+    FileSystemItem * newRootItem = new FileSystemItem(
                 generateData(rootDir), FileSystemItem::DIRECTORY);
-    setupModelData(rootDir, rootItem);
+    setupModelData(rootDir, newRootItem);
+    rootItem = newRootItem;
+    reset();
+
+    if(oldRootItem)
+        delete oldRootItem;
 }
 
 QList<QVariant> DirectoryModel::generateData(const QDir &dir)
@@ -158,17 +162,22 @@ void DirectoryModel::setupModelData(const QDir &dir, FileSystemItem *parentItem)
     }
 }
 
+FileSystemItem * DirectoryModel::getItem(const QModelIndex &index) const
+{
+    if(index.isValid()){
+        return static_cast<FileSystemItem*>(index.internalPointer());
+    }
+    else{
+        return rootItem;
+    }
+}
+
 QModelIndex DirectoryModel::index(int row, int column, const QModelIndex &parent) const
 {
     if( ! hasIndex(row, column, parent))
         return QModelIndex();
 
-    FileSystemItem * parentItem;
-    if(parent.isValid())
-        parentItem = static_cast<FileSystemItem*>(parent.internalPointer());
-    else
-        parentItem = rootItem;
-
+    FileSystemItem * parentItem = getItem(parent);
     FileSystemItem * childItem = parentItem->child(row);
     if(childItem)
         return createIndex(row, column, childItem);
@@ -180,8 +189,8 @@ QModelIndex DirectoryModel::parent(const QModelIndex &child) const
 {
     if( ! child.isValid())
         return QModelIndex();
-    FileSystemItem * childItem =
-            static_cast<FileSystemItem*>(child.internalPointer());
+
+    FileSystemItem * childItem = getItem(child);
     FileSystemItem * parentItem = childItem->parent();
 
     if(parentItem == rootItem)
@@ -202,8 +211,7 @@ QVariant DirectoryModel::data(const QModelIndex &index, int role) const
     if( ! index.isValid())
         return QVariant();
 
-    FileSystemItem * item =
-            static_cast<FileSystemItem*>(index.internalPointer());
+    FileSystemItem * item = getItem(index);
 
     if(role == Qt::DisplayRole){
         return item->data(index.column());
@@ -249,23 +257,13 @@ QVariant DirectoryModel::headerData(int section, Qt::Orientation orientation, in
 
 int DirectoryModel::rowCount(const QModelIndex &parent) const
 {
-    FileSystemItem * parentItem;
-    if(parent.isValid())
-        parentItem = static_cast<FileSystemItem*>(parent.internalPointer());
-    else
-        parentItem = rootItem;
-
+    FileSystemItem * parentItem = getItem(parent);
     return parentItem->childCount();
 }
 
 int DirectoryModel::columnCount(const QModelIndex &parent) const
 {
-    FileSystemItem * parentItem;
-    if(parent.isValid())
-        parentItem = static_cast<FileSystemItem*>(parent.internalPointer());
-    else
-        parentItem = rootItem;
-
+    FileSystemItem * parentItem = getItem(parent);
     return parentItem->columnCount();
 }
 
