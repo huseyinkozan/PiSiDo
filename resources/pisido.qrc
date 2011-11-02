@@ -34,7 +34,6 @@
         <file alias="open-dir-red.png">images/open-dir-red.png</file>
         <file alias="open-dir.png">images/open-dir.png</file>
         <file alias="refresh.png">images/refresh.png</file>
-        <file alias="folder-open.png">images/folder-open.png</file>
         <file alias="folder.png">images/folder.png</file>
         <file alias="file.png">images/file.png</file>
     </qresource>
