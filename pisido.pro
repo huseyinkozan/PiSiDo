@@ -91,7 +91,8 @@ SOURCES += \
     cpp/archiveselectiondialog.cpp \
     cpp/archivewidget.cpp \
     cpp/aboutdialog.cpp \
-    cpp/directorymodel.cpp
+    cpp/directorymodel.cpp \
+    translationwidget.cpp
 
 HEADERS += \
     h/pchs.h \
@@ -112,7 +113,8 @@ HEADERS += \
     h/archivewidget.h \
     h/aboutdialog.h \
     h/multicompleter.h \
-    h/directorymodel.h
+    h/directorymodel.h \
+    translationwidget.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -124,7 +126,8 @@ FORMS += \
     ui/addinstallfilelabeldialog.ui \
     ui/archiveselectiondialog.ui \
     ui/archivewidget.ui \
-    ui/aboutdialog.ui
+    ui/aboutdialog.ui \
+    translationwidget.ui
 
 TRANSLATIONS += \
     translations/pisido_en_US.ts \
