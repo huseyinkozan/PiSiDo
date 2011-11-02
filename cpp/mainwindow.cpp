@@ -905,8 +905,7 @@ void MainWindow::on_tb_add_label_clicked()
     QModelIndexList list = ui->treeV_files->selectionModel()->selectedRows(0);
     if(list.count() != 1)
         return;
-    QAbstractItemModel * a_model = ui->treeV_files->model();
-    QFileSystemModel * model = qobject_cast<QFileSystemModel *>(a_model);
+    DirectoryModel * model = qobject_cast<DirectoryModel*>(ui->treeV_files->model());
     if(model){
         bool is_dir = model->isDir(list.first());
         QString path = model->filePath(list.first()).remove(package_install_dir.absolutePath());
@@ -1084,6 +1083,7 @@ void MainWindow::on_tb_import_package_clicked()
         }
 
         on_le_package_name_textChanged(ui->le_package_name->text());  // to fill package install directory tree
+        on_tb_refresh_install_files_clicked();
     }
 }
 
@@ -1360,16 +1360,16 @@ void MainWindow::call_pisi_build_command(const QString &build_step)
         QMessageBox::critical(this, tr("Error"), tr("There is no PSPEC file : %1 ").arg(pspec_file));
         return;
     }
+    DirectoryModel * model = qobject_cast<DirectoryModel*>(ui->treeV_files->model());
+    if(model){
+        model->clear();
+    }
     QString command = QString("pkexec --user root pisi build %1 %2 --output-dir %3 \n")
             .arg(pspec_file)
             .arg(build_step)
             .arg(workspace_dir.absolutePath())
             ;
     w_terminal->sendText(command);
-    DirectoryModel * model = qobject_cast<DirectoryModel*>(ui->treeV_files->model());
-    if(model){
-        model->clear();
-    }
 }
 
 
