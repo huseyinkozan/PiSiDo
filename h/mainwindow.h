@@ -10,6 +10,7 @@
 
 #include "pisi.h"
 #include "archivewidget.h"
+#include "translationwidget.h"
 
 namespace Ui {
     class MainWindow;
@@ -35,6 +36,7 @@ private slots:
 
     void append_archive(const QString & archive, const QString & sha1);
     void delete_archive(ArchiveWidget *);
+    void delete_translation(TranslationWidget *);
 
     void append_file(const QString & path, const QString & file_type, bool permanent);
 
@@ -46,6 +48,7 @@ private slots:
     void clear_tableW_aditional_files();
     void clear_tableW_history();
     void clear_archive_widgets();
+    void clear_translation_widgets();
 
     void on_action_Change_Workspace_triggered();
 
@@ -120,6 +123,8 @@ private slots:
 
     void on_tb_refresh_tableW_aditional_files_clicked();
 
+    void on_tb_add_translation_clicked();
+
 protected:
     virtual void closeEvent(QCloseEvent * event);
 
@@ -142,6 +147,7 @@ private:
     QDir package_install_dir;
 
     QList<ArchiveWidget *> archive_widgets;
+    QList<TranslationWidget *> translation_widgets;
     QTimer * workspace_dir_timer;
     QStringList workspace_package_names;
 

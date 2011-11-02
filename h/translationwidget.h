@@ -22,7 +22,7 @@ public:
     QString get_language();
 
 signals:
-    void delete_me(ArchiveWidget *);
+    void delete_me(TranslationWidget *);
 
 private slots:
     void on_tb_delete_clicked();

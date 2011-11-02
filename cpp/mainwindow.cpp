@@ -148,6 +148,18 @@ MainWindow::MainWindow(QWidget *parent) :
     DirectoryModel * model = new DirectoryModel(QDir("/invaliddirectory"),this);
     ui->treeV_files->setModel(model);
 
+    // fill translation list
+    QStringList language_list;
+    for (int i = 0; i < QLocale::LastLanguage; ++i) {
+        QString language = QLocale::languageToString((QLocale::Language) i);
+        if( ! language.isEmpty()){
+            if( ! language_list.contains(language))
+                language_list.append(language);
+        }
+    }
+    language_list.sort();
+    ui->combo_translation->addItems(language_list);
+
     read_settings();
 
     if( ! not_ask_workspace){
@@ -1019,7 +1031,6 @@ void MainWindow::append_archive(const QString &archive, const QString &sha1)
     connect(a_w, SIGNAL(delete_me(ArchiveWidget*)), this, SLOT(delete_archive(ArchiveWidget*)));
     archive_widgets.append(a_w);
     w_layout->addWidget(a_w);
-
 }
 
 void MainWindow::delete_archive(ArchiveWidget * a_w)
@@ -1033,6 +1044,38 @@ void MainWindow::clear_archive_widgets()
 {
     foreach (ArchiveWidget * a_w, archive_widgets) {
         delete_archive(a_w);
+    }
+}
+
+void MainWindow::on_tb_add_translation_clicked()
+{
+    QVBoxLayout * w_layout = qobject_cast<QVBoxLayout *>(ui->w_translation_base->layout());
+    if( ! w_layout){
+        w_layout = new QVBoxLayout;
+        w_layout->setMargin(1);
+        w_layout->setSpacing(1);
+        ui->w_translation_base->setLayout(w_layout);
+    }
+    TranslationWidget * t_w = new TranslationWidget(
+                ui->w_translation_base,
+                ui->combo_translation->currentText()
+                );
+    connect(t_w, SIGNAL(delete_me(TranslationWidget*)), this, SLOT(delete_translation(TranslationWidget*)));
+    translation_widgets.append(t_w);
+    w_layout->addWidget(t_w);
+}
+
+void MainWindow::delete_translation(TranslationWidget * t_w)
+{
+    disconnect(t_w, SIGNAL(delete_me(TranslationWidget*)), this, SLOT(delete_translation(TranslationWidget*)));
+    translation_widgets.removeAt(translation_widgets.indexOf(t_w));
+    delete t_w;
+}
+
+void MainWindow::clear_translation_widgets()
+{
+    foreach (TranslationWidget * t_w, translation_widgets) {
+        delete_translation(t_w);
     }
 }
 
@@ -1377,6 +1420,7 @@ void MainWindow::call_pisi_build_command(const QString &build_step)
             ;
     w_terminal->sendText(command);
 }
+
 
 
 

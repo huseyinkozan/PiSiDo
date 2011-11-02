@@ -92,7 +92,7 @@ SOURCES += \
     cpp/archivewidget.cpp \
     cpp/aboutdialog.cpp \
     cpp/directorymodel.cpp \
-    translationwidget.cpp
+    cpp/translationwidget.cpp
 
 HEADERS += \
     h/pchs.h \
@@ -114,7 +114,7 @@ HEADERS += \
     h/aboutdialog.h \
     h/multicompleter.h \
     h/directorymodel.h \
-    translationwidget.h
+    h/translationwidget.h
 
 FORMS += \
     ui/mainwindow.ui \
@@ -127,7 +127,7 @@ FORMS += \
     ui/archiveselectiondialog.ui \
     ui/archivewidget.ui \
     ui/aboutdialog.ui \
-    translationwidget.ui
+    ui/translationwidget.ui
 
 TRANSLATIONS += \
     translations/pisido_en_US.ts \
