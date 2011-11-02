@@ -14,8 +14,6 @@
 #include <QTimer>
 #include <QShortcut>
 #include <QFileSystemWatcher>
-#include <QFileSystemModel>
-#include <QStandardItemModel>
 #include <QDirIterator>
 
 #include <Qsci/qsciscintilla.h>
@@ -29,6 +27,7 @@
 #include "aditionalfiledialog.h"
 #include "archiveselectiondialog.h"
 #include "configurationdialog.h"
+#include "directorymodel.h"
 #include "languagedialog.h"
 #include "workspacedialog.h"
 #include "multicompleter.h"
@@ -44,8 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     workspace_dir(QDir::root()),
     package_dir(QDir::root()),
     package_files_dir(QDir::root()),
-    package_install_dir(QDir::root()),
-    package_install_model(NULL)
+    package_install_dir(QDir::root())
 {
     ui->setupUi(this);
 
@@ -151,6 +149,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     package_files_watcher = new QFileSystemWatcher(this);
     connect(package_files_watcher, SIGNAL(directoryChanged(QString)), SLOT(package_files_changed()));
+
+    DirectoryModel * model = new DirectoryModel(QDir("/invaliddirectory"),this);
+    ui->treeV_files->setModel(model);
 
     read_settings();
 
@@ -465,6 +466,13 @@ void MainWindow::on_action_Reset_Fields_triggered()
 
     clear_tableW_files();
     files.clear();
+
+    DirectoryModel * model = qobject_cast<DirectoryModel*>(ui->treeV_files->model());
+    if(model){
+        model->clear();
+    }
+
+
 
     pisi.clear();
     dom_pspec.clear();
@@ -805,35 +813,16 @@ void MainWindow::package_files_process(const QString & dir)
 
 void MainWindow::on_tb_refresh_install_files_clicked()
 {
-
-    // TODO : fill the tree by hand !!!
-
-    release_package_install_model();
-
-    if( ! package_install_dir.isRoot() && package_install_dir.exists()){
-        if(package_install_model == NULL){
-            package_install_model = new QFileSystemModel(this);
-            package_install_model->setReadOnly(true);
-            package_install_model->setRootPath(package_install_dir.absolutePath());
-            ui->treeV_files->setModel(package_install_model);
-            ui->treeV_files->setRootIndex(package_install_model->index(package_install_dir.absolutePath()));
-            ui->treeV_files->expandAll();
+    DirectoryModel * model = qobject_cast<DirectoryModel *>(ui->treeV_files->model());
+    if(model){
+        if( ! package_install_dir.isRoot() && package_install_dir.exists()){
+            model->setRootDirectory(package_install_dir);
             QTimer::singleShot(500, ui->treeV_files, SLOT(expandAll()));
         }
-    }
-    else{
-        if(package_install_model){
-            release_package_install_model();
+        else{
+            model->clear();
         }
     }
-}
-
-void MainWindow::release_package_install_model()
-{
-    QStandardItemModel * model = new QStandardItemModel(this);
-    ui->treeV_files->setModel(model);
-    delete package_install_model;
-    package_install_model = NULL;
 }
 
 void MainWindow::on_tb_patch_down_clicked()
@@ -1377,6 +1366,10 @@ void MainWindow::call_pisi_build_command(const QString &build_step)
             .arg(workspace_dir.absolutePath())
             ;
     w_terminal->sendText(command);
+    DirectoryModel * model = qobject_cast<DirectoryModel*>(ui->treeV_files->model());
+    if(model){
+        model->clear();
+    }
 }
 
 

@@ -33,6 +33,7 @@ signals:
 public slots:
     void setRootDirectory(const QDir & dir);
     void refresh();
+    void clear();
 
 private:
     QDir rootDir;

@@ -114,6 +114,12 @@ void DirectoryModel::refresh()
         delete oldRootItem;
 }
 
+void DirectoryModel::clear()
+{
+    rootDir = QDir("/invaliddirectory");
+    refresh();
+}
+
 QList<QVariant> DirectoryModel::generateData(const QDir &dir)
 {
     QList<QVariant> data;

@@ -18,7 +18,6 @@ namespace Ui {
 class QsciScintilla;
 class QsciLexerPython;
 class QFileSystemWatcher;
-class QFileSystemModel;
 class QTermWidget;
 
 class MainWindow : public QMainWindow
@@ -47,8 +46,6 @@ private slots:
     void clear_tableW_aditional_files();
     void clear_tableW_history();
     void clear_archive_widgets();
-
-    void release_package_install_model();
 
     void on_action_Change_Workspace_triggered();
 
@@ -141,7 +138,6 @@ private:
     QDir package_install_dir;
 
     QFileSystemWatcher * package_files_watcher;
-    QFileSystemModel * package_install_model;
     QList<ArchiveWidget *> archive_widgets;
     QTimer * workspace_dir_timer;
     QStringList workspace_package_names;
