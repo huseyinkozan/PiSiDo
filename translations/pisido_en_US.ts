@@ -469,22 +469,22 @@
 <context>
     <name>DirectoryModel</name>
     <message>
-        <location filename="../cpp/directorymodel.cpp" line="243"/>
+        <location filename="../cpp/directorymodel.cpp" line="259"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/directorymodel.cpp" line="246"/>
+        <location filename="../cpp/directorymodel.cpp" line="262"/>
         <source>Permission</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/directorymodel.cpp" line="249"/>
+        <location filename="../cpp/directorymodel.cpp" line="265"/>
         <source>Size</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/directorymodel.cpp" line="252"/>
+        <location filename="../cpp/directorymodel.cpp" line="268"/>
         <source>Symlink</source>
         <translation></translation>
     </message>
@@ -1171,189 +1171,189 @@ And than you can edit their properties in here</source>
         <translation></translation>
     </message>
     <message>
+        <location filename="../cpp/mainwindow.cpp" line="82"/>
+        <location filename="../cpp/mainwindow.cpp" line="83"/>
         <location filename="../cpp/mainwindow.cpp" line="84"/>
-        <location filename="../cpp/mainwindow.cpp" line="85"/>
-        <location filename="../cpp/mainwindow.cpp" line="86"/>
         <source>Show or hide %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="170"/>
+        <location filename="../cpp/mainwindow.cpp" line="171"/>
         <source>No Workspace</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="171"/>
+        <location filename="../cpp/mainwindow.cpp" line="172"/>
         <source>Workspace does not exists !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="222"/>
-        <location filename="../cpp/mainwindow.cpp" line="253"/>
-        <location filename="../cpp/mainwindow.cpp" line="323"/>
-        <location filename="../cpp/mainwindow.cpp" line="1052"/>
+        <location filename="../cpp/mainwindow.cpp" line="223"/>
+        <location filename="../cpp/mainwindow.cpp" line="254"/>
+        <location filename="../cpp/mainwindow.cpp" line="324"/>
+        <location filename="../cpp/mainwindow.cpp" line="1040"/>
+        <location filename="../cpp/mainwindow.cpp" line="1065"/>
+        <location filename="../cpp/mainwindow.cpp" line="1069"/>
         <location filename="../cpp/mainwindow.cpp" line="1077"/>
         <location filename="../cpp/mainwindow.cpp" line="1081"/>
-        <location filename="../cpp/mainwindow.cpp" line="1089"/>
-        <location filename="../cpp/mainwindow.cpp" line="1093"/>
+        <location filename="../cpp/mainwindow.cpp" line="1268"/>
+        <location filename="../cpp/mainwindow.cpp" line="1272"/>
         <location filename="../cpp/mainwindow.cpp" line="1279"/>
         <location filename="../cpp/mainwindow.cpp" line="1283"/>
-        <location filename="../cpp/mainwindow.cpp" line="1290"/>
-        <location filename="../cpp/mainwindow.cpp" line="1294"/>
-        <location filename="../cpp/mainwindow.cpp" line="1298"/>
-        <location filename="../cpp/mainwindow.cpp" line="1371"/>
+        <location filename="../cpp/mainwindow.cpp" line="1287"/>
+        <location filename="../cpp/mainwindow.cpp" line="1360"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="222"/>
+        <location filename="../cpp/mainwindow.cpp" line="223"/>
         <source>Can not open &quot;%1&quot; resource !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="253"/>
+        <location filename="../cpp/mainwindow.cpp" line="254"/>
         <source>Can not open %1 file to write.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="323"/>
+        <location filename="../cpp/mainwindow.cpp" line="324"/>
         <source>There are no translation files in : %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="410"/>
+        <location filename="../cpp/mainwindow.cpp" line="411"/>
         <source>http://developer.pardus.org.tr/guides/packaging/actionsapi/index.html</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="411"/>
+        <location filename="../cpp/mainwindow.cpp" line="412"/>
         <source>http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="481"/>
-        <location filename="../cpp/mainwindow.cpp" line="1201"/>
+        <location filename="../cpp/mainwindow.cpp" line="489"/>
+        <location filename="../cpp/mainwindow.cpp" line="1190"/>
         <source>Error at conversion release string to integer !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="943"/>
+        <location filename="../cpp/mainwindow.cpp" line="931"/>
         <source>True</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="943"/>
+        <location filename="../cpp/mainwindow.cpp" line="931"/>
         <source>False</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1052"/>
+        <location filename="../cpp/mainwindow.cpp" line="1040"/>
         <source>Can not open file for reading !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1064"/>
+        <location filename="../cpp/mainwindow.cpp" line="1052"/>
         <source>Parse Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1065"/>
+        <location filename="../cpp/mainwindow.cpp" line="1053"/>
         <source>XML Parse Error : 
 %1
 Line:%2, Column:%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1077"/>
+        <location filename="../cpp/mainwindow.cpp" line="1065"/>
         <source>An error occured while parsing xml file : %1</source>
         <translation></translation>
     </message>
     <message>
+        <location filename="../cpp/mainwindow.cpp" line="1069"/>
         <location filename="../cpp/mainwindow.cpp" line="1081"/>
-        <location filename="../cpp/mainwindow.cpp" line="1093"/>
         <source>Unknownt exception !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1089"/>
+        <location filename="../cpp/mainwindow.cpp" line="1077"/>
         <source>An error occured while filling fields: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1104"/>
+        <location filename="../cpp/mainwindow.cpp" line="1093"/>
         <source>Empty pisi file, import pspec.xml before use !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1155"/>
+        <location filename="../cpp/mainwindow.cpp" line="1144"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1156"/>
+        <location filename="../cpp/mainwindow.cpp" line="1145"/>
         <source>Package name is not same with source name in the pspec.xml file !
 Application does not support multiple packages !
 Process will stop.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1183"/>
+        <location filename="../cpp/mainwindow.cpp" line="1172"/>
         <source>Package build information successfully imported.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1193"/>
+        <location filename="../cpp/mainwindow.cpp" line="1182"/>
         <source>Please define an update in history !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1279"/>
+        <location filename="../cpp/mainwindow.cpp" line="1268"/>
         <source>An error occured while filling pisi from fields :
  %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1283"/>
+        <location filename="../cpp/mainwindow.cpp" line="1272"/>
         <source>Unknownt exception while filling pisi from fields !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1290"/>
+        <location filename="../cpp/mainwindow.cpp" line="1279"/>
         <source>Empty package name !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1294"/>
+        <location filename="../cpp/mainwindow.cpp" line="1283"/>
         <source>Can not create package directory in workspace !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1298"/>
+        <location filename="../cpp/mainwindow.cpp" line="1287"/>
         <source>Can not create files directory in package directory !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1319"/>
+        <location filename="../cpp/mainwindow.cpp" line="1308"/>
         <source>Actions API File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1319"/>
+        <location filename="../cpp/mainwindow.cpp" line="1308"/>
         <source>Actions.py is empty !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1350"/>
+        <location filename="../cpp/mainwindow.cpp" line="1339"/>
         <source>Build Successful</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1351"/>
+        <location filename="../cpp/mainwindow.cpp" line="1340"/>
         <source>Build files created successfully.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1371"/>
+        <location filename="../cpp/mainwindow.cpp" line="1360"/>
         <source>There is no PSPEC file : %1 </source>
         <translation></translation>
     </message>
