@@ -24,7 +24,9 @@ public:
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
 
-
+    bool isDir(const QModelIndex &index);
+    bool isFile(const QModelIndex &index);
+    QString filePath(const QModelIndex &index);
 
 signals:
 

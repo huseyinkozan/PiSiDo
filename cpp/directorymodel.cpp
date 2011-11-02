@@ -9,24 +9,26 @@ public:
     enum ItemType {DIRECTORY, FILE};
 
     FileSystemItem(
+        const QString & path,
         const QList<QVariant> & data,
         ItemType type,
         FileSystemItem * parent = 0)
     {
+        itemPath = path;
         itemData = data;
         itemType = type;
         parentItem = parent;
     }
-    FileSystemItem(FileSystemItem * parent = 0){
-        parentItem = parent;
-        itemType = FILE;
+    FileSystemItem(){
+        itemPath = QString();
+        parentItem = 0;
+        itemType = DIRECTORY;
     }
-
     ~FileSystemItem(){
         qDeleteAll(childItems);
     }
     bool isValid() const {
-        return itemData.count() > 0;
+        return ! itemPath.isEmpty();
     }
     void appendChild(FileSystemItem * item){
         childItems.append(item);
@@ -59,7 +61,12 @@ public:
     ItemType type() const {
         return itemType;
     }
+    QString path() const {
+        return itemPath;
+    }
+
 private:
+    QString itemPath;
     QList<QVariant> itemData;               // row info
     QList<FileSystemItem*> childItems;
     ItemType itemType;
@@ -97,6 +104,7 @@ void DirectoryModel::refresh()
     FileSystemItem * oldRootItem = rootItem;
 
     FileSystemItem * newRootItem = new FileSystemItem(
+                rootDir.absolutePath(),
                 generateData(rootDir), FileSystemItem::DIRECTORY);
     setupModelData(rootDir, newRootItem);
     rootItem = newRootItem;
@@ -144,6 +152,7 @@ void DirectoryModel::setupModelData(const QDir &dir, FileSystemItem *parentItem)
                      QDir::separator() +
                      fileInfo.fileName());
             FileSystemItem * item = new FileSystemItem(
+                        dir.absolutePath(),
                         generateData(dir),
                         FileSystemItem::DIRECTORY,
                         parentItem);
@@ -152,6 +161,7 @@ void DirectoryModel::setupModelData(const QDir &dir, FileSystemItem *parentItem)
         }
         else if (fileInfo.isFile()) {
             parentItem->appendChild(new FileSystemItem(
+                                        fileInfo.absoluteFilePath(),
                                         generateData(
                                             QFile(fileInfo.absoluteFilePath())),
                                         FileSystemItem::FILE,
@@ -265,6 +275,30 @@ int DirectoryModel::columnCount(const QModelIndex &parent) const
 {
     FileSystemItem * parentItem = getItem(parent);
     return parentItem->columnCount();
+}
+
+bool DirectoryModel::isDir(const QModelIndex &index)
+{
+    if( ! index.isValid())
+        return false;
+    FileSystemItem * item = getItem(index);
+    return item->type() == FileSystemItem::DIRECTORY;
+}
+
+bool DirectoryModel::isFile(const QModelIndex &index)
+{
+    if( ! index.isValid())
+        return false;
+    FileSystemItem * item = getItem(index);
+    return item->type() == FileSystemItem::FILE;
+}
+
+QString DirectoryModel::filePath(const QModelIndex &index)
+{
+    if( ! index.isValid())
+        return QString();
+    FileSystemItem * item = getItem(index);
+    return item->path();
 }
 
 
