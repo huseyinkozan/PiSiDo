@@ -104,6 +104,9 @@ void Pisi::load_from_dom(const QDomDocument & dom) throw(QString)
         }
 
         QDomElement elm_pkg = root.namedItem("Package").toElement();
+        if( ! elm_pkg.nextSiblingElement("Package").isNull()){
+            throw QObject::tr("Multiple Package tag is not supported !");
+        }
         if( ! elm_pkg.isNull() && elm_pkg.isElement())
         {
             try{
