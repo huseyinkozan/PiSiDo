@@ -954,7 +954,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="le_install_files_dir">
+        <widget class="QLineEdit" name="le_package_install_dir">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -967,7 +967,7 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="tb_refresh_install_files">
+        <widget class="QToolButton" name="tb_refresh_treeV_files">
          <property name="toolTip">
           <string>Please refresh after a successful build !</string>
          </property>
@@ -994,7 +994,7 @@ p, li { white-space: pre-wrap; }
         </font>
        </property>
        <property name="text">
-        <string>Labels</string>
+        <string>Files</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -1022,8 +1022,56 @@ p, li { white-space: pre-wrap; }
     <number>8</number>
    </attribute>
    <widget class="QWidget" name="dw_patches_contents">
-    <layout class="QGridLayout" name="gridLayout_8">
-     <item row="0" column="0" rowspan="4">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QToolButton" name="tb_open_patches_dir">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Opens patch directory (workspace/__package_name__/files/)</string>
+         </property>
+         <property name="statusTip">
+          <string>Opens patch directory (workspace/__package_name__/files/)</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/pisido.qrc">
+           <normaloff>:/images/open-dir.png</normaloff>:/images/open-dir.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="le_package_patches_dir">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="tb_refresh_tableW_patches">
+         <property name="toolTip">
+          <string>Please refresh after a successful build !</string>
+         </property>
+         <property name="statusTip">
+          <string>Please refresh after a successful build !</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/pisido.qrc">
+           <normaloff>:/images/refresh.png</normaloff>:/images/refresh.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0" rowspan="3">
       <widget class="QTableWidget" name="tableW_patches">
        <property name="toolTip">
         <string>Add your patches to package files directory (workspace/__package_name__/files/).
@@ -1068,7 +1116,7 @@ And than you can define priority in here.</string>
        </column>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="1" column="1">
       <widget class="QToolButton" name="tb_patch_up">
        <property name="toolTip">
         <string>Level decrease (will operate earlier)</string>
@@ -1085,7 +1133,7 @@ And than you can define priority in here.</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item row="2" column="1">
       <widget class="QToolButton" name="tb_patch_down">
        <property name="toolTip">
         <string>Level increase (will operate later)</string>
@@ -1102,27 +1150,7 @@ And than you can define priority in here.</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
-      <widget class="QToolButton" name="tb_open_patches_dir">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Opens patch directory (workspace/__package_name__/files/)</string>
-       </property>
-       <property name="statusTip">
-        <string>Opens patch directory (workspace/__package_name__/files/)</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../resources/pisido.qrc">
-         <normaloff>:/images/open-dir.png</normaloff>:/images/open-dir.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
+     <item row="3" column="1">
       <spacer name="verticalSpacer_2">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -1156,8 +1184,56 @@ And than you can define priority in here.</string>
     <number>8</number>
    </attribute>
    <widget class="QWidget" name="dw_aditional_files_content">
-    <layout class="QGridLayout" name="gridLayout_9">
-     <item row="0" column="0" rowspan="3">
+    <layout class="QGridLayout" name="gridLayout_5">
+     <item row="0" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_10">
+       <item>
+        <widget class="QToolButton" name="tb_open_aditional_files_dir">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Opens aditional files directory (workspace/__package_name__/files/)</string>
+         </property>
+         <property name="statusTip">
+          <string>Opens aditional files directory (workspace/__package_name__/files/)</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/pisido.qrc">
+           <normaloff>:/images/open-dir.png</normaloff>:/images/open-dir.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="le_package_aditionals_dir">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="tb_refresh_tableW_aditional_files">
+         <property name="toolTip">
+          <string>Please refresh after a successful build !</string>
+         </property>
+         <property name="statusTip">
+          <string>Please refresh after a successful build !</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../resources/pisido.qrc">
+           <normaloff>:/images/refresh.png</normaloff>:/images/refresh.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0" rowspan="2">
       <widget class="QTableWidget" name="tableW_aditional_files">
        <property name="toolTip">
         <string>Add your aditional files to package files directory (workspace/__package_name__/files/).
@@ -1217,7 +1293,7 @@ And than you can edit their properties in here</string>
        </column>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="1" column="1">
       <widget class="QToolButton" name="tb_edit_aditional_files">
        <property name="toolTip">
         <string>Edits selected file</string>
@@ -1235,26 +1311,6 @@ And than you can edit their properties in here</string>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QToolButton" name="tb_open_aditional_files_dir">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Opens aditional files directory (workspace/__package_name__/files/)</string>
-       </property>
-       <property name="statusTip">
-        <string>Opens aditional files directory (workspace/__package_name__/files/)</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../resources/pisido.qrc">
-         <normaloff>:/images/open-dir.png</normaloff>:/images/open-dir.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
       <spacer name="verticalSpacer_3">
        <property name="orientation">
         <enum>Qt::Vertical</enum>

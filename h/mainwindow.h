@@ -17,7 +17,6 @@ namespace Ui {
 
 class QsciScintilla;
 class QsciLexerPython;
-class QFileSystemWatcher;
 class QTermWidget;
 
 class MainWindow : public QMainWindow
@@ -30,6 +29,7 @@ public:
 
 private slots:
     void init_package_name_completer();
+    void check_package_dirs();
     void save_actions_editor_change();
     void complete_word();
 
@@ -38,7 +38,7 @@ private slots:
 
     void append_file(const QString & path, const QString & file_type, bool permanent);
 
-    void package_files_changed();
+    void update_package_files();
     void package_files_process(const QString & dir);
 
     void clear_tableW_files();
@@ -114,7 +114,11 @@ private slots:
 
     void on_tb_build_all_clicked();
 
-    void on_tb_refresh_install_files_clicked();
+    void on_tb_refresh_treeV_files_clicked();
+
+    void on_tb_refresh_tableW_patches_clicked();
+
+    void on_tb_refresh_tableW_aditional_files_clicked();
 
 protected:
     virtual void closeEvent(QCloseEvent * event);
@@ -137,7 +141,6 @@ private:
     QDir package_files_dir;
     QDir package_install_dir;
 
-    QFileSystemWatcher * package_files_watcher;
     QList<ArchiveWidget *> archive_widgets;
     QTimer * workspace_dir_timer;
     QStringList workspace_package_names;

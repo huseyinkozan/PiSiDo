@@ -13,7 +13,6 @@
 #include <QCryptographicHash>
 #include <QTimer>
 #include <QShortcut>
-#include <QFileSystemWatcher>
 #include <QDirIterator>
 
 #include <Qsci/qsciscintilla.h>
@@ -145,11 +144,6 @@ MainWindow::MainWindow(QWidget *parent) :
     actions_templates = actions_templates_defaults;
     actions_editor->setText(actions_templates[ui->combo_actions_template->currentIndex()]);
 
-    // checks build dir and install dir for file changes
-
-    package_files_watcher = new QFileSystemWatcher(this);
-    connect(package_files_watcher, SIGNAL(directoryChanged(QString)), SLOT(package_files_changed()));
-
     DirectoryModel * model = new DirectoryModel(QDir("/invaliddirectory"),this);
     ui->treeV_files->setModel(model);
 
@@ -178,6 +172,7 @@ MainWindow::MainWindow(QWidget *parent) :
     workspace_dir_timer = new QTimer(this);
     workspace_dir_timer->start(PACKAGE_NAME_REFRESH_INTERVAL);
     connect(workspace_dir_timer, SIGNAL(timeout()), this, SLOT(init_package_name_completer()));
+    connect(workspace_dir_timer, SIGNAL(timeout()), this, SLOT(check_package_dirs()));
 
     w_terminal = new QTermWidget(1, ui->dw_build);
     QFont terminal_font = QApplication::font();
@@ -277,6 +272,25 @@ void MainWindow::init_package_name_completer()
         ui->le_package_name->setCompleter(completer);
         if(old_completer)
             delete old_completer;
+    }
+}
+
+void MainWindow::check_package_dirs()
+{
+    if( ! package_dir.isRoot() && package_dir.exists())
+    {
+        ui->tb_open_package_dir->setEnabled(true);
+    }
+    else{
+        ui->tb_open_package_dir->setEnabled(false);
+    }
+
+    if(QFile::exists(package_dir.absoluteFilePath("pspec.xml"))
+            && QFile::exists(package_dir.absoluteFilePath("actions.py"))){
+        ui->tb_import_package->setEnabled(true);
+    }
+    else{
+        ui->tb_import_package->setEnabled(false);
     }
 }
 
@@ -471,7 +485,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
     if(model){
         model->clear();
     }
-
+    ui->le_package_install_dir->clear();
 
 
     pisi.clear();
@@ -566,11 +580,6 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
         package_name.clear();
         package_dir = QDir::root();
         package_files_dir = QDir::root();
-
-        QStringList p_f_w_dirs = package_files_watcher->directories();
-        if( ! p_f_w_dirs.isEmpty())
-            package_files_watcher->removePaths(p_f_w_dirs);
-
         package_install_dir = QDir::root();
     }
     else
@@ -578,17 +587,6 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
         package_name = text.trimmed();
         package_dir = QDir(workspace_dir.absoluteFilePath(package_name));
         package_files_dir = QDir(package_dir.absoluteFilePath("files/"));
-
-        if( ! package_files_dir.isRoot() && package_files_dir.exists()){
-            QStringList p_f_w_dirs = package_files_watcher->directories();
-            if( ! p_f_w_dirs.contains(package_files_dir.absolutePath()))
-                package_files_watcher->addPath(package_files_dir.absolutePath());
-        }
-        else{
-            QStringList p_f_w_dirs = package_files_watcher->directories();
-            if( ! p_f_w_dirs.isEmpty())
-                package_files_watcher->removePaths(p_f_w_dirs);
-        }
 
         QString v = pisi.get_last_update().get_version();
         int r = pisi.get_last_update().get_release();
@@ -602,16 +600,27 @@ void MainWindow::on_le_package_name_textChanged(const QString &text)
         }
     }
 
+    if(package_files_dir.isRoot()){
+        ui->le_package_patches_dir->setText("");
+        ui->le_package_aditionals_dir->setText("");
+    }
+    else{
+        ui->le_package_patches_dir->setText(package_files_dir.absolutePath());
+        ui->le_package_aditionals_dir->setText(package_files_dir.absolutePath());
+    }
+
     if(package_install_dir.isRoot()){
-        ui->le_install_files_dir->setText("");
+        ui->le_package_install_dir->setText("");
+        ui->tb_refresh_treeV_files->setEnabled(false);
         ui->tb_open_install_dir->setEnabled(false);
     }
     else{
-        ui->le_install_files_dir->setText(package_install_dir.absolutePath());
+        ui->le_package_install_dir->setText(package_install_dir.absolutePath());
+        ui->tb_refresh_treeV_files->setEnabled(true);
         ui->tb_open_install_dir->setEnabled(true);
     }
     // to handle text change event
-    package_files_changed();
+    update_package_files();
 }
 
 
@@ -686,16 +695,8 @@ void MainWindow::complete_word()
         actions_editor->autoCompleteFromDocument();
 }
 
-void MainWindow::package_files_changed()
+void MainWindow::update_package_files()
 {
-    if( ! package_dir.isRoot() && package_dir.exists())
-    {
-        ui->tb_open_package_dir->setEnabled(true);
-    }
-    else{
-        ui->tb_open_package_dir->setEnabled(false);
-    }
-
     if( ! package_files_dir.isRoot() && package_files_dir.exists())
     {
         ui->tb_open_aditional_files_dir->setEnabled(true);
@@ -708,12 +709,13 @@ void MainWindow::package_files_changed()
 
         package_files_process(package_files_dir.absolutePath());
 
-        QDirIterator it(package_files_dir.absolutePath(), QDir::Dirs|QDir::NoDotAndDotDot|QDir::NoSymLinks|QDir::Readable, QDirIterator::Subdirectories);
+        QDirIterator it(
+                    package_files_dir.absolutePath(),
+                    QDir::Dirs|QDir::NoDotAndDotDot|QDir::NoSymLinks|QDir::Readable,
+                    QDirIterator::Subdirectories);
+
         while(it.hasNext()){
             QString sub = it.next();
-            if( ! package_files_watcher->directories().contains(sub))
-                package_files_watcher->addPath(sub);
-
             package_files_process(sub);
         }
 
@@ -730,14 +732,6 @@ void MainWindow::package_files_changed()
         clear_tableW_aditional_files();
         ui->tb_open_aditional_files_dir->setEnabled(false);
         ui->tb_open_patches_dir->setEnabled(false);
-    }
-
-    if(QFile::exists(package_dir.absoluteFilePath("pspec.xml"))
-            && QFile::exists(package_dir.absoluteFilePath("actions.py"))){
-        ui->tb_import_package->setEnabled(true);
-    }
-    else{
-        ui->tb_import_package->setEnabled(false);
     }
 }
 
@@ -811,7 +805,7 @@ void MainWindow::package_files_process(const QString & dir)
     }
 }
 
-void MainWindow::on_tb_refresh_install_files_clicked()
+void MainWindow::on_tb_refresh_treeV_files_clicked()
 {
     DirectoryModel * model = qobject_cast<DirectoryModel *>(ui->treeV_files->model());
     if(model){
@@ -824,6 +818,17 @@ void MainWindow::on_tb_refresh_install_files_clicked()
         }
     }
 }
+
+void MainWindow::on_tb_refresh_tableW_patches_clicked()
+{
+    update_package_files();
+}
+
+void MainWindow::on_tb_refresh_tableW_aditional_files_clicked()
+{
+    update_package_files();
+}
+
 
 void MainWindow::on_tb_patch_down_clicked()
 {
@@ -840,7 +845,7 @@ void MainWindow::on_tb_patch_down_clicked()
         key++;
         patches.insert(key, value);
     }
-    package_files_changed();
+    update_package_files();
 }
 
 void MainWindow::on_tb_patch_up_clicked()
@@ -860,7 +865,7 @@ void MainWindow::on_tb_patch_up_clicked()
         key--;
         patches.insert(key, value);
     }
-    package_files_changed();
+    update_package_files();
 }
 
 void MainWindow::clear_tableW_patches()
@@ -888,7 +893,7 @@ void MainWindow::on_tb_edit_aditional_files_clicked()
     AditionalFileDialog afd(this, a_file, aditional_files.value(a_file));
     if( afd.exec() == QDialog::Accepted ){
         aditional_files[a_file] = afd.get_attr();
-        package_files_changed();
+        update_package_files();
     }
 }
 
@@ -1083,7 +1088,7 @@ void MainWindow::on_tb_import_package_clicked()
         }
 
         on_le_package_name_textChanged(ui->le_package_name->text());  // to fill package install directory tree
-        on_tb_refresh_install_files_clicked();
+        on_tb_refresh_treeV_files_clicked();
     }
 }
 
@@ -1156,7 +1161,7 @@ void MainWindow::pisi_to_gui() throw (QString)
         append_file(path, attr.keys().first(), attr.value(attr.keys().first()));
     }
     aditional_files = package.get_aditional_files();
-    package_files_changed();
+    update_package_files();
 
 
     QString actions_py = package_dir.absoluteFilePath("actions.py");
@@ -1371,6 +1376,7 @@ void MainWindow::call_pisi_build_command(const QString &build_step)
             ;
     w_terminal->sendText(command);
 }
+
 
 
 
