@@ -115,7 +115,7 @@ QList<QVariant> DirectoryModel::generateData(const QDir &dir)
 QList<QVariant> DirectoryModel::generateData(const QFile &file)
 {
     QList<QVariant> data;
-    data << file.fileName();
+    data << QFileInfo(file.fileName()).fileName();
     data << generatePermission(QFileInfo(file));
     data << file.size();
     data << file.symLinkTarget();
@@ -124,18 +124,27 @@ QList<QVariant> DirectoryModel::generateData(const QFile &file)
 
 void DirectoryModel::setupModelData(const QDir &dir, FileSystemItem *parentItem)
 {
-    // populate root item with directory contents
+    if( ! parentItem){
+        qDebug("parent null");
+        return;
+    }
+    if( ! dir.exists())
+        return;
+
     QFileInfoList list = dir.entryInfoList(
-                QDir::AllDirs|QDir::Files|QDir::Hidden|QDir::NoDotAndDotDot,
-                QDir::DirsFirst|QDir::LocaleAware|QDir::Name);
+                QDir::Dirs|QDir::Files|QDir::Hidden|QDir::NoDotAndDotDot,
+                QDir::DirsFirst|QDir::Name);
     foreach (QFileInfo fileInfo, list) {
         if(fileInfo.isDir()){
+            QDir dir(fileInfo.absolutePath() +
+                     QDir::separator() +
+                     fileInfo.fileName());
             FileSystemItem * item = new FileSystemItem(
-                        generateData(fileInfo.absoluteDir()),
+                        generateData(dir),
                         FileSystemItem::DIRECTORY,
                         parentItem);
             parentItem->appendChild(item);
-            setupModelData(fileInfo.absoluteDir(), item);
+            setupModelData(dir, item);
         }
         else if (fileInfo.isFile()) {
             parentItem->appendChild(new FileSystemItem(
@@ -145,7 +154,6 @@ void DirectoryModel::setupModelData(const QDir &dir, FileSystemItem *parentItem)
                                         parentItem));
         }
         else{
-            // ?
         }
     }
 }
@@ -201,10 +209,12 @@ QVariant DirectoryModel::data(const QModelIndex &index, int role) const
         return item->data(index.column());
     }
     else if(role == Qt::DecorationRole){
-        if(item->type() == FileSystemItem::DIRECTORY)
-            return QIcon(":/images/folder.png");
-        else
-            return QIcon(":/images/file.png");
+        if(index.column() == 0){
+            if(item->type() == FileSystemItem::DIRECTORY)
+                return QIcon(":/images/folder.png");
+            else
+                return QIcon(":/images/file.png");
+        }
     }
 
 //    else if(role == Qt::ToolTipRole){
@@ -283,11 +293,11 @@ QString DirectoryModel::generatePermission(const QFileInfo &fi)
     // with numbers
     r += "(";
     r += QString::number(
-                p & (QFile::ReadOwner|QFile::WriteOwner|QFile::ExeOwner) >> 12);
+                (p & (QFile::ReadOwner|QFile::WriteOwner|QFile::ExeOwner)) >> 12);
     r += QString::number(
-                p & (QFile::ReadUser|QFile::WriteUser|QFile::ExeUser) >> 8);
+                (p & (QFile::ReadUser|QFile::WriteUser|QFile::ExeUser)) >> 8);
     r += QString::number(
-                p & (QFile::ReadGroup|QFile::WriteGroup|QFile::ExeGroup) >> 4);
+                (p & (QFile::ReadGroup|QFile::WriteGroup|QFile::ExeGroup)) >> 4);
     r += QString::number(
                 p & (QFile::ReadOther|QFile::WriteOther|QFile::ExeOther));
     r += ")";

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>388</width>
-    <height>301</height>
+    <width>573</width>
+    <height>463</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,15 +43,15 @@
    <item row="1" column="0">
     <widget class="QToolBox" name="toolBox">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_0">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>370</width>
-        <height>145</height>
+        <width>555</width>
+        <height>310</height>
        </rect>
       </property>
       <attribute name="label">
@@ -106,46 +106,40 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>356</width>
-        <height>38</height>
+        <width>555</width>
+        <height>310</height>
        </rect>
       </property>
       <attribute name="label">
        <string>Translators</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Turkish</string>
-         </property>
-        </widget>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Turkish</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Hüseyin Kozan &lt;posta@huseyinkozan.com.tr&gt;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Hüseyin Kozan &lt;posta@huseyinkozan.com.tr&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
+       <item>
+        <widget class="QTreeView" name="treeView_test"/>
        </item>
       </layout>
      </widget>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">
