@@ -994,7 +994,7 @@ p, li { white-space: pre-wrap; }
         </font>
        </property>
        <property name="text">
-        <string>Files</string>
+        <string>&lt;Files&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
