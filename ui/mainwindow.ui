@@ -550,6 +550,11 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <property name="text">
+           <string notr="true">Java</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string notr="true">KDE4</string>
           </property>
          </item>

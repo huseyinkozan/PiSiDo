@@ -143,6 +143,7 @@ OTHER_FILES += \
     help/help_en_US.odt \
     resources/files/actions_template_auto.py \
     resources/files/actions_template_cmake.py \
+    resources/files/actions_template_java.py \
     resources/files/actions_template_kde4.py \
     resources/files/actions_template_python.py \
     resources/files/actions_template_qt4.py \
