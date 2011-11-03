@@ -150,6 +150,7 @@ private:
     QList<TranslationWidget *> translation_widgets;
     QTimer * workspace_dir_timer;
     QStringList workspace_package_names;
+    QHash<QString, int> language_hash;
 
     QString package_name;
     QString homepage;

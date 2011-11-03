@@ -74,9 +74,6 @@ private:
 };
 
 
-const int COLUMN_COUNT = 4;     // constant: Name, Permission, Size, Symlink
-
-
 
 
 DirectoryModel::DirectoryModel(const QDir & dir, QObject *parent) :

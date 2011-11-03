@@ -21,6 +21,9 @@ public:
     QString get_description();
     QString get_language();
 
+    void set_summary(const QString & text);
+    void set_description(const QString & text);
+
 signals:
     void delete_me(TranslationWidget *);
 

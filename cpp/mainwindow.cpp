@@ -153,8 +153,10 @@ MainWindow::MainWindow(QWidget *parent) :
     for (int i = 0; i < QLocale::LastLanguage; ++i) {
         QString language = QLocale::languageToString((QLocale::Language) i);
         if( ! language.isEmpty()){
-            if( ! language_list.contains(language))
+            if( ! language_list.contains(language)){
                 language_list.append(language);
+                language_hash.insert(language, i);
+            }
         }
     }
     language_list.sort();
@@ -484,6 +486,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
 //      package_files_watcher, aditional_files, patches
 
     clear_archive_widgets();
+    clear_translation_widgets();
 
     actions_templates.clear();
     actions_templates = actions_templates_defaults;
@@ -1049,17 +1052,20 @@ void MainWindow::clear_archive_widgets()
 
 void MainWindow::on_tb_add_translation_clicked()
 {
+    QString language = ui->combo_translation->currentText();
+    foreach (TranslationWidget * t_w, translation_widgets) {
+        if(t_w->get_language() == language)
+            return;
+    }
     QVBoxLayout * w_layout = qobject_cast<QVBoxLayout *>(ui->w_translation_base->layout());
     if( ! w_layout){
         w_layout = new QVBoxLayout;
-        w_layout->setMargin(1);
-        w_layout->setSpacing(1);
+        w_layout->setMargin(2);
+        w_layout->setSpacing(2);
         ui->w_translation_base->setLayout(w_layout);
     }
     TranslationWidget * t_w = new TranslationWidget(
-                ui->w_translation_base,
-                ui->combo_translation->currentText()
-                );
+                ui->w_translation_base, language);
     connect(t_w, SIGNAL(delete_me(TranslationWidget*)), this, SLOT(delete_translation(TranslationWidget*)));
     translation_widgets.append(t_w);
     w_layout->addWidget(t_w);
@@ -1091,6 +1097,7 @@ void MainWindow::on_tb_import_package_clicked()
         }
 
         clear_archive_widgets();
+        clear_translation_widgets();
         clear_tableW_files();
 
         QString errorMsg;
@@ -1131,8 +1138,93 @@ void MainWindow::on_tb_import_package_clicked()
             return;
         }
 
+        QString actions_py = package_dir.absoluteFilePath("actions.py");
+        if(QFile::exists(actions_py)){
+            int current_index = ui->combo_actions_template->currentIndex();
+            actions_templates[COMBO_ACTIONS_IMPORT_INDEX] = get_file_contents(actions_py);
+            ui->combo_actions_template->setCurrentIndex(COMBO_ACTIONS_IMPORT_INDEX);
+            if(current_index == COMBO_ACTIONS_IMPORT_INDEX)
+                on_combo_actions_template_currentIndexChanged(COMBO_ACTIONS_IMPORT_INDEX);
+        }
+
+        // sipa getti kod :)
+        QString translations_xml = package_dir.absoluteFilePath("translations.xml");
+        QFile translations_file(translations_xml);
+        if(translations_file.exists()){
+            if(translations_file.open(QIODevice::ReadOnly)){
+                QDomDocument dom;
+                if(dom.setContent(&translations_file)){
+                    QDomElement root = dom.firstChildElement("PISI");
+                    if( ! root.isNull()){
+                        QDomElement elm = root.firstChildElement("Source");
+                        if( ! elm.isNull()){
+                            elm = elm.firstChildElement("Name");
+                            if( ! elm.isNull() && elm.text() == package_name){
+                                QDomElement elm_sum = elm.nextSiblingElement("Summary");
+                                while( ! elm_sum.isNull()){
+                                    QString lang = elm_sum.attribute("xml:lang");
+                                    QString language = QLocale::languageToString(
+                                                QLocale(lang).language());
+                                    bool added_before = false;
+                                    foreach(TranslationWidget*t_w, translation_widgets){
+                                        if(t_w->get_language() == language){
+                                            t_w->set_summary(elm_sum.text());
+                                            added_before = true;
+                                        }
+                                    }
+                                    if( ! added_before){
+                                        if( ! lang.isEmpty() && language_hash.contains(language)){
+                                            ui->combo_translation->setCurrentIndex(
+                                                        ui->combo_translation->findText(language));
+                                            on_tb_add_translation_clicked();
+                                            foreach(TranslationWidget*t_w, translation_widgets){
+                                                if(t_w->get_language() == language){
+                                                    t_w->set_summary(elm_sum.text());
+                                                }
+                                            }
+                                        }
+                                    }
+                                    elm_sum = elm_sum.nextSiblingElement("Summary");
+                                }
+                                QDomElement elm_desc = elm.nextSiblingElement("Description");
+                                while( ! elm_desc.isNull()){
+                                    QString lang = elm_desc.attribute("xml:lang");
+                                    QString language = QLocale::languageToString(
+                                                QLocale(lang).language());
+                                    bool added_before = false;
+                                    foreach(TranslationWidget*t_w, translation_widgets){
+                                        if(t_w->get_language() == language){
+                                            t_w->set_description(elm_desc.text());
+                                            added_before = true;
+                                        }
+                                    }
+                                    if( ! added_before){
+                                        if( ! lang.isEmpty() && language_hash.contains(language)){
+                                            ui->combo_translation->setCurrentIndex(
+                                                        ui->combo_translation->findText(language));
+                                            on_tb_add_translation_clicked();
+                                            foreach(TranslationWidget*t_w, translation_widgets){
+                                                if(t_w->get_language() == language){
+                                                    t_w->set_description(elm_sum.text());
+                                                }
+                                            }
+                                        }
+                                    }
+                                    elm_desc = elm_desc.nextSiblingElement("Description");
+                                }
+                            }
+                        }
+                    }
+                }
+                translations_file.close();
+            }
+        }
+
+
         on_le_package_name_textChanged(ui->le_package_name->text());  // to fill package install directory tree
         on_tb_refresh_treeV_files_clicked();
+
+        statusBar()->showMessage(tr("Package build information successfully imported."));
     }
 }
 
@@ -1206,19 +1298,6 @@ void MainWindow::pisi_to_gui() throw (QString)
     }
     aditional_files = package.get_aditional_files();
     update_package_files();
-
-
-    QString actions_py = package_dir.absoluteFilePath("actions.py");
-    if(QFile::exists(actions_py)){
-        int current_index = ui->combo_actions_template->currentIndex();
-        actions_templates[COMBO_ACTIONS_IMPORT_INDEX] = get_file_contents(actions_py);
-        ui->combo_actions_template->setCurrentIndex(COMBO_ACTIONS_IMPORT_INDEX);
-        if(current_index == COMBO_ACTIONS_IMPORT_INDEX)
-            on_combo_actions_template_currentIndexChanged(COMBO_ACTIONS_IMPORT_INDEX);
-    }
-
-
-    statusBar()->showMessage(tr("Package build information successfully imported."));
 }
 
 void MainWindow::pisi_from_gui() throw (QString)
@@ -1345,6 +1424,35 @@ bool MainWindow::create_build_files()
     QString pspec_file_name = package_dir.absoluteFilePath("pspec.xml");
     QString pspec_content = dom_pspec.toString(4) + xml_branding;
     save_text_file( pspec_file_name, pspec_content );
+
+    // create translation
+    if(translation_widgets.count()){
+        QDomDocument dom;
+        QDomElement pisi = dom.createElement("PISI");
+        dom.appendChild(pisi);
+        QDomElement source = dom.createElement("Source");
+        pisi.appendChild(source);
+
+        QDomElement source_name = dom.createElement("Name");
+        source_name.appendChild(dom.createTextNode(package_name));
+        source.appendChild(source_name);
+
+        foreach (TranslationWidget * t_w, translation_widgets) {
+            int l = language_hash.value(t_w->get_language());
+            QLocale loc((QLocale::Language) l);
+            QDomElement source_summary = dom.createElement("Summary");
+            source_summary.appendChild(dom.createTextNode(t_w->get_summary()));
+            source_summary.setAttribute("xml:lang", loc.name().split('_').first());
+            source.appendChild(source_summary);
+            QDomElement source_description = dom.createElement("Description");
+            source_description.appendChild(dom.createTextNode(t_w->get_description()));
+            source_description.setAttribute("xml:lang", loc.name().split('_').first());
+            source.appendChild(source_description);
+        }
+        QString content = dom.toString(4) + xml_branding;
+        QString file_name = package_dir.absoluteFilePath("translations.xml");
+        save_text_file(file_name, content);
+    }
 
 
     // create actions

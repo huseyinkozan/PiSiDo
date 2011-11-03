@@ -35,3 +35,15 @@ QString TranslationWidget::get_language()
 {
     return ui->gb_language->title();
 }
+
+void TranslationWidget::set_summary(const QString &text)
+{
+    ui->le_summary->setText(text);
+}
+
+void TranslationWidget::set_description(const QString &text)
+{
+    ui->pte_description->setPlainText(text);
+}
+
+
