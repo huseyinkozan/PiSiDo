@@ -2,9 +2,7 @@
 Todo:
 -----
 
-    (*) Install file directory tree will be filled by hand.
-    (*) Open toolbuttons will moved to upper on aditional files and patches.
-        (*) Location will shown like install file directory.
+    (*) Install file directory tree will be filled with lazy load methode.
 
     (*) help file will be updated before beta
 

@@ -33,9 +33,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-238</y>
-         <width>270</width>
-         <height>531</height>
+         <y>-276</y>
+         <width>277</width>
+         <height>569</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
@@ -93,7 +93,7 @@
           </item>
          </layout>
         </item>
-        <item row="12" column="0">
+        <item row="14" column="0">
          <widget class="QLabel" name="lbl_brief">
           <property name="text">
            <string>Summary</string>
@@ -106,7 +106,7 @@
           </property>
          </widget>
         </item>
-        <item row="12" column="1">
+        <item row="14" column="1">
          <widget class="QLineEdit" name="le_summary">
           <property name="toolTip">
            <string>A brief description for software that packaging</string>
@@ -123,14 +123,14 @@
           </property>
          </widget>
         </item>
-        <item row="11" column="0">
+        <item row="13" column="0">
          <widget class="QLabel" name="lbl_src_homepage">
           <property name="text">
            <string>Homepage</string>
           </property>
          </widget>
         </item>
-        <item row="11" column="1">
+        <item row="13" column="1">
          <widget class="QLineEdit" name="le_homepage">
           <property name="toolTip">
            <string>Homepage of the software that packaging</string>
@@ -140,14 +140,14 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
+        <item row="8" column="0">
          <widget class="QLabel" name="lbl_build_dependency">
           <property name="text">
            <string>Build Dep.</string>
           </property>
          </widget>
         </item>
-        <item row="6" column="1">
+        <item row="8" column="1">
          <widget class="QLineEdit" name="le_build_dependency">
           <property name="toolTip">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -163,14 +163,14 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="7" column="0">
+        <item row="9" column="0">
          <widget class="QLabel" name="lbl_runtime_dependency">
           <property name="text">
            <string>Runtime Dep.</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="1">
+        <item row="9" column="1">
          <widget class="QLineEdit" name="le_runtime_dependency">
           <property name="toolTip">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -186,28 +186,28 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="8" column="0">
+        <item row="10" column="0">
          <widget class="QLabel" name="lbl_licence">
           <property name="text">
            <string>Licence</string>
           </property>
          </widget>
         </item>
-        <item row="9" column="0">
+        <item row="11" column="0">
          <widget class="QLabel" name="lbl_is_a">
           <property name="text">
            <string>Type</string>
           </property>
          </widget>
         </item>
-        <item row="10" column="0">
+        <item row="12" column="0">
          <widget class="QLabel" name="lbl_part_of">
           <property name="text">
            <string>Component</string>
           </property>
          </widget>
         </item>
-        <item row="10" column="1">
+        <item row="12" column="1">
          <widget class="QComboBox" name="combo_part_of">
           <property name="toolTip">
            <string>Select component</string>
@@ -217,61 +217,7 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="4" column="0" rowspan="2">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Archive</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
-          <item>
-           <widget class="QComboBox" name="combo_archive_type">
-            <property name="toolTip">
-             <string>Use compressed type to compute sha1 values of local archive files</string>
-            </property>
-            <property name="statusTip">
-             <string>Use compressed type to compute sha1 values of local archive files</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>Compressed</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Url</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="tb_add_archive">
-            <property name="toolTip">
-             <string>Add archive</string>
-            </property>
-            <property name="statusTip">
-             <string>Add archive</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/pisido.qrc">
-              <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="5" column="1">
-         <widget class="QWidget" name="w_archive_base" native="true"/>
-        </item>
-        <item row="13" column="1">
+        <item row="15" column="1">
          <widget class="QPlainTextEdit" name="pte_description">
           <property name="toolTip">
            <string>Detailed description for software that packaging</string>
@@ -281,7 +227,7 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="13" column="0">
+        <item row="15" column="0">
          <widget class="QLabel" name="lbl_detailed">
           <property name="text">
            <string>Description</string>
@@ -294,7 +240,7 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="8" column="1">
+        <item row="10" column="1">
          <widget class="QLineEdit" name="le_license">
           <property name="toolTip">
            <string>Comma seperated licenses</string>
@@ -304,7 +250,7 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="9" column="1">
+        <item row="11" column="1">
          <widget class="QLineEdit" name="le_is_a">
           <property name="toolTip">
            <string>Comma seperated types</string>
@@ -314,7 +260,112 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="14" column="0" rowspan="2">
+        <item row="16" column="1">
+         <widget class="QFrame" name="fr_translation">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <property name="margin">
+            <number>4</number>
+           </property>
+           <item row="0" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_11">
+             <item>
+              <widget class="QComboBox" name="combo_translation"/>
+             </item>
+             <item>
+              <widget class="QToolButton" name="tb_add_translation">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources/pisido.qrc">
+                 <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="1">
+            <widget class="QWidget" name="w_translation_base" native="true"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QFrame" name="fr_archive">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="margin">
+            <number>4</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QComboBox" name="combo_archive_type">
+               <property name="toolTip">
+                <string>Use compressed type to compute sha1 values of local archive files</string>
+               </property>
+               <property name="statusTip">
+                <string>Use compressed type to compute sha1 values of local archive files</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Compressed</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Url</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="tb_add_archive">
+               <property name="toolTip">
+                <string>Add archive</string>
+               </property>
+               <property name="statusTip">
+                <string>Add archive</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../resources/pisido.qrc">
+                 <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QWidget" name="w_archive_base" native="true"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Archive</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+         </widget>
+        </item>
+        <item row="16" column="0">
          <widget class="QLabel" name="lbl_translation">
           <property name="text">
            <string>Translation</string>
@@ -323,27 +374,6 @@ p, li { white-space: pre-wrap; }
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
           </property>
          </widget>
-        </item>
-        <item row="14" column="1">
-         <layout class="QHBoxLayout" name="horizontalLayout_11">
-          <item>
-           <widget class="QComboBox" name="combo_translation"/>
-          </item>
-          <item>
-           <widget class="QToolButton" name="tb_add_translation">
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../resources/pisido.qrc">
-              <normaloff>:/images/add.png</normaloff>:/images/add.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="15" column="1">
-         <widget class="QWidget" name="w_translation_base" native="true"/>
         </item>
        </layout>
       </widget>

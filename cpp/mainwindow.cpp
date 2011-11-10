@@ -1153,7 +1153,9 @@ void MainWindow::on_tb_import_package_clicked()
         if(translations_file.exists()){
             if(translations_file.open(QIODevice::ReadOnly)){
                 QDomDocument dom;
-                if(dom.setContent(&translations_file)){
+                QString errorMsg;
+                int errorLine, errorColumn;
+                if(dom.setContent(&translations_file, &errorMsg, &errorLine, &errorColumn)){
                     QDomElement root = dom.firstChildElement("PISI");
                     if( ! root.isNull()){
                         QDomElement elm = root.firstChildElement("Source");
@@ -1213,8 +1215,33 @@ void MainWindow::on_tb_import_package_clicked()
                                     elm_desc = elm_desc.nextSiblingElement("Description");
                                 }
                             }
+                            else {
+                                // no name or not equal
+                                QMessageBox::critical(this,
+                                                      tr("Translation File Error"),
+                                                      tr("No Name tag in Source tag in PISI tag in translation.xml "
+                                                         "or name is not same with package name !"));
+                            }
+                        }
+                        else{
+                            // no source
+                            QMessageBox::critical(this,
+                                                  tr("Translation File Error"),
+                                                  tr("No Source tag in PISI tag in translation.xml !"));
                         }
                     }
+                    else{
+                        // no PISI
+                        QMessageBox::critical(this,
+                                              tr("Translation File Error"),
+                                              tr("No PISI tag in translation.xml !"));
+                    }
+                }
+                else {
+                    QMessageBox::critical(this, tr("Translation File Error"),
+                                          tr("XML Parse Error : \n%1\nLine:%2, Column:%3")
+                                            .arg(errorMsg).arg(errorLine).arg(errorColumn)
+                                          );
                 }
                 translations_file.close();
             }
