@@ -469,22 +469,22 @@
 <context>
     <name>DirectoryModel</name>
     <message>
-        <location filename="../cpp/directorymodel.cpp" line="259"/>
+        <location filename="../cpp/directorymodel.cpp" line="256"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/directorymodel.cpp" line="262"/>
+        <location filename="../cpp/directorymodel.cpp" line="259"/>
         <source>Permission</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/directorymodel.cpp" line="265"/>
+        <location filename="../cpp/directorymodel.cpp" line="262"/>
         <source>Size</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/directorymodel.cpp" line="268"/>
+        <location filename="../cpp/directorymodel.cpp" line="265"/>
         <source>Symlink</source>
         <translation></translation>
     </message>
@@ -609,568 +609,573 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="223"/>
+        <location filename="../ui/mainwindow.ui" line="361"/>
         <source>Archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="235"/>
-        <location filename="../ui/mainwindow.ui" line="238"/>
+        <location filename="../ui/mainwindow.ui" line="316"/>
+        <location filename="../ui/mainwindow.ui" line="319"/>
         <source>Use compressed type to compute sha1 values of local archive files</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="242"/>
+        <location filename="../ui/mainwindow.ui" line="323"/>
         <source>Compressed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="247"/>
+        <location filename="../ui/mainwindow.ui" line="328"/>
         <source>Url</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="255"/>
-        <location filename="../ui/mainwindow.ui" line="258"/>
+        <location filename="../ui/mainwindow.ui" line="336"/>
+        <location filename="../ui/mainwindow.ui" line="339"/>
         <source>Add archive</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="277"/>
-        <location filename="../ui/mainwindow.ui" line="280"/>
+        <location filename="../ui/mainwindow.ui" line="223"/>
+        <location filename="../ui/mainwindow.ui" line="226"/>
         <source>Detailed description for software that packaging</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="287"/>
+        <location filename="../ui/mainwindow.ui" line="233"/>
         <source>Description</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="300"/>
-        <location filename="../ui/mainwindow.ui" line="303"/>
+        <location filename="../ui/mainwindow.ui" line="246"/>
+        <location filename="../ui/mainwindow.ui" line="249"/>
         <source>Comma seperated licenses</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="310"/>
-        <location filename="../ui/mainwindow.ui" line="313"/>
+        <location filename="../ui/mainwindow.ui" line="256"/>
+        <location filename="../ui/mainwindow.ui" line="259"/>
         <source>Comma seperated types</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="334"/>
+        <location filename="../ui/mainwindow.ui" line="371"/>
+        <source>Translation</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="395"/>
         <source>&amp;File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="345"/>
+        <location filename="../ui/mainwindow.ui" line="406"/>
         <source>&amp;Settings</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="353"/>
+        <location filename="../ui/mainwindow.ui" line="414"/>
         <source>&amp;Help</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="365"/>
+        <location filename="../ui/mainwindow.ui" line="426"/>
         <source>&amp;Tools</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="372"/>
+        <location filename="../ui/mainwindow.ui" line="433"/>
         <source>&amp;View</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="388"/>
-        <location filename="../ui/mainwindow.ui" line="391"/>
+        <location filename="../ui/mainwindow.ui" line="449"/>
+        <location filename="../ui/mainwindow.ui" line="452"/>
         <source>History Window</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="394"/>
+        <location filename="../ui/mainwindow.ui" line="455"/>
         <source>History</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="404"/>
-        <location filename="../ui/mainwindow.ui" line="407"/>
+        <location filename="../ui/mainwindow.ui" line="465"/>
+        <location filename="../ui/mainwindow.ui" line="468"/>
         <source>You have to add at least one update</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="438"/>
+        <location filename="../ui/mainwindow.ui" line="499"/>
         <source>Rel. No</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="443"/>
+        <location filename="../ui/mainwindow.ui" line="504"/>
         <source>Date</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="448"/>
+        <location filename="../ui/mainwindow.ui" line="509"/>
         <source>Version</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="453"/>
+        <location filename="../ui/mainwindow.ui" line="514"/>
         <source>Comment</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="458"/>
-        <location filename="../ui/mainwindow.ui" line="1114"/>
+        <location filename="../ui/mainwindow.ui" line="519"/>
+        <location filename="../ui/mainwindow.ui" line="1180"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="463"/>
+        <location filename="../ui/mainwindow.ui" line="524"/>
         <source>Email</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="471"/>
-        <location filename="../ui/mainwindow.ui" line="474"/>
+        <location filename="../ui/mainwindow.ui" line="532"/>
+        <location filename="../ui/mainwindow.ui" line="535"/>
         <source>Add an update</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="488"/>
-        <location filename="../ui/mainwindow.ui" line="491"/>
+        <location filename="../ui/mainwindow.ui" line="549"/>
+        <location filename="../ui/mainwindow.ui" line="552"/>
         <source>Delete last update</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="511"/>
-        <location filename="../ui/mainwindow.ui" line="514"/>
+        <location filename="../ui/mainwindow.ui" line="572"/>
+        <location filename="../ui/mainwindow.ui" line="575"/>
         <source>Actions File Window</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="529"/>
+        <location filename="../ui/mainwindow.ui" line="590"/>
         <source>Select Template </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="536"/>
-        <location filename="../ui/mainwindow.ui" line="539"/>
+        <location filename="../ui/mainwindow.ui" line="597"/>
+        <location filename="../ui/mainwindow.ui" line="600"/>
         <source>Select actions.py template</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="573"/>
+        <location filename="../ui/mainwindow.ui" line="639"/>
         <source>Imported</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="594"/>
-        <location filename="../ui/mainwindow.ui" line="597"/>
+        <location filename="../ui/mainwindow.ui" line="660"/>
+        <location filename="../ui/mainwindow.ui" line="663"/>
         <source>Zoom In</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="611"/>
-        <location filename="../ui/mainwindow.ui" line="614"/>
+        <location filename="../ui/mainwindow.ui" line="677"/>
+        <location filename="../ui/mainwindow.ui" line="680"/>
         <source>Zoom Out</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="636"/>
-        <location filename="../ui/mainwindow.ui" line="639"/>
+        <location filename="../ui/mainwindow.ui" line="702"/>
+        <location filename="../ui/mainwindow.ui" line="705"/>
         <source>Build Window</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="642"/>
+        <location filename="../ui/mainwindow.ui" line="708"/>
         <source>Build</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="658"/>
+        <location filename="../ui/mainwindow.ui" line="724"/>
         <source>Build Commands</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="666"/>
+        <location filename="../ui/mainwindow.ui" line="732"/>
         <source>Only</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="674"/>
+        <location filename="../ui/mainwindow.ui" line="740"/>
         <source>Build Files</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="679"/>
+        <location filename="../ui/mainwindow.ui" line="745"/>
         <source>Package</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="687"/>
-        <location filename="../ui/mainwindow.ui" line="690"/>
+        <location filename="../ui/mainwindow.ui" line="753"/>
+        <location filename="../ui/mainwindow.ui" line="756"/>
         <source>Build only selected</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="708"/>
+        <location filename="../ui/mainwindow.ui" line="774"/>
         <source>Up To</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="749"/>
-        <location filename="../ui/mainwindow.ui" line="752"/>
+        <location filename="../ui/mainwindow.ui" line="815"/>
+        <location filename="../ui/mainwindow.ui" line="818"/>
         <source>Build up to selected (see pisi help build)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="770"/>
+        <location filename="../ui/mainwindow.ui" line="836"/>
         <source>Build All</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="777"/>
-        <location filename="../ui/mainwindow.ui" line="780"/>
+        <location filename="../ui/mainwindow.ui" line="843"/>
+        <location filename="../ui/mainwindow.ui" line="846"/>
         <source>Create build files in to the package directory and builds package</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="818"/>
-        <location filename="../ui/mainwindow.ui" line="821"/>
+        <location filename="../ui/mainwindow.ui" line="884"/>
+        <location filename="../ui/mainwindow.ui" line="887"/>
         <source>Install Files Window</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="972"/>
-        <location filename="../ui/mainwindow.ui" line="975"/>
-        <location filename="../ui/mainwindow.ui" line="1058"/>
-        <location filename="../ui/mainwindow.ui" line="1061"/>
-        <location filename="../ui/mainwindow.ui" line="1220"/>
-        <location filename="../ui/mainwindow.ui" line="1223"/>
+        <location filename="../ui/mainwindow.ui" line="1038"/>
+        <location filename="../ui/mainwindow.ui" line="1041"/>
+        <location filename="../ui/mainwindow.ui" line="1124"/>
+        <location filename="../ui/mainwindow.ui" line="1127"/>
+        <location filename="../ui/mainwindow.ui" line="1286"/>
+        <location filename="../ui/mainwindow.ui" line="1289"/>
         <source>Please refresh after a successful build !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="834"/>
-        <location filename="../ui/mainwindow.ui" line="837"/>
+        <location filename="../ui/mainwindow.ui" line="900"/>
+        <location filename="../ui/mainwindow.ui" line="903"/>
         <source>A successful build need for listing. Which will fill /var/pisi/__package_name__/install</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="844"/>
-        <location filename="../ui/mainwindow.ui" line="847"/>
+        <location filename="../ui/mainwindow.ui" line="910"/>
+        <location filename="../ui/mainwindow.ui" line="913"/>
         <source>If none, a default will be added</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="866"/>
-        <location filename="../ui/mainwindow.ui" line="1271"/>
+        <location filename="../ui/mainwindow.ui" line="932"/>
+        <location filename="../ui/mainwindow.ui" line="1337"/>
         <source>File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="871"/>
+        <location filename="../ui/mainwindow.ui" line="937"/>
         <source>File Type</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="876"/>
+        <location filename="../ui/mainwindow.ui" line="942"/>
         <source>Permanent</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="942"/>
-        <location filename="../ui/mainwindow.ui" line="945"/>
+        <location filename="../ui/mainwindow.ui" line="1008"/>
+        <location filename="../ui/mainwindow.ui" line="1011"/>
         <source>Opens install directory (/var/pisi/__package_name__/install)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="887"/>
-        <location filename="../ui/mainwindow.ui" line="890"/>
+        <location filename="../ui/mainwindow.ui" line="953"/>
+        <location filename="../ui/mainwindow.ui" line="956"/>
         <source>Delete selected label</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="907"/>
-        <location filename="../ui/mainwindow.ui" line="910"/>
+        <location filename="../ui/mainwindow.ui" line="973"/>
+        <location filename="../ui/mainwindow.ui" line="976"/>
         <source>Add label</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="962"/>
-        <location filename="../ui/mainwindow.ui" line="965"/>
+        <location filename="../ui/mainwindow.ui" line="1028"/>
+        <location filename="../ui/mainwindow.ui" line="1031"/>
         <source>Directory of the installed files</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1013"/>
-        <location filename="../ui/mainwindow.ui" line="1016"/>
+        <location filename="../ui/mainwindow.ui" line="1079"/>
+        <location filename="../ui/mainwindow.ui" line="1082"/>
         <source>Patches Window</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1019"/>
+        <location filename="../ui/mainwindow.ui" line="1085"/>
         <source>Patches</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1077"/>
+        <location filename="../ui/mainwindow.ui" line="1143"/>
         <source>Add your patches to package files directory (workspace/__package_name__/files/).
 And than you can define priority in here.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1081"/>
+        <location filename="../ui/mainwindow.ui" line="1147"/>
         <source>Add your patches to package files directory (workspace/__package_name__/files/). And than you can define priority in here.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1109"/>
+        <location filename="../ui/mainwindow.ui" line="1175"/>
         <source>Level</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1122"/>
-        <location filename="../ui/mainwindow.ui" line="1125"/>
+        <location filename="../ui/mainwindow.ui" line="1188"/>
+        <location filename="../ui/mainwindow.ui" line="1191"/>
         <source>Level decrease (will operate earlier)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1139"/>
-        <location filename="../ui/mainwindow.ui" line="1142"/>
+        <location filename="../ui/mainwindow.ui" line="1205"/>
+        <location filename="../ui/mainwindow.ui" line="1208"/>
         <source>Level increase (will operate later)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1034"/>
-        <location filename="../ui/mainwindow.ui" line="1037"/>
+        <location filename="../ui/mainwindow.ui" line="1100"/>
+        <location filename="../ui/mainwindow.ui" line="1103"/>
         <source>Opens patch directory (workspace/__package_name__/files/)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1175"/>
-        <location filename="../ui/mainwindow.ui" line="1178"/>
+        <location filename="../ui/mainwindow.ui" line="1241"/>
+        <location filename="../ui/mainwindow.ui" line="1244"/>
         <source>Aditional Files Window</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1239"/>
+        <location filename="../ui/mainwindow.ui" line="1305"/>
         <source>Add your aditional files to package files directory (workspace/__package_name__/files/).
 And than you can edit their properties in here</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1243"/>
+        <location filename="../ui/mainwindow.ui" line="1309"/>
         <source>Add your aditional files to package files directory (workspace/__package_name__/files/).\nAnd than you can edit their properties in here</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1276"/>
+        <location filename="../ui/mainwindow.ui" line="1342"/>
         <source>Target</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1281"/>
+        <location filename="../ui/mainwindow.ui" line="1347"/>
         <source>Permission</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1286"/>
+        <location filename="../ui/mainwindow.ui" line="1352"/>
         <source>Owner</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1291"/>
+        <location filename="../ui/mainwindow.ui" line="1357"/>
         <source>Group</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1299"/>
-        <location filename="../ui/mainwindow.ui" line="1302"/>
+        <location filename="../ui/mainwindow.ui" line="1365"/>
+        <location filename="../ui/mainwindow.ui" line="1368"/>
         <source>Edits selected file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1196"/>
-        <location filename="../ui/mainwindow.ui" line="1199"/>
+        <location filename="../ui/mainwindow.ui" line="1262"/>
+        <location filename="../ui/mainwindow.ui" line="1265"/>
         <source>Opens aditional files directory (workspace/__package_name__/files/)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1331"/>
+        <location filename="../ui/mainwindow.ui" line="1397"/>
         <source>Operations Toolbar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1351"/>
+        <location filename="../ui/mainwindow.ui" line="1417"/>
         <source>View Toolbar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1365"/>
+        <location filename="../ui/mainwindow.ui" line="1431"/>
         <source>Help Toolbar</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1389"/>
+        <location filename="../ui/mainwindow.ui" line="1455"/>
         <source>E&amp;xit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1392"/>
+        <location filename="../ui/mainwindow.ui" line="1458"/>
         <source>Exit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1395"/>
+        <location filename="../ui/mainwindow.ui" line="1461"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1404"/>
+        <location filename="../ui/mainwindow.ui" line="1470"/>
         <source>&amp;Configure...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1416"/>
+        <location filename="../ui/mainwindow.ui" line="1482"/>
         <source>A&amp;bout...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1455"/>
+        <location filename="../ui/mainwindow.ui" line="1521"/>
         <source>&amp;Actions API</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1470"/>
+        <location filename="../ui/mainwindow.ui" line="1536"/>
         <source>&amp;PISI Spec</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1485"/>
+        <location filename="../ui/mainwindow.ui" line="1551"/>
         <source>&amp;Language...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1500"/>
+        <location filename="../ui/mainwindow.ui" line="1566"/>
         <source>Change &amp;WS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1515"/>
+        <location filename="../ui/mainwindow.ui" line="1581"/>
         <source>&amp;Open WS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1530"/>
+        <location filename="../ui/mainwindow.ui" line="1596"/>
         <source>&amp;Reset</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1407"/>
+        <location filename="../ui/mainwindow.ui" line="1473"/>
         <source>Configure Application</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="517"/>
+        <location filename="../ui/mainwindow.ui" line="578"/>
         <source>Actions</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="824"/>
+        <location filename="../ui/mainwindow.ui" line="890"/>
         <source>Installs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="997"/>
+        <location filename="../ui/mainwindow.ui" line="1063"/>
         <source>&lt;Files&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1181"/>
+        <location filename="../ui/mainwindow.ui" line="1247"/>
         <source>Aditionals</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1419"/>
+        <location filename="../ui/mainwindow.ui" line="1485"/>
         <source>About</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1428"/>
+        <location filename="../ui/mainwindow.ui" line="1494"/>
         <source>About &amp;Qt...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1431"/>
+        <location filename="../ui/mainwindow.ui" line="1497"/>
         <source>About Qt</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1440"/>
+        <location filename="../ui/mainwindow.ui" line="1506"/>
         <source>&amp;Help...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1443"/>
+        <location filename="../ui/mainwindow.ui" line="1509"/>
         <source>Help</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1446"/>
+        <location filename="../ui/mainwindow.ui" line="1512"/>
         <source>F1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1458"/>
-        <location filename="../ui/mainwindow.ui" line="1461"/>
+        <location filename="../ui/mainwindow.ui" line="1524"/>
+        <location filename="../ui/mainwindow.ui" line="1527"/>
         <source>Opens Actions API web page</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1473"/>
-        <location filename="../ui/mainwindow.ui" line="1476"/>
+        <location filename="../ui/mainwindow.ui" line="1539"/>
+        <location filename="../ui/mainwindow.ui" line="1542"/>
         <source>Opens PISI Spec web page</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1488"/>
-        <location filename="../ui/mainwindow.ui" line="1491"/>
+        <location filename="../ui/mainwindow.ui" line="1554"/>
+        <location filename="../ui/mainwindow.ui" line="1557"/>
         <source>Change Application Language</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1503"/>
-        <location filename="../ui/mainwindow.ui" line="1506"/>
+        <location filename="../ui/mainwindow.ui" line="1569"/>
+        <location filename="../ui/mainwindow.ui" line="1572"/>
         <source>Change Workspace</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1518"/>
-        <location filename="../ui/mainwindow.ui" line="1521"/>
+        <location filename="../ui/mainwindow.ui" line="1584"/>
+        <location filename="../ui/mainwindow.ui" line="1587"/>
         <source>Open Workspace</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1533"/>
-        <location filename="../ui/mainwindow.ui" line="1536"/>
+        <location filename="../ui/mainwindow.ui" line="1599"/>
+        <location filename="../ui/mainwindow.ui" line="1602"/>
         <source>Reset Fields</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1545"/>
+        <location filename="../ui/mainwindow.ui" line="1611"/>
         <source>Open PP&amp;D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1548"/>
+        <location filename="../ui/mainwindow.ui" line="1614"/>
         <source>Open Pisi Packaging Directory</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="1551"/>
+        <location filename="../ui/mainwindow.ui" line="1617"/>
         <source>Open PISI Packaging Directory</source>
         <translation></translation>
     </message>
@@ -1182,182 +1187,206 @@ And than you can edit their properties in here</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="165"/>
+        <location filename="../cpp/mainwindow.cpp" line="180"/>
         <source>No Workspace</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="166"/>
+        <location filename="../cpp/mainwindow.cpp" line="181"/>
         <source>Workspace does not exists !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="218"/>
-        <location filename="../cpp/mainwindow.cpp" line="249"/>
-        <location filename="../cpp/mainwindow.cpp" line="338"/>
-        <location filename="../cpp/mainwindow.cpp" line="1045"/>
-        <location filename="../cpp/mainwindow.cpp" line="1070"/>
-        <location filename="../cpp/mainwindow.cpp" line="1074"/>
-        <location filename="../cpp/mainwindow.cpp" line="1082"/>
-        <location filename="../cpp/mainwindow.cpp" line="1086"/>
-        <location filename="../cpp/mainwindow.cpp" line="1273"/>
-        <location filename="../cpp/mainwindow.cpp" line="1277"/>
-        <location filename="../cpp/mainwindow.cpp" line="1284"/>
-        <location filename="../cpp/mainwindow.cpp" line="1288"/>
-        <location filename="../cpp/mainwindow.cpp" line="1292"/>
-        <location filename="../cpp/mainwindow.cpp" line="1365"/>
+        <location filename="../cpp/mainwindow.cpp" line="233"/>
+        <location filename="../cpp/mainwindow.cpp" line="264"/>
+        <location filename="../cpp/mainwindow.cpp" line="353"/>
+        <location filename="../cpp/mainwindow.cpp" line="1095"/>
+        <location filename="../cpp/mainwindow.cpp" line="1121"/>
+        <location filename="../cpp/mainwindow.cpp" line="1125"/>
+        <location filename="../cpp/mainwindow.cpp" line="1133"/>
+        <location filename="../cpp/mainwindow.cpp" line="1137"/>
+        <location filename="../cpp/mainwindow.cpp" line="1423"/>
+        <location filename="../cpp/mainwindow.cpp" line="1427"/>
+        <location filename="../cpp/mainwindow.cpp" line="1434"/>
+        <location filename="../cpp/mainwindow.cpp" line="1438"/>
+        <location filename="../cpp/mainwindow.cpp" line="1442"/>
+        <location filename="../cpp/mainwindow.cpp" line="1544"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="218"/>
+        <location filename="../cpp/mainwindow.cpp" line="233"/>
         <source>Can not open &quot;%1&quot; resource !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="249"/>
+        <location filename="../cpp/mainwindow.cpp" line="264"/>
         <source>Can not open %1 file to write.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="338"/>
+        <location filename="../cpp/mainwindow.cpp" line="353"/>
         <source>There are no translation files in : %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="425"/>
+        <location filename="../cpp/mainwindow.cpp" line="440"/>
         <source>http://developer.pardus.org.tr/guides/packaging/actionsapi/index.html</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="426"/>
+        <location filename="../cpp/mainwindow.cpp" line="441"/>
         <source>http://svn.pardus.org.tr/uludag/trunk/pisi/pisi-spec.rng</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="503"/>
-        <location filename="../cpp/mainwindow.cpp" line="1195"/>
+        <location filename="../cpp/mainwindow.cpp" line="519"/>
+        <location filename="../cpp/mainwindow.cpp" line="1345"/>
         <source>Error at conversion release string to integer !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="936"/>
+        <location filename="../cpp/mainwindow.cpp" line="952"/>
         <source>True</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="936"/>
+        <location filename="../cpp/mainwindow.cpp" line="952"/>
         <source>False</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1045"/>
+        <location filename="../cpp/mainwindow.cpp" line="1095"/>
         <source>Can not open file for reading !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1057"/>
+        <location filename="../cpp/mainwindow.cpp" line="1108"/>
         <source>Parse Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1058"/>
+        <location filename="../cpp/mainwindow.cpp" line="1109"/>
+        <location filename="../cpp/mainwindow.cpp" line="1242"/>
         <source>XML Parse Error : 
 %1
 Line:%2, Column:%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1070"/>
+        <location filename="../cpp/mainwindow.cpp" line="1121"/>
         <source>An error occured while parsing xml file : %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1074"/>
-        <location filename="../cpp/mainwindow.cpp" line="1086"/>
+        <location filename="../cpp/mainwindow.cpp" line="1125"/>
+        <location filename="../cpp/mainwindow.cpp" line="1137"/>
         <source>Unknownt exception !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1082"/>
+        <location filename="../cpp/mainwindow.cpp" line="1133"/>
         <source>An error occured while filling fields: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1098"/>
+        <location filename="../cpp/mainwindow.cpp" line="1221"/>
+        <location filename="../cpp/mainwindow.cpp" line="1229"/>
+        <location filename="../cpp/mainwindow.cpp" line="1236"/>
+        <location filename="../cpp/mainwindow.cpp" line="1241"/>
+        <source>Translation File Error</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../cpp/mainwindow.cpp" line="1222"/>
+        <source>No Name tag in Source tag in PISI tag in translation.xml or name is not same with package name !</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../cpp/mainwindow.cpp" line="1230"/>
+        <source>No Source tag in PISI tag in translation.xml !</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../cpp/mainwindow.cpp" line="1237"/>
+        <source>No PISI tag in translation.xml !</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../cpp/mainwindow.cpp" line="1261"/>
         <source>Empty pisi file, import pspec.xml before use !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1149"/>
+        <location filename="../cpp/mainwindow.cpp" line="1312"/>
         <source>Warning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1150"/>
+        <location filename="../cpp/mainwindow.cpp" line="1313"/>
         <source>Package name is not same with source name in the pspec.xml file !
 Application does not support multiple packages !
 Process will stop.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1177"/>
+        <location filename="../cpp/mainwindow.cpp" line="1254"/>
         <source>Package build information successfully imported.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1187"/>
+        <location filename="../cpp/mainwindow.cpp" line="1337"/>
         <source>Please define an update in history !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1273"/>
+        <location filename="../cpp/mainwindow.cpp" line="1423"/>
         <source>An error occured while filling pisi from fields :
  %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1277"/>
+        <location filename="../cpp/mainwindow.cpp" line="1427"/>
         <source>Unknownt exception while filling pisi from fields !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1284"/>
+        <location filename="../cpp/mainwindow.cpp" line="1434"/>
         <source>Empty package name !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1288"/>
+        <location filename="../cpp/mainwindow.cpp" line="1438"/>
         <source>Can not create package directory in workspace !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1292"/>
+        <location filename="../cpp/mainwindow.cpp" line="1442"/>
         <source>Can not create files directory in package directory !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1313"/>
+        <location filename="../cpp/mainwindow.cpp" line="1492"/>
         <source>Actions API File</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1313"/>
+        <location filename="../cpp/mainwindow.cpp" line="1492"/>
         <source>Actions.py is empty !</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1344"/>
+        <location filename="../cpp/mainwindow.cpp" line="1523"/>
         <source>Build Successful</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1345"/>
+        <location filename="../cpp/mainwindow.cpp" line="1524"/>
         <source>Build files created successfully.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../cpp/mainwindow.cpp" line="1365"/>
+        <location filename="../cpp/mainwindow.cpp" line="1544"/>
         <source>There is no PSPEC file : %1 </source>
         <translation></translation>
     </message>
@@ -1721,6 +1750,19 @@ Process will stop.</source>
     <message>
         <location filename="../cpp/pisiupdate.cpp" line="169"/>
         <source>Empty update packager email !</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>TranslationWidget</name>
+    <message>
+        <location filename="../ui/translationwidget.ui" line="14"/>
+        <source>TranslationWidget</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/translationwidget.ui" line="35"/>
+        <source>Language</source>
         <translation></translation>
     </message>
 </context>
