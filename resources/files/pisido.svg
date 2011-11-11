@@ -443,7 +443,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -520,20 +520,20 @@
        id="path4405"
        inkscape:connector-curvature="0" />
     <text
-       transform="matrix(0.97194201,0.46738708,-0.03185534,1.0135494,0,0)"
+       transform="matrix(0.94046828,0.48302866,-0.03082379,1.0474688,0,0)"
        xml:space="preserve"
-       style="font-size:62.32830429px;font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans Oblique"
-       x="142.14696"
-       y="139.88116"
+       style="font-size:71.43617411px;font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans Oblique"
+       x="141.25688"
+       y="132.38458"
        id="text4023"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4074"
-         x="142.14696"
-         y="139.88116">pisi</tspan></text>
+         x="141.25688"
+         y="132.38458">pisi</tspan></text>
     <g
        id="g3864"
-       transform="matrix(1.2637068,0.52958637,-0.64241777,1.5391908,86.415768,-239.9701)">
+       transform="matrix(1.70415,0.50492809,-0.72008967,1.8294538,-20.332121,-286.56382)">
       <path
          style="fill:#000000;fill-opacity:1;stroke:none"
          d="m 273.61755,167.71949 c 0,0 -1.73614,22.37022 -4.07136,33.41334 -1.96747,9.30393 -8.34787,27.54639 -8.34787,27.54639 0,0 8.99798,-18.03763 11.05397,-27.49435 2.39371,-11.01026 1.3652,-33.46538 1.3652,-33.46538 z"
