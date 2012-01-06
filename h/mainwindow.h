@@ -29,7 +29,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void init_package_name_completer();
+    void populate_package_name();
     void check_package_dirs();
     void save_actions_editor_change();
     void complete_word();
@@ -49,6 +49,8 @@ private slots:
     void clear_tableW_history();
     void clear_archive_widgets();
     void clear_translation_widgets();
+
+    void combo_package_name_returnPressed();
 
     void on_action_Change_Workspace_triggered();
 
@@ -70,8 +72,7 @@ private slots:
 
     void on_action_Application_Language_triggered();
 
-    void on_le_package_name_textChanged(const QString &text);
-    void on_le_package_name_returnPressed();
+    void on_combo_package_name_editTextChanged(const QString &text);
     void on_tb_import_package_clicked();
 
     void on_le_license_textChanged(const QString & text);

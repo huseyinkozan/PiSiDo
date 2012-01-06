@@ -184,9 +184,14 @@ MainWindow::MainWindow(QWidget *parent) :
         QTimer::singleShot(0, qApp, SLOT(quit()));
     }
 
+    populate_package_name();
+    ui->combo_package_name->completer()->setCompletionMode(QCompleter::PopupCompletion);
+    ui->combo_package_name->clearEditText();
+    connect(ui->combo_package_name->lineEdit(), SIGNAL(returnPressed()), SLOT(combo_package_name_returnPressed()));
+
     workspace_dir_timer = new QTimer(this);
     workspace_dir_timer->start(PACKAGE_NAME_REFRESH_INTERVAL);
-    connect(workspace_dir_timer, SIGNAL(timeout()), this, SLOT(init_package_name_completer()));
+    connect(workspace_dir_timer, SIGNAL(timeout()), this, SLOT(populate_package_name()));
     connect(workspace_dir_timer, SIGNAL(timeout()), this, SLOT(check_package_dirs()));
 
     w_terminal = new QTermWidget(1, ui->dw_build);
@@ -207,7 +212,7 @@ MainWindow::MainWindow(QWidget *parent) :
     w_terminal->setWorkingDirectory(workspace_dir.absolutePath());
     w_terminal->changeDir(workspace_dir.absolutePath());
 
-    ui->le_package_name->setFocus();
+    ui->combo_package_name->setFocus();
 }
 
 MainWindow::~MainWindow()
@@ -269,24 +274,18 @@ bool MainWindow::save_text_file(const QString &file_name, const QString &data)
     return true;
 }
 
-void MainWindow::init_package_name_completer()
+void MainWindow::populate_package_name()
 {
     if( ! workspace_dir.exists()){
-        QCompleter * old_completer = ui->le_package_name->completer();
-        ui->le_package_name->setCompleter(0);
-        if(old_completer)
-            delete old_completer;
+        ui->combo_package_name->clear();
         return;
     }
 
     QStringList list = workspace_dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot|QDir::NoSymLinks, QDir::Name);
     if(list != workspace_package_names){
         workspace_package_names = list;
-        QCompleter * completer = new QCompleter(workspace_package_names, this);
-        QCompleter * old_completer = ui->le_package_name->completer();
-        ui->le_package_name->setCompleter(completer);
-        if(old_completer)
-            delete old_completer;
+        ui->combo_package_name->clear();
+        ui->combo_package_name->addItems(workspace_package_names);
     }
 }
 
@@ -317,8 +316,8 @@ void MainWindow::on_action_Change_Workspace_triggered()
         not_ask_workspace = wd.get_not_ask_workspace();
         w_terminal->setWorkingDirectory(workspace_dir.absolutePath());
         w_terminal->changeDir(workspace_dir.absolutePath());
-        on_le_package_name_textChanged(ui->le_package_name->text());
-        init_package_name_completer();
+        on_combo_package_name_editTextChanged(ui->combo_package_name->lineEdit()->text());
+        populate_package_name();
     }
 }
 
@@ -469,7 +468,7 @@ void MainWindow::read_settings()
 
 void MainWindow::on_action_Reset_Fields_triggered()
 {
-    ui->le_package_name->clear();
+    ui->combo_package_name->clearEditText();
     ui->le_homepage->clear();
     ui->le_license->clear();
     ui->le_is_a->clear();
@@ -482,7 +481,7 @@ void MainWindow::on_action_Reset_Fields_triggered()
 //    These will be cleared after gui change :
 //      package_name, homepage, licenses, is_a_s, part_of, summary,
 //      description, build_dependency, runtime_dependency
-//    These will be cleared after le_package_name clear :
+//    These will be cleared after combo_package_name clear :
 //      package_files_watcher, aditional_files, patches
 
     clear_archive_widgets();
@@ -584,12 +583,12 @@ void MainWindow::clear_tableW_history()
     }
 }
 
-void MainWindow::on_le_package_name_returnPressed()
+void MainWindow::combo_package_name_returnPressed()
 {
     on_tb_import_package_clicked();
 }
 
-void MainWindow::on_le_package_name_textChanged(const QString &text)
+void MainWindow::on_combo_package_name_editTextChanged(const QString &text)
 {
     if(text.isEmpty())
     {
@@ -1248,7 +1247,7 @@ void MainWindow::on_tb_import_package_clicked()
         }
 
 
-        on_le_package_name_textChanged(ui->le_package_name->text());  // to fill package install directory tree
+        on_combo_package_name_editTextChanged(ui->combo_package_name->lineEdit()->text());  // to fill package install directory tree
         on_tb_refresh_treeV_files_clicked();
 
         statusBar()->showMessage(tr("Package build information successfully imported."));
@@ -1495,7 +1494,7 @@ bool MainWindow::create_build_files()
     action_py_contents.replace(QString("__summary__"), summary);
     save_text_file( actions_file_name, action_py_contents );
 
-    on_le_package_name_textChanged(ui->le_package_name->text());
+    on_combo_package_name_editTextChanged(ui->combo_package_name->lineEdit()->text());
 
     return true;
 }
