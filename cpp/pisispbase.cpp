@@ -364,15 +364,15 @@ PisiSPBase::VRTFAttr PisiSPBase::get_dependency_attribute(QString attr_name, boo
     {
         if(attr_name.startsWith("=="))
             return RELEASE;
-        else if(attr_name.startsWith("<<"))
+        else if(attr_name.startsWith("<<="))
             return RELEASETO;
-        else if(attr_name.startsWith(">>"))
+        else if(attr_name.startsWith(">>="))
             return RELEASEFROM;
         else if(attr_name.startsWith("="))
             return VERSION;
-        else if(attr_name.startsWith("<"))
+        else if(attr_name.startsWith("<="))
             return VERSIONTO;
-        else if(attr_name.startsWith(">"))
+        else if(attr_name.startsWith(">="))
             return VERSIONFROM;
         else throw QObject::tr("No VersionReleaseToFrom attribute : %1").arg(attr_name);
     }
@@ -383,19 +383,19 @@ QString PisiSPBase::get_dependency_attribute(PisiSPBase::VRTFAttr attr, bool abb
     switch(attr)
     {
     case VERSIONFROM:
-        if(abbreviation) return ">"; else return "versionFrom";
+        if(abbreviation) return ">="; else return "versionFrom";
         break;
     case VERSIONTO:
-        if(abbreviation) return "<"; else return "versionTo";
+        if(abbreviation) return "<="; else return "versionTo";
         break;
     case VERSION:
         if(abbreviation) return "="; else return "version";
         break;
     case RELEASEFROM:
-        if(abbreviation) return ">>"; else return "releaseFrom";
+        if(abbreviation) return ">>="; else return "releaseFrom";
         break;
     case RELEASETO:
-        if(abbreviation) return "<<"; else return "releaseTo";
+        if(abbreviation) return "<<="; else return "releaseTo";
         break;
     case RELEASE:
         if(abbreviation) return "=="; else return "release";
@@ -503,7 +503,7 @@ QString PisiSPBase::get_aditional_file_attribute(PisiSPBase::AFileAttr attr)
 }
 
 /**
-  returns dependencies like : qt[>4.7;<4.5;==4.6], gtk[>>2], libz, libusb1[=1]
+  returns dependencies like : qt[>=4.7;<=4.5;==4.6], gtk[>>=2], libz, libusb1[=1]
 */
 QStringList PisiSPBase::get_dependency_list(QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > dependencies)
 {
@@ -526,7 +526,7 @@ QStringList PisiSPBase::get_dependency_list(QMap<QString, QMap<PisiSPBase::VRTFA
 }
 
 /**
-  takes string like : qt[>4.7;<4.5;==4.6], gtk[>>2], libz, libusb1[=1], returns dependencies
+  takes string like : qt[>=4.7;<=4.5;==4.6], gtk[>>=2], libz, libusb1[=1], returns dependencies
 */
 QMap<QString, QMap<PisiSPBase::VRTFAttr,QString> > PisiSPBase::get_dependency_list(QString dependency_string)
 {
